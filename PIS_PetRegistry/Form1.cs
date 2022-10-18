@@ -1,8 +1,8 @@
 namespace PIS_PetRegistry
 {
-    public partial class Form1 : Form
+    public partial class AuthWin : Form
     {
-        public Form1()
+        public AuthWin()
         {
             InitializeComponent();
         }
