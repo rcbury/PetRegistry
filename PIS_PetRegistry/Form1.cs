@@ -6,5 +6,13 @@ namespace PIS_PetRegistry
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MainWindow form = new MainWindow();
+            Hide();
+            form.ShowDialog();
+            Show();
+        }
     }
 }
