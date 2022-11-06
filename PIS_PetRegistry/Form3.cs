@@ -10,21 +10,19 @@ using System.Windows.Forms;
 
 namespace PIS_PetRegistry
 {
-    public partial class FilterOption : Form
+    public partial class Form3 : Form
     {
-        public FilterOption()
+        public Form3()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Close();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Close();
+            MainWindow form = new MainWindow();
+            Hide();
+            form.ShowDialog();
+            Show();
         }
     }
 }

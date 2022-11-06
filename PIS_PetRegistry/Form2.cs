@@ -35,8 +35,8 @@ namespace PIS_PetRegistry
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            FilterOption form = new FilterOption();
-            form.ShowDialog();
+            //FilterOption form = new FilterOption();
+            //form.ShowDialog();
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)

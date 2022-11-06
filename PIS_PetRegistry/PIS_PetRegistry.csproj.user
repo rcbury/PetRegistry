@@ -4,13 +4,13 @@
     <Compile Update="Card.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FilterOption.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form3.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="PetOwners.cs">
