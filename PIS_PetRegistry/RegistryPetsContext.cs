@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace PIS_PetRegistry.Models;
 
@@ -46,7 +44,8 @@ public partial class RegistryPetsContext : DbContext
     public virtual DbSet<VeterinaryAppointmentAnimal> VeterinaryAppointmentAnimals { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(ConfigurationManager.ConnectionStrings["ShelterDatabase"].ConnectionString);
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("Host=localhost;Database=registry_pets;Username=postgres;Password=admin");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -388,6 +387,9 @@ public partial class RegistryPetsContext : DbContext
             entity.Property(e => e.DateEvent).HasColumnName("date_event");
             entity.Property(e => e.FkAnimal).HasColumnName("FK_animal");
             entity.Property(e => e.FkUser).HasColumnName("FK_user");
+            entity.Property(e => e.Name)
+                .HasColumnType("character varying")
+                .HasColumnName("name");
 
             entity.HasOne(d => d.FkAnimalNavigation).WithMany(p => p.VeterinaryAppointmentAnimals)
                 .HasForeignKey(d => d.FkAnimal)

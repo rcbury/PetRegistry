@@ -484,6 +484,11 @@ namespace PISPetRegistry.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("FK_user");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
                     b.HasKey("Id")
                         .HasName("veterinary_appointment_animal_pkey");
 

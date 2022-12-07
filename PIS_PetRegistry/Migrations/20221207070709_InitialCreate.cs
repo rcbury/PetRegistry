@@ -313,7 +313,8 @@ namespace PISPetRegistry.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityAlwaysColumn),
                     dateevent = table.Column<DateOnly>(name: "date_event", type: "date", nullable: true),
                     FKanimal = table.Column<int>(name: "FK_animal", type: "integer", nullable: false),
-                    FKuser = table.Column<int>(name: "FK_user", type: "integer", nullable: false)
+                    FKuser = table.Column<int>(name: "FK_user", type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying", nullable: false)
                 },
                 constraints: table =>
                 {

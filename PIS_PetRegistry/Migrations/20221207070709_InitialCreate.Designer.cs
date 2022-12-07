@@ -12,7 +12,7 @@ using PIS_PetRegistry.Models;
 namespace PISPetRegistry.Migrations
 {
     [DbContext(typeof(RegistryPetsContext))]
-    [Migration("20221206160620_InitialCreate")]
+    [Migration("20221207070709_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -486,6 +486,11 @@ namespace PISPetRegistry.Migrations
                     b.Property<int>("FkUser")
                         .HasColumnType("integer")
                         .HasColumnName("FK_user");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
 
                     b.HasKey("Id")
                         .HasName("veterinary_appointment_animal_pkey");
