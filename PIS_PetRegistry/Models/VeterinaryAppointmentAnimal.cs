@@ -13,6 +13,8 @@ public partial class VeterinaryAppointmentAnimal
 
     public int FkUser { get; set; }
 
+    public string Name { get; set; } = null!;
+
     public virtual AnimalCard FkAnimalNavigation { get; set; } = null!;
 
     public virtual User FkUserNavigation { get; set; } = null!;
