@@ -10,19 +10,11 @@ using System.Windows.Forms;
 
 namespace PIS_PetRegistry
 {
-    public partial class Form3 : Form
+    public partial class PhysicalPersonForm : Form
     {
-        public Form3()
+        public PhysicalPersonForm()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MainWindow form = new MainWindow();
-            Hide();
-            form.ShowDialog();
-            Show();
         }
     }
 }

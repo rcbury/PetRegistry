@@ -1,6 +1,6 @@
 ﻿namespace PIS_PetRegistry
 {
-    partial class Form3
+    partial class LegalPersonForm
     {
         /// <summary>
         /// Required designer variable.
@@ -54,12 +54,9 @@
             this.label8 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox6
@@ -193,9 +190,9 @@
             this.groupBox5.Controls.Add(this.label8);
             this.groupBox5.Controls.Add(this.textBox6);
             this.groupBox5.Controls.Add(this.label7);
-            this.groupBox5.Location = new System.Drawing.Point(13, 82);
+            this.groupBox5.Location = new System.Drawing.Point(13, 12);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(781, 130);
+            this.groupBox5.Size = new System.Drawing.Size(781, 200);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Данные физического лица";
@@ -296,27 +293,6 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "Телефон";
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.checkBox1);
-            this.groupBox4.Location = new System.Drawing.Point(12, 12);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(781, 64);
-            this.groupBox4.TabIndex = 4;
-            this.groupBox4.TabStop = false;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(10, 25);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(134, 19);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Юридическое лицо";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(647, 415);
@@ -335,15 +311,12 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
             this.Name = "Form3";
             this.Text = "Form3";
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -376,8 +349,6 @@
         private Label label8;
         private TextBox textBox6;
         private Label label7;
-        private GroupBox groupBox4;
-        private CheckBox checkBox1;
         private Button button1;
     }
 }

@@ -10,26 +10,19 @@ using System.Windows.Forms;
 
 namespace PIS_PetRegistry
 {
-    public partial class Card : Form
+    public partial class LegalPersonForm : Form
     {
-        public Card()
+        public LegalPersonForm()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox4_Enter(object sender, EventArgs e)
-        {
-
+            AnimalRegistryForm form = new AnimalRegistryForm();
+            Hide();
+            form.ShowDialog();
+            Show();
         }
     }
 }

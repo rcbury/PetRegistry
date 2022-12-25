@@ -1,6 +1,6 @@
 ﻿namespace PIS_PetRegistry
 {
-    partial class AuthWin
+    partial class AuthorizationForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -46,16 +46,16 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(163, 31);
+            this.textBox1.Location = new System.Drawing.Point(97, 31);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 23);
+            this.textBox1.Size = new System.Drawing.Size(166, 23);
             this.textBox1.TabIndex = 5;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(163, 60);
+            this.textBox2.Location = new System.Drawing.Point(99, 60);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 23);
+            this.textBox2.Size = new System.Drawing.Size(164, 23);
             this.textBox2.TabIndex = 7;
             // 
             // label1

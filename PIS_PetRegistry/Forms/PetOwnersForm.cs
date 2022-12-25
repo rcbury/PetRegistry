@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PIS_PetRegistry
 {
-    public partial class PetOwners : Form
+    public partial class PetOwnersForm : Form
     {
-        public PetOwners()
+        public PetOwnersForm()
         {
             InitializeComponent();
         }
@@ -28,7 +28,7 @@ namespace PIS_PetRegistry
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            Form3 form = new Form3();
+            LegalPersonForm form = new LegalPersonForm();
             Hide();
             form.ShowDialog();
             Show();

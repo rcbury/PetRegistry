@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PIS_PetRegistry
 {
-    public partial class MainWindow : Form
+    public partial class AnimalRegistryForm : Form
     {
-        public MainWindow()
+        public AnimalRegistryForm()
         {
             InitializeComponent();
         }
@@ -24,7 +24,7 @@ namespace PIS_PetRegistry
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            PetOwners form = new PetOwners();
+            PetOwnersForm form = new PetOwnersForm();
             form.ShowDialog();
         }
 
@@ -41,7 +41,7 @@ namespace PIS_PetRegistry
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            Card form = new Card();
+            AnimalCardForm form = new AnimalCardForm();
             form.ShowDialog();
         }
     }

@@ -1,15 +1,15 @@
 namespace PIS_PetRegistry
 {
-    public partial class AuthWin : Form
+    public partial class AuthorizationForm : Form
     {
-        public AuthWin()
+        public AuthorizationForm()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MainWindow form = new MainWindow();
+            AnimalRegistryForm form = new AnimalRegistryForm();
             Hide();
             form.ShowDialog();
             Show();
