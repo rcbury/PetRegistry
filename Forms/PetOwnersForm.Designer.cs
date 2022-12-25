@@ -30,16 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PetOwnersForm));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.задатьУсловиеФильтрацииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.DASDSAFA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.DASDSAFA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -51,14 +51,31 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripDropDownButton1,
-            this.toolStripButton1,
-            this.toolStripButton2});
+            this.toolStripDropDownButton2,
+            this.toolStripDropDownButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(800, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripDropDownButton2
+            // 
+            this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
+            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(87, 22);
+            this.toolStripDropDownButton2.Text = "Фильтрация";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(238, 22);
+            this.toolStripMenuItem1.Text = "Задать условие фильтрации...";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripDropDownButton1
             // 
@@ -75,7 +92,7 @@
             // задатьУсловиеФильтрацииToolStripMenuItem
             // 
             this.задатьУсловиеФильтрацииToolStripMenuItem.Name = "задатьУсловиеФильтрацииToolStripMenuItem";
-            this.задатьУсловиеФильтрацииToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.задатьУсловиеФильтрацииToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.задатьУсловиеФильтрацииToolStripMenuItem.Text = "Excel";
             this.задатьУсловиеФильтрацииToolStripMenuItem.Click += new System.EventHandler(this.задатьУсловиеФильтрацииToolStripMenuItem_Click);
             // 
@@ -114,11 +131,6 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // DASDSAFA
-            // 
-            this.DASDSAFA.HeaderText = "Column1";
-            this.DASDSAFA.Name = "DASDSAFA";
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.dataGridView2);
@@ -140,32 +152,19 @@
             this.dataGridView2.Size = new System.Drawing.Size(786, 391);
             this.dataGridView2.TabIndex = 0;
             // 
-            // toolStripButton1
+            // DASDSAFA
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.DASDSAFA.HeaderText = "Column1";
+            this.DASDSAFA.Name = "DASDSAFA";
             // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButton2";
-            // 
-            // PetOwnersForm
+            // PetOwners
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.toolStrip1);
-            this.Name = "PetOwnersForm";
+            this.Name = "PetOwners";
             this.Text = "PetOwners";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -187,10 +186,10 @@
         private TabControl tabControl1;
         private TabPage tabPage1;
         private TabPage tabPage2;
+        private ToolStripDropDownButton toolStripDropDownButton2;
+        private ToolStripMenuItem toolStripMenuItem1;
         private DataGridView dataGridView1;
         private DataGridView dataGridView2;
         private DataGridViewTextBoxColumn DASDSAFA;
-        private ToolStripButton toolStripButton1;
-        private ToolStripButton toolStripButton2;
     }
 }
