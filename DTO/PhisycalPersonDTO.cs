@@ -8,6 +8,6 @@ namespace PIS_PetRegistry.DTO
 {
     internal class PhisycalPersonDTO
     {
-
+        public string Name { get; set; }
     }
 }
