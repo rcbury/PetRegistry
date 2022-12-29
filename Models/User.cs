@@ -15,13 +15,23 @@ public partial class User
 
     public string Email { get; set; } = null!;
 
-    public int? FkRole { get; set; }
+    public int FkRole { get; set; }
 
-    public virtual Role? FkRoleNavigation { get; set; }
+    public int? FkShelter { get; set; }
 
-    public virtual ICollection<Log> Logs { get; } = new List<Log>();
+    public int? FkLocation { get; set; }
 
-    public virtual ICollection<TreatmentParasitesAnimal> TreatmentParasitesAnimals { get; } = new List<TreatmentParasitesAnimal>();
+    public virtual ICollection<AmimalCardLog> AmimalCardLogs { get; } = new List<AmimalCardLog>();
+
+    public virtual ICollection<Contract> Contracts { get; } = new List<Contract>();
+
+    public virtual Location? FkLocationNavigation { get; set; }
+
+    public virtual Role FkRoleNavigation { get; set; } = null!;
+
+    public virtual Shelter? FkShelterNavigation { get; set; }
+
+    public virtual ICollection<ParasiteTreatment> ParasiteTreatments { get; } = new List<ParasiteTreatment>();
 
     public virtual ICollection<Vaccination> Vaccinations { get; } = new List<Vaccination>();
 

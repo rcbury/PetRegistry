@@ -7,35 +7,25 @@ public partial class AnimalCard
 {
     public int Id { get; set; }
 
-    public Guid ChipId { get; set; }
+    public bool IsBoy { get; set; }
 
-    public bool Sex { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string? Name { get; set; }
+    public string Photo { get; set; } = null!;
 
-    public string? Photo { get; set; }
+    public int FkCategory { get; set; }
 
-    public string NameTrapingService { get; set; } = null!;
+    public int FkShelter { get; set; }
 
-    public bool? IsContract { get; set; }
+    public string ChipId { get; set; } = null!;
 
-    public int? FkCategory { get; set; }
+    public virtual ICollection<Contract> Contracts { get; } = new List<Contract>();
 
-    public int? FkLegalPerson { get; set; }
+    public virtual AnimalCategory FkCategoryNavigation { get; set; } = null!;
 
-    public int? FkPhysicalPerson { get; set; }
+    public virtual Shelter FkShelterNavigation { get; set; } = null!;
 
-    public int? FkShelter { get; set; }
-
-    public virtual AnimalCategory? FkCategoryNavigation { get; set; }
-
-    public virtual LegalPerson? FkLegalPersonNavigation { get; set; }
-
-    public virtual PhysicalPerson? FkPhysicalPersonNavigation { get; set; }
-
-    public virtual Shelter IdNavigation { get; set; } = null!;
-
-    public virtual ICollection<TreatmentParasitesAnimal> TreatmentParasitesAnimals { get; } = new List<TreatmentParasitesAnimal>();
+    public virtual ICollection<ParasiteTreatment> ParasiteTreatments { get; } = new List<ParasiteTreatment>();
 
     public virtual ICollection<Vaccination> Vaccinations { get; } = new List<Vaccination>();
 

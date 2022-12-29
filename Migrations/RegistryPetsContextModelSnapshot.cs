@@ -22,6 +22,42 @@ namespace PISPetRegistry.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("PIS_PetRegistry.Models.AmimalCardLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("CreateTime")
+                        .HasColumnType("date")
+                        .HasColumnName("create_time");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("json")
+                        .HasColumnName("description");
+
+                    b.Property<int>("FkLogsType")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_logs_type");
+
+                    b.Property<int>("FkUser")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_user");
+
+                    b.HasKey("Id")
+                        .HasName("logs_pkey");
+
+                    b.HasIndex("FkLogsType");
+
+                    b.HasIndex("FkUser");
+
+                    b.ToTable("amimal_card_log", (string)null);
+                });
+
             modelBuilder.Entity("PIS_PetRegistry.Models.AnimalCard", b =>
                 {
                     b.Property<int>("Id")
@@ -31,55 +67,39 @@ namespace PISPetRegistry.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("ChipId")
-                        .HasColumnType("uuid")
+                    b.Property<string>("ChipId")
+                        .IsRequired()
+                        .HasColumnType("character varying")
                         .HasColumnName("chip_id");
 
-                    b.Property<int?>("FkCategory")
+                    b.Property<int>("FkCategory")
                         .HasColumnType("integer")
                         .HasColumnName("FK_category");
 
-                    b.Property<int?>("FkLegalPerson")
-                        .HasColumnType("integer")
-                        .HasColumnName("FK_legal_person");
-
-                    b.Property<int?>("FkPhysicalPerson")
-                        .HasColumnType("integer")
-                        .HasColumnName("FK_physical_person");
-
-                    b.Property<int?>("FkShelter")
+                    b.Property<int>("FkShelter")
                         .HasColumnType("integer")
                         .HasColumnName("FK_shelter");
 
-                    b.Property<bool?>("IsContract")
+                    b.Property<bool>("IsBoy")
                         .HasColumnType("boolean")
-                        .HasColumnName("is_contract");
+                        .HasColumnName("is_boy");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("name");
 
-                    b.Property<string>("NameTrapingService")
+                    b.Property<string>("Photo")
                         .IsRequired()
                         .HasColumnType("character varying")
-                        .HasColumnName("name_traping_service");
-
-                    b.Property<string>("Photo")
-                        .HasColumnType("character varying")
                         .HasColumnName("photo");
-
-                    b.Property<bool>("Sex")
-                        .HasColumnType("boolean")
-                        .HasColumnName("sex");
 
                     b.HasKey("Id")
                         .HasName("animals_pkey");
 
                     b.HasIndex("FkCategory");
 
-                    b.HasIndex("FkLegalPerson");
-
-                    b.HasIndex("FkPhysicalPerson");
+                    b.HasIndex("FkShelter");
 
                     b.ToTable("animal_card", (string)null);
                 });
@@ -101,6 +121,53 @@ namespace PISPetRegistry.Migrations
                         .HasName("animal_category_pkey");
 
                     b.ToTable("animal_category", (string)null);
+                });
+
+            modelBuilder.Entity("PIS_PetRegistry.Models.Contract", b =>
+                {
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date")
+                        .HasColumnName("date");
+
+                    b.Property<int>("FkAnimalCard")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_animal_card");
+
+                    b.Property<int>("FkUser")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_user");
+
+                    b.Property<int>("FkPhysicalPerson")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_physical_person");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("FkLegalPerson")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_legal_person");
+
+                    b.Property<int?>("Number")
+                        .HasColumnType("integer")
+                        .HasColumnName("number");
+
+                    b.HasKey("Date", "FkAnimalCard", "FkUser", "FkPhysicalPerson", "Id")
+                        .HasName("contract_pkey");
+
+                    b.HasIndex("FkAnimalCard");
+
+                    b.HasIndex("FkLegalPerson");
+
+                    b.HasIndex("FkPhysicalPerson");
+
+                    b.HasIndex("FkUser");
+
+                    b.ToTable("contract", (string)null);
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.Country", b =>
@@ -132,6 +199,7 @@ namespace PISPetRegistry.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("address");
 
@@ -139,23 +207,26 @@ namespace PISPetRegistry.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("email");
 
-                    b.Property<int?>("FkCountry")
+                    b.Property<int>("FkCountry")
                         .HasColumnType("integer")
                         .HasColumnName("FK_country");
 
-                    b.Property<int?>("FkLocality")
+                    b.Property<int>("FkLocality")
                         .HasColumnType("integer")
                         .HasColumnName("FK_locality");
 
                     b.Property<string>("Inn")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("INN");
 
                     b.Property<string>("Kpp")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("KPP");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("name");
 
@@ -170,7 +241,7 @@ namespace PISPetRegistry.Migrations
 
                     b.HasIndex("FkLocality");
 
-                    b.ToTable("legal_persons", (string)null);
+                    b.ToTable("legal_person", (string)null);
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.Location", b =>
@@ -190,48 +261,7 @@ namespace PISPetRegistry.Migrations
                     b.HasKey("Id")
                         .HasName("locality_pkey");
 
-                    b.ToTable("locations", (string)null);
-                });
-
-            modelBuilder.Entity("PIS_PetRegistry.Models.Log", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly?>("CreateTime")
-                        .HasColumnType("date")
-                        .HasColumnName("create_time");
-
-                    b.Property<string>("Data")
-                        .HasColumnType("json")
-                        .HasColumnName("data");
-
-                    b.Property<int>("FkLogsType")
-                        .HasColumnType("integer")
-                        .HasColumnName("FK_logs_type");
-
-                    b.Property<int>("FkShelter")
-                        .HasColumnType("integer")
-                        .HasColumnName("FK_shelter");
-
-                    b.Property<int>("FkUser")
-                        .HasColumnType("integer")
-                        .HasColumnName("FK_user");
-
-                    b.HasKey("Id")
-                        .HasName("logs_pkey");
-
-                    b.HasIndex("FkLogsType");
-
-                    b.HasIndex("FkShelter");
-
-                    b.HasIndex("FkUser");
-
-                    b.ToTable("logs", (string)null);
+                    b.ToTable("location", (string)null);
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.LogType", b =>
@@ -253,6 +283,58 @@ namespace PISPetRegistry.Migrations
                     b.ToTable("log_type", (string)null);
                 });
 
+            modelBuilder.Entity("PIS_PetRegistry.Models.ParasiteTreatment", b =>
+                {
+                    b.Property<int>("FkAnimal")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_animal");
+
+                    b.Property<int>("FkUser")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_user");
+
+                    b.Property<int>("FkMedication")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_medication");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date")
+                        .HasColumnName("date");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
+
+                    b.HasKey("FkAnimal", "FkUser", "FkMedication", "Date")
+                        .HasName("parasite_treatment_pkey");
+
+                    b.HasIndex("FkMedication");
+
+                    b.HasIndex("FkUser");
+
+                    b.ToTable("parasite_treatment", (string)null);
+                });
+
+            modelBuilder.Entity("PIS_PetRegistry.Models.ParasiteTreatmentMedication", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("parasite_treatment_medication_pkey");
+
+                    b.ToTable("parasite_treatment_medication", (string)null);
+                });
+
             modelBuilder.Entity("PIS_PetRegistry.Models.PhysicalPerson", b =>
                 {
                     b.Property<int>("Id")
@@ -263,6 +345,7 @@ namespace PISPetRegistry.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("address");
 
@@ -270,19 +353,21 @@ namespace PISPetRegistry.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("email");
 
-                    b.Property<int?>("FkCountry")
+                    b.Property<int>("FkCountry")
                         .HasColumnType("integer")
                         .HasColumnName("FK_country");
 
-                    b.Property<int?>("FkLocality")
+                    b.Property<int>("FkLocality")
                         .HasColumnType("integer")
                         .HasColumnName("FK_locality");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("name");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("phone");
 
@@ -293,7 +378,7 @@ namespace PISPetRegistry.Migrations
 
                     b.HasIndex("FkLocality");
 
-                    b.ToTable("physical_persons", (string)null);
+                    b.ToTable("physical_person", (string)null);
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.Role", b =>
@@ -312,7 +397,7 @@ namespace PISPetRegistry.Migrations
                     b.HasKey("Id")
                         .HasName("role_pkey");
 
-                    b.ToTable("roles", (string)null);
+                    b.ToTable("role", (string)null);
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.Shelter", b =>
@@ -325,58 +410,25 @@ namespace PISPetRegistry.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("address");
 
-                    b.Property<int?>("FkLocality")
+                    b.Property<int>("FkLocation")
                         .HasColumnType("integer")
-                        .HasColumnName("FK_locality");
+                        .HasColumnName("FK_location");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
                         .HasName("shelter_pkey");
 
-                    b.HasIndex("FkLocality");
+                    b.HasIndex("FkLocation");
 
-                    b.ToTable("shelters", (string)null);
-                });
-
-            modelBuilder.Entity("PIS_PetRegistry.Models.TreatmentParasitesAnimal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly?>("DateEvent")
-                        .HasColumnType("date")
-                        .HasColumnName("date_event");
-
-                    b.Property<int>("FkAnimal")
-                        .HasColumnType("integer")
-                        .HasColumnName("FK_animal");
-
-                    b.Property<int>("FkUser")
-                        .HasColumnType("integer")
-                        .HasColumnName("FK_user");
-
-                    b.Property<string>("NameMedicines")
-                        .HasColumnType("character varying")
-                        .HasColumnName("name_medicines");
-
-                    b.HasKey("Id")
-                        .HasName("treatment_parasites_animal_pkey");
-
-                    b.HasIndex("FkAnimal");
-
-                    b.HasIndex("FkUser");
-
-                    b.ToTable("treatment_parasites_animal", (string)null);
+                    b.ToTable("shelter", (string)null);
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.User", b =>
@@ -393,9 +445,17 @@ namespace PISPetRegistry.Migrations
                         .HasColumnType("character varying")
                         .HasColumnName("email");
 
-                    b.Property<int?>("FkRole")
+                    b.Property<int?>("FkLocation")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_location");
+
+                    b.Property<int>("FkRole")
                         .HasColumnType("integer")
                         .HasColumnName("FK_role");
+
+                    b.Property<int?>("FkShelter")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_shelter");
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -415,27 +475,20 @@ namespace PISPetRegistry.Migrations
                     b.HasKey("Id")
                         .HasName("user_pkey");
 
+                    b.HasIndex("FkLocation");
+
                     b.HasIndex("FkRole");
 
-                    b.ToTable("users", (string)null);
+                    b.HasIndex("FkShelter");
+
+                    b.ToTable("user", (string)null);
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.Vaccination", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly?>("DateEndEvent")
+                    b.Property<DateOnly>("DateEnd")
                         .HasColumnType("date")
-                        .HasColumnName("date_end_event");
-
-                    b.Property<DateOnly>("DateEvent")
-                        .HasColumnType("date")
-                        .HasColumnName("date_event");
+                        .HasColumnName("date_end");
 
                     b.Property<int>("FkAnimal")
                         .HasColumnType("integer")
@@ -445,51 +498,78 @@ namespace PISPetRegistry.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("FK_user");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("character varying")
-                        .HasColumnName("name");
-
-                    b.Property<int?>("NumberSeries")
+                    b.Property<int>("FkVaccine")
                         .HasColumnType("integer")
-                        .HasColumnName("number_series");
+                        .HasColumnName("FK_vaccine");
 
-                    b.HasKey("Id")
-                        .HasName("vaccinations_pkey");
+                    b.HasKey("DateEnd", "FkAnimal", "FkUser", "FkVaccine")
+                        .HasName("vaccination_pkey");
 
                     b.HasIndex("FkAnimal");
 
                     b.HasIndex("FkUser");
 
-                    b.ToTable("vaccinations", (string)null);
+                    b.HasIndex("FkVaccine");
+
+                    b.ToTable("vaccination", (string)null);
                 });
 
-            modelBuilder.Entity("PIS_PetRegistry.Models.VeterinaryAppointmentAnimal", b =>
+            modelBuilder.Entity("PIS_PetRegistry.Models.Vaccine", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly?>("DateEvent")
-                        .HasColumnType("date")
-                        .HasColumnName("date_event");
-
-                    b.Property<int>("FkAnimal")
-                        .HasColumnType("integer")
-                        .HasColumnName("FK_animal");
-
-                    b.Property<int>("FkUser")
-                        .HasColumnType("integer")
-                        .HasColumnName("FK_user");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("name");
 
+                    b.Property<int>("Number")
+                        .HasColumnType("integer")
+                        .HasColumnName("number");
+
+                    b.Property<int>("ValidityPeriod")
+                        .HasColumnType("integer")
+                        .HasColumnName("validity_period");
+
                     b.HasKey("Id")
+                        .HasName("vaccine_pkey");
+
+                    b.ToTable("vaccine", (string)null);
+                });
+
+            modelBuilder.Entity("PIS_PetRegistry.Models.VeterinaryAppointmentAnimal", b =>
+                {
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date")
+                        .HasColumnName("date");
+
+                    b.Property<int>("FkAnimal")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_animal");
+
+                    b.Property<int>("FkUser")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_user");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_completed");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("character varying")
+                        .HasColumnName("name");
+
+                    b.HasKey("Date", "FkAnimal", "FkUser")
                         .HasName("veterinary_appointment_animal_pkey");
 
                     b.HasIndex("FkAnimal");
@@ -499,36 +579,76 @@ namespace PISPetRegistry.Migrations
                     b.ToTable("veterinary_appointment_animal", (string)null);
                 });
 
+            modelBuilder.Entity("PIS_PetRegistry.Models.AmimalCardLog", b =>
+                {
+                    b.HasOne("PIS_PetRegistry.Models.LogType", "FkLogsTypeNavigation")
+                        .WithMany("AmimalCardLogs")
+                        .HasForeignKey("FkLogsType")
+                        .IsRequired()
+                        .HasConstraintName("FK_logs_type");
+
+                    b.HasOne("PIS_PetRegistry.Models.User", "FkUserNavigation")
+                        .WithMany("AmimalCardLogs")
+                        .HasForeignKey("FkUser")
+                        .IsRequired()
+                        .HasConstraintName("FK_user");
+
+                    b.Navigation("FkLogsTypeNavigation");
+
+                    b.Navigation("FkUserNavigation");
+                });
+
             modelBuilder.Entity("PIS_PetRegistry.Models.AnimalCard", b =>
                 {
                     b.HasOne("PIS_PetRegistry.Models.AnimalCategory", "FkCategoryNavigation")
                         .WithMany("AnimalCards")
                         .HasForeignKey("FkCategory")
+                        .IsRequired()
                         .HasConstraintName("FK_category");
 
-                    b.HasOne("PIS_PetRegistry.Models.LegalPerson", "FkLegalPersonNavigation")
+                    b.HasOne("PIS_PetRegistry.Models.Shelter", "FkShelterNavigation")
                         .WithMany("AnimalCards")
-                        .HasForeignKey("FkLegalPerson")
-                        .HasConstraintName("FK_legal_person");
-
-                    b.HasOne("PIS_PetRegistry.Models.PhysicalPerson", "FkPhysicalPersonNavigation")
-                        .WithMany("AnimalCards")
-                        .HasForeignKey("FkPhysicalPerson")
-                        .HasConstraintName("FK_physical_person");
-
-                    b.HasOne("PIS_PetRegistry.Models.Shelter", "IdNavigation")
-                        .WithOne("AnimalCard")
-                        .HasForeignKey("PIS_PetRegistry.Models.AnimalCard", "Id")
+                        .HasForeignKey("FkShelter")
                         .IsRequired()
                         .HasConstraintName("FK_shelter");
 
                     b.Navigation("FkCategoryNavigation");
 
+                    b.Navigation("FkShelterNavigation");
+                });
+
+            modelBuilder.Entity("PIS_PetRegistry.Models.Contract", b =>
+                {
+                    b.HasOne("PIS_PetRegistry.Models.AnimalCard", "FkAnimalCardNavigation")
+                        .WithMany("Contracts")
+                        .HasForeignKey("FkAnimalCard")
+                        .IsRequired()
+                        .HasConstraintName("FK_animal_card");
+
+                    b.HasOne("PIS_PetRegistry.Models.LegalPerson", "FkLegalPersonNavigation")
+                        .WithMany("Contracts")
+                        .HasForeignKey("FkLegalPerson")
+                        .HasConstraintName("FK_legal_person");
+
+                    b.HasOne("PIS_PetRegistry.Models.PhysicalPerson", "FkPhysicalPersonNavigation")
+                        .WithMany("Contracts")
+                        .HasForeignKey("FkPhysicalPerson")
+                        .IsRequired()
+                        .HasConstraintName("FK_physical_person");
+
+                    b.HasOne("PIS_PetRegistry.Models.User", "FkUserNavigation")
+                        .WithMany("Contracts")
+                        .HasForeignKey("FkUser")
+                        .IsRequired()
+                        .HasConstraintName("FK_user");
+
+                    b.Navigation("FkAnimalCardNavigation");
+
                     b.Navigation("FkLegalPersonNavigation");
 
                     b.Navigation("FkPhysicalPersonNavigation");
 
-                    b.Navigation("IdNavigation");
+                    b.Navigation("FkUserNavigation");
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.LegalPerson", b =>
@@ -536,11 +656,13 @@ namespace PISPetRegistry.Migrations
                     b.HasOne("PIS_PetRegistry.Models.Country", "FkCountryNavigation")
                         .WithMany("LegalPeople")
                         .HasForeignKey("FkCountry")
+                        .IsRequired()
                         .HasConstraintName("FK_country");
 
                     b.HasOne("PIS_PetRegistry.Models.Location", "FkLocalityNavigation")
                         .WithMany("LegalPeople")
                         .HasForeignKey("FkLocality")
+                        .IsRequired()
                         .HasConstraintName("FK_locality");
 
                     b.Navigation("FkCountryNavigation");
@@ -548,29 +670,29 @@ namespace PISPetRegistry.Migrations
                     b.Navigation("FkLocalityNavigation");
                 });
 
-            modelBuilder.Entity("PIS_PetRegistry.Models.Log", b =>
+            modelBuilder.Entity("PIS_PetRegistry.Models.ParasiteTreatment", b =>
                 {
-                    b.HasOne("PIS_PetRegistry.Models.LogType", "FkLogsTypeNavigation")
-                        .WithMany("Logs")
-                        .HasForeignKey("FkLogsType")
+                    b.HasOne("PIS_PetRegistry.Models.AnimalCard", "FkAnimalNavigation")
+                        .WithMany("ParasiteTreatments")
+                        .HasForeignKey("FkAnimal")
                         .IsRequired()
-                        .HasConstraintName("FK_logs_type");
+                        .HasConstraintName("FK_animal");
 
-                    b.HasOne("PIS_PetRegistry.Models.Shelter", "FkShelterNavigation")
-                        .WithMany("Logs")
-                        .HasForeignKey("FkShelter")
+                    b.HasOne("PIS_PetRegistry.Models.ParasiteTreatmentMedication", "FkMedicationNavigation")
+                        .WithMany("ParasiteTreatments")
+                        .HasForeignKey("FkMedication")
                         .IsRequired()
-                        .HasConstraintName("FK_shelter");
+                        .HasConstraintName("FK_medication");
 
                     b.HasOne("PIS_PetRegistry.Models.User", "FkUserNavigation")
-                        .WithMany("Logs")
+                        .WithMany("ParasiteTreatments")
                         .HasForeignKey("FkUser")
                         .IsRequired()
                         .HasConstraintName("FK_user");
 
-                    b.Navigation("FkLogsTypeNavigation");
+                    b.Navigation("FkAnimalNavigation");
 
-                    b.Navigation("FkShelterNavigation");
+                    b.Navigation("FkMedicationNavigation");
 
                     b.Navigation("FkUserNavigation");
                 });
@@ -580,11 +702,13 @@ namespace PISPetRegistry.Migrations
                     b.HasOne("PIS_PetRegistry.Models.Country", "FkCountryNavigation")
                         .WithMany("PhysicalPeople")
                         .HasForeignKey("FkCountry")
+                        .IsRequired()
                         .HasConstraintName("FK_country");
 
                     b.HasOne("PIS_PetRegistry.Models.Location", "FkLocalityNavigation")
                         .WithMany("PhysicalPeople")
                         .HasForeignKey("FkLocality")
+                        .IsRequired()
                         .HasConstraintName("FK_locality");
 
                     b.Navigation("FkCountryNavigation");
@@ -594,41 +718,38 @@ namespace PISPetRegistry.Migrations
 
             modelBuilder.Entity("PIS_PetRegistry.Models.Shelter", b =>
                 {
-                    b.HasOne("PIS_PetRegistry.Models.Location", "FkLocalityNavigation")
+                    b.HasOne("PIS_PetRegistry.Models.Location", "FkLocationNavigation")
                         .WithMany("Shelters")
-                        .HasForeignKey("FkLocality")
+                        .HasForeignKey("FkLocation")
+                        .IsRequired()
                         .HasConstraintName("FK_locality");
 
-                    b.Navigation("FkLocalityNavigation");
-                });
-
-            modelBuilder.Entity("PIS_PetRegistry.Models.TreatmentParasitesAnimal", b =>
-                {
-                    b.HasOne("PIS_PetRegistry.Models.AnimalCard", "FkAnimalNavigation")
-                        .WithMany("TreatmentParasitesAnimals")
-                        .HasForeignKey("FkAnimal")
-                        .IsRequired()
-                        .HasConstraintName("FK_animal");
-
-                    b.HasOne("PIS_PetRegistry.Models.User", "FkUserNavigation")
-                        .WithMany("TreatmentParasitesAnimals")
-                        .HasForeignKey("FkUser")
-                        .IsRequired()
-                        .HasConstraintName("FK_user");
-
-                    b.Navigation("FkAnimalNavigation");
-
-                    b.Navigation("FkUserNavigation");
+                    b.Navigation("FkLocationNavigation");
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.User", b =>
                 {
+                    b.HasOne("PIS_PetRegistry.Models.Location", "FkLocationNavigation")
+                        .WithMany("Users")
+                        .HasForeignKey("FkLocation")
+                        .HasConstraintName("FK_location");
+
                     b.HasOne("PIS_PetRegistry.Models.Role", "FkRoleNavigation")
                         .WithMany("Users")
                         .HasForeignKey("FkRole")
+                        .IsRequired()
                         .HasConstraintName("FK_role");
 
+                    b.HasOne("PIS_PetRegistry.Models.Shelter", "FkShelterNavigation")
+                        .WithMany("Users")
+                        .HasForeignKey("FkShelter")
+                        .HasConstraintName("FK_shelter");
+
+                    b.Navigation("FkLocationNavigation");
+
                     b.Navigation("FkRoleNavigation");
+
+                    b.Navigation("FkShelterNavigation");
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.Vaccination", b =>
@@ -645,9 +766,17 @@ namespace PISPetRegistry.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_user");
 
+                    b.HasOne("PIS_PetRegistry.Models.Vaccine", "FkVaccineNavigation")
+                        .WithMany("Vaccinations")
+                        .HasForeignKey("FkVaccine")
+                        .IsRequired()
+                        .HasConstraintName("FK_vaccine");
+
                     b.Navigation("FkAnimalNavigation");
 
                     b.Navigation("FkUserNavigation");
+
+                    b.Navigation("FkVaccineNavigation");
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.VeterinaryAppointmentAnimal", b =>
@@ -671,7 +800,9 @@ namespace PISPetRegistry.Migrations
 
             modelBuilder.Entity("PIS_PetRegistry.Models.AnimalCard", b =>
                 {
-                    b.Navigation("TreatmentParasitesAnimals");
+                    b.Navigation("Contracts");
+
+                    b.Navigation("ParasiteTreatments");
 
                     b.Navigation("Vaccinations");
 
@@ -692,7 +823,7 @@ namespace PISPetRegistry.Migrations
 
             modelBuilder.Entity("PIS_PetRegistry.Models.LegalPerson", b =>
                 {
-                    b.Navigation("AnimalCards");
+                    b.Navigation("Contracts");
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.Location", b =>
@@ -702,16 +833,23 @@ namespace PISPetRegistry.Migrations
                     b.Navigation("PhysicalPeople");
 
                     b.Navigation("Shelters");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.LogType", b =>
                 {
-                    b.Navigation("Logs");
+                    b.Navigation("AmimalCardLogs");
+                });
+
+            modelBuilder.Entity("PIS_PetRegistry.Models.ParasiteTreatmentMedication", b =>
+                {
+                    b.Navigation("ParasiteTreatments");
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.PhysicalPerson", b =>
                 {
-                    b.Navigation("AnimalCards");
+                    b.Navigation("Contracts");
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.Role", b =>
@@ -721,20 +859,27 @@ namespace PISPetRegistry.Migrations
 
             modelBuilder.Entity("PIS_PetRegistry.Models.Shelter", b =>
                 {
-                    b.Navigation("AnimalCard");
+                    b.Navigation("AnimalCards");
 
-                    b.Navigation("Logs");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.User", b =>
                 {
-                    b.Navigation("Logs");
+                    b.Navigation("AmimalCardLogs");
 
-                    b.Navigation("TreatmentParasitesAnimals");
+                    b.Navigation("Contracts");
+
+                    b.Navigation("ParasiteTreatments");
 
                     b.Navigation("Vaccinations");
 
                     b.Navigation("VeterinaryAppointmentAnimals");
+                });
+
+            modelBuilder.Entity("PIS_PetRegistry.Models.Vaccine", b =>
+                {
+                    b.Navigation("Vaccinations");
                 });
 #pragma warning restore 612, 618
         }
