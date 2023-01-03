@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PIS_PetRegistry.Models;
@@ -11,9 +12,11 @@ using PIS_PetRegistry.Models;
 namespace PISPetRegistry.Migrations
 {
     [DbContext(typeof(RegistryPetsContext))]
-    partial class RegistryPetsContextModelSnapshot : ModelSnapshot
+    [Migration("20230103151916_SeedData")]
+    partial class SeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -625,7 +628,7 @@ namespace PISPetRegistry.Migrations
                             FkShelter = 1,
                             Login = "mikhail1",
                             Name = "Михайлов Михаил Иванович",
-                            Password = "c508b76b382725a100c21e8a4d452619"
+                            Password = "b5f44ae34083deccec95df26067e02a0"
                         },
                         new
                         {
@@ -635,7 +638,7 @@ namespace PISPetRegistry.Migrations
                             FkShelter = 1,
                             Login = "elena2",
                             Name = "Михайлова Елена Ивановна",
-                            Password = "35b4a09a4aa3bede9a833923d24d3921"
+                            Password = "f7373d2b16a4a61a2ee9e9aa9a4b2bee"
                         },
                         new
                         {
@@ -644,7 +647,7 @@ namespace PISPetRegistry.Migrations
                             FkRole = 3,
                             Login = "petr3",
                             Name = "Петров Петр Петрович",
-                            Password = "00354d7169c4399322be98a27f553da3"
+                            Password = "b5f44ae34083deccec95df26067e02a0"
                         },
                         new
                         {
@@ -654,7 +657,7 @@ namespace PISPetRegistry.Migrations
                             FkRole = 4,
                             Login = "gena4",
                             Name = "Сидоров Геннадий Иванович",
-                            Password = "0228a06e78a77ad502f703e3fa9ecae1"
+                            Password = "b5f44ae34083deccec95df26067e02a0"
                         },
                         new
                         {
@@ -664,7 +667,7 @@ namespace PISPetRegistry.Migrations
                             FkShelter = 1,
                             Login = "ivan5",
                             Name = "Иванов Иван Иванович",
-                            Password = "8e5aa3866bb85289df35552106de5b21"
+                            Password = "b5f44ae34083deccec95df26067e02a0"
                         });
                 });
 
