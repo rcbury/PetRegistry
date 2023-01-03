@@ -8,8 +8,9 @@ using PIS_PetRegistry.DTO;
 
 namespace PIS_PetRegistry.Backend
 {
-    internal static class Authorization
+    public static class Authorization
     {
         public static UserDTO? AuthorizedUserDto { get; set; }
+
     }
 }

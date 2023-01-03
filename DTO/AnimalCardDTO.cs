@@ -12,6 +12,7 @@ namespace PIS_PetRegistry.DTO
         public bool IsBoy { get; set; }
         public string Name { get; set; } = null!;
         public string Photo { get; set; } = null!;
+        public int? YearOfBirth { get; set; } = null;
         public int FkCategory { get; set; }
         public int FkShelter { get; set; }
         public string ChipId { get; set; } = null!;

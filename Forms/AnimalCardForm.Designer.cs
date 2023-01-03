@@ -31,15 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnimalCardForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.animalSexComboBox = new System.Windows.Forms.ComboBox();
+            this.animalNameTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.animalChipIdTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.animalBirthYearTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.animalCategoryComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -57,6 +57,9 @@
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.button5 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.button7 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.textBox17 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -85,10 +88,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.saveButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -102,10 +102,10 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -122,32 +122,40 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.textBox5);
+            this.tabPage1.Controls.Add(this.animalSexComboBox);
+            this.tabPage1.Controls.Add(this.animalNameTextBox);
             this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.textBox4);
+            this.tabPage1.Controls.Add(this.animalChipIdTextBox);
             this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.textBox2);
+            this.tabPage1.Controls.Add(this.animalBirthYearTextBox);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.comboBox1);
-            this.tabPage1.Controls.Add(this.textBox1);
+            this.tabPage1.Controls.Add(this.animalCategoryComboBox);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.pictureBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(792, 445);
+            this.tabPage1.Size = new System.Drawing.Size(792, 534);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основная информация";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // textBox5
+            // animalSexComboBox
             // 
-            this.textBox5.Location = new System.Drawing.Point(341, 88);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(162, 23);
-            this.textBox5.TabIndex = 13;
+            this.animalSexComboBox.FormattingEnabled = true;
+            this.animalSexComboBox.Location = new System.Drawing.Point(169, 33);
+            this.animalSexComboBox.Name = "animalSexComboBox";
+            this.animalSexComboBox.Size = new System.Drawing.Size(93, 23);
+            this.animalSexComboBox.TabIndex = 14;
+            // 
+            // animalNameTextBox
+            // 
+            this.animalNameTextBox.Location = new System.Drawing.Point(341, 88);
+            this.animalNameTextBox.Name = "animalNameTextBox";
+            this.animalNameTextBox.Size = new System.Drawing.Size(162, 23);
+            this.animalNameTextBox.TabIndex = 13;
             // 
             // label6
             // 
@@ -158,28 +166,29 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "Кличка животного";
             // 
-            // textBox4
+            // animalChipIdTextBox
             // 
-            this.textBox4.Location = new System.Drawing.Point(8, 88);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(311, 23);
-            this.textBox4.TabIndex = 11;
+            this.animalChipIdTextBox.Location = new System.Drawing.Point(8, 88);
+            this.animalChipIdTextBox.Name = "animalChipIdTextBox";
+            this.animalChipIdTextBox.Size = new System.Drawing.Size(311, 23);
+            this.animalChipIdTextBox.TabIndex = 11;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(8, 70);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(311, 15);
+            this.label5.Size = new System.Drawing.Size(155, 15);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Номер электронного чипа(идентификационная метка)";
+            this.label5.Text = "Номер электронного чипа";
             // 
-            // textBox2
+            // animalBirthYearTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(311, 35);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(140, 23);
-            this.textBox2.TabIndex = 7;
+            this.animalBirthYearTextBox.Location = new System.Drawing.Point(311, 35);
+            this.animalBirthYearTextBox.Name = "animalBirthYearTextBox";
+            this.animalBirthYearTextBox.Size = new System.Drawing.Size(104, 23);
+            this.animalBirthYearTextBox.TabIndex = 7;
+            this.animalBirthYearTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.animalBirthYearTextBox_KeyPress);
             // 
             // label3
             // 
@@ -200,20 +209,13 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Категория животного";
             // 
-            // comboBox1
+            // animalCategoryComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(8, 33);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 23);
-            this.comboBox1.TabIndex = 4;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(169, 33);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 23);
-            this.textBox1.TabIndex = 3;
+            this.animalCategoryComboBox.FormattingEnabled = true;
+            this.animalCategoryComboBox.Location = new System.Drawing.Point(8, 33);
+            this.animalCategoryComboBox.Name = "animalCategoryComboBox";
+            this.animalCategoryComboBox.Size = new System.Drawing.Size(121, 23);
+            this.animalCategoryComboBox.TabIndex = 4;
             // 
             // label1
             // 
@@ -251,7 +253,7 @@
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(792, 445);
+            this.tabPage2.Size = new System.Drawing.Size(792, 534);
             this.tabPage2.TabIndex = 4;
             this.tabPage2.Text = "Ветеринарные мероприятия";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -355,7 +357,7 @@
             this.tabPage3.Controls.Add(this.button5);
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(792, 445);
+            this.tabPage3.Size = new System.Drawing.Size(792, 534);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Ветеринарные назначения";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -367,13 +369,13 @@
             this.dataGridView4.Location = new System.Drawing.Point(0, 0);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.RowTemplate.Height = 25;
-            this.dataGridView4.Size = new System.Drawing.Size(792, 420);
+            this.dataGridView4.Size = new System.Drawing.Size(792, 509);
             this.dataGridView4.TabIndex = 3;
             // 
             // button5
             // 
             this.button5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button5.Location = new System.Drawing.Point(0, 420);
+            this.button5.Location = new System.Drawing.Point(0, 509);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(792, 25);
             this.button5.TabIndex = 2;
@@ -392,6 +394,36 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Владелец";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.checkBox2);
+            this.groupBox7.Controls.Add(this.button7);
+            this.groupBox7.Location = new System.Drawing.Point(3, 400);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(169, 82);
+            this.groupBox7.TabIndex = 12;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Договор";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(12, 51);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(129, 19);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "Договор подписан";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(10, 22);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(123, 23);
+            this.button7.TabIndex = 0;
+            this.button7.Text = "Выдать договор";
+            this.button7.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
@@ -649,53 +681,24 @@
             this.checkBox1.Text = "Юридическое лицо";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // saveButton
             // 
-            this.button6.Location = new System.Drawing.Point(708, 568);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 24;
-            this.button6.Text = "Сохранить";
-            this.button6.UseVisualStyleBackColor = true;
+            this.saveButton.Location = new System.Drawing.Point(708, 568);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.TabIndex = 24;
+            this.saveButton.Text = "Сохранить";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.checkBox2);
-            this.groupBox7.Controls.Add(this.button7);
-            this.groupBox7.Location = new System.Drawing.Point(3, 400);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(169, 82);
-            this.groupBox7.TabIndex = 12;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Договор";
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(10, 22);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(123, 23);
-            this.button7.TabIndex = 0;
-            this.button7.Text = "Выдать договор";
-            this.button7.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(12, 51);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(129, 19);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Договор подписан";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // Card
+            // AnimalCardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 603);
-            this.Controls.Add(this.button6);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.tabControl1);
-            this.Name = "Card";
+            this.Name = "AnimalCardForm";
             this.Text = "Учетная карточка";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -711,14 +714,14 @@
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.tabPage4.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -727,17 +730,16 @@
 
         private TabControl tabControl1;
         private TabPage tabPage1;
-        private TextBox textBox1;
         private Label label1;
         private Button button1;
         private PictureBox pictureBox1;
-        private TextBox textBox2;
+        private TextBox animalBirthYearTextBox;
         private Label label3;
         private Label label2;
-        private ComboBox comboBox1;
-        private TextBox textBox5;
+        private ComboBox animalCategoryComboBox;
+        private TextBox animalNameTextBox;
         private Label label6;
-        private TextBox textBox4;
+        private TextBox animalChipIdTextBox;
         private Label label5;
         private TabPage tabPage2;
         private GroupBox groupBox3;
@@ -784,6 +786,7 @@
         private GroupBox groupBox7;
         private CheckBox checkBox2;
         private Button button7;
-        private Button button6;
+        private Button saveButton;
+        private ComboBox animalSexComboBox;
     }
 }
