@@ -166,7 +166,7 @@ namespace PIS_PetRegistry.Backend
                 {
                     Id = 1,
                     Login = "mikhail1",
-                    Password = "b5f44ae34083deccec95df26067e02a0",
+                    Password = "c508b76b382725a100c21e8a4d452619",
                     Name= "Михайлов Михаил Иванович",
                     Email = "mikhailivanovic@gmail.com",
                     FkRole = 1,
@@ -176,7 +176,7 @@ namespace PIS_PetRegistry.Backend
                 {
                     Id = 2,
                     Login = "elena2",
-                    Password = "f7373d2b16a4a61a2ee9e9aa9a4b2bee",
+                    Password = "35b4a09a4aa3bede9a833923d24d3921",
                     Name = "Михайлова Елена Ивановна",
                     Email = "lenaivanova@gmail.com",
                     FkRole = 2,
@@ -186,7 +186,7 @@ namespace PIS_PetRegistry.Backend
                 {
                     Id = 3,
                     Login = "petr3",
-                    Password = "b5f44ae34083deccec95df26067e02a0",
+                    Password = "00354d7169c4399322be98a27f553da3",
                     Name = "Петров Петр Петрович",
                     Email = "petrov@gmail.com",
                     FkRole = 3
@@ -195,7 +195,7 @@ namespace PIS_PetRegistry.Backend
                 {
                     Id = 4,
                     Login = "gena4",
-                    Password = "b5f44ae34083deccec95df26067e02a0",
+                    Password = "0228a06e78a77ad502f703e3fa9ecae1",
                     Name = "Сидоров Геннадий Иванович",
                     Email = "sidorov@gmail.com",
                     FkRole = 4,
@@ -205,7 +205,7 @@ namespace PIS_PetRegistry.Backend
                 {
                     Id = 5,
                     Login = "ivan5",
-                    Password = "b5f44ae34083deccec95df26067e02a0",
+                    Password = "8e5aa3866bb85289df35552106de5b21",
                     Name = "Иванов Иван Иванович",
                     Email = "ivanov@gmail.com",
                     FkRole = 5,
