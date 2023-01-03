@@ -3,19 +3,21 @@ using System.Collections.Generic;
 
 namespace PIS_PetRegistry.Models;
 
-public partial class TreatmentParasitesAnimal
+public partial class ParasiteTreatment
 {
     public int Id { get; set; }
-
-    public DateOnly? DateEvent { get; set; }
-
-    public string? NameMedicines { get; set; }
 
     public int FkAnimal { get; set; }
 
     public int FkUser { get; set; }
 
+    public int FkMedication { get; set; }
+
+    public DateOnly Date { get; set; }
+
     public virtual AnimalCard FkAnimalNavigation { get; set; } = null!;
+
+    public virtual ParasiteTreatmentMedication FkMedicationNavigation { get; set; } = null!;
 
     public virtual User FkUserNavigation { get; set; } = null!;
 }

@@ -15,40 +15,72 @@ public partial class RegistryPetsContext : DbContext
     {
     }
 
+    public virtual DbSet<AmimalCardLog> AmimalCardLogs { get; set; }
+
     public virtual DbSet<AnimalCard> AnimalCards { get; set; }
 
     public virtual DbSet<AnimalCategory> AnimalCategories { get; set; }
 
+    public virtual DbSet<Contract> Contracts { get; set; }
+
     public virtual DbSet<Country> Countries { get; set; }
 
-    public virtual DbSet<LegalPerson> LegalPersons { get; set; }
+    public virtual DbSet<LegalPerson> LegalPeople { get; set; }
 
     public virtual DbSet<Location> Locations { get; set; }
 
-    public virtual DbSet<Log> Logs { get; set; }
-
     public virtual DbSet<LogType> LogTypes { get; set; }
 
-    public virtual DbSet<PhysicalPerson> PhysicalPersons { get; set; }
+    public virtual DbSet<ParasiteTreatment> ParasiteTreatments { get; set; }
+
+    public virtual DbSet<ParasiteTreatmentMedication> ParasiteTreatmentMedications { get; set; }
+
+    public virtual DbSet<PhysicalPerson> PhysicalPeople { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Shelter> Shelters { get; set; }
 
-    public virtual DbSet<TreatmentParasitesAnimal> TreatmentParasitesAnimals { get; set; }
-
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<Vaccination> Vaccinations { get; set; }
 
+    public virtual DbSet<Vaccine> Vaccines { get; set; }
+
     public virtual DbSet<VeterinaryAppointmentAnimal> VeterinaryAppointmentAnimals { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseNpgsql("Host=localhost;Database=registry_pets;Username=postgres;Password=admin");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AmimalCardLog>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("logs_pkey");
+
+            entity.ToTable("amimal_card_log");
+
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
+            entity.Property(e => e.CreateTime).HasColumnName("create_time");
+            entity.Property(e => e.Description)
+                .HasColumnType("json")
+                .HasColumnName("description");
+            entity.Property(e => e.FkLogsType).HasColumnName("FK_logs_type");
+            entity.Property(e => e.FkUser).HasColumnName("FK_user");
+
+            entity.HasOne(d => d.FkLogsTypeNavigation).WithMany(p => p.AmimalCardLogs)
+                .HasForeignKey(d => d.FkLogsType)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_logs_type");
+
+            entity.HasOne(d => d.FkUserNavigation).WithMany(p => p.AmimalCardLogs)
+                .HasForeignKey(d => d.FkUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_user");
+        });
+
         modelBuilder.Entity<AnimalCard>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("animals_pkey");
@@ -56,40 +88,28 @@ public partial class RegistryPetsContext : DbContext
             entity.ToTable("animal_card");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.ChipId).HasColumnName("chip_id");
+            entity.Property(e => e.ChipId)
+                .HasColumnType("character varying")
+                .HasColumnName("chip_id");
             entity.Property(e => e.FkCategory).HasColumnName("FK_category");
-            entity.Property(e => e.FkLegalPerson).HasColumnName("FK_legal_person");
-            entity.Property(e => e.FkPhysicalPerson).HasColumnName("FK_physical_person");
             entity.Property(e => e.FkShelter).HasColumnName("FK_shelter");
-            entity.Property(e => e.IsContract).HasColumnName("is_contract");
+            entity.Property(e => e.IsBoy).HasColumnName("is_boy");
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
-            entity.Property(e => e.NameTrapingService)
-                .HasColumnType("character varying")
-                .HasColumnName("name_traping_service");
             entity.Property(e => e.Photo)
                 .HasColumnType("character varying")
                 .HasColumnName("photo");
-            entity.Property(e => e.Sex).HasColumnName("sex");
 
             entity.HasOne(d => d.FkCategoryNavigation).WithMany(p => p.AnimalCards)
                 .HasForeignKey(d => d.FkCategory)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_category");
 
-            entity.HasOne(d => d.FkLegalPersonNavigation).WithMany(p => p.AnimalCards)
-                .HasForeignKey(d => d.FkLegalPerson)
-                .HasConstraintName("FK_legal_person");
-
-            entity.HasOne(d => d.FkPhysicalPersonNavigation).WithMany(p => p.AnimalCards)
-                .HasForeignKey(d => d.FkPhysicalPerson)
-                .HasConstraintName("FK_physical_person");
-
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.AnimalCard)
-                .HasForeignKey<AnimalCard>(d => d.Id)
+            entity.HasOne(d => d.FkShelterNavigation).WithMany(p => p.AnimalCards)
+                .HasForeignKey(d => d.FkShelter)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_shelter");
         });
@@ -106,6 +126,43 @@ public partial class RegistryPetsContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<Contract>(entity =>
+        {
+            entity.HasKey(e => new { e.Date, e.FkAnimalCard, e.FkUser, e.FkPhysicalPerson, e.Id }).HasName("contract_pkey");
+
+            entity.ToTable("contract");
+
+            entity.Property(e => e.Date).HasColumnName("date");
+            entity.Property(e => e.FkAnimalCard).HasColumnName("FK_animal_card");
+            entity.Property(e => e.FkUser).HasColumnName("FK_user");
+            entity.Property(e => e.FkPhysicalPerson).HasColumnName("FK_physical_person");
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
+            entity.Property(e => e.FkLegalPerson).HasColumnName("FK_legal_person");
+            entity.Property(e => e.Number).HasColumnName("number");
+
+            entity.HasOne(d => d.FkAnimalCardNavigation).WithMany(p => p.Contracts)
+                .HasForeignKey(d => d.FkAnimalCard)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_animal_card");
+
+            entity.HasOne(d => d.FkLegalPersonNavigation).WithMany(p => p.Contracts)
+                .HasForeignKey(d => d.FkLegalPerson)
+                .HasConstraintName("FK_legal_person");
+
+            entity.HasOne(d => d.FkPhysicalPersonNavigation).WithMany(p => p.Contracts)
+                .HasForeignKey(d => d.FkPhysicalPerson)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_physical_person");
+
+            entity.HasOne(d => d.FkUserNavigation).WithMany(p => p.Contracts)
+                .HasForeignKey(d => d.FkUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_user");
         });
 
         modelBuilder.Entity<Country>(entity =>
@@ -126,7 +183,7 @@ public partial class RegistryPetsContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("legal_person_pkey");
 
-            entity.ToTable("legal_persons");
+            entity.ToTable("legal_person");
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
@@ -154,10 +211,12 @@ public partial class RegistryPetsContext : DbContext
 
             entity.HasOne(d => d.FkCountryNavigation).WithMany(p => p.LegalPeople)
                 .HasForeignKey(d => d.FkCountry)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_country");
 
             entity.HasOne(d => d.FkLocalityNavigation).WithMany(p => p.LegalPeople)
                 .HasForeignKey(d => d.FkLocality)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_locality");
         });
 
@@ -165,7 +224,7 @@ public partial class RegistryPetsContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("locality_pkey");
 
-            entity.ToTable("locations");
+            entity.ToTable("location");
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
@@ -173,39 +232,6 @@ public partial class RegistryPetsContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
-        });
-
-        modelBuilder.Entity<Log>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("logs_pkey");
-
-            entity.ToTable("logs");
-
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
-            entity.Property(e => e.CreateTime).HasColumnName("create_time");
-            entity.Property(e => e.Data)
-                .HasColumnType("json")
-                .HasColumnName("data");
-            entity.Property(e => e.FkLogsType).HasColumnName("FK_logs_type");
-            entity.Property(e => e.FkShelter).HasColumnName("FK_shelter");
-            entity.Property(e => e.FkUser).HasColumnName("FK_user");
-
-            entity.HasOne(d => d.FkLogsTypeNavigation).WithMany(p => p.Logs)
-                .HasForeignKey(d => d.FkLogsType)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_logs_type");
-
-            entity.HasOne(d => d.FkShelterNavigation).WithMany(p => p.Logs)
-                .HasForeignKey(d => d.FkShelter)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_shelter");
-
-            entity.HasOne(d => d.FkUserNavigation).WithMany(p => p.Logs)
-                .HasForeignKey(d => d.FkUser)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_user");
         });
 
         modelBuilder.Entity<LogType>(entity =>
@@ -222,11 +248,56 @@ public partial class RegistryPetsContext : DbContext
                 .HasColumnName("name");
         });
 
+        modelBuilder.Entity<ParasiteTreatment>(entity =>
+        {
+            entity.HasKey(e => new { e.FkAnimal, e.FkUser, e.FkMedication, e.Date }).HasName("parasite_treatment_pkey");
+
+            entity.ToTable("parasite_treatment");
+
+            entity.Property(e => e.FkAnimal).HasColumnName("FK_animal");
+            entity.Property(e => e.FkUser).HasColumnName("FK_user");
+            entity.Property(e => e.FkMedication).HasColumnName("FK_medication");
+            entity.Property(e => e.Date).HasColumnName("date");
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
+
+            entity.HasOne(d => d.FkAnimalNavigation).WithMany(p => p.ParasiteTreatments)
+                .HasForeignKey(d => d.FkAnimal)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_animal");
+
+            entity.HasOne(d => d.FkMedicationNavigation).WithMany(p => p.ParasiteTreatments)
+                .HasForeignKey(d => d.FkMedication)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_medication");
+
+            entity.HasOne(d => d.FkUserNavigation).WithMany(p => p.ParasiteTreatments)
+                .HasForeignKey(d => d.FkUser)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_user");
+        });
+
+        modelBuilder.Entity<ParasiteTreatmentMedication>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("parasite_treatment_medication_pkey");
+
+            entity.ToTable("parasite_treatment_medication");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasColumnType("character varying")
+                .HasColumnName("name");
+        });
+
         modelBuilder.Entity<PhysicalPerson>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("physical_person_pkey");
 
-            entity.ToTable("physical_persons");
+            entity.ToTable("physical_person");
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
@@ -248,10 +319,12 @@ public partial class RegistryPetsContext : DbContext
 
             entity.HasOne(d => d.FkCountryNavigation).WithMany(p => p.PhysicalPeople)
                 .HasForeignKey(d => d.FkCountry)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_country");
 
             entity.HasOne(d => d.FkLocalityNavigation).WithMany(p => p.PhysicalPeople)
                 .HasForeignKey(d => d.FkLocality)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_locality");
         });
 
@@ -259,7 +332,7 @@ public partial class RegistryPetsContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("role_pkey");
 
-            entity.ToTable("roles");
+            entity.ToTable("role");
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
@@ -273,7 +346,7 @@ public partial class RegistryPetsContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("shelter_pkey");
 
-            entity.ToTable("shelters");
+            entity.ToTable("shelter");
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
@@ -281,48 +354,22 @@ public partial class RegistryPetsContext : DbContext
             entity.Property(e => e.Address)
                 .HasColumnType("character varying")
                 .HasColumnName("address");
-            entity.Property(e => e.FkLocality).HasColumnName("FK_locality");
+            entity.Property(e => e.FkLocation).HasColumnName("FK_location");
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
 
-            entity.HasOne(d => d.FkLocalityNavigation).WithMany(p => p.Shelters)
-                .HasForeignKey(d => d.FkLocality)
+            entity.HasOne(d => d.FkLocationNavigation).WithMany(p => p.Shelters)
+                .HasForeignKey(d => d.FkLocation)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_locality");
-        });
-
-        modelBuilder.Entity<TreatmentParasitesAnimal>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("treatment_parasites_animal_pkey");
-
-            entity.ToTable("treatment_parasites_animal");
-
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
-            entity.Property(e => e.DateEvent).HasColumnName("date_event");
-            entity.Property(e => e.FkAnimal).HasColumnName("FK_animal");
-            entity.Property(e => e.FkUser).HasColumnName("FK_user");
-            entity.Property(e => e.NameMedicines)
-                .HasColumnType("character varying")
-                .HasColumnName("name_medicines");
-
-            entity.HasOne(d => d.FkAnimalNavigation).WithMany(p => p.TreatmentParasitesAnimals)
-                .HasForeignKey(d => d.FkAnimal)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_animal");
-
-            entity.HasOne(d => d.FkUserNavigation).WithMany(p => p.TreatmentParasitesAnimals)
-                .HasForeignKey(d => d.FkUser)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_user");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("user_pkey");
 
-            entity.ToTable("users");
+            entity.ToTable("user");
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
@@ -330,7 +377,9 @@ public partial class RegistryPetsContext : DbContext
             entity.Property(e => e.Email)
                 .HasColumnType("character varying")
                 .HasColumnName("email");
+            entity.Property(e => e.FkLocation).HasColumnName("FK_location");
             entity.Property(e => e.FkRole).HasColumnName("FK_role");
+            entity.Property(e => e.FkShelter).HasColumnName("FK_shelter");
             entity.Property(e => e.Login)
                 .HasColumnType("character varying")
                 .HasColumnName("login");
@@ -341,28 +390,30 @@ public partial class RegistryPetsContext : DbContext
                 .HasColumnType("character varying")
                 .HasColumnName("password");
 
+            entity.HasOne(d => d.FkLocationNavigation).WithMany(p => p.Users)
+                .HasForeignKey(d => d.FkLocation)
+                .HasConstraintName("FK_location");
+
             entity.HasOne(d => d.FkRoleNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.FkRole)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_role");
+
+            entity.HasOne(d => d.FkShelterNavigation).WithMany(p => p.Users)
+                .HasForeignKey(d => d.FkShelter)
+                .HasConstraintName("FK_shelter");
         });
 
         modelBuilder.Entity<Vaccination>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("vaccinations_pkey");
+            entity.HasKey(e => new { e.DateEnd, e.FkAnimal, e.FkUser, e.FkVaccine }).HasName("vaccination_pkey");
 
-            entity.ToTable("vaccinations");
+            entity.ToTable("vaccination");
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
-            entity.Property(e => e.DateEndEvent).HasColumnName("date_end_event");
-            entity.Property(e => e.DateEvent).HasColumnName("date_event");
+            entity.Property(e => e.DateEnd).HasColumnName("date_end");
             entity.Property(e => e.FkAnimal).HasColumnName("FK_animal");
             entity.Property(e => e.FkUser).HasColumnName("FK_user");
-            entity.Property(e => e.Name)
-                .HasColumnType("character varying")
-                .HasColumnName("name");
-            entity.Property(e => e.NumberSeries).HasColumnName("number_series");
+            entity.Property(e => e.FkVaccine).HasColumnName("FK_vaccine");
 
             entity.HasOne(d => d.FkAnimalNavigation).WithMany(p => p.Vaccinations)
                 .HasForeignKey(d => d.FkAnimal)
@@ -373,20 +424,43 @@ public partial class RegistryPetsContext : DbContext
                 .HasForeignKey(d => d.FkUser)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_user");
+
+            entity.HasOne(d => d.FkVaccineNavigation).WithMany(p => p.Vaccinations)
+                .HasForeignKey(d => d.FkVaccine)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_vaccine");
+        });
+
+        modelBuilder.Entity<Vaccine>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("vaccine_pkey");
+
+            entity.ToTable("vaccine");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasColumnType("character varying")
+                .HasColumnName("name");
+            entity.Property(e => e.Number).HasColumnName("number");
+            entity.Property(e => e.ValidityPeriod).HasColumnName("validity_period");
         });
 
         modelBuilder.Entity<VeterinaryAppointmentAnimal>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("veterinary_appointment_animal_pkey");
+            entity.HasKey(e => new { e.Date, e.FkAnimal, e.FkUser }).HasName("veterinary_appointment_animal_pkey");
 
             entity.ToTable("veterinary_appointment_animal");
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
-            entity.Property(e => e.DateEvent).HasColumnName("date_event");
+            entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.FkAnimal).HasColumnName("FK_animal");
             entity.Property(e => e.FkUser).HasColumnName("FK_user");
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
+            entity.Property(e => e.IsCompleted).HasColumnName("is_completed");
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");

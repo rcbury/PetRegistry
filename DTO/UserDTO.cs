@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace PIS_PetRegistry.DTO
 {
-    internal class UserDTO
+    public class UserDTO
     {
         public int Id { get; set; } = 0;
         public string Login { get; set; } = "";
         public string Name { get; set; } = "";
-        public int ShelterId { get; set; }
+        public int? ShelterId { get; set; }
         public int RoleId { get; set; }
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace PIS_PetRegistry
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            UserDTO? userDTO = null;
+            UserDTO? userDTO;
             
             try
             {
@@ -31,6 +31,7 @@ namespace PIS_PetRegistry
             }
 
             AnimalRegistryForm form = new AnimalRegistryForm();
+
             Hide();
             form.ShowDialog();
             Show();

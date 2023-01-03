@@ -12,29 +12,42 @@ namespace PIS_PetRegistry.Controllers
 {
     internal static class AuthorizationController
     {
-        public static UserDTO Authorize(string login, string password)
+        public static UserDTO? Authorize(string login, string password)
         {
             var dbContext = new RegistryPetsContext();
-            
+
             MD5Hash mD5Hash = new MD5Hash();
             string hashedPassword = mD5Hash.HashPassword(password);
 
-            var user = dbContext.Users.Where(x => x.Password.Equals(hashedPassword) && x.Login.Equals(login)).FirstOrDefault();
-            
+            var user = dbContext.Users
+                .Where(x => x.Password.ToLower().Equals(hashedPassword.ToLower()) &&
+                    x.Login.ToLower().Equals(login.ToLower()))
+                .FirstOrDefault();
+
             if (user == null)
             {
                 return null;
             }
             else
             {
-                var userDTO = new UserDTO();
-                userDTO.Login = user.Login;
-                userDTO.Id = user.Id;
-                //TODO: Добавить поля после обновления моделей
+                var userDTO = new UserDTO()
+                {
+                    Login = user.Login,
+                    Id = user.Id,
+                    ShelterId = user.FkShelter,
+                    RoleId = user.FkRole,
+                    LocationId = user.FkLocation,
+                };
+                
                 Authorization.AuthorizedUserDto = userDTO;
                 //TODO: Global entity framework filter for roles and locations
                 return userDTO;
             }
+        }
+
+        public static UserDTO GetAuthorizedUser()
+        {
+            return Authorization.AuthorizedUserDto;
         }
     }
 }
