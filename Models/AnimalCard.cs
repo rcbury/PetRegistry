@@ -13,6 +13,8 @@ public partial class AnimalCard
 
     public string Photo { get; set; } = null!;
 
+    public int? YearOfBirth { get; set; }
+
     public int FkCategory { get; set; }
 
     public int FkShelter { get; set; }
