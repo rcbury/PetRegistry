@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.DTO;
+﻿using PIS_PetRegistry.Controllers;
+using PIS_PetRegistry.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,9 +14,15 @@ namespace PIS_PetRegistry
 {
     public partial class AnimalRegistryForm : Form
     {
-        public AnimalRegistryForm(List<AnimalCardDTO> listAnimalCards = null!)
+        private List<AnimalCardDTO> _listAnimalCards;
+        private List<AnimalCategoryDTO> _animalCategories;
+        public AnimalRegistryForm(UserDTO user = null!)
         {
             InitializeComponent();
+            _animalCategories = AnimalCardController.GetAnimalCategories();
+            comboBox2.DataSource = _animalCategories;
+            comboBox2.DisplayMember = "Name";
+            comboBox2.ValueMember = "Id";
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -44,6 +51,11 @@ namespace PIS_PetRegistry
         {
             AnimalCardForm form = new AnimalCardForm();
             form.ShowDialog();
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
