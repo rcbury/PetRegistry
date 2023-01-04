@@ -11,7 +11,7 @@ public partial class AnimalCard
 
     public string Name { get; set; } = null!;
 
-    public string Photo { get; set; } = null!;
+    public string? Photo { get; set; }
 
     public int? YearOfBirth { get; set; }
 

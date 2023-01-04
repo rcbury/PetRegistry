@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PIS_PetRegistry.Models;
@@ -11,9 +12,11 @@ using PIS_PetRegistry.Models;
 namespace PISPetRegistry.Migrations
 {
     [DbContext(typeof(RegistryPetsContext))]
-    partial class RegistryPetsContextModelSnapshot : ModelSnapshot
+    [Migration("20230103190034_UpdateVaccination")]
+    partial class UpdateVaccination
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,6 +93,7 @@ namespace PISPetRegistry.Migrations
                         .HasColumnName("name");
 
                     b.Property<string>("Photo")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("photo");
 

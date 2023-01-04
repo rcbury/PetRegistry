@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using PIS_PetRegistry.Backend;
 
 namespace PIS_PetRegistry.Models;
 
@@ -477,6 +478,8 @@ public partial class RegistryPetsContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_user");
         });
+
+        modelBuilder.Seed();
 
         OnModelCreatingPartial(modelBuilder);
     }
