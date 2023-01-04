@@ -69,12 +69,27 @@ namespace PIS_PetRegistry
             locationCol.ValueMember = "Id";
             locationCol.DisplayMember = "Name";
             locationCol.DataPropertyName = "FkLocality";
+            var animalCountCol = new DataGridViewTextBoxColumn();
+            animalCountCol.Name = "AnimalCount";
+            animalCountCol.HeaderText = "Кол-во животных";
+            animalCountCol.DataPropertyName = "AnimalCount";
+            var catCountCol = new DataGridViewTextBoxColumn();
+            catCountCol.Name = "CatCount";
+            catCountCol.HeaderText = "Кол-во кошек/котов";
+            catCountCol.DataPropertyName = "CatCount";
+            var dogCountCol = new DataGridViewTextBoxColumn();
+            dogCountCol.Name = "DogCount";
+            dogCountCol.HeaderText = "Кол-во собак/псов";
+            dogCountCol.DataPropertyName = "DogCount";
             dataGridView1.Columns.Add(phoneCol);
             dataGridView1.Columns.Add(nameCol);
             dataGridView1.Columns.Add(addressCol);
             dataGridView1.Columns.Add(emailCol);
             dataGridView1.Columns.Add(countryCol);
             dataGridView1.Columns.Add(locationCol);
+            dataGridView1.Columns.Add(animalCountCol);
+            dataGridView1.Columns.Add(catCountCol);
+            dataGridView1.Columns.Add(dogCountCol);
             dataGridView2.AutoGenerateColumns = false;
             dataGridView2.DataSource = listLegalPersonDTOs;
             var legalAddressCol = new DataGridViewTextBoxColumn();
@@ -115,6 +130,18 @@ namespace PIS_PetRegistry
             legalLocationCol.ValueMember = "Id";
             legalLocationCol.DisplayMember = "Name";
             legalLocationCol.DataPropertyName = "FkLocality";
+            var legalAnimalCountCol = new DataGridViewTextBoxColumn();
+            legalAnimalCountCol.Name = "AnimalCount";
+            legalAnimalCountCol.HeaderText = "Кол-во животных";
+            legalAnimalCountCol.DataPropertyName = "AnimalCount";
+            var legalCatCountCol = new DataGridViewTextBoxColumn();
+            legalCatCountCol.Name = "CatCount";
+            legalCatCountCol.HeaderText = "Кол-во кошек/котов";
+            legalCatCountCol.DataPropertyName = "CatCount";
+            var legalDogCountCol = new DataGridViewTextBoxColumn();
+            legalDogCountCol.Name = "DogCount";
+            legalDogCountCol.HeaderText = "Кол-во собак/псов";
+            legalDogCountCol.DataPropertyName = "DogCount";
             dataGridView2.Columns.Add(innCol);
             dataGridView2.Columns.Add(kppCol);
             dataGridView2.Columns.Add(legalNameCol);
@@ -123,6 +150,9 @@ namespace PIS_PetRegistry
             dataGridView2.Columns.Add(legalPhoneCol);
             dataGridView2.Columns.Add(legalCountryCol);
             dataGridView2.Columns.Add(legalLocationCol);
+            dataGridView2.Columns.Add(legalAnimalCountCol);
+            dataGridView2.Columns.Add(legalCatCountCol);
+            dataGridView2.Columns.Add(legalDogCountCol);
         }
 
         private void задатьУсловиеФильтрацииToolStripMenuItem_Click(object sender, EventArgs e)
