@@ -321,5 +321,14 @@ namespace PIS_PetRegistry
             form.ShowDialog();
             Refetch();
         }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.animalCardDTO == null && tabControl1.SelectedIndex != 0)
+            {
+                MessageBox.Show("Сначала сохраните учетную карточку");
+                tabControl1.SelectedIndex = 0;
+            }
+        }
     }
 }

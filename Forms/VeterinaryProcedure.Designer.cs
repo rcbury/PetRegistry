@@ -57,6 +57,8 @@
             // 
             // veterinaryAppointmentDatePicker
             // 
+            this.veterinaryAppointmentDatePicker.CustomFormat = "dd/MM/yyyy hh:mm:ss";
+            this.veterinaryAppointmentDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.veterinaryAppointmentDatePicker.Location = new System.Drawing.Point(12, 72);
             this.veterinaryAppointmentDatePicker.Name = "veterinaryAppointmentDatePicker";
             this.veterinaryAppointmentDatePicker.Size = new System.Drawing.Size(200, 23);
