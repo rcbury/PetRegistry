@@ -53,7 +53,7 @@ public partial class RegistryPetsContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
             .UseLazyLoadingProxies()
-            .UseNpgsql("Host=localhost;Database=registry_pets;Username=postgres;Password=admin");
+            .UseNpgsql("Host=localhost;Database=registry_pets;Username=postgres;Password=postgres");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -261,6 +261,10 @@ public partial class RegistryPetsContext : DbContext
             entity.Property(e => e.FkUser).HasColumnName("FK_user");
             entity.Property(e => e.FkMedication).HasColumnName("FK_medication");
             entity.Property(e => e.Date).HasColumnName("date");
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
 
             entity.HasOne(d => d.FkAnimalNavigation).WithMany(p => p.ParasiteTreatments)
                 .HasForeignKey(d => d.FkAnimal)
@@ -448,13 +452,17 @@ public partial class RegistryPetsContext : DbContext
 
         modelBuilder.Entity<VeterinaryAppointmentAnimal>(entity =>
         {
-            entity.HasKey(e => new { e.Date, e.FkAnimal }).HasName("veterinary_appointment_animal_pkey");
+            entity.HasKey(e => new { e.Date, e.FkAnimal, e.FkUser }).HasName("veterinary_appointment_animal_pkey");
 
             entity.ToTable("veterinary_appointment_animal");
 
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.FkAnimal).HasColumnName("FK_animal");
             entity.Property(e => e.FkUser).HasColumnName("FK_user");
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
             entity.Property(e => e.IsCompleted).HasColumnName("is_completed");
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
