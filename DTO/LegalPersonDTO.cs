@@ -6,24 +6,17 @@ using System.Threading.Tasks;
 
 namespace PIS_PetRegistry.DTO
 {
-    internal class LegalPersonDTO
+    public class LegalPersonDTO
     {
-        public int Id { get; set; }
-
-        public string Inn { get; set; }
-
-        public string Kpp { get; set; }
-
-        public string Name { get; set; } 
-
+        public int Id { get; set; } = 0;
+        public string INN { get; set; } = null!;
+        public string KPP { get; set; } = null!;
+        public string Name { get; set; } = null!;
         public string Address { get; set; } = null!;
-
-        public string? Email { get; set; }
-
-        public string? Phone { get; set; }
-
+        public string Email { get; set; } = null!;
+        public string Phone { get; set; } = null!;
         public int FkCountry { get; set; }
-
         public int FkLocality { get; set; }
+
     }
 }
