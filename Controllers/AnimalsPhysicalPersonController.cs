@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIS_PetRegistry.DTO
+namespace PIS_PetRegistry.Controllers
 {
-    internal class PhisycalPersonDTO
+    internal class Class1
     {
-
     }
 }
