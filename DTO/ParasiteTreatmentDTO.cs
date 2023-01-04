@@ -8,11 +8,9 @@ namespace PIS_PetRegistry.DTO
 {
     public class ParasiteTreatmentDTO
     {
-        public int? Id { get; set; } = null;
-
         public int FkAnimal { get; set; }
 
-        public int FkUser { get; set; }
+        public int? FkUser { get; set; }
 
         public int FkMedication { get; set; }
 

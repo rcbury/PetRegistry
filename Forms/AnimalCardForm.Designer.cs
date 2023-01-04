@@ -305,6 +305,7 @@
             this.vaccinationDGV.RowTemplate.Height = 25;
             this.vaccinationDGV.Size = new System.Drawing.Size(770, 191);
             this.vaccinationDGV.TabIndex = 1;
+            this.vaccinationDGV.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.vaccinationDGV_CellContentDoubleClick);
             // 
             // addVaccinationButton
             // 

@@ -5,8 +5,6 @@ namespace PIS_PetRegistry.Models;
 
 public partial class ParasiteTreatment
 {
-    public int Id { get; set; }
-
     public int FkAnimal { get; set; }
 
     public int FkUser { get; set; }

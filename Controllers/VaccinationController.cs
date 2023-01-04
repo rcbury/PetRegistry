@@ -23,7 +23,7 @@ namespace PIS_PetRegistry.Controllers
                             Id = vaccine.Id,
                             Name = vaccine.Name,
                             Number = vaccine.Number,
-                            ValidityPeriod = vaccine.ValidityPeriod,                            
+                            ValidityPeriod = vaccine.ValidityPeriod,
                         });
                 }
             }
@@ -35,7 +35,7 @@ namespace PIS_PetRegistry.Controllers
             var vaccinationsDTO = new List<VaccinationDTO>();
             using (var context = new RegistryPetsContext())
             {
-                var vaccinations = context.Vaccinations.Where(x => x.FkAnimal == FkAnimal);
+                var vaccinations = context.Vaccinations.Where(x => x.FkAnimal == FkAnimal).ToList();
                 foreach (var vaccination in vaccinations)
                 {
                     vaccinationsDTO.Add(
@@ -46,10 +46,26 @@ namespace PIS_PetRegistry.Controllers
                             DateEnd = vaccination.DateEnd,
                             FkUser = vaccination.FkUser,
                             FkAnimal = vaccination.FkAnimal,
+                            FkVaccine = vaccination.FkVaccine,
                         });
                 }
             }
             return vaccinationsDTO;
+        }
+
+        public static Vaccination? GetVaccination(int fkAnimal, int fkUser, int fkVaccine, DateOnly dateEnd)
+        {
+            using (var context = new RegistryPetsContext())
+            {
+                var vaccinationModel = context.Vaccinations
+                    .Where(x => x.FkUser == fkUser)
+                    .Where(x => x.FkVaccine == fkVaccine)
+                    .Where(x => x.DateEnd == dateEnd)
+                    .Where(x => x.FkAnimal == fkAnimal)
+                    .FirstOrDefault();
+
+                return vaccinationModel;
+            }
         }
 
         public static VaccinationDTO AddVaccination(VaccinationDTO vaccinationDTO, UserDTO userDTO)
@@ -62,6 +78,15 @@ namespace PIS_PetRegistry.Controllers
                 FkVaccine = vaccinationDTO.FkVaccine,
                 DateEnd = vaccinationDTO.DateEnd,
             };
+
+            var existingModel = GetVaccination(
+                vaccinationDTO.FkAnimal,
+                userDTO.Id,
+                vaccinationDTO.FkVaccine,
+                vaccinationDTO.DateEnd);
+
+            if (existingModel != null)
+                throw new Exception("Данная запись уже существует");
 
             using (var context = new RegistryPetsContext())
             {
@@ -80,34 +105,49 @@ namespace PIS_PetRegistry.Controllers
             return newVaccinationDTO;
         }
 
-        public static VaccinationDTO UpdateVaccination(VaccinationDTO vaccinationDTO, UserDTO userDTO)
+        public static VaccinationDTO UpdateVaccination(VaccinationDTO oldVaccinationDTO, VaccinationDTO vaccinationDTO, UserDTO userDTO)
         {
             Vaccination? vaccinationModel;
 
             using (var context = new RegistryPetsContext())
             {
-                vaccinationModel = context.Vaccinations.Where(x => x.DateEnd.Equals(vaccinationDTO.DateEnd) && 
-                    x.FkVaccine.Equals(vaccinationDTO.FkVaccine) && 
-                    x.FkAnimal.Equals(vaccinationDTO.FkAnimal)).FirstOrDefault();
+                vaccinationModel = GetVaccination(
+                    oldVaccinationDTO.FkAnimal,
+                    (int)oldVaccinationDTO.FkUser,
+                    oldVaccinationDTO.FkVaccine,
+                    oldVaccinationDTO.DateEnd);
 
                 if (vaccinationModel == null)
                     throw new Exception("trying to update non existent model");
 
+                var existingVaccinationModel = GetVaccination(
+                    vaccinationDTO.FkAnimal,
+                    (int)oldVaccinationDTO.FkUser,
+                    vaccinationDTO.FkVaccine,
+                    vaccinationDTO.DateEnd);
+
+                if (existingVaccinationModel != null)
+                    throw new Exception("Данная запись уже существует");
+
+                context.Remove(vaccinationModel);
+                context.SaveChanges();
+
                 vaccinationModel.DateEnd = vaccinationDTO.DateEnd;
                 vaccinationModel.FkVaccine = vaccinationDTO.FkVaccine;
 
+                context.Add(vaccinationModel);
                 context.SaveChanges();
+
+                var newVaccinationDTO = new VaccinationDTO()
+                {
+                    FkAnimal = vaccinationModel.FkAnimal,
+                    FkUser = vaccinationModel.FkUser,
+                    FkVaccine = vaccinationModel.FkVaccine,
+                    DateEnd = vaccinationModel.DateEnd,
+                };
+
+                return newVaccinationDTO;
             }
-
-            var newVaccinationDTO = new VaccinationDTO()
-            {
-                FkAnimal = vaccinationModel.FkAnimal,
-                FkUser = vaccinationModel.FkUser,
-                FkVaccine = vaccinationModel.FkVaccine,
-                DateEnd = vaccinationModel.DateEnd,
-            };
-
-            return newVaccinationDTO;
         }
     }
 }

@@ -65,7 +65,7 @@ namespace PIS_PetRegistry.Forms
         {
             ValidateFields();
 
-            if (parasiteTreatmentDTO.Id == null)
+            if (parasiteTreatmentDTO.FkUser == null)
             {
                 var tempParasiteTreatmentDTO = new ParasiteTreatmentDTO
                 {
@@ -77,12 +77,20 @@ namespace PIS_PetRegistry.Forms
                 var authorizedUser = AuthorizationController.GetAuthorizedUser();
 
                 parasiteTreatmentDTO = ParasiteTreatmentController.AddParasiteTreatment(tempParasiteTreatmentDTO, authorizedUser);
+
+                try
+                {
+                    parasiteTreatmentDTO = ParasiteTreatmentController.AddParasiteTreatment(tempParasiteTreatmentDTO, authorizedUser);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
             else
             {
                 var tempParasiteTreatmentDTO = new ParasiteTreatmentDTO
                 {
-                    Id = parasiteTreatmentDTO.Id,
                     FkUser = parasiteTreatmentDTO.FkUser,
                     FkMedication = int.Parse(medicationComboBox.SelectedValue.ToString()),
                     Date = DateOnly.Parse(parasiteTreatmentDatePicker.Value.ToShortDateString()),
@@ -91,7 +99,19 @@ namespace PIS_PetRegistry.Forms
 
                 var authorizedUser = AuthorizationController.GetAuthorizedUser();
 
-                parasiteTreatmentDTO = ParasiteTreatmentController.UpdateParasiteTreatment(tempParasiteTreatmentDTO, authorizedUser);
+                try
+                {
+                    parasiteTreatmentDTO = ParasiteTreatmentController.UpdateParasiteTreatment(
+                        parasiteTreatmentDTO,
+                        tempParasiteTreatmentDTO, 
+                        authorizedUser);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
             }
         }
     }

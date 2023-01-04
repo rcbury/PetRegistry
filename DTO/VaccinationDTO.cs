@@ -12,7 +12,7 @@ namespace PIS_PetRegistry.DTO
 
         public int FkAnimal { get; set; }
 
-        public int? FkUser { get; set; } = null;
+        public int? FkUser { get; set; }
 
         public int FkVaccine { get; set; }
 

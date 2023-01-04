@@ -277,15 +277,13 @@ namespace PIS_PetRegistry
 
                 parasiteTreatmentDGV.DataSource = parasiteTreatmentsDTO;
                 veterinaryAppointmentDGV.DataSource = veterinaryAppointmentsDTO;
-                vaccinationDGV.DataSource = veterinaryAppointmentsDTO;
+                vaccinationDGV.DataSource = vaccinationsDTO;
             }
         }
 
         private void parasiteTreatmentDGV_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var clickedId = (int)parasiteTreatmentDGV.Rows[e.RowIndex].Cells["Id"].Value;
-
-            var clickedDTO = parasiteTreatmentsDTO.Where(x => x.Id == clickedId).FirstOrDefault();
+            var clickedDTO = (ParasiteTreatmentDTO)parasiteTreatmentDGV.Rows[e.RowIndex].DataBoundItem;
 
             var form = new ParasiteTreatmentForm(clickedDTO);
             form.ShowDialog();
@@ -294,9 +292,7 @@ namespace PIS_PetRegistry
 
         private void veterinaryAppointmentDGV_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var clickedId = (int)veterinaryAppointmentDGV.Rows[e.RowIndex].Cells["Id"].Value;
-
-            var clickedDTO = veterinaryAppointmentsDTO.Where(x => x.Id == clickedId).FirstOrDefault();
+            var clickedDTO = (VeterinaryAppointmentDTO)veterinaryAppointmentDGV.Rows[e.RowIndex].DataBoundItem;
 
             var form = new VeterinaryProcedure(clickedDTO);
             form.ShowDialog();
@@ -313,6 +309,15 @@ namespace PIS_PetRegistry
         private void addVaccinationButton_Click(object sender, EventArgs e)
         {
             var form = new VaccinationForm(animalCardDTO.Id);
+            form.ShowDialog();
+            Refetch();
+        }
+
+        private void vaccinationDGV_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var clickedDTO = (VaccinationDTO)vaccinationDGV.Rows[e.RowIndex].DataBoundItem;
+
+            var form = new VaccinationForm(clickedDTO);
             form.ShowDialog();
             Refetch();
         }

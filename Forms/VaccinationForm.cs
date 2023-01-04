@@ -16,7 +16,7 @@ namespace PIS_PetRegistry.Forms
     {
         public VaccinationForm(int FKAnimal)
         {
-            var vaccines = ParasiteTreatmentController.GetMedications();
+            var vaccines = VaccinationController.GetVaccines();
 
             vaccinationDTO = new VaccinationDTO();
             vaccinationDTO.FkAnimal = FKAnimal;
@@ -33,7 +33,7 @@ namespace PIS_PetRegistry.Forms
 
         public VaccinationForm(VaccinationDTO vaccinationDTO)
         {
-            var vaccines = ParasiteTreatmentController.GetMedications();
+            var vaccines = VaccinationController.GetVaccines();
 
             this.vaccinationDTO = vaccinationDTO;
 
@@ -76,7 +76,14 @@ namespace PIS_PetRegistry.Forms
 
                 var authorizedUser = AuthorizationController.GetAuthorizedUser();
 
-                vaccinationDTO = VaccinationController.AddVaccination(tempVaccinationDTO, authorizedUser);
+                try
+                {
+                    vaccinationDTO = VaccinationController.AddVaccination(tempVaccinationDTO, authorizedUser);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
             else
             {
@@ -89,8 +96,14 @@ namespace PIS_PetRegistry.Forms
                 };
 
                 var authorizedUser = AuthorizationController.GetAuthorizedUser();
-
-                vaccinationDTO = VaccinationController.UpdateVaccination(tempVaccinationDTO, authorizedUser);
+                try
+                {
+                    vaccinationDTO = VaccinationController.UpdateVaccination(vaccinationDTO, tempVaccinationDTO, authorizedUser);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }

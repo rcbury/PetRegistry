@@ -2,6 +2,7 @@
 using PIS_PetRegistry.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,6 @@ namespace PIS_PetRegistry.Controllers
                     parasiteTreatmentsDTO.Add(
                         new ParasiteTreatmentDTO()
                         {
-                            Id = parasiteTreatment.Id,
                             FkAnimal = parasiteTreatment.FkAnimal,
                             FkUser = parasiteTreatment.FkUser,
                             FkMedication = parasiteTreatment.FkMedication,
@@ -66,50 +66,78 @@ namespace PIS_PetRegistry.Controllers
                 Date = parasiteTreatmentDTO.Date,
             };
 
+            var existingParasiteTreatment = GetParasiteTreatment(
+                parasiteTreatmentDTO.FkAnimal,
+                userDTO.Id,
+                parasiteTreatmentDTO.Date,
+                parasiteTreatmentDTO.FkMedication);
 
-            //Entity framework govno
+            if (existingParasiteTreatment != null)
+                throw new Exception("Запись уже существует");
+
             using (var context = new RegistryPetsContext())
             {
                 context.ParasiteTreatments.Add(parasiteTreatmentModel);
                 context.SaveChanges();
             }
 
+            var newParasiteTreatmentDTO = new ParasiteTreatmentDTO()
+            {
+                FkAnimal = parasiteTreatmentModel.FkAnimal,
+                FkUser = parasiteTreatmentModel.FkUser,
+                FkMedication = parasiteTreatmentModel.FkMedication,
+                Date = parasiteTreatmentModel.Date,
+            };
+
+            return newParasiteTreatmentDTO;
+        }
+
+        public static ParasiteTreatment? GetParasiteTreatment(int fkAnimal, int fkUser, DateOnly date, int fkMedication)
+        {
             using (var context = new RegistryPetsContext())
             {
-                parasiteTreatmentModel = context.ParasiteTreatments.Where(x => x.Id == parasiteTreatmentModel.Id).FirstOrDefault();
+                var parasiteTreatmentModel = context.ParasiteTreatments
+                    .Where(x => x.FkAnimal == fkAnimal)
+                    .Where(x => x.FkUser == fkUser)
+                    .Where(x => x.Date == date)
+                    .Where(x => x.FkMedication == fkMedication)
+                    .FirstOrDefault();
 
-
-                var newParasiteTreatmentDTO = new ParasiteTreatmentDTO()
-                {
-                    Id = parasiteTreatmentDTO.Id,
-                    FkAnimal = parasiteTreatmentModel.FkAnimal,
-                    FkUser = parasiteTreatmentModel.FkUser,
-                    FkMedication = parasiteTreatmentModel.FkMedication,
-                    Date = parasiteTreatmentModel.Date,
-                    UserName = parasiteTreatmentModel.FkUserNavigation.Name,
-                    MedicationName = parasiteTreatmentModel.FkMedicationNavigation.Name
-                };
-
-                return newParasiteTreatmentDTO;
+                return parasiteTreatmentModel;
             }
         }
 
-        public static ParasiteTreatmentDTO UpdateParasiteTreatment(ParasiteTreatmentDTO parasiteTreatmentDTO, UserDTO userDTO)
+        public static ParasiteTreatmentDTO UpdateParasiteTreatment(
+            ParasiteTreatmentDTO oldParasiteTreatmentDTO,
+            ParasiteTreatmentDTO parasiteTreatmentDTO,
+            UserDTO userDTO)
         {
             ParasiteTreatment? parasiteTreatmentModel;
 
             using (var context = new RegistryPetsContext())
             {
-                parasiteTreatmentModel = context.ParasiteTreatments.Where(x => x.Id.Equals(parasiteTreatmentDTO.Id)).FirstOrDefault();
+                parasiteTreatmentModel = GetParasiteTreatment(
+                    oldParasiteTreatmentDTO.FkAnimal,
+                    (int)oldParasiteTreatmentDTO.FkUser,
+                    oldParasiteTreatmentDTO.Date,
+                    oldParasiteTreatmentDTO.FkMedication);
 
                 if (parasiteTreatmentModel == null)
                     throw new Exception("trying to update non existent model");
+
+                var existingParasiteTreatment = GetParasiteTreatment(
+                    parasiteTreatmentDTO.FkAnimal,
+                    parasiteTreatmentModel.FkUser,
+                    parasiteTreatmentDTO.Date,
+                    parasiteTreatmentDTO.FkMedication);
+
+                if (existingParasiteTreatment != null)
+                    throw new Exception("Данная запись уже существует");
 
                 context.ParasiteTreatments.Remove(parasiteTreatmentModel);
 
                 context.SaveChanges();
 
-                parasiteTreatmentModel.Id = 0;
                 parasiteTreatmentModel.Date = parasiteTreatmentDTO.Date;
                 parasiteTreatmentModel.FkMedication = parasiteTreatmentDTO.FkMedication;
 
@@ -117,18 +145,15 @@ namespace PIS_PetRegistry.Controllers
                 context.SaveChanges();
 
 
-                var newVaccinationDTO = new ParasiteTreatmentDTO()
+                var newParasiteTreatmentDTO = new ParasiteTreatmentDTO()
                 {
-                    Id = parasiteTreatmentModel.Id,
                     FkAnimal = parasiteTreatmentModel.FkAnimal,
                     FkUser = parasiteTreatmentModel.FkUser,
                     FkMedication = parasiteTreatmentModel.FkMedication,
                     Date = parasiteTreatmentModel.Date,
-                    UserName = parasiteTreatmentModel.FkUserNavigation.Name,
-                    MedicationName = parasiteTreatmentModel.FkMedicationNavigation.Name
                 };
 
-                return newVaccinationDTO;
+                return newParasiteTreatmentDTO;
             }
         }
     }

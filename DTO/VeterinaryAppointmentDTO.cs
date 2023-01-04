@@ -8,13 +8,11 @@ namespace PIS_PetRegistry.DTO
 {
     public class VeterinaryAppointmentDTO
     {
-        public int? Id { get; set; }
-
         public DateOnly Date { get; set; }
 
         public int FkAnimal { get; set; }
 
-        public int FkUser { get; set; }
+        public int? FkUser { get; set; }
 
         public string Name { get; set; } = null!;
 

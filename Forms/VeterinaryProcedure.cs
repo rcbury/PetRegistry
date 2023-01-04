@@ -50,7 +50,7 @@ namespace PIS_PetRegistry.Forms
         {
             ValidateFields();
 
-            if (veterinaryAppointmentDTO.Id == null)
+            if (veterinaryAppointmentDTO.FkUser == null)
             {
                 var tempVeterinaryAppointmentDTO = new VeterinaryAppointmentDTO
                 {
@@ -61,14 +61,21 @@ namespace PIS_PetRegistry.Forms
                 };
 
                 var authorizedUser = AuthorizationController.GetAuthorizedUser();
-
-                veterinaryAppointmentDTO = VeterinaryAppointmentController.AddVeterinaryAppointment(tempVeterinaryAppointmentDTO, authorizedUser);
+                try
+                {
+                    veterinaryAppointmentDTO = VeterinaryAppointmentController.AddVeterinaryAppointment(
+                        tempVeterinaryAppointmentDTO, 
+                        authorizedUser);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
             else
             {
                 var tempVeterinaryAppointmentDTO = new VeterinaryAppointmentDTO
                 {
-                    Id = veterinaryAppointmentDTO.Id,
                     FkUser = veterinaryAppointmentDTO.FkUser,
                     Date = DateOnly.Parse(veterinaryAppointmentDatePicker.Value.ToShortDateString()),
                     FkAnimal = veterinaryAppointmentDTO.FkAnimal,
@@ -77,8 +84,17 @@ namespace PIS_PetRegistry.Forms
                 };
 
                 var authorizedUser = AuthorizationController.GetAuthorizedUser();
-
-                veterinaryAppointmentDTO = VeterinaryAppointmentController.UpdateVeterinaryAppointment(tempVeterinaryAppointmentDTO, authorizedUser);
+                try
+                {
+                    veterinaryAppointmentDTO = VeterinaryAppointmentController.UpdateVeterinaryAppointment(
+                        veterinaryAppointmentDTO, 
+                        tempVeterinaryAppointmentDTO, 
+                        authorizedUser);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }

@@ -22,7 +22,6 @@ namespace PIS_PetRegistry.Controllers
                     veterinaryAppointmentsDTO.Add(
                         new VeterinaryAppointmentDTO()
                         {
-                            Id = veterinaryAppointment.Id,
                             FkAnimal = veterinaryAppointment.FkAnimal,
                             FkUser = veterinaryAppointment.FkUser,
                             Name = veterinaryAppointment.Name,
@@ -49,50 +48,77 @@ namespace PIS_PetRegistry.Controllers
                 IsCompleted = veterinaryAppointmentDTO.IsCompleted,
             };
 
+            var existingVeterinaryAppointmentModel = GetVeterinaryAppointment(
+                veterinaryAppointmentDTO.FkAnimal,
+                userDTO.Id,
+                veterinaryAppointmentDTO.Date);
 
-            //Entity framework govno
+            if (existingVeterinaryAppointmentModel != null)
+            {
+                throw new Exception("Данная запись уже существует");
+            }
+
             using (var context = new RegistryPetsContext())
             {
                 context.VeterinaryAppointmentAnimals.Add(veterinaryAppointmentModel);
                 context.SaveChanges();
             }
 
+            var newVeterinaryAppointmentDTO = new VeterinaryAppointmentDTO()
+            {
+                FkAnimal = veterinaryAppointmentModel.FkAnimal,
+                FkUser = veterinaryAppointmentModel.FkUser,
+                Name = veterinaryAppointmentModel.Name,
+                Date = veterinaryAppointmentModel.Date,
+                IsCompleted = veterinaryAppointmentModel.IsCompleted,
+            };
+
+            return newVeterinaryAppointmentDTO;
+        }
+
+        public static VeterinaryAppointmentAnimal? GetVeterinaryAppointment(int fkAnimal, int fkUser, DateOnly date)
+        {
             using (var context = new RegistryPetsContext())
             {
-                veterinaryAppointmentModel = context.VeterinaryAppointmentAnimals.Where(x => x.Id == veterinaryAppointmentModel.Id).FirstOrDefault();
+                var veterinaryAppointmentModel = context.VeterinaryAppointmentAnimals
+                    .Where(x => x.FkUser == fkUser)
+                    .Where(x => x.FkAnimal == fkAnimal)
+                    .Where(x => x.Date == date)
+                    .FirstOrDefault();
 
-
-                var newVeterinaryAppointmentDTO = new VeterinaryAppointmentDTO()
-                {
-                    Id = veterinaryAppointmentDTO.Id,
-                    FkAnimal = veterinaryAppointmentModel.FkAnimal,
-                    FkUser = veterinaryAppointmentModel.FkUser,
-                    Name = veterinaryAppointmentModel.Name,
-                    Date = veterinaryAppointmentModel.Date,
-                    IsCompleted = veterinaryAppointmentModel.IsCompleted,
-                    UserName = veterinaryAppointmentModel.FkUserNavigation.Name,
-                };
-
-                return newVeterinaryAppointmentDTO;
+                return veterinaryAppointmentModel;
             }
         }
 
-        public static VeterinaryAppointmentDTO UpdateVeterinaryAppointment(VeterinaryAppointmentDTO veterinaryAppointmentDTO, UserDTO userDTO)
+        public static VeterinaryAppointmentDTO UpdateVeterinaryAppointment(
+            VeterinaryAppointmentDTO oldVeterinaryAppointmentDTO,
+            VeterinaryAppointmentDTO veterinaryAppointmentDTO,
+            UserDTO userDTO)
         {
             VeterinaryAppointmentAnimal? veterinaryAppointmentModel;
 
             using (var context = new RegistryPetsContext())
             {
-                veterinaryAppointmentModel = context.VeterinaryAppointmentAnimals.Where(x => x.Id.Equals(veterinaryAppointmentDTO.Id)).FirstOrDefault();
+                veterinaryAppointmentModel = GetVeterinaryAppointment(
+                    oldVeterinaryAppointmentDTO.FkAnimal,
+                    (int)oldVeterinaryAppointmentDTO.FkUser,
+                    oldVeterinaryAppointmentDTO.Date);
 
                 if (veterinaryAppointmentModel == null)
                     throw new Exception("trying to update non existent model");
+
+                var existingVeterinaryAppointmentModel = GetVeterinaryAppointment(
+                    veterinaryAppointmentDTO.FkAnimal,
+                    (int)veterinaryAppointmentModel.FkUser,
+                    veterinaryAppointmentDTO.Date);
+
+                if (existingVeterinaryAppointmentModel != null)
+                    throw new Exception("Запись уже существует");
 
                 context.VeterinaryAppointmentAnimals.Remove(veterinaryAppointmentModel);
 
                 context.SaveChanges();
 
-                veterinaryAppointmentModel.Id = 0;
                 veterinaryAppointmentModel.Date = veterinaryAppointmentDTO.Date;
                 veterinaryAppointmentModel.Name = veterinaryAppointmentDTO.Name;
                 veterinaryAppointmentModel.IsCompleted = veterinaryAppointmentDTO.IsCompleted;
@@ -103,12 +129,10 @@ namespace PIS_PetRegistry.Controllers
 
                 var newVaccinationDTO = new VeterinaryAppointmentDTO()
                 {
-                    Id = veterinaryAppointmentModel.Id,
                     FkAnimal = veterinaryAppointmentModel.FkAnimal,
                     FkUser = veterinaryAppointmentModel.FkUser,
                     Name = veterinaryAppointmentModel.Name,
                     Date = veterinaryAppointmentModel.Date,
-                    UserName = veterinaryAppointmentModel.FkUserNavigation.Name,
                     IsCompleted = veterinaryAppointmentModel.IsCompleted
                 };
 
