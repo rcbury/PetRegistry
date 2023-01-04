@@ -51,5 +51,10 @@ namespace PIS_PetRegistry
             form.ShowDialog();
             Show();
         }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
