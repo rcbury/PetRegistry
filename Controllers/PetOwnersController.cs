@@ -44,8 +44,8 @@ namespace PIS_PetRegistry.Controllers
                     legalPeople.Add(new LegalPersonDTO()
                     {
                         Id = personInfo.Id,
-                        Inn = personInfo.Inn,
-                        Kpp = personInfo.Kpp,
+                        INN = personInfo.Inn,
+                        KPP = personInfo.Kpp,
                         Name = personInfo.Name,
                         Phone = personInfo.Phone,
                         Address = personInfo.Address,
@@ -90,6 +90,38 @@ namespace PIS_PetRegistry.Controllers
                 }
             }
             return countries;
+        }
+
+        public static List<AnimalCardDTO> GetAnimalsByLegalPerson(int legalPersonId)
+        {
+            var animalsLegalPersonDTO = new List<AnimalCardDTO>();
+            using (var context = new RegistryPetsContext())
+            {
+                var animalsNumber = context.Contracts
+                    .Where(x => x.FkLegalPerson == legalPersonId)
+                    .Select(x => x.FkAnimalCard)
+                    .Distinct();
+
+                foreach (var animalId in animalsNumber)
+                {
+                    var animal = context.AnimalCards
+                        .Where(x => x.Id == animalId)
+                        .FirstOrDefault();
+                    animalsLegalPersonDTO.Add(
+                        new AnimalCardDTO()
+                        {
+                            Id = animal.Id,
+                            IsBoy = animal.IsBoy,
+                            Name = animal.Name,
+                            Photo = animal.Photo,
+                            YearOfBirth = animal.YearOfBirth,
+                            FkCategory = animal.FkCategory,
+                            FkShelter = animal.FkShelter,
+                            ChipId = animal.ChipId,
+                        });
+                }
+                return animalsLegalPersonDTO;
+            }
         }
     }
 }

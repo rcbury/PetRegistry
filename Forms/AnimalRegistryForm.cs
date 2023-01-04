@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PIS_PetRegistry.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,7 @@ namespace PIS_PetRegistry
 {
     public partial class AnimalRegistryForm : Form
     {
-        public AnimalRegistryForm()
+        public AnimalRegistryForm(List<AnimalCardDTO> listAnimalCards = null!)
         {
             InitializeComponent();
         }
