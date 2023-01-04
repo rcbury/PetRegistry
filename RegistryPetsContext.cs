@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using PIS_PetRegistry.Backend;
 
@@ -53,7 +54,7 @@ public partial class RegistryPetsContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
             .UseLazyLoadingProxies()
-            .UseNpgsql("Host=localhost;Database=registry_pets;Username=postgres;Password=postgres");
+            .UseNpgsql(ConfigurationManager.ConnectionStrings["RegestryPets"].ToString());
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
