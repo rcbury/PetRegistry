@@ -59,14 +59,48 @@ namespace PIS_PetRegistry.Controllers
             return physicalPeopleDTO;
         }
 
-        public static List<LegalPersonDTO> GetLegalPeople()
+        public static List<LegalPersonDTO> GetLegalPeople(string inn, string kpp, string name, string email, 
+            string address, string phone, int country, int location)
         {
-            var legalPeople = new List<LegalPersonDTO>();
+            var legalPeopleDTO = new List<LegalPersonDTO>();
             using (var context = new RegistryPetsContext())
             {
-                foreach (var personInfo in context.LegalPeople.ToList())
+                var legalPeople = context.LegalPeople.ToList();
+                if (inn != null && inn != "")
                 {
-                    legalPeople.Add(new LegalPersonDTO()
+                    legalPeople = legalPeople.Where(person => person.Phone.Contains(inn)).ToList();
+                }
+                if (kpp != null && kpp != "")
+                {
+                    legalPeople = legalPeople.Where(person => person.Phone.Contains(kpp)).ToList();
+                }
+                if (name != null && name != "")
+                {
+                    legalPeople = legalPeople.Where(person => person.Phone.Contains(name)).ToList();
+                }
+                if (email != null && email != "")
+                {
+                    legalPeople = legalPeople.Where(person => person.Phone.Contains(email)).ToList();
+                }
+                if (address != null && address != "")
+                {
+                    legalPeople = legalPeople.Where(person => person.Phone.Contains(address)).ToList();
+                }
+                if (phone != null && phone != "")
+                {
+                    legalPeople = legalPeople.Where(person => person.Phone.Contains(phone)).ToList();
+                }
+                if (country != 0)
+                {
+                    legalPeople = legalPeople.Where(person => person.FkCountry == country).ToList();
+                }
+                if (location != 0)
+                {
+                    legalPeople = legalPeople.Where(person => person.FkLocality == location).ToList();
+                }
+                foreach (var personInfo in legalPeople)
+                {
+                    legalPeopleDTO.Add(new LegalPersonDTO()
                     {
                         Id = personInfo.Id,
                         INN = personInfo.Inn,
@@ -80,7 +114,7 @@ namespace PIS_PetRegistry.Controllers
                     });
                 }
             }
-            return legalPeople;
+            return legalPeopleDTO;
         }
 
         public static List<LocationDTO> GetLocations()

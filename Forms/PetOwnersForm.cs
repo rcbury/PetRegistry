@@ -27,10 +27,16 @@ namespace PIS_PetRegistry
             comboBox1.DataSource = countries;
             comboBox1.DisplayMember = "Name";
             comboBox1.ValueMember = "Id";
+            comboBox4.DataSource = countries;
+            comboBox4.DisplayMember = "Name";
+            comboBox4.ValueMember = "Id";
             locations = PetOwnersController.GetLocations();
             comboBox2.DataSource = locations;
             comboBox2.DisplayMember = "Name";
             comboBox2.ValueMember = "Id";
+            comboBox3.DataSource = locations;
+            comboBox3.DisplayMember = "Name";
+            comboBox3.ValueMember = "Id";
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = listPhysicalPersonDTOs;
             var phoneCol = new DataGridViewTextBoxColumn();
@@ -69,6 +75,54 @@ namespace PIS_PetRegistry
             dataGridView1.Columns.Add(emailCol);
             dataGridView1.Columns.Add(countryCol);
             dataGridView1.Columns.Add(locationCol);
+            dataGridView2.AutoGenerateColumns = false;
+            dataGridView2.DataSource = listLegalPersonDTOs;
+            var legalAddressCol = new DataGridViewTextBoxColumn();
+            legalAddressCol.Name = "Address";
+            legalAddressCol.HeaderText = "Адрес";
+            legalAddressCol.DataPropertyName = "Address";
+            var innCol = new DataGridViewTextBoxColumn();
+            innCol.Name = "Inn";
+            innCol.HeaderText = "ИНН";
+            innCol.DataPropertyName = "INN";
+            var kppCol = new DataGridViewTextBoxColumn();
+            kppCol.Name = "Kpp";
+            kppCol.HeaderText = "ИНН";
+            kppCol.DataPropertyName = "KPP";
+            var legalNameCol = new DataGridViewTextBoxColumn();
+            legalNameCol.HeaderText = "Наименование организации";
+            legalNameCol.DataPropertyName = "Name";
+            legalNameCol.Name = "Name";
+            var legalEmailCol = new DataGridViewTextBoxColumn();
+            legalEmailCol.HeaderText = "Адрес эл. почты";
+            legalEmailCol.DataPropertyName = "Email";
+            legalEmailCol.Name = "Email";
+            var legalPhoneCol = new DataGridViewTextBoxColumn();
+            legalPhoneCol.HeaderText = "Номер телефона";
+            legalPhoneCol.DataPropertyName = "Phone";
+            legalPhoneCol.Name = "Phone";
+            var legalCountryCol = new DataGridViewComboBoxColumn();
+            legalCountryCol.Name = "Country";
+            legalCountryCol.HeaderText = "Страна";
+            legalCountryCol.DataSource = countries;
+            legalCountryCol.ValueMember = "Id";
+            legalCountryCol.DisplayMember = "Name";
+            legalCountryCol.DataPropertyName = "FkCountry";
+            var legalLocationCol = new DataGridViewComboBoxColumn();
+            legalLocationCol.Name = "Location";
+            legalLocationCol.HeaderText = "Населенный пункт";
+            legalLocationCol.DataSource = locations;
+            legalLocationCol.ValueMember = "Id";
+            legalLocationCol.DisplayMember = "Name";
+            legalLocationCol.DataPropertyName = "FkLocality";
+            dataGridView2.Columns.Add(innCol);
+            dataGridView2.Columns.Add(kppCol);
+            dataGridView2.Columns.Add(legalNameCol);
+            dataGridView2.Columns.Add(legalAddressCol);
+            dataGridView2.Columns.Add(legalEmailCol);
+            dataGridView2.Columns.Add(legalPhoneCol);
+            dataGridView2.Columns.Add(legalCountryCol);
+            dataGridView2.Columns.Add(legalLocationCol);
         }
 
         private void задатьУсловиеФильтрацииToolStripMenuItem_Click(object sender, EventArgs e)
@@ -115,6 +169,20 @@ namespace PIS_PetRegistry
             var location = Convert.ToInt16(comboBox2.SelectedValue);
             listPhysicalPersonDTOs = PetOwnersController.GetPhysicalPeople(phone, name, address, email, country, location);
             dataGridView1.DataSource = listPhysicalPersonDTOs;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var inn = textBox8.Text;
+            var kpp = textBox6.Text;
+            var name = textBox5.Text;
+            var email = textBox7.Text;
+            var address = textBox9.Text;
+            var phone = textBox10.Text;
+            var country = Convert.ToInt16(comboBox4.SelectedValue);
+            var location = Convert.ToInt16(comboBox3.SelectedValue);
+            listLegalPersonDTOs = PetOwnersController.GetLegalPeople(inn,kpp,name,email,address,phone,country,location);
+            dataGridView2.DataSource = listLegalPersonDTOs;
         }
     }
 }
