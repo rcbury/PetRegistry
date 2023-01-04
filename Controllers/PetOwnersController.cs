@@ -12,14 +12,39 @@ namespace PIS_PetRegistry.Controllers
 {
     internal class PetOwnersController
     {
-        public static List<PhysicalPersonDTO> GetPhysicalPeople()
+        public static List<PhysicalPersonDTO> GetPhysicalPeople(string phone, string name, string address, string email, int country, int location)
         {
-            var physicalPeople = new List<PhysicalPersonDTO>();
+            var physicalPeopleDTO = new List<PhysicalPersonDTO>();
             using (var context = new RegistryPetsContext()) 
             {
-                foreach (var personInfo in context.PhysicalPeople.ToList()) 
+                var physicalPeople = context.PhysicalPeople.ToList();
+                if (phone != null && phone != "") 
                 {
-                    physicalPeople.Add(new PhysicalPersonDTO()
+                    physicalPeople = physicalPeople.Where(person => person.Phone.Contains(phone)).ToList();
+                }
+                if (name != null && name != "")
+                {
+                    physicalPeople = physicalPeople.Where(person => person.Name.Contains(name)).ToList();
+                }
+                if (address != null && address != "")
+                {
+                    physicalPeople = physicalPeople.Where(person => person.Address.Contains(address)).ToList();
+                }
+                if (email != null && email != "")
+                {
+                    physicalPeople = physicalPeople.Where(person => person.Email.Contains(email)).ToList();
+                }
+                if (country != 0)
+                {
+                    physicalPeople = physicalPeople.Where(person => person.FkCountry == country).ToList();
+                }
+                if (location != 0)
+                {
+                    physicalPeople = physicalPeople.Where(person => person.FkLocality == location).ToList();
+                }
+                foreach (var personInfo in physicalPeople)
+                {
+                    physicalPeopleDTO.Add(new PhysicalPersonDTO()
                     {
                         Id = personInfo.Id,
                         Name = personInfo.Name,
@@ -31,7 +56,7 @@ namespace PIS_PetRegistry.Controllers
                     });
                 }
             }
-            return physicalPeople;
+            return physicalPeopleDTO;
         }
 
         public static List<LegalPersonDTO> GetLegalPeople()
@@ -61,6 +86,11 @@ namespace PIS_PetRegistry.Controllers
         public static List<LocationDTO> GetLocations()
         {
             var locations = new List<LocationDTO>();
+            locations.Add(new LocationDTO()
+            {
+                Id = 0,
+                Name = ""
+            });
             using (var context = new RegistryPetsContext()) 
             {
                 foreach (var location in context.Locations.ToList()) 
@@ -78,6 +108,11 @@ namespace PIS_PetRegistry.Controllers
         public static List<CountryDTO> GetCountries() 
         {
             var countries = new List<CountryDTO>();
+            countries.Add(new CountryDTO()
+            {
+                Id = 0,
+                Name = ""
+            });
             using (var context = new RegistryPetsContext())
             {
                 foreach (var country in context.Countries.ToList())

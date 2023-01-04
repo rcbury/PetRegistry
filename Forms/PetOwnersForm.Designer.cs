@@ -30,18 +30,19 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -49,14 +50,7 @@
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Location = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Country = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.INN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KPP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,13 +59,14 @@
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.dataGridViewComboBoxColumn2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.button3 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -97,66 +92,9 @@
             this.tabPage1.Text = "Физические лица";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Name,
-            this.Phone,
-            this.Address,
-            this.Email,
-            this.Location,
-            this.Country});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 101);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidth = 62;
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(906, 318);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.groupBox2);
-            this.tabPage2.Controls.Add(this.dataGridView2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(912, 422);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Юридические лица";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.INN,
-            this.KPP,
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewComboBoxColumn1,
-            this.dataGridViewComboBoxColumn2});
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView2.Location = new System.Drawing.Point(3, 95);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.RowHeadersWidth = 62;
-            this.dataGridView2.RowTemplate.Height = 25;
-            this.dataGridView2.Size = new System.Drawing.Size(906, 324);
-            this.dataGridView2.TabIndex = 0;
-            this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
-            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.textBox4);
             this.groupBox1.Controls.Add(this.textBox3);
             this.groupBox1.Controls.Add(this.button1);
@@ -172,6 +110,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Фильтры";
             // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(246, 19);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.PlaceholderText = "Фактический адрес проживания";
+            this.textBox4.Size = new System.Drawing.Size(189, 23);
+            this.textBox4.TabIndex = 6;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(126, 19);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.PlaceholderText = "ФИО";
+            this.textBox3.Size = new System.Drawing.Size(114, 23);
+            this.textBox3.TabIndex = 5;
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(756, 63);
@@ -180,6 +134,7 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "Сделать запрос";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // comboBox2
             // 
@@ -216,21 +171,32 @@
             this.textBox1.Size = new System.Drawing.Size(114, 23);
             this.textBox1.TabIndex = 0;
             // 
-            // textBox3
+            // dataGridView1
             // 
-            this.textBox3.Location = new System.Drawing.Point(126, 19);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.PlaceholderText = "ФИО";
-            this.textBox3.Size = new System.Drawing.Size(114, 23);
-            this.textBox3.TabIndex = 5;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 101);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersWidth = 62;
+            this.dataGridView1.RowTemplate.Height = 25;
+            this.dataGridView1.Size = new System.Drawing.Size(906, 318);
+            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // textBox4
+            // tabPage2
             // 
-            this.textBox4.Location = new System.Drawing.Point(246, 19);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.PlaceholderText = "Фактический адрес проживания";
-            this.textBox4.Size = new System.Drawing.Size(189, 23);
-            this.textBox4.TabIndex = 6;
+            this.tabPage2.Controls.Add(this.groupBox2);
+            this.tabPage2.Controls.Add(this.dataGridView2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(912, 422);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Юридические лица";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -250,6 +216,22 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Фильтры";
+            // 
+            // textBox10
+            // 
+            this.textBox10.Location = new System.Drawing.Point(681, 19);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.PlaceholderText = "Номер телефона";
+            this.textBox10.Size = new System.Drawing.Size(114, 23);
+            this.textBox10.TabIndex = 8;
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(561, 19);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.PlaceholderText = "Адрес";
+            this.textBox9.Size = new System.Drawing.Size(114, 23);
+            this.textBox9.TabIndex = 7;
             // 
             // textBox5
             // 
@@ -310,59 +292,29 @@
             this.textBox8.Size = new System.Drawing.Size(114, 23);
             this.textBox8.TabIndex = 0;
             // 
-            // textBox9
+            // dataGridView2
             // 
-            this.textBox9.Location = new System.Drawing.Point(561, 19);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.PlaceholderText = "Адрес";
-            this.textBox9.Size = new System.Drawing.Size(114, 23);
-            this.textBox9.TabIndex = 7;
-            // 
-            // textBox10
-            // 
-            this.textBox10.Location = new System.Drawing.Point(681, 19);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.PlaceholderText = "Номер телефона";
-            this.textBox10.Size = new System.Drawing.Size(114, 23);
-            this.textBox10.TabIndex = 8;
-            // 
-            // Name
-            // 
-            this.Name.HeaderText = "ФИО";
-            this.Name.MinimumWidth = 8;
-            this.Name.Name = "Name";
-            this.Name.ReadOnly = true;
-            this.Name.Width = 150;
-            // 
-            // Phone
-            // 
-            this.Phone.HeaderText = "Номер телефона";
-            this.Phone.Name = "Phone";
-            this.Phone.ReadOnly = true;
-            // 
-            // Address
-            // 
-            this.Address.HeaderText = "Фактический адрес проживания";
-            this.Address.Name = "Address";
-            this.Address.ReadOnly = true;
-            // 
-            // Email
-            // 
-            this.Email.HeaderText = "Адрес электронной почты";
-            this.Email.Name = "Email";
-            this.Email.ReadOnly = true;
-            // 
-            // Location
-            // 
-            this.Location.HeaderText = "Населенный пункт";
-            this.Location.Name = "Location";
-            this.Location.ReadOnly = true;
-            // 
-            // Country
-            // 
-            this.Country.HeaderText = "Страна";
-            this.Country.Name = "Country";
-            this.Country.ReadOnly = true;
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.INN,
+            this.KPP,
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewComboBoxColumn1,
+            this.dataGridViewComboBoxColumn2});
+            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridView2.Location = new System.Drawing.Point(3, 95);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.ReadOnly = true;
+            this.dataGridView2.RowHeadersWidth = 62;
+            this.dataGridView2.RowTemplate.Height = 25;
+            this.dataGridView2.Size = new System.Drawing.Size(906, 324);
+            this.dataGridView2.TabIndex = 0;
+            this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             // 
             // INN
             // 
@@ -412,6 +364,15 @@
             this.dataGridViewComboBoxColumn2.Name = "dataGridViewComboBoxColumn2";
             this.dataGridViewComboBoxColumn2.ReadOnly = true;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(561, 63);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(189, 23);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "Добавить физическое лицо";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
             // PetOwnersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -422,13 +383,13 @@
             this.Text = "Владельцы животных";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -457,12 +418,6 @@
         private TextBox textBox8;
         private TextBox textBox10;
         private TextBox textBox9;
-        private DataGridViewTextBoxColumn Name;
-        private DataGridViewTextBoxColumn Phone;
-        private DataGridViewTextBoxColumn Address;
-        private DataGridViewTextBoxColumn Email;
-        private DataGridViewComboBoxColumn Location;
-        private DataGridViewComboBoxColumn Country;
         private DataGridViewTextBoxColumn INN;
         private DataGridViewTextBoxColumn KPP;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
@@ -471,5 +426,6 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewComboBoxColumn dataGridViewComboBoxColumn1;
         private DataGridViewComboBoxColumn dataGridViewComboBoxColumn2;
+        private Button button3;
     }
 }
