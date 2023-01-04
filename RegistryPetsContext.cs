@@ -261,10 +261,6 @@ public partial class RegistryPetsContext : DbContext
             entity.Property(e => e.FkUser).HasColumnName("FK_user");
             entity.Property(e => e.FkMedication).HasColumnName("FK_medication");
             entity.Property(e => e.Date).HasColumnName("date");
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
 
             entity.HasOne(d => d.FkAnimalNavigation).WithMany(p => p.ParasiteTreatments)
                 .HasForeignKey(d => d.FkAnimal)
@@ -459,10 +455,6 @@ public partial class RegistryPetsContext : DbContext
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.FkAnimal).HasColumnName("FK_animal");
             entity.Property(e => e.FkUser).HasColumnName("FK_user");
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
             entity.Property(e => e.IsCompleted).HasColumnName("is_completed");
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
