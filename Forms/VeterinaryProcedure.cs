@@ -26,7 +26,7 @@ namespace PIS_PetRegistry.Forms
         public VeterinaryProcedure(VeterinaryAppointmentDTO parasiteTreatmentDTO)
         {
             this.veterinaryAppointmentDTO = parasiteTreatmentDTO;
-
+            this.veterinaryAppointmentDTO.Date = this.veterinaryAppointmentDTO.Date.ToUniversalTime();
             InitializeComponent();
             FillFields();
         }
@@ -37,7 +37,7 @@ namespace PIS_PetRegistry.Forms
         {
             veterinaryAppointmentNameTextBox.Text = veterinaryAppointmentDTO.Name;
             if (veterinaryAppointmentDTO.Date.Year != 1)
-                veterinaryAppointmentDatePicker.Value = DateTime.Parse(veterinaryAppointmentDTO.Date.ToShortDateString());
+                veterinaryAppointmentDatePicker.Value = veterinaryAppointmentDTO.Date.ToLocalTime();
             veterinaryAppointmentCompletedCheckBox.Checked = veterinaryAppointmentDTO.IsCompleted;
         }
 
@@ -55,7 +55,7 @@ namespace PIS_PetRegistry.Forms
                 var tempVeterinaryAppointmentDTO = new VeterinaryAppointmentDTO
                 {
                     Name = veterinaryAppointmentNameTextBox.Text,
-                    Date = DateOnly.Parse(veterinaryAppointmentDatePicker.Value.ToShortDateString()),
+                    Date = veterinaryAppointmentDatePicker.Value.ToUniversalTime(),
                     FkAnimal = veterinaryAppointmentDTO.FkAnimal,
                     IsCompleted = veterinaryAppointmentCompletedCheckBox.Checked,
                 };
@@ -77,7 +77,7 @@ namespace PIS_PetRegistry.Forms
                 var tempVeterinaryAppointmentDTO = new VeterinaryAppointmentDTO
                 {
                     FkUser = veterinaryAppointmentDTO.FkUser,
-                    Date = DateOnly.Parse(veterinaryAppointmentDatePicker.Value.ToShortDateString()),
+                    Date = veterinaryAppointmentDatePicker.Value.ToUniversalTime(),
                     FkAnimal = veterinaryAppointmentDTO.FkAnimal,
                     Name = veterinaryAppointmentNameTextBox.Text,
                     IsCompleted = veterinaryAppointmentCompletedCheckBox.Checked

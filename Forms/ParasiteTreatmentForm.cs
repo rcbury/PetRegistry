@@ -63,7 +63,14 @@ namespace PIS_PetRegistry.Forms
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            ValidateFields();
+            try
+            {
+                ValidateFields();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             if (parasiteTreatmentDTO.FkUser == null)
             {
@@ -75,8 +82,6 @@ namespace PIS_PetRegistry.Forms
                 };
 
                 var authorizedUser = AuthorizationController.GetAuthorizedUser();
-
-                parasiteTreatmentDTO = ParasiteTreatmentController.AddParasiteTreatment(tempParasiteTreatmentDTO, authorizedUser);
 
                 try
                 {

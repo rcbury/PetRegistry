@@ -5,7 +5,7 @@ namespace PIS_PetRegistry.Models;
 
 public partial class VeterinaryAppointmentAnimal
 {
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
 
     public int FkAnimal { get; set; }
 

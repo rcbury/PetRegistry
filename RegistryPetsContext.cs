@@ -448,7 +448,7 @@ public partial class RegistryPetsContext : DbContext
 
         modelBuilder.Entity<VeterinaryAppointmentAnimal>(entity =>
         {
-            entity.HasKey(e => new { e.Date, e.FkAnimal, e.FkUser }).HasName("veterinary_appointment_animal_pkey");
+            entity.HasKey(e => new { e.Date, e.FkAnimal }).HasName("veterinary_appointment_animal_pkey");
 
             entity.ToTable("veterinary_appointment_animal");
 
