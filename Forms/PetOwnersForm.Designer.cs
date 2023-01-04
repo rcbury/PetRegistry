@@ -31,7 +31,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.DASDSAFA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -52,6 +51,20 @@
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Location = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Country = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.INN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.KPP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dataGridViewComboBoxColumn2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -86,24 +99,25 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DASDSAFA});
+            this.Name,
+            this.Phone,
+            this.Address,
+            this.Email,
+            this.Location,
+            this.Country});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGridView1.Location = new System.Drawing.Point(3, 101);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 62;
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.Size = new System.Drawing.Size(906, 318);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
-            // DASDSAFA
-            // 
-            this.DASDSAFA.HeaderText = "Column1";
-            this.DASDSAFA.MinimumWidth = 8;
-            this.DASDSAFA.Name = "DASDSAFA";
-            this.DASDSAFA.Width = 150;
             // 
             // tabPage2
             // 
@@ -119,10 +133,22 @@
             // 
             // dataGridView2
             // 
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.INN,
+            this.KPP,
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewComboBoxColumn1,
+            this.dataGridViewComboBoxColumn2});
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGridView2.Location = new System.Drawing.Point(3, 95);
             this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersWidth = 62;
             this.dataGridView2.RowTemplate.Height = 25;
             this.dataGridView2.Size = new System.Drawing.Size(906, 324);
@@ -300,6 +326,92 @@
             this.textBox10.Size = new System.Drawing.Size(114, 23);
             this.textBox10.TabIndex = 8;
             // 
+            // Name
+            // 
+            this.Name.HeaderText = "ФИО";
+            this.Name.MinimumWidth = 8;
+            this.Name.Name = "Name";
+            this.Name.ReadOnly = true;
+            this.Name.Width = 150;
+            // 
+            // Phone
+            // 
+            this.Phone.HeaderText = "Номер телефона";
+            this.Phone.Name = "Phone";
+            this.Phone.ReadOnly = true;
+            // 
+            // Address
+            // 
+            this.Address.HeaderText = "Фактический адрес проживания";
+            this.Address.Name = "Address";
+            this.Address.ReadOnly = true;
+            // 
+            // Email
+            // 
+            this.Email.HeaderText = "Адрес электронной почты";
+            this.Email.Name = "Email";
+            this.Email.ReadOnly = true;
+            // 
+            // Location
+            // 
+            this.Location.HeaderText = "Населенный пункт";
+            this.Location.Name = "Location";
+            this.Location.ReadOnly = true;
+            // 
+            // Country
+            // 
+            this.Country.HeaderText = "Страна";
+            this.Country.Name = "Country";
+            this.Country.ReadOnly = true;
+            // 
+            // INN
+            // 
+            this.INN.HeaderText = "ИНН";
+            this.INN.Name = "INN";
+            this.INN.ReadOnly = true;
+            // 
+            // KPP
+            // 
+            this.KPP.HeaderText = "КПП";
+            this.KPP.Name = "KPP";
+            this.KPP.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Наименование организации";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Номер телефона";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Адрес";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Адрес электронной почты";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // dataGridViewComboBoxColumn1
+            // 
+            this.dataGridViewComboBoxColumn1.HeaderText = "Страна";
+            this.dataGridViewComboBoxColumn1.Name = "dataGridViewComboBoxColumn1";
+            this.dataGridViewComboBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewComboBoxColumn2
+            // 
+            this.dataGridViewComboBoxColumn2.HeaderText = "Населенный пункт";
+            this.dataGridViewComboBoxColumn2.Name = "dataGridViewComboBoxColumn2";
+            this.dataGridViewComboBoxColumn2.ReadOnly = true;
+            // 
             // PetOwnersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -327,7 +439,6 @@
         private TabPage tabPage2;
         private DataGridView dataGridView1;
         private DataGridView dataGridView2;
-        private DataGridViewTextBoxColumn DASDSAFA;
         private GroupBox groupBox1;
         private TextBox textBox4;
         private TextBox textBox3;
@@ -346,5 +457,19 @@
         private TextBox textBox8;
         private TextBox textBox10;
         private TextBox textBox9;
+        private DataGridViewTextBoxColumn Name;
+        private DataGridViewTextBoxColumn Phone;
+        private DataGridViewTextBoxColumn Address;
+        private DataGridViewTextBoxColumn Email;
+        private DataGridViewComboBoxColumn Location;
+        private DataGridViewComboBoxColumn Country;
+        private DataGridViewTextBoxColumn INN;
+        private DataGridViewTextBoxColumn KPP;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewComboBoxColumn dataGridViewComboBoxColumn1;
+        private DataGridViewComboBoxColumn dataGridViewComboBoxColumn2;
     }
 }
