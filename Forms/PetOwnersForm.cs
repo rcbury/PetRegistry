@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Controllers;
+﻿using ClosedXML.Excel;
+using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using System;
 using System.Collections.Generic;
@@ -213,6 +214,16 @@ namespace PIS_PetRegistry
             var location = Convert.ToInt16(comboBox3.SelectedValue);
             listLegalPersonDTOs = PetOwnersController.GetLegalPeople(inn,kpp,name,email,address,phone,country,location);
             dataGridView2.DataSource = listLegalPersonDTOs;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            PetOwnersController.ExportPhysicalPeopleToExcel(listPhysicalPersonDTOs);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            PetOwnersController.ExportLegalPeopleToExcel(listLegalPersonDTOs);
         }
     }
 }
