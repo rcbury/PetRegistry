@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnimalCardForm));
+            this.parasiteTreatmentDGV = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.animalSexComboBox = new System.Windows.Forms.ComboBox();
@@ -44,18 +45,14 @@
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.button4 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.button3 = new System.Windows.Forms.Button();
+            this.addParasiteTreatmentButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button2 = new System.Windows.Forms.Button();
+            this.vaccinationDGV = new System.Windows.Forms.DataGridView();
+            this.addVaccinationButton = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.button5 = new System.Windows.Forms.Button();
+            this.veterinaryAppointmentDGV = new System.Windows.Forms.DataGridView();
+            this.addVeterinaryAppointmentButton = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -89,24 +86,33 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.saveButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.parasiteTreatmentDGV)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vaccinationDGV)).BeginInit();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.veterinaryAppointmentDGV)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // parasiteTreatmentDGV
+            // 
+            this.parasiteTreatmentDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.parasiteTreatmentDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.parasiteTreatmentDGV.Location = new System.Drawing.Point(3, 19);
+            this.parasiteTreatmentDGV.Name = "parasiteTreatmentDGV";
+            this.parasiteTreatmentDGV.RowTemplate.Height = 25;
+            this.parasiteTreatmentDGV.Size = new System.Drawing.Size(775, 232);
+            this.parasiteTreatmentDGV.TabIndex = 1;
+            this.parasiteTreatmentDGV.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.parasiteTreatmentDGV_CellContentDoubleClick);
             // 
             // tabControl1
             // 
@@ -248,7 +254,6 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
@@ -258,103 +263,64 @@
             this.tabPage2.Text = "Ветеринарные мероприятия";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.dataGridView3);
-            this.groupBox3.Controls.Add(this.button4);
-            this.groupBox3.Location = new System.Drawing.Point(8, 301);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(776, 142);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Дегельминтизация";
-            // 
-            // dataGridView3
-            // 
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dataGridView3.Location = new System.Drawing.Point(3, 19);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.RowTemplate.Height = 25;
-            this.dataGridView3.Size = new System.Drawing.Size(240, 95);
-            this.dataGridView3.TabIndex = 1;
-            // 
-            // button4
-            // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button4.Location = new System.Drawing.Point(3, 114);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(770, 25);
-            this.button4.TabIndex = 0;
-            this.button4.Text = "Добавить";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.dataGridView2);
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Location = new System.Drawing.Point(8, 153);
+            this.groupBox2.Controls.Add(this.parasiteTreatmentDGV);
+            this.groupBox2.Controls.Add(this.addParasiteTreatmentButton);
+            this.groupBox2.Location = new System.Drawing.Point(8, 252);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(776, 142);
+            this.groupBox2.Size = new System.Drawing.Size(781, 279);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Обработка от эктопаразитов";
+            this.groupBox2.Text = "Обработка от паразитов";
             // 
-            // dataGridView2
+            // addParasiteTreatmentButton
             // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dataGridView2.Location = new System.Drawing.Point(3, 19);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 25;
-            this.dataGridView2.Size = new System.Drawing.Size(240, 95);
-            this.dataGridView2.TabIndex = 1;
-            // 
-            // button3
-            // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button3.Location = new System.Drawing.Point(3, 114);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(770, 25);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "Добавить";
-            this.button3.UseVisualStyleBackColor = true;
+            this.addParasiteTreatmentButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.addParasiteTreatmentButton.Location = new System.Drawing.Point(3, 251);
+            this.addParasiteTreatmentButton.Name = "addParasiteTreatmentButton";
+            this.addParasiteTreatmentButton.Size = new System.Drawing.Size(775, 25);
+            this.addParasiteTreatmentButton.TabIndex = 0;
+            this.addParasiteTreatmentButton.Text = "Добавить";
+            this.addParasiteTreatmentButton.UseVisualStyleBackColor = true;
+            this.addParasiteTreatmentButton.Click += new System.EventHandler(this.addParasiteTreatmentButton_Click);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dataGridView1);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.vaccinationDGV);
+            this.groupBox1.Controls.Add(this.addVaccinationButton);
             this.groupBox1.Location = new System.Drawing.Point(8, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(776, 142);
+            this.groupBox1.Size = new System.Drawing.Size(776, 238);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Вакцинация";
             // 
-            // dataGridView1
+            // vaccinationDGV
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(240, 95);
-            this.dataGridView1.TabIndex = 1;
+            this.vaccinationDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.vaccinationDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vaccinationDGV.Location = new System.Drawing.Point(3, 19);
+            this.vaccinationDGV.Name = "vaccinationDGV";
+            this.vaccinationDGV.RowTemplate.Height = 25;
+            this.vaccinationDGV.Size = new System.Drawing.Size(770, 191);
+            this.vaccinationDGV.TabIndex = 1;
             // 
-            // button2
+            // addVaccinationButton
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button2.Location = new System.Drawing.Point(3, 114);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(770, 25);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "Добавить";
-            this.button2.UseVisualStyleBackColor = true;
+            this.addVaccinationButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.addVaccinationButton.Location = new System.Drawing.Point(3, 210);
+            this.addVaccinationButton.Name = "addVaccinationButton";
+            this.addVaccinationButton.Size = new System.Drawing.Size(770, 25);
+            this.addVaccinationButton.TabIndex = 0;
+            this.addVaccinationButton.Text = "Добавить";
+            this.addVaccinationButton.UseVisualStyleBackColor = true;
+            this.addVaccinationButton.Click += new System.EventHandler(this.addVaccinationButton_Click);
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.dataGridView4);
-            this.tabPage3.Controls.Add(this.button5);
+            this.tabPage3.Controls.Add(this.veterinaryAppointmentDGV);
+            this.tabPage3.Controls.Add(this.addVeterinaryAppointmentButton);
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(792, 534);
@@ -362,25 +328,27 @@
             this.tabPage3.Text = "Ветеринарные назначения";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // dataGridView4
+            // veterinaryAppointmentDGV
             // 
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dataGridView4.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.RowTemplate.Height = 25;
-            this.dataGridView4.Size = new System.Drawing.Size(792, 509);
-            this.dataGridView4.TabIndex = 3;
+            this.veterinaryAppointmentDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.veterinaryAppointmentDGV.Dock = System.Windows.Forms.DockStyle.Left;
+            this.veterinaryAppointmentDGV.Location = new System.Drawing.Point(0, 0);
+            this.veterinaryAppointmentDGV.Name = "veterinaryAppointmentDGV";
+            this.veterinaryAppointmentDGV.RowTemplate.Height = 25;
+            this.veterinaryAppointmentDGV.Size = new System.Drawing.Size(792, 509);
+            this.veterinaryAppointmentDGV.TabIndex = 3;
+            this.veterinaryAppointmentDGV.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.veterinaryAppointmentDGV_CellContentDoubleClick);
             // 
-            // button5
+            // addVeterinaryAppointmentButton
             // 
-            this.button5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button5.Location = new System.Drawing.Point(0, 509);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(792, 25);
-            this.button5.TabIndex = 2;
-            this.button5.Text = "Добавить";
-            this.button5.UseVisualStyleBackColor = true;
+            this.addVeterinaryAppointmentButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.addVeterinaryAppointmentButton.Location = new System.Drawing.Point(0, 509);
+            this.addVeterinaryAppointmentButton.Name = "addVeterinaryAppointmentButton";
+            this.addVeterinaryAppointmentButton.Size = new System.Drawing.Size(792, 25);
+            this.addVeterinaryAppointmentButton.TabIndex = 2;
+            this.addVeterinaryAppointmentButton.Text = "Добавить";
+            this.addVeterinaryAppointmentButton.UseVisualStyleBackColor = true;
+            this.addVeterinaryAppointmentButton.Click += new System.EventHandler(this.addVeterinaryAppointmentButton_Click);
             // 
             // tabPage4
             // 
@@ -695,24 +663,22 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 603);
+            this.ClientSize = new System.Drawing.Size(797, 603);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.tabControl1);
             this.Name = "AnimalCardForm";
             this.Text = "Учетная карточка";
+            ((System.ComponentModel.ISupportInitialize)(this.parasiteTreatmentDGV)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vaccinationDGV)).EndInit();
             this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.veterinaryAppointmentDGV)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
@@ -742,18 +708,15 @@
         private TextBox animalChipIdTextBox;
         private Label label5;
         private TabPage tabPage2;
-        private GroupBox groupBox3;
-        private DataGridView dataGridView3;
-        private Button button4;
         private GroupBox groupBox2;
-        private DataGridView dataGridView2;
-        private Button button3;
+        private DataGridView parasiteTreatmentDGV;
+        private Button addParasiteTreatmentButton;
         private GroupBox groupBox1;
-        private DataGridView dataGridView1;
-        private Button button2;
+        private DataGridView vaccinationDGV;
+        private Button addVaccinationButton;
         private TabPage tabPage3;
-        private DataGridView dataGridView4;
-        private Button button5;
+        private DataGridView veterinaryAppointmentDGV;
+        private Button addVeterinaryAppointmentButton;
         private TabPage tabPage4;
         private GroupBox groupBox4;
         private GroupBox groupBox6;

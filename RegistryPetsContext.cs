@@ -50,7 +50,9 @@ public partial class RegistryPetsContext : DbContext
     public virtual DbSet<VeterinaryAppointmentAnimal> VeterinaryAppointmentAnimals { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Host=localhost;Database=registry_pets;Username=postgres;Password=admin");
+        => optionsBuilder
+            .UseLazyLoadingProxies()
+            .UseNpgsql("Host=localhost;Database=registry_pets;Username=postgres;Password=admin");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
