@@ -26,6 +26,7 @@ namespace PIS_PetRegistry.Controllers
 
             if (user == null)
             {
+                dbContext.Dispose();
                 return null;
             }
             else
@@ -37,12 +38,15 @@ namespace PIS_PetRegistry.Controllers
                     ShelterId = user.FkShelter,
                     RoleId = user.FkRole,
                     LocationId = user.FkLocation,
+                    ShelterLocationId = user.FkShelterNavigation.FkLocation,
                 };
-                
+
+                dbContext.Dispose();
                 Authorization.AuthorizedUserDto = userDTO;
-                //TODO: Global entity framework filter for roles and locations
                 return userDTO;
             }
+
+            
         }
 
         public static UserDTO GetAuthorizedUser()

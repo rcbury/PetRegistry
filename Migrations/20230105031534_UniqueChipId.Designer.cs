@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PIS_PetRegistry.Models;
@@ -11,9 +12,11 @@ using PIS_PetRegistry.Models;
 namespace PISPetRegistry.Migrations
 {
     [DbContext(typeof(RegistryPetsContext))]
-    partial class RegistryPetsContextModelSnapshot : ModelSnapshot
+    [Migration("20230105031534_UniqueChipId")]
+    partial class UniqueChipId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,6 +27,42 @@ namespace PISPetRegistry.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("PIS_PetRegistry.Models.AmimalCardLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("CreateTime")
+                        .HasColumnType("date")
+                        .HasColumnName("create_time");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("json")
+                        .HasColumnName("description");
+
+                    b.Property<int>("FkLogsType")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_logs_type");
+
+                    b.Property<int>("FkUser")
+                        .HasColumnType("integer")
+                        .HasColumnName("FK_user");
+
+                    b.HasKey("Id")
+                        .HasName("logs_pkey");
+
+                    b.HasIndex("FkLogsType");
+
+                    b.HasIndex("FkUser");
+
+                    b.ToTable("amimal_card_log", (string)null);
+                });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.AnimalCard", b =>
                 {
@@ -74,42 +113,6 @@ namespace PISPetRegistry.Migrations
                     b.HasIndex("FkShelter");
 
                     b.ToTable("animal_card", (string)null);
-                });
-
-            modelBuilder.Entity("PIS_PetRegistry.Models.AnimalCardLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("create_time");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("json")
-                        .HasColumnName("description");
-
-                    b.Property<int>("FkLogsType")
-                        .HasColumnType("integer")
-                        .HasColumnName("FK_logs_type");
-
-                    b.Property<int>("FkUser")
-                        .HasColumnType("integer")
-                        .HasColumnName("FK_user");
-
-                    b.HasKey("Id")
-                        .HasName("logs_pkey");
-
-                    b.HasIndex("FkLogsType");
-
-                    b.HasIndex("FkUser");
-
-                    b.ToTable("animal_card_log", (string)null);
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.AnimalCategory", b =>
@@ -770,6 +773,25 @@ namespace PISPetRegistry.Migrations
                     b.ToTable("veterinary_appointment_animal", (string)null);
                 });
 
+            modelBuilder.Entity("PIS_PetRegistry.Models.AmimalCardLog", b =>
+                {
+                    b.HasOne("PIS_PetRegistry.Models.LogType", "FkLogsTypeNavigation")
+                        .WithMany("AmimalCardLogs")
+                        .HasForeignKey("FkLogsType")
+                        .IsRequired()
+                        .HasConstraintName("FK_logs_type");
+
+                    b.HasOne("PIS_PetRegistry.Models.User", "FkUserNavigation")
+                        .WithMany("AmimalCardLogs")
+                        .HasForeignKey("FkUser")
+                        .IsRequired()
+                        .HasConstraintName("FK_user");
+
+                    b.Navigation("FkLogsTypeNavigation");
+
+                    b.Navigation("FkUserNavigation");
+                });
+
             modelBuilder.Entity("PIS_PetRegistry.Models.AnimalCard", b =>
                 {
                     b.HasOne("PIS_PetRegistry.Models.AnimalCategory", "FkCategoryNavigation")
@@ -787,25 +809,6 @@ namespace PISPetRegistry.Migrations
                     b.Navigation("FkCategoryNavigation");
 
                     b.Navigation("FkShelterNavigation");
-                });
-
-            modelBuilder.Entity("PIS_PetRegistry.Models.AnimalCardLog", b =>
-                {
-                    b.HasOne("PIS_PetRegistry.Models.LogType", "FkLogsTypeNavigation")
-                        .WithMany("AmimalCardLogs")
-                        .HasForeignKey("FkLogsType")
-                        .IsRequired()
-                        .HasConstraintName("FK_logs_type");
-
-                    b.HasOne("PIS_PetRegistry.Models.User", "FkUserNavigation")
-                        .WithMany("AmimalCardLogs")
-                        .HasForeignKey("FkUser")
-                        .IsRequired()
-                        .HasConstraintName("FK_user");
-
-                    b.Navigation("FkLogsTypeNavigation");
-
-                    b.Navigation("FkUserNavigation");
                 });
 
             modelBuilder.Entity("PIS_PetRegistry.Models.Contract", b =>

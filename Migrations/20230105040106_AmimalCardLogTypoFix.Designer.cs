@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PIS_PetRegistry.Models;
@@ -11,9 +12,11 @@ using PIS_PetRegistry.Models;
 namespace PISPetRegistry.Migrations
 {
     [DbContext(typeof(RegistryPetsContext))]
-    partial class RegistryPetsContextModelSnapshot : ModelSnapshot
+    [Migration("20230105040106_AmimalCardLogTypoFix")]
+    partial class AmimalCardLogTypoFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,8 +88,8 @@ namespace PISPetRegistry.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreateTime")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateOnly>("CreateTime")
+                        .HasColumnType("date")
                         .HasColumnName("create_time");
 
                     b.Property<string>("Description")
