@@ -32,6 +32,7 @@
             this.parasiteTreatmentDGV = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.saveButton = new System.Windows.Forms.Button();
             this.animalSexComboBox = new System.Windows.Forms.ComboBox();
             this.animalNameTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -42,8 +43,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.animalCategoryComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.uploadPictureButton = new System.Windows.Forms.Button();
+            this.animalPictureBox = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.addParasiteTreatmentButton = new System.Windows.Forms.Button();
@@ -85,11 +86,11 @@
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.saveButton = new System.Windows.Forms.Button();
+            this.deleteAnimalCardButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.parasiteTreatmentDGV)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.animalPictureBox)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -120,15 +121,18 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 562);
+            this.tabControl1.Size = new System.Drawing.Size(797, 603);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.deleteAnimalCardButton);
+            this.tabPage1.Controls.Add(this.saveButton);
             this.tabPage1.Controls.Add(this.animalSexComboBox);
             this.tabPage1.Controls.Add(this.animalNameTextBox);
             this.tabPage1.Controls.Add(this.label6);
@@ -139,15 +143,25 @@
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.animalCategoryComboBox);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.button1);
-            this.tabPage1.Controls.Add(this.pictureBox1);
+            this.tabPage1.Controls.Add(this.uploadPictureButton);
+            this.tabPage1.Controls.Add(this.animalPictureBox);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(792, 534);
+            this.tabPage1.Size = new System.Drawing.Size(789, 575);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основная информация";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // saveButton
+            // 
+            this.saveButton.Location = new System.Drawing.Point(643, 522);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(138, 47);
+            this.saveButton.TabIndex = 24;
+            this.saveButton.Text = "Сохранить";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // animalSexComboBox
             // 
@@ -234,24 +248,25 @@
             this.label1.Text = "Пол животного";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // button1
+            // uploadPictureButton
             // 
-            this.button1.Location = new System.Drawing.Point(618, 377);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(153, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Загрузить фотографию";
-            this.button1.UseVisualStyleBackColor = true;
+            this.uploadPictureButton.Location = new System.Drawing.Point(10, 443);
+            this.uploadPictureButton.Name = "uploadPictureButton";
+            this.uploadPictureButton.Size = new System.Drawing.Size(167, 35);
+            this.uploadPictureButton.TabIndex = 1;
+            this.uploadPictureButton.Text = "Загрузить фотографию";
+            this.uploadPictureButton.UseVisualStyleBackColor = true;
+            this.uploadPictureButton.Click += new System.EventHandler(this.uploadPictureButton_Click);
             // 
-            // pictureBox1
+            // animalPictureBox
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(8, 117);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(311, 320);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.animalPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("animalPictureBox.Image")));
+            this.animalPictureBox.Location = new System.Drawing.Point(8, 117);
+            this.animalPictureBox.Name = "animalPictureBox";
+            this.animalPictureBox.Size = new System.Drawing.Size(311, 320);
+            this.animalPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.animalPictureBox.TabIndex = 0;
+            this.animalPictureBox.TabStop = false;
             // 
             // tabPage2
             // 
@@ -259,7 +274,7 @@
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(792, 534);
+            this.tabPage2.Size = new System.Drawing.Size(789, 575);
             this.tabPage2.TabIndex = 4;
             this.tabPage2.Text = "Ветеринарные мероприятия";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -325,7 +340,7 @@
             this.tabPage3.Controls.Add(this.addVeterinaryAppointmentButton);
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(792, 534);
+            this.tabPage3.Size = new System.Drawing.Size(789, 575);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Ветеринарные назначения";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -337,16 +352,16 @@
             this.veterinaryAppointmentDGV.Location = new System.Drawing.Point(0, 0);
             this.veterinaryAppointmentDGV.Name = "veterinaryAppointmentDGV";
             this.veterinaryAppointmentDGV.RowTemplate.Height = 25;
-            this.veterinaryAppointmentDGV.Size = new System.Drawing.Size(792, 509);
+            this.veterinaryAppointmentDGV.Size = new System.Drawing.Size(792, 550);
             this.veterinaryAppointmentDGV.TabIndex = 3;
             this.veterinaryAppointmentDGV.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.veterinaryAppointmentDGV_CellContentDoubleClick);
             // 
             // addVeterinaryAppointmentButton
             // 
             this.addVeterinaryAppointmentButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.addVeterinaryAppointmentButton.Location = new System.Drawing.Point(0, 509);
+            this.addVeterinaryAppointmentButton.Location = new System.Drawing.Point(0, 550);
             this.addVeterinaryAppointmentButton.Name = "addVeterinaryAppointmentButton";
-            this.addVeterinaryAppointmentButton.Size = new System.Drawing.Size(792, 25);
+            this.addVeterinaryAppointmentButton.Size = new System.Drawing.Size(789, 25);
             this.addVeterinaryAppointmentButton.TabIndex = 2;
             this.addVeterinaryAppointmentButton.Text = "Добавить";
             this.addVeterinaryAppointmentButton.UseVisualStyleBackColor = true;
@@ -360,7 +375,7 @@
             this.tabPage4.Controls.Add(this.groupBox4);
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(792, 534);
+            this.tabPage4.Size = new System.Drawing.Size(789, 575);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Владелец";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -651,22 +666,21 @@
             this.checkBox1.Text = "Юридическое лицо";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // saveButton
+            // deleteAnimalCardButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(708, 568);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 24;
-            this.saveButton.Text = "Сохранить";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.deleteAnimalCardButton.Location = new System.Drawing.Point(434, 522);
+            this.deleteAnimalCardButton.Name = "deleteAnimalCardButton";
+            this.deleteAnimalCardButton.Size = new System.Drawing.Size(138, 47);
+            this.deleteAnimalCardButton.TabIndex = 25;
+            this.deleteAnimalCardButton.Text = "Удалить";
+            this.deleteAnimalCardButton.UseVisualStyleBackColor = true;
+            this.deleteAnimalCardButton.Click += new System.EventHandler(this.deleteAnimalCardButton_Click);
             // 
             // AnimalCardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(797, 603);
-            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.tabControl1);
             this.Name = "AnimalCardForm";
             this.Text = "Учетная карточка";
@@ -674,7 +688,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.animalPictureBox)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -699,8 +713,8 @@
         private TabControl tabControl1;
         private TabPage tabPage1;
         private Label label1;
-        private Button button1;
-        private PictureBox pictureBox1;
+        private Button uploadPictureButton;
+        private PictureBox animalPictureBox;
         private TextBox animalBirthYearTextBox;
         private Label label3;
         private Label label2;
@@ -753,5 +767,6 @@
         private Button button7;
         private Button saveButton;
         private ComboBox animalSexComboBox;
+        private Button deleteAnimalCardButton;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using DocumentFormat.OpenXml.Drawing;
 using Microsoft.EntityFrameworkCore;
 using PIS_PetRegistry.Backend;
 
@@ -17,7 +18,7 @@ public partial class RegistryPetsContext : DbContext
     {
     }
 
-    public virtual DbSet<AmimalCardLog> AmimalCardLogs { get; set; }
+    public virtual DbSet<AnimalCardLog> AnimalCardLogs { get; set; }
 
     public virtual DbSet<AnimalCard> AnimalCards { get; set; }
 
@@ -58,11 +59,11 @@ public partial class RegistryPetsContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AmimalCardLog>(entity =>
+        modelBuilder.Entity<AnimalCardLog>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("logs_pkey");
 
-            entity.ToTable("amimal_card_log");
+            entity.ToTable("animal_card_log");
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
@@ -117,7 +118,12 @@ public partial class RegistryPetsContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_shelter");
 
+            entity.HasIndex(e => e.ChipId).IsUnique();
+
             // roles access limitations
+            if (Authorization.AuthorizedUserDto == null)
+                return;
+
             if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
             {
                 if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)
@@ -238,6 +244,9 @@ public partial class RegistryPetsContext : DbContext
                 .HasConstraintName("FK_locality");
 
             // roles access limitations
+            if (Authorization.AuthorizedUserDto == null)
+                return;
+
             if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
             {
                 if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)
@@ -356,6 +365,9 @@ public partial class RegistryPetsContext : DbContext
                 .HasConstraintName("FK_locality");
 
             // roles access limitations
+            if (Authorization.AuthorizedUserDto == null)
+                return;
+
             if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
             {
                 if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)

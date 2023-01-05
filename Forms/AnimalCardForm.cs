@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Controllers;
+﻿using PIS_PetRegistry.Backend;
+using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Forms;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +47,36 @@ namespace PIS_PetRegistry
         private List<ParasiteTreatmentDTO> parasiteTreatmentsDTO;
         private List<VeterinaryAppointmentDTO> veterinaryAppointmentsDTO;
         private List<VaccinationDTO> vaccinationsDTO;
+        private bool veterinaryShtukiModificationAllowed = true;
 
+        public void SetupPermissions()
+        {
+            var authorizedUser = AuthorizationController.GetAuthorizedUser();
+
+            if (animalCardDTO == null && authorizedUser.RoleId != (int)UserRoles.Veterinarian)
+                throw new Exception("Данный пользователь не может создать учетную карточку животного");
+
+
+            if (authorizedUser.RoleId != (int)UserRoles.Veterinarian)
+            {
+                animalCategoryComboBox.Enabled = false;
+                animalSexComboBox.Enabled = false;
+                animalNameTextBox.Enabled = false;
+                animalChipIdTextBox.Enabled = false;
+                animalCategoryComboBox.Enabled = false;
+
+                saveButton.Enabled = false;
+                uploadPictureButton.Enabled = false;
+                addParasiteTreatmentButton.Enabled = false;
+                addVaccinationButton.Enabled = false;
+                addVeterinaryAppointmentButton.Enabled = false;
+                veterinaryShtukiModificationAllowed = false;
+
+                //TODO: Disable owners info
+            }
+
+
+        }
 
         public void FillFields()
         {
@@ -57,6 +88,8 @@ namespace PIS_PetRegistry
             animalNameTextBox.Text = animalCardDTO.Name;
             animalChipIdTextBox.Text = animalCardDTO.ChipId;
             animalBirthYearTextBox.Text = animalCardDTO.YearOfBirth.ToString();
+
+            animalPictureBox.ImageLocation = animalCardDTO.Photo;
         }
 
         private void SetupVaccinationDGV()
@@ -212,7 +245,7 @@ namespace PIS_PetRegistry
                 tempAnimalCardDTO.FkCategory = int.Parse(animalCategoryComboBox.SelectedValue.ToString());
                 tempAnimalCardDTO.IsBoy = (bool)animalSexComboBox.SelectedValue;
                 tempAnimalCardDTO.YearOfBirth = int.Parse(animalBirthYearTextBox.Text);
-                tempAnimalCardDTO.Photo = "";
+                tempAnimalCardDTO.Photo = animalPictureBox.ImageLocation;
 
                 var authorizedUser = AuthorizationController.GetAuthorizedUser();
 
@@ -283,6 +316,8 @@ namespace PIS_PetRegistry
 
         private void parasiteTreatmentDGV_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (!veterinaryShtukiModificationAllowed) return;
+
             var clickedDTO = (ParasiteTreatmentDTO)parasiteTreatmentDGV.Rows[e.RowIndex].DataBoundItem;
 
             var form = new ParasiteTreatmentForm(clickedDTO);
@@ -292,6 +327,8 @@ namespace PIS_PetRegistry
 
         private void veterinaryAppointmentDGV_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (!veterinaryShtukiModificationAllowed) return;
+
             var clickedDTO = (VeterinaryAppointmentDTO)veterinaryAppointmentDGV.Rows[e.RowIndex].DataBoundItem;
 
             var form = new VeterinaryProcedure(clickedDTO);
@@ -315,6 +352,8 @@ namespace PIS_PetRegistry
 
         private void vaccinationDGV_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (!veterinaryShtukiModificationAllowed) return;
+
             var clickedDTO = (VaccinationDTO)vaccinationDGV.Rows[e.RowIndex].DataBoundItem;
 
             var form = new VaccinationForm(clickedDTO);
@@ -329,6 +368,47 @@ namespace PIS_PetRegistry
                 MessageBox.Show("Сначала сохраните учетную карточку");
                 tabControl1.SelectedIndex = 0;
             }
+        }
+
+        private void uploadPictureButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "Files|*.jpg;*.jpeg;*.png;";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    var filePath = openFileDialog.FileName;
+
+                    animalPictureBox.ImageLocation = filePath;
+                }
+            }
+        }
+
+        private void deleteAnimalCardButton_Click(object sender, EventArgs e)
+        {
+            var confirmationResult = MessageBox.Show(
+                "Вы действительно хотите удалить учетную карточку?", 
+                "Подтверждение удаления", 
+                MessageBoxButtons.YesNo);
+
+            if (confirmationResult == DialogResult.No)
+                return;
+
+            if (animalCardDTO == null)
+                this.Close();
+
+            var authorizedUser = AuthorizationController.GetAuthorizedUser();
+
+            AnimalCardController.DeleteAnimalCard(this.animalCardDTO, authorizedUser);
+
+            MessageBox.Show("Карточка успешно удалена");
+
+            this.Close();
         }
     }
 }
