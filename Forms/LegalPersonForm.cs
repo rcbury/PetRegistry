@@ -31,9 +31,8 @@ namespace PIS_PetRegistry
         private void button1_Click(object sender, EventArgs e)
         {
             
-            var listAnimalRegistry = new List<AnimalCardDTO>();
             //...
-            AnimalRegistryForm form = new AnimalRegistryForm(listAnimalRegistry);
+            AnimalRegistryForm form = new AnimalRegistryForm();
             Hide();
             form.ShowDialog();
             Show();

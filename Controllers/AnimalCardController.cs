@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PIS_PetRegistry.Backend;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using PISPetRegistry.Migrations;
@@ -98,17 +99,7 @@ namespace PIS_PetRegistry.Controllers
                 AnimalCardLogController.LogCreate(animalCardModel, userDTO.Id);
             }
 
-            var newAnimalCardDTO = new AnimalCardDTO()
-            {
-                Id = animalCardModel.Id,
-                ChipId = animalCardModel.ChipId,
-                Name = animalCardModel.Name,
-                IsBoy = animalCardModel.IsBoy,
-                FkCategory = animalCardModel.FkCategory,
-                FkShelter = animalCardModel.FkShelter,
-                YearOfBirth = animalCardModel.YearOfBirth,
-                Photo = animalCardModel.Photo,
-            };
+            var newAnimalCardDTO = ConvertModelInDTO(animalCardModel);
 
             return newAnimalCardDTO;
         }
@@ -142,21 +133,43 @@ namespace PIS_PetRegistry.Controllers
                 AnimalCardLogController.LogUpdate(oldAnimalCardModel, animalCardModel, userDTO.Id);
             }
 
-            var newAnimalCardDTO = new AnimalCardDTO()
-            {
-                Id = animalCardModel.Id,
-                ChipId = animalCardModel.ChipId,
-                Name = animalCardModel.Name,
-                IsBoy = animalCardModel.IsBoy,
-                FkCategory = animalCardModel.FkCategory,
-                FkShelter = animalCardModel.FkShelter,
-                YearOfBirth = animalCardModel.YearOfBirth,
-                Photo = animalCardModel.Photo,
-            };
+            var newAnimalCardDTO = ConvertModelInDTO(animalCardModel);
 
             return newAnimalCardDTO;
         }
 
+        public static List<AnimalCardDTO> GetAnimals(UserDTO user) 
+        {
+            var animalsList = AnimalService.GetAnimalCards(user.ShelterId);
+            var animalsListDto = animalsList.Select(item => ConvertModelInDTO(item)).ToList();
+
+            return animalsListDto;
+        }
+        public static List<AnimalCardDTO> GetAnimals(AnimalFilterDTO animalFilter)
+        {
+            var animalsList = AnimalService.GetAnimalCards(animalFilter);
+            var animalsListDto = animalsList.Select(item => ConvertModelInDTO(item)).ToList();
+
+            return animalsListDto;
+        }
+
+        public static AnimalCardDTO ConvertModelInDTO(AnimalCard model) 
+        {
+            var AnimalCardDTO = new AnimalCardDTO()
+            {
+                Id = model.Id,
+                ChipId = model.ChipId,
+                Name = model.Name,
+                IsBoy = model.IsBoy,
+                FkCategory = model.FkCategory,
+                FkShelter = model.FkShelter,
+                YearOfBirth = model.YearOfBirth,
+                Photo = model.Photo
+            };
+
+            return AnimalCardDTO;
+        }
+        
         public static void DeleteAnimalCard(AnimalCardDTO animalCardDTO, UserDTO userDTO)
         {
             using (var context = new RegistryPetsContext())
