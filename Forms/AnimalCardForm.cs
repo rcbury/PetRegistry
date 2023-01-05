@@ -22,7 +22,7 @@ namespace PIS_PetRegistry
         /// </summary>
         public AnimalCardForm() : this(null)
         {
-
+            
         }
 
         /// <summary>
@@ -33,6 +33,7 @@ namespace PIS_PetRegistry
         {
             this.animalCardDTO = animalCardDTO;
             this.parasiteTreatmentsDTO = new List<ParasiteTreatmentDTO>();
+            this.locationsDTO = PetOwnersController.GetLocations();
 
             InitializeComponent();
             
@@ -44,9 +45,12 @@ namespace PIS_PetRegistry
         }
 
         private AnimalCardDTO? animalCardDTO;
+        private PhysicalPersonDTO? physicalPersonDTO;
+        private LegalPersonDTO? legalPersonDTO;
         private List<ParasiteTreatmentDTO> parasiteTreatmentsDTO;
         private List<VeterinaryAppointmentDTO> veterinaryAppointmentsDTO;
         private List<VaccinationDTO> vaccinationsDTO;
+        private List<LocationDTO> locationsDTO;
         private bool veterinaryShtukiModificationAllowed = true;
 
         public void SetupPermissions()
@@ -208,6 +212,14 @@ namespace PIS_PetRegistry
             animalSexComboBox.DataSource = animalSexDict;
             animalSexComboBox.ValueMember = "Key";
             animalSexComboBox.DisplayMember = "Value";
+
+            physicalLocationCombobox.DataSource = locationsDTO;
+            physicalLocationCombobox.ValueMember = "Id";
+            physicalLocationCombobox.DisplayMember = "Name";
+
+            legalLocationCombobox.DataSource = locationsDTO;
+            legalLocationCombobox.ValueMember = "Id";
+            legalLocationCombobox.DisplayMember = "Name";
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -409,6 +421,47 @@ namespace PIS_PetRegistry
             MessageBox.Show("Карточка успешно удалена");
 
             this.Close();
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var phone = textBox6.Text;
+            physicalPersonDTO = AnimalCardController.GetPhysicalPersonByPhone(phone);
+            if (physicalPersonDTO == null)
+            {
+                MessageBox.Show("Физ. лицо с указанным номером телефона не найдено.");
+            }
+            else 
+            {
+                textBox7.Text = physicalPersonDTO.Email;
+                textBox8.Text = physicalPersonDTO.Address;
+                textBox9.Text = physicalPersonDTO.Name;
+                physicalLocationCombobox.SelectedValue = physicalPersonDTO.FkLocality;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var inn = textBox12.Text;
+            legalPersonDTO = AnimalCardController.GetLegalPersonByINN(inn);
+            if (legalPersonDTO == null)
+            {
+                MessageBox.Show("Юр. лицо с указанным ИНН не найдено.");
+            }
+            else
+            {
+                textBox13.Text = legalPersonDTO.Name;
+                textBox14.Text = legalPersonDTO.KPP;
+                textBox15.Text = legalPersonDTO.Address;
+                textBox16.Text = legalPersonDTO.Phone;
+                textBox17.Text = legalPersonDTO.Email;
+                legalLocationCombobox.SelectedValue = legalPersonDTO.FkLocality;
+            }
         }
     }
 }

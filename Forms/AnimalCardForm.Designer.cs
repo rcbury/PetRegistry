@@ -32,6 +32,7 @@
             this.parasiteTreatmentDGV = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.deleteAnimalCardButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.animalSexComboBox = new System.Windows.Forms.ComboBox();
             this.animalNameTextBox = new System.Windows.Forms.TextBox();
@@ -72,10 +73,7 @@
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
@@ -86,7 +84,11 @@
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.deleteAnimalCardButton = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.physicalLocationCombobox = new System.Windows.Forms.ComboBox();
+            this.legalLocationCombobox = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.parasiteTreatmentDGV)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -152,6 +154,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основная информация";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // deleteAnimalCardButton
+            // 
+            this.deleteAnimalCardButton.Location = new System.Drawing.Point(434, 522);
+            this.deleteAnimalCardButton.Name = "deleteAnimalCardButton";
+            this.deleteAnimalCardButton.Size = new System.Drawing.Size(138, 47);
+            this.deleteAnimalCardButton.TabIndex = 25;
+            this.deleteAnimalCardButton.Text = "Удалить";
+            this.deleteAnimalCardButton.UseVisualStyleBackColor = true;
+            this.deleteAnimalCardButton.Click += new System.EventHandler(this.deleteAnimalCardButton_Click);
             // 
             // saveButton
             // 
@@ -384,7 +396,7 @@
             // 
             this.groupBox7.Controls.Add(this.checkBox2);
             this.groupBox7.Controls.Add(this.button7);
-            this.groupBox7.Location = new System.Drawing.Point(3, 400);
+            this.groupBox7.Location = new System.Drawing.Point(4, 417);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(169, 82);
             this.groupBox7.TabIndex = 12;
@@ -412,6 +424,9 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.legalLocationCombobox);
+            this.groupBox6.Controls.Add(this.label11);
+            this.groupBox6.Controls.Add(this.button2);
             this.groupBox6.Controls.Add(this.textBox17);
             this.groupBox6.Controls.Add(this.label18);
             this.groupBox6.Controls.Add(this.textBox16);
@@ -426,13 +441,14 @@
             this.groupBox6.Controls.Add(this.label13);
             this.groupBox6.Location = new System.Drawing.Point(4, 209);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(781, 185);
+            this.groupBox6.Size = new System.Drawing.Size(781, 202);
             this.groupBox6.TabIndex = 3;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Данные юридического лица";
             // 
             // textBox17
             // 
+            this.textBox17.Enabled = false;
             this.textBox17.Location = new System.Drawing.Point(403, 125);
             this.textBox17.Name = "textBox17";
             this.textBox17.Size = new System.Drawing.Size(361, 23);
@@ -449,6 +465,7 @@
             // 
             // textBox16
             // 
+            this.textBox16.Enabled = false;
             this.textBox16.Location = new System.Drawing.Point(205, 125);
             this.textBox16.Name = "textBox16";
             this.textBox16.Size = new System.Drawing.Size(190, 23);
@@ -465,6 +482,7 @@
             // 
             // textBox15
             // 
+            this.textBox15.Enabled = false;
             this.textBox15.Location = new System.Drawing.Point(11, 125);
             this.textBox15.Name = "textBox15";
             this.textBox15.Size = new System.Drawing.Size(190, 23);
@@ -481,9 +499,10 @@
             // 
             // textBox14
             // 
+            this.textBox14.Enabled = false;
             this.textBox14.Location = new System.Drawing.Point(395, 81);
             this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(375, 23);
+            this.textBox14.Size = new System.Drawing.Size(369, 23);
             this.textBox14.TabIndex = 17;
             // 
             // label15
@@ -497,6 +516,7 @@
             // 
             // textBox13
             // 
+            this.textBox13.Enabled = false;
             this.textBox13.Location = new System.Drawing.Point(9, 81);
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(375, 23);
@@ -515,7 +535,7 @@
             // 
             this.textBox12.Location = new System.Drawing.Point(9, 37);
             this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(755, 23);
+            this.textBox12.Size = new System.Drawing.Size(576, 23);
             this.textBox12.TabIndex = 13;
             // 
             // label13
@@ -529,10 +549,9 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.textBox11);
-            this.groupBox5.Controls.Add(this.label12);
-            this.groupBox5.Controls.Add(this.textBox10);
-            this.groupBox5.Controls.Add(this.label11);
+            this.groupBox5.Controls.Add(this.physicalLocationCombobox);
+            this.groupBox5.Controls.Add(this.label4);
+            this.groupBox5.Controls.Add(this.button1);
             this.groupBox5.Controls.Add(this.textBox9);
             this.groupBox5.Controls.Add(this.label10);
             this.groupBox5.Controls.Add(this.textBox8);
@@ -548,43 +567,22 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Данные физического лица";
             // 
-            // textBox11
+            // button1
             // 
-            this.textBox11.Location = new System.Drawing.Point(412, 80);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(192, 23);
-            this.textBox11.TabIndex = 11;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(412, 62);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(58, 15);
-            this.label12.TabIndex = 10;
-            this.label12.Text = "Отчество";
-            // 
-            // textBox10
-            // 
-            this.textBox10.Location = new System.Drawing.Point(214, 80);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(192, 23);
-            this.textBox10.TabIndex = 9;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(214, 62);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(31, 15);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "Имя";
+            this.button1.Location = new System.Drawing.Point(160, 35);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(173, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Найти физ. лицо";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox9
             // 
+            this.textBox9.Enabled = false;
             this.textBox9.Location = new System.Drawing.Point(9, 80);
             this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(192, 23);
+            this.textBox9.Size = new System.Drawing.Size(304, 23);
             this.textBox9.TabIndex = 7;
             // 
             // label10
@@ -592,21 +590,22 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(9, 62);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(58, 15);
+            this.label10.Size = new System.Drawing.Size(34, 15);
             this.label10.TabIndex = 6;
-            this.label10.Text = "Фамилия";
+            this.label10.Text = "ФИО";
             // 
             // textBox8
             // 
-            this.textBox8.Location = new System.Drawing.Point(316, 36);
+            this.textBox8.Enabled = false;
+            this.textBox8.Location = new System.Drawing.Point(498, 36);
             this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(459, 23);
+            this.textBox8.Size = new System.Drawing.Size(277, 23);
             this.textBox8.TabIndex = 5;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(319, 18);
+            this.label9.Location = new System.Drawing.Point(498, 18);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(192, 15);
             this.label9.TabIndex = 4;
@@ -614,7 +613,8 @@
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(160, 36);
+            this.textBox7.Enabled = false;
+            this.textBox7.Location = new System.Drawing.Point(339, 36);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(153, 23);
             this.textBox7.TabIndex = 3;
@@ -622,11 +622,12 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(160, 18);
+            this.label8.Location = new System.Drawing.Point(339, 18);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(153, 15);
             this.label8.TabIndex = 2;
             this.label8.Text = "Адрес электронной почты";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // textBox6
             // 
@@ -666,15 +667,51 @@
             this.checkBox1.Text = "Юридическое лицо";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // deleteAnimalCardButton
+            // button2
             // 
-            this.deleteAnimalCardButton.Location = new System.Drawing.Point(434, 522);
-            this.deleteAnimalCardButton.Name = "deleteAnimalCardButton";
-            this.deleteAnimalCardButton.Size = new System.Drawing.Size(138, 47);
-            this.deleteAnimalCardButton.TabIndex = 25;
-            this.deleteAnimalCardButton.Text = "Удалить";
-            this.deleteAnimalCardButton.UseVisualStyleBackColor = true;
-            this.deleteAnimalCardButton.Click += new System.EventHandler(this.deleteAnimalCardButton_Click);
+            this.button2.Location = new System.Drawing.Point(591, 37);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(173, 23);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Найти юр. лицо";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(319, 62);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(111, 15);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Населенный пункт";
+            // 
+            // physicalLocationCombobox
+            // 
+            this.physicalLocationCombobox.Enabled = false;
+            this.physicalLocationCombobox.FormattingEnabled = true;
+            this.physicalLocationCombobox.Location = new System.Drawing.Point(319, 80);
+            this.physicalLocationCombobox.Name = "physicalLocationCombobox";
+            this.physicalLocationCombobox.Size = new System.Drawing.Size(121, 23);
+            this.physicalLocationCombobox.TabIndex = 10;
+            // 
+            // legalLocationCombobox
+            // 
+            this.legalLocationCombobox.Enabled = false;
+            this.legalLocationCombobox.FormattingEnabled = true;
+            this.legalLocationCombobox.Location = new System.Drawing.Point(11, 169);
+            this.legalLocationCombobox.Name = "legalLocationCombobox";
+            this.legalLocationCombobox.Size = new System.Drawing.Size(121, 23);
+            this.legalLocationCombobox.TabIndex = 12;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(11, 151);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(111, 15);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Населенный пункт";
             // 
             // AnimalCardForm
             // 
@@ -768,5 +805,10 @@
         private Button saveButton;
         private ComboBox animalSexComboBox;
         private Button deleteAnimalCardButton;
+        private Button button1;
+        private Button button2;
+        private ComboBox legalLocationCombobox;
+        private ComboBox physicalLocationCombobox;
+        private Label label4;
     }
 }
