@@ -22,6 +22,8 @@ namespace PIS_PetRegistry
             new KeyValuePair<bool, string>(false, "Девочка"),
             new KeyValuePair<bool, string>(true, "Мальчик"),
         };
+        private int _previousIndex;
+        private bool _sortDirection;
 
         public AnimalRegistryForm(UserDTO user = null!)
         {
@@ -81,6 +83,11 @@ namespace PIS_PetRegistry
             dataGridViewListAnimals.AutoGenerateColumns = false;
             dataGridViewListAnimals.AllowUserToAddRows = false;
             dataGridViewListAnimals.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            foreach (DataGridViewColumn column in dataGridViewListAnimals.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.Automatic;
+            }
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -170,8 +177,37 @@ namespace PIS_PetRegistry
 
         private void dataGridViewListAnimals_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            AnimalCardForm animalForm = new AnimalCardForm(_listAnimalCards[e.RowIndex]);
-            animalForm.ShowDialog();
+            if (e.RowIndex >= 0)
+            { 
+                AnimalCardForm animalForm = new AnimalCardForm(_listAnimalCards[e.RowIndex]);
+                animalForm.ShowDialog();
+            }
+        }
+
+        private void dataGridViewListAnimals_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == _previousIndex)
+                _sortDirection ^= true;
+
+            dataGridViewListAnimals.DataSource = SortData(
+                (List<AnimalCardDTO>)dataGridViewListAnimals.DataSource, dataGridViewListAnimals.Columns[e.ColumnIndex].Name, _sortDirection);
+
+            _previousIndex = e.ColumnIndex;
+        }
+
+        public List<AnimalCardDTO> SortData(List<AnimalCardDTO> list, string column, bool ascending)
+        {
+            try
+            {
+                return ascending ?
+                    list.OrderBy(_ => _.GetType().GetProperty(column).GetValue(_)).ToList() :
+                    list.OrderByDescending(_ => _.GetType().GetProperty(column).GetValue(_)).ToList();
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка сотрировки");
+                return list;
+            }
         }
     }
 }

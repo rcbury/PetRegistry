@@ -140,6 +140,7 @@
             this.dataGridViewListAnimals.TabIndex = 1;
             this.dataGridViewListAnimals.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridViewListAnimals.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewListAnimals_CellContentDoubleClick);
+            this.dataGridViewListAnimals.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewListAnimals_ColumnHeaderMouseClick);
             // 
             // groupBox1
             // 
