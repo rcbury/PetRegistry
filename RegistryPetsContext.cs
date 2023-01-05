@@ -116,6 +116,20 @@ public partial class RegistryPetsContext : DbContext
                 .HasForeignKey(d => d.FkShelter)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_shelter");
+
+            // roles access limitations
+            if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
+            {
+                if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)
+                {
+                    entity.HasQueryFilter(e => e.FkShelterNavigation.FkLocation == Authorization.AuthorizedUserDto.LocationId);
+                }
+                else
+                {
+                    entity.HasQueryFilter(e => e.FkShelterNavigation.FkLocation == Authorization.AuthorizedUserDto.ShelterLocationId);
+                }
+
+            }
         });
 
         modelBuilder.Entity<AnimalCategory>(entity =>
@@ -222,6 +236,20 @@ public partial class RegistryPetsContext : DbContext
                 .HasForeignKey(d => d.FkLocality)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_locality");
+
+            // roles access limitations
+            if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
+            {
+                if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)
+                {
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.LocationId);
+                }
+                else
+                {
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.ShelterLocationId);
+                }
+
+            }
         });
 
         modelBuilder.Entity<Location>(entity =>
@@ -326,6 +354,20 @@ public partial class RegistryPetsContext : DbContext
                 .HasForeignKey(d => d.FkLocality)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_locality");
+
+            // roles access limitations
+            if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
+            {
+                if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)
+                {
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.LocationId);
+                }
+                else
+                {
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.ShelterLocationId);
+                }
+
+            }
         });
 
         modelBuilder.Entity<Role>(entity =>
