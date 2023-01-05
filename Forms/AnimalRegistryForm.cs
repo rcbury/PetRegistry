@@ -19,15 +19,20 @@ namespace PIS_PetRegistry
         private List<AnimalCategoryDTO> _animalCategories;
         private List<KeyValuePair<bool, string>> _animalSexTypes = new List<KeyValuePair<bool, string>>()
         {
-            new KeyValuePair<bool, string>(true, "Мальчик"),
             new KeyValuePair<bool, string>(false, "Девочка"),
+            new KeyValuePair<bool, string>(true, "Мальчик"),
         };
 
         public AnimalRegistryForm(UserDTO user = null!)
         {
             InitializeComponent();
-            
+
+            var defualtAnimalCategory = new AnimalCategoryDTO();
+            defualtAnimalCategory.Id = -1;
+            defualtAnimalCategory.Name = "Категория";
+
             _animalCategories = AnimalCardController.GetAnimalCategories();
+            _animalCategories.Insert(0, defualtAnimalCategory);
             comboBoxCategory.DataSource = _animalCategories;
             comboBoxCategory.DisplayMember = "Name";
             comboBoxCategory.ValueMember = "Id";
@@ -113,11 +118,54 @@ namespace PIS_PetRegistry
 
         private void buttonClickQuery_Click(object sender, EventArgs e)
         {
-            _listAnimalCards = AnimalCardController.GetAnimalsUser(Authorization.AuthorizedUserDto);
+            if (IsSelectedFilters())
+            {
+                var filterParams = this.GenerateFilterDTO();
+                _listAnimalCards = AnimalCardController.GetAnimals(filterParams);
+            }
+            else
+            { 
+                _listAnimalCards = AnimalCardController.GetAnimals(Authorization.AuthorizedUserDto);
+            }
+            
             dataGridViewListAnimals.DataSource = _listAnimalCards;
 
             if (_listAnimalCards.Count == 0)
                 MessageBox.Show("По вашему запросу нечего не найдено");
+        }
+
+        private AnimalFilterDTO GenerateFilterDTO()
+        { 
+            AnimalFilterDTO filterDTO = new AnimalFilterDTO();
+
+            filterDTO.Name = this.textBoxName.Text;
+            filterDTO.ChipId = this.textBoxChipId.Text;
+            filterDTO.AnimalCategory = _animalCategories[this.comboBoxCategory.SelectedIndex];
+
+            if (comboBoxSex.SelectedIndex != -1)
+            { 
+                filterDTO.IsBoy = _animalSexTypes[comboBoxSex.SelectedIndex].Key;
+                filterDTO.IsSelectedSex = comboBoxSex.SelectedIndex >= 0;
+            }
+
+            return filterDTO;
+        }
+
+        private Boolean IsSelectedFilters()
+        {
+            if (this.textBoxName.Text.Length != 0)
+                return true;
+
+            if (this.textBoxChipId.Text.Length != 0)
+                return true;
+
+            if (this.comboBoxSex.SelectedIndex >= 0)
+                return true;
+
+            if (this.comboBoxCategory.SelectedIndex > 0)
+                return true;
+
+            return false;
         }
 
         private void dataGridViewListAnimals_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)

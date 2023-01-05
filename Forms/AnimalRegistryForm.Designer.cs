@@ -42,7 +42,7 @@
             this.buttonClickQuery = new System.Windows.Forms.Button();
             this.comboBoxCategory = new System.Windows.Forms.ComboBox();
             this.comboBoxSex = new System.Windows.Forms.ComboBox();
-            this.textBoxCheapId = new System.Windows.Forms.TextBox();
+            this.textBoxChipId = new System.Windows.Forms.TextBox();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewListAnimals)).BeginInit();
@@ -146,7 +146,7 @@
             this.groupBox1.Controls.Add(this.buttonClickQuery);
             this.groupBox1.Controls.Add(this.comboBoxCategory);
             this.groupBox1.Controls.Add(this.comboBoxSex);
-            this.groupBox1.Controls.Add(this.textBoxCheapId);
+            this.groupBox1.Controls.Add(this.textBoxChipId);
             this.groupBox1.Controls.Add(this.textBoxName);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 40);
@@ -172,7 +172,7 @@
             // comboBoxCategory
             // 
             this.comboBoxCategory.FormattingEnabled = true;
-            this.comboBoxCategory.Location = new System.Drawing.Point(533, 38);
+            this.comboBoxCategory.Location = new System.Drawing.Point(619, 38);
             this.comboBoxCategory.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.comboBoxCategory.Name = "comboBoxCategory";
             this.comboBoxCategory.Size = new System.Drawing.Size(205, 38);
@@ -189,18 +189,18 @@
             this.comboBoxSex.Location = new System.Drawing.Point(422, 38);
             this.comboBoxSex.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.comboBoxSex.Name = "comboBoxSex";
-            this.comboBoxSex.Size = new System.Drawing.Size(98, 38);
+            this.comboBoxSex.Size = new System.Drawing.Size(187, 38);
             this.comboBoxSex.TabIndex = 2;
             this.comboBoxSex.Text = "Пол";
             // 
-            // textBoxCheapId
+            // textBoxChipId
             // 
-            this.textBoxCheapId.Location = new System.Drawing.Point(216, 38);
-            this.textBoxCheapId.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.textBoxCheapId.Name = "textBoxCheapId";
-            this.textBoxCheapId.PlaceholderText = "Номер чипа";
-            this.textBoxCheapId.Size = new System.Drawing.Size(193, 35);
-            this.textBoxCheapId.TabIndex = 1;
+            this.textBoxChipId.Location = new System.Drawing.Point(216, 38);
+            this.textBoxChipId.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.textBoxChipId.Name = "textBoxChipId";
+            this.textBoxChipId.PlaceholderText = "Номер чипа";
+            this.textBoxChipId.Size = new System.Drawing.Size(193, 35);
+            this.textBoxChipId.TabIndex = 1;
             // 
             // textBoxName
             // 
@@ -247,7 +247,7 @@
         private Button buttonClickQuery;
         private ComboBox comboBoxCategory;
         private ComboBox comboBoxSex;
-        private TextBox textBoxCheapId;
+        private TextBox textBoxChipId;
         private TextBox textBoxName;
     }
 }
