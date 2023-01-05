@@ -83,11 +83,6 @@ namespace PIS_PetRegistry
             dataGridViewListAnimals.AutoGenerateColumns = false;
             dataGridViewListAnimals.AllowUserToAddRows = false;
             dataGridViewListAnimals.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-            foreach (DataGridViewColumn column in dataGridViewListAnimals.Columns)
-            {
-                column.SortMode = DataGridViewColumnSortMode.Automatic;
-            }
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -205,7 +200,7 @@ namespace PIS_PetRegistry
             }
             catch
             {
-                MessageBox.Show("Ошибка сотрировки");
+                MessageBox.Show("Ошибка сортировки");
                 return list;
             }
         }
