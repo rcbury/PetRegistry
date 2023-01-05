@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Aspose.Words;
+using DocumentFormat.OpenXml.Bibliography;
+using PIS_PetRegistry.Backend;
 
 namespace PIS_PetRegistry.Controllers
 {
@@ -196,6 +199,70 @@ namespace PIS_PetRegistry.Controllers
                 AnimalCardLogController.LogDelete(animalCard, userDTO.Id);
 
                 context.SaveChanges();
+            }
+        }
+
+        public static void MakeContract(string filePath, PhysicalPersonDTO? physicalPerson, 
+            LegalPersonDTO? legalPerson, AnimalCardDTO animalCard, UserDTO user) 
+        {
+            if (physicalPerson != null)
+            {
+                using (var context = new RegistryPetsContext()) 
+                {
+                    Document doc;
+                    if (legalPerson != null)
+                    {
+                        var city = context.Locations.Where(location => location.Id == legalPerson.FkLocality)
+                            .FirstOrDefault()
+                            .Name;
+                        doc = new Document("Договор юры.docx");
+                        doc.Range.Replace("<LegalPersonINN> ", legalPerson.INN);
+                        doc.Range.Replace("<LegalPersonKPP> ", legalPerson.KPP);
+                        doc.Range.Replace("<LegalPersonPhoneNumber> ", legalPerson.Phone);
+                        doc.Range.Replace("<LegalPersonName> ", legalPerson.Name);
+                        doc.Range.Replace("<LegalPersonLocation> ", city);
+                        doc.Range.Replace("<LegalPersonAddress> ", legalPerson.Address);
+                    }
+                    else
+                    {
+                        doc = new Document("Договор физы.docx");
+                    }
+                    var shelter = context.Shelters.Where(shelter => shelter.Id == user.ShelterId)
+                        .FirstOrDefault();
+                    var personCity = context.Locations.Where(location => location.Id == physicalPerson.FkLocality)
+                        .FirstOrDefault()
+                        .Name;
+                    var animalCategoryName = context.AnimalCategories.Where(animalCategory => animalCategory.Id == animalCard.FkCategory)
+                        .FirstOrDefault()
+                        .Name;
+                    var animalGender = animalCard.IsBoy ? "М" : "Ж";
+                    var day = DateTime.Now.Day.ToString();
+                    var month = DateTime.Now.Month.ToString();
+                    var year = DateTime.Now.Year.ToString();
+                    var age = (int.Parse(year) - animalCard.YearOfBirth).ToString();
+                    var loggedUserCreds = Utils.GetCredsFromFullName(user.Name);
+                    var physicalPersonCreds = Utils.GetCredsFromFullName(physicalPerson.Name);
+                    var loggedUserRole = context.Roles.Where(role => role.Id == user.RoleId).FirstOrDefault().Name;
+                    doc.Range.Replace("<City>", personCity);
+                    doc.Range.Replace("<Day>", day);
+                    doc.Range.Replace("<Month>", month);
+                    doc.Range.Replace("<Year>", year);
+                    doc.Range.Replace("<ShelterName>", shelter.Name);
+                    doc.Range.Replace("<Address>", shelter.Address);
+                    doc.Range.Replace("<PhysicalPersonName>", physicalPerson.Name);
+                    doc.Range.Replace("<PhysicalPersonLocation>", personCity);
+                    doc.Range.Replace("<PhysicalPersonAddress> ", physicalPerson.Address);
+                    doc.Range.Replace("<AnimalCategoryName> ", animalCategoryName);
+                    doc.Range.Replace("<AnimalAge> ", age);
+                    doc.Range.Replace("<AnimalGender> ", animalGender);
+                    doc.Range.Replace("<ChipId> ", animalCard.ChipId);
+                    doc.Range.Replace("<AnimalName> ", animalCard.Name);
+                    doc.Range.Replace("<LoggedUserCreds> ", loggedUserCreds);
+                    doc.Range.Replace("<LoggedUserRole> ", loggedUserRole);
+                    doc.Range.Replace("<PhysicalPersonCreds> ", physicalPersonCreds);
+                    doc.Range.Replace("<PhysicalPersonNumber> ", physicalPerson.Phone);
+                    doc.Save(filePath);
+                }
             }
         }
     }

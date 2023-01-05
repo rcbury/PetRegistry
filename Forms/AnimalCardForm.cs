@@ -463,5 +463,34 @@ namespace PIS_PetRegistry
                 legalLocationCombobox.SelectedValue = legalPersonDTO.FkLocality;
             }
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                groupBox6.Show();
+            }
+            else 
+            {
+                groupBox6.Hide();
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            var currentUser = AuthorizationController.GetAuthorizedUser();
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.InitialDirectory = "c:\\";
+                saveFileDialog.DefaultExt = ".docx";
+                saveFileDialog.RestoreDirectory = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = saveFileDialog.FileName;
+                    AnimalCardController.MakeContract(filePath, physicalPersonDTO, legalPersonDTO, animalCardDTO, currentUser);
+                }
+            }
+        }
     }
 }

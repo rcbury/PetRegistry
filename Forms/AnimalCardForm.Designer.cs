@@ -60,6 +60,9 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.button7 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.legalLocationCombobox = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.textBox17 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.textBox16 = new System.Windows.Forms.TextBox();
@@ -73,6 +76,8 @@
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.physicalLocationCombobox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -84,11 +89,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.physicalLocationCombobox = new System.Windows.Forms.ComboBox();
-            this.legalLocationCombobox = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.parasiteTreatmentDGV)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -421,6 +421,7 @@
             this.button7.TabIndex = 0;
             this.button7.Text = "Выдать договор";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // groupBox6
             // 
@@ -445,6 +446,34 @@
             this.groupBox6.TabIndex = 3;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Данные юридического лица";
+            // 
+            // legalLocationCombobox
+            // 
+            this.legalLocationCombobox.Enabled = false;
+            this.legalLocationCombobox.FormattingEnabled = true;
+            this.legalLocationCombobox.Location = new System.Drawing.Point(11, 169);
+            this.legalLocationCombobox.Name = "legalLocationCombobox";
+            this.legalLocationCombobox.Size = new System.Drawing.Size(121, 23);
+            this.legalLocationCombobox.TabIndex = 12;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(11, 151);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(111, 15);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Населенный пункт";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(591, 37);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(173, 23);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Найти юр. лицо";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // textBox17
             // 
@@ -567,6 +596,24 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Данные физического лица";
             // 
+            // physicalLocationCombobox
+            // 
+            this.physicalLocationCombobox.Enabled = false;
+            this.physicalLocationCombobox.FormattingEnabled = true;
+            this.physicalLocationCombobox.Location = new System.Drawing.Point(319, 80);
+            this.physicalLocationCombobox.Name = "physicalLocationCombobox";
+            this.physicalLocationCombobox.Size = new System.Drawing.Size(121, 23);
+            this.physicalLocationCombobox.TabIndex = 10;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(319, 62);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(111, 15);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Населенный пункт";
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(160, 35);
@@ -666,52 +713,7 @@
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "Юридическое лицо";
             this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(591, 37);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(173, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Найти юр. лицо";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(319, 62);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(111, 15);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Населенный пункт";
-            // 
-            // physicalLocationCombobox
-            // 
-            this.physicalLocationCombobox.Enabled = false;
-            this.physicalLocationCombobox.FormattingEnabled = true;
-            this.physicalLocationCombobox.Location = new System.Drawing.Point(319, 80);
-            this.physicalLocationCombobox.Name = "physicalLocationCombobox";
-            this.physicalLocationCombobox.Size = new System.Drawing.Size(121, 23);
-            this.physicalLocationCombobox.TabIndex = 10;
-            // 
-            // legalLocationCombobox
-            // 
-            this.legalLocationCombobox.Enabled = false;
-            this.legalLocationCombobox.FormattingEnabled = true;
-            this.legalLocationCombobox.Location = new System.Drawing.Point(11, 169);
-            this.legalLocationCombobox.Name = "legalLocationCombobox";
-            this.legalLocationCombobox.Size = new System.Drawing.Size(121, 23);
-            this.legalLocationCombobox.TabIndex = 12;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(11, 151);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(111, 15);
-            this.label11.TabIndex = 11;
-            this.label11.Text = "Населенный пункт";
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // AnimalCardForm
             // 
