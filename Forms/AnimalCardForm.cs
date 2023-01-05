@@ -472,6 +472,7 @@ namespace PIS_PetRegistry
             }
             else 
             {
+                legalPersonDTO = null;
                 groupBox6.Hide();
             }
         }

@@ -38,6 +38,7 @@ namespace PIS_PetRegistry.Controllers
                     ShelterId = user.FkShelter,
                     RoleId = user.FkRole,
                     LocationId = user.FkLocation,
+                    Name = user.Name,
                     ShelterLocationId = user.FkShelterNavigation.FkLocation,
                 };
 

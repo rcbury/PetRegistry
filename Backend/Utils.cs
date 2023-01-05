@@ -15,8 +15,8 @@ namespace PIS_PetRegistry.Backend
             var res = fullName;
             if (nameArr.Length == 3) 
             {
-                res = nameArr[0] + nameArr[1].ToArray()[0].ToString().ToUpper() 
-                    + nameArr[2].ToArray()[0].ToString().ToUpper();
+                res = nameArr[0] + " " + nameArr[1].ToArray()[0].ToString().ToUpper() + ". "
+                    + nameArr[2].ToArray()[0].ToString().ToUpper() + ".";
             }
             return res;
         }
