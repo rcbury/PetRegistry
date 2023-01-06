@@ -35,48 +35,6 @@ namespace PIS_PetRegistry.Controllers
             return animalCategoriesDTO;
         }
 
-        public static PhysicalPersonDTO GetPhysicalPersonByPhone(string phone) 
-        {
-            using (var context = new RegistryPetsContext()) 
-            {
-                var person = context.PhysicalPeople.Where(person => person.Phone == phone).FirstOrDefault();
-                if (person == null) 
-                {
-                    throw new Exception("Physical person with that phone number does not exists");
-                }
-                return new PhysicalPersonDTO()
-                {
-                    Phone = phone,
-                    Name = person.Name,
-                    Address = person.Address,
-                    Email = person.Email,
-                    FkLocality = person.FkLocality
-                };
-            }
-        }
-
-        public static LegalPersonDTO? GetLegalPersonByINN(string INN)
-        {
-            using (var context = new RegistryPetsContext())
-            {
-                var person = context.LegalPeople.Where(person => person.Inn == INN).FirstOrDefault();
-                if (person == null)
-                {
-                    return null;
-                }
-                return new LegalPersonDTO()
-                {
-                    INN = INN,
-                    KPP = person.Kpp,
-                    Name = person.Name,
-                    Address = person.Address,
-                    Email = person.Email,
-                    Phone = person.Phone,
-                    FkLocality = person.FkLocality
-                };
-            }
-        }
-
         public static AnimalCardDTO AddAnimalCard(AnimalCardDTO animalCardDTO, UserDTO userDTO)
         {
 

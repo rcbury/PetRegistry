@@ -454,7 +454,7 @@ namespace PIS_PetRegistry
         private void button1_Click(object sender, EventArgs e)
         {
             var phone = textBox6.Text;
-            physicalPersonDTO = AnimalCardController.GetPhysicalPersonByPhone(phone);
+            physicalPersonDTO = PetOwnersController.GetPhysicalPersonByPhone(phone);
             if (physicalPersonDTO == null)
             {
                 MessageBox.Show("Физ. лицо с указанным номером телефона не найдено.");
@@ -471,7 +471,7 @@ namespace PIS_PetRegistry
         private void button2_Click(object sender, EventArgs e)
         {
             var inn = textBox12.Text;
-            legalPersonDTO = AnimalCardController.GetLegalPersonByINN(inn);
+            legalPersonDTO = PetOwnersController.GetLegalPersonByINN(inn);
             if (legalPersonDTO == null)
             {
                 MessageBox.Show("Юр. лицо с указанным ИНН не найдено.");
