@@ -204,5 +204,10 @@ namespace PIS_PetRegistry
                 return list;
             }
         }
+
+        private void задатьУсловиеФильтрацииПоПолюToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AnimalCardController.ExportCardsToExcel(_listAnimalCards);
+        }
     }
 }
