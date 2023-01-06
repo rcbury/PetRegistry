@@ -36,7 +36,7 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.задатьУсловиеФильтрацииПоПолюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExportExcelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridViewListAnimals = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonClickQuery = new System.Windows.Forms.Button();
@@ -112,7 +112,7 @@
             // 
             this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.задатьУсловиеФильтрацииПоПолюToolStripMenuItem});
+            this.ExportExcelMenuItem});
             this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
@@ -120,11 +120,11 @@
             this.toolStripDropDownButton2.Text = "Экспорт";
             this.toolStripDropDownButton2.ToolTipText = "Экспорт";
             // 
-            // задатьУсловиеФильтрацииПоПолюToolStripMenuItem
+            // ExportExcelMenuItem
             // 
-            this.задатьУсловиеФильтрацииПоПолюToolStripMenuItem.Name = "задатьУсловиеФильтрацииПоПолюToolStripMenuItem";
-            this.задатьУсловиеФильтрацииПоПолюToolStripMenuItem.Size = new System.Drawing.Size(152, 34);
-            this.задатьУсловиеФильтрацииПоПолюToolStripMenuItem.Text = "Excel";
+            this.ExportExcelMenuItem.Name = "задатьУсловиеФильтрацииПоПолюToolStripMenuItem";
+            this.ExportExcelMenuItem.Size = new System.Drawing.Size(152, 34);
+            this.ExportExcelMenuItem.Text = "Excel";
             // 
             // dataGridViewListAnimals
             // 
@@ -241,7 +241,7 @@
         private ToolStripDropDownButton toolStripDropDownButton1;
         private ToolStripMenuItem toolStripMenuItem2;
         private ToolStripDropDownButton toolStripDropDownButton2;
-        private ToolStripMenuItem задатьУсловиеФильтрацииПоПолюToolStripMenuItem;
+        private ToolStripMenuItem ExportExcelMenuItem;
         private DataGridView dataGridViewListAnimals;
         private ToolStripDropDownButton toolStripDropDownButton4;
         private ToolStripMenuItem toolStripMenuItem3;

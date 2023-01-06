@@ -103,7 +103,7 @@ namespace PIS_PetRegistry
             innCol.DataPropertyName = "INN";
             var kppCol = new DataGridViewTextBoxColumn();
             kppCol.Name = "Kpp";
-            kppCol.HeaderText = "ИНН";
+            kppCol.HeaderText = "КПП";
             kppCol.DataPropertyName = "KPP";
             var legalNameCol = new DataGridViewTextBoxColumn();
             legalNameCol.HeaderText = "Наименование организации";
@@ -218,12 +218,34 @@ namespace PIS_PetRegistry
 
         private void button5_Click(object sender, EventArgs e)
         {
-            PetOwnersController.ExportPhysicalPeopleToExcel(listPhysicalPersonDTOs);
+            using (var saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.InitialDirectory = "c:\\";
+                saveFileDialog.DefaultExt = ".xlsx";
+                saveFileDialog.RestoreDirectory = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = saveFileDialog.FileName;
+                    PetOwnersController.ExportPhysicalPeopleToExcel(filePath, listPhysicalPersonDTOs);
+                }
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            PetOwnersController.ExportLegalPeopleToExcel(listLegalPersonDTOs);
+            using (var saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.InitialDirectory = "c:\\";
+                saveFileDialog.DefaultExt = ".xlsx";
+                saveFileDialog.RestoreDirectory = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = saveFileDialog.FileName;
+                    PetOwnersController.ExportLegalPeopleToExcel(filePath, listLegalPersonDTOs);
+                }
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
