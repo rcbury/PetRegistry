@@ -204,5 +204,21 @@ namespace PIS_PetRegistry
                 return list;
             }
         }
+
+        private void задатьУсловиеФильтрацииПоПолюToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var saveFileDialog = new SaveFileDialog()) 
+            {
+                saveFileDialog.InitialDirectory = "c:\\";
+                saveFileDialog.DefaultExt = ".xlsx";
+                saveFileDialog.RestoreDirectory = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = saveFileDialog.FileName;
+                    AnimalCardController.ExportCardsToExcel(filePath, _listAnimalCards);
+                }
+            }
+        }
     }
 }

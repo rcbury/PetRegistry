@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using Spire.Doc;
 using DocumentFormat.OpenXml.Bibliography;
 using PIS_PetRegistry.Backend;
+using ClosedXML.Excel;
 
 namespace PIS_PetRegistry.Controllers
 {
@@ -127,7 +128,57 @@ namespace PIS_PetRegistry.Controllers
 
             return AnimalCardDTO;
         }
-        
+
+        public static void ExportCardsToExcel(string path, List<AnimalCardDTO> cardsList) 
+        {
+            using (var workbook = new XLWorkbook())
+            {
+                IXLWorksheet worksheet = workbook.Worksheets.Add("Учетные карточки");
+
+                var heads = new string[5]
+                {
+                    "Кличка",
+                    "Номер чипа",
+                    "Дата рождения",
+                    "Пол животного",
+                    "Категория животного"
+                };
+
+                var cnt = 1;
+                foreach (var head in heads)
+                {
+                    var currCell = worksheet.Cell(1, cnt);
+                    currCell.Value = head;
+                    currCell.Style.Alignment.WrapText = true;
+                    currCell.Style.Font.Bold = true;
+                    cnt++;
+                }
+
+                var len = cardsList.Count;
+                if (len > 0)
+                {
+                    using (var context = new RegistryPetsContext())
+                    {
+                        var rowCnt = 2;
+                        foreach (var card in cardsList)
+                        {
+                            var category = context.AnimalCategories.Where(category => category.Id == card.FkCategory).FirstOrDefault().Name;
+                            worksheet.Cell(rowCnt, 1).Value = card.Name;
+                            worksheet.Cell(rowCnt, 2).Value = card.ChipId;
+                            worksheet.Cell(rowCnt, 3).Value = card.YearOfBirth;
+                            worksheet.Cell(rowCnt, 4).Value = card.IsBoy ? "Мальчик" : "Девочка";
+                            worksheet.Cell(rowCnt, 5).Value = category;
+                            rowCnt++;
+                        }
+                    }
+                }
+                worksheet.Columns().AdjustToContents();
+                worksheet.Rows().AdjustToContents();
+                workbook.SaveAs(path);
+            }
+        }
+
+
         public static void DeleteAnimalCard(AnimalCardDTO animalCardDTO, UserDTO userDTO)
         {
             using (var context = new RegistryPetsContext())
