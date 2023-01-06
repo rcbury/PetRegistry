@@ -207,7 +207,18 @@ namespace PIS_PetRegistry
 
         private void задатьУсловиеФильтрацииПоПолюToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AnimalCardController.ExportCardsToExcel(_listAnimalCards);
+            using (var saveFileDialog = new SaveFileDialog()) 
+            {
+                saveFileDialog.InitialDirectory = "c:\\";
+                saveFileDialog.DefaultExt = ".xlsx";
+                saveFileDialog.RestoreDirectory = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = saveFileDialog.FileName;
+                    AnimalCardController.ExportCardsToExcel(filePath, _listAnimalCards);
+                }
+            }
         }
     }
 }

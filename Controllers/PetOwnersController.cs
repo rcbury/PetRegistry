@@ -197,7 +197,7 @@ namespace PIS_PetRegistry.Controllers
             }
         }
 
-        public static void ExportPhysicalPeopleToExcel(List<PhysicalPersonDTO> physicalPeopleDTO)
+        public static void ExportPhysicalPeopleToExcel(string path, List<PhysicalPersonDTO> physicalPeopleDTO)
         {
             using (var workbook = new XLWorkbook())
             {
@@ -249,16 +249,11 @@ namespace PIS_PetRegistry.Controllers
                 }
                 worksheet.Columns().AdjustToContents();
                 worksheet.Rows().AdjustToContents();
-                var fileName = $"Выгрузка физических лиц от {DateOnly.FromDateTime(DateTime.Now)}.xlsx";
-                if (Directory.Exists(fileName)) 
-                {
-                    Directory.Delete(fileName);
-                }
-                workbook.SaveAs(fileName);
+                workbook.SaveAs(path);
             }
         }
 
-        public static void ExportLegalPeopleToExcel(List<LegalPersonDTO> legalPeopleDTO) 
+        public static void ExportLegalPeopleToExcel(string path, List<LegalPersonDTO> legalPeopleDTO) 
         {
             using (var workbook = new XLWorkbook())
             {
@@ -316,12 +311,7 @@ namespace PIS_PetRegistry.Controllers
                 }
                 worksheet.Columns().AdjustToContents();
                 worksheet.Rows().AdjustToContents();
-                var fileName = $"Выгрузка юридических лиц от {DateOnly.FromDateTime(DateTime.Now)}.xlsx";
-                if (Directory.Exists(fileName))
-                {
-                    Directory.Delete(fileName);
-                }
-                workbook.SaveAs(fileName);
+                workbook.SaveAs(path);
             }
         }
     }

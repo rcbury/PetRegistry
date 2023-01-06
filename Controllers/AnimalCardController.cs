@@ -171,7 +171,7 @@ namespace PIS_PetRegistry.Controllers
             return AnimalCardDTO;
         }
 
-        public static void ExportCardsToExcel(List<AnimalCardDTO> cardsList) 
+        public static void ExportCardsToExcel(string path, List<AnimalCardDTO> cardsList) 
         {
             using (var workbook = new XLWorkbook())
             {
@@ -216,12 +216,7 @@ namespace PIS_PetRegistry.Controllers
                 }
                 worksheet.Columns().AdjustToContents();
                 worksheet.Rows().AdjustToContents();
-                var fileName = $"Выгрузка учетных карточек от {DateOnly.FromDateTime(DateTime.Now)}.xlsx";
-                if (Directory.Exists(fileName))
-                {
-                    Directory.Delete(fileName);
-                }
-                workbook.SaveAs(fileName);
+                workbook.SaveAs(path);
             }
         }
 
