@@ -83,7 +83,7 @@ namespace PIS_PetRegistry
 
             if(CountryComboBox.SelectedIndex == 0 || LocalityComboBox.SelectedIndex == 0)
             {
-                MessageBox.Show("Пожалуйста, укажите страну и населенный пункт.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Пожалуйста, укажите страну и населенный пункт.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -101,10 +101,22 @@ namespace PIS_PetRegistry
 
         private void ListAnimalsButton_Click(object sender, EventArgs e)
         {
-            AnimalRegistryForm form = new AnimalRegistryForm(/*mainPhysicalPerson*/);
-            //Hide();
-            form.ShowDialog();
-            Show();
+            if(mainPhysicalPerson == null)
+            {
+                MessageBox.Show("Этот человек еще не добавлен в реестр.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            var countAnimalsByPhysicalPerson = AnimalCardController.CountAnimalsByPhysicalPerson(mainPhysicalPerson.Id);
+            if (countAnimalsByPhysicalPerson == 0)
+            {
+                MessageBox.Show("У этого человека нет животных.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                AnimalRegistryForm form = new AnimalRegistryForm(/*mainPhysicalPerson*/);
+                form.ShowDialog();
+                Show();
+            }
         }
     }
 }

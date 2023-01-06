@@ -286,5 +286,86 @@ namespace PIS_PetRegistry.Controllers
                 }
             }
         }
+        public static List<AnimalCardDTO> GetAnimalsByLegalPerson(int legalPersonId)
+        {
+            var animalsByLegalPersonDTO = new List<AnimalCardDTO>();
+
+            using (var context = new RegistryPetsContext())
+            {
+                var animalsNumber = context.Contracts
+                    .Where(x => x.FkLegalPerson.Equals(legalPersonId))
+                    .Select(x => x.FkAnimalCard)
+                    .Distinct();
+
+                foreach (var animalId in animalsNumber)
+                {
+                    var animal = context.AnimalCards
+                        .Where(x => x.Id.Equals(animalId))
+                        .FirstOrDefault();
+
+                    animalsByLegalPersonDTO.Add(
+                        new AnimalCardDTO()
+                        {
+                            Id = animal.Id,
+                            IsBoy = animal.IsBoy,
+                            Name = animal.Name,
+                            Photo = animal.Photo,
+                            YearOfBirth = animal.YearOfBirth,
+                            FkCategory = animal.FkCategory,
+                            FkShelter = animal.FkShelter,
+                            ChipId = animal.ChipId,
+                        });
+                }
+            }
+
+            return animalsByLegalPersonDTO;
+        }
+
+        public static List<AnimalCardDTO> GetAnimalsByPhysicalPerson(int physicalPersonId)
+        {
+            var animalsByPhysicalPersonDTO = new List<AnimalCardDTO>();
+
+            using (var context = new RegistryPetsContext())
+            {
+                var animalsNumber = context.Contracts
+                    .Where(x => x.FkPhysicalPerson.Equals(physicalPersonId))
+                    .Select(x => x.FkAnimalCard)
+                    .Distinct();
+
+                foreach (var animalId in animalsNumber)
+                {
+                    var animal = context.AnimalCards
+                        .Where(x => x.Id.Equals(animalId))
+                        .FirstOrDefault();
+
+                    animalsByPhysicalPersonDTO.Add(
+                        new AnimalCardDTO()
+                        {
+                            Id = animal.Id,
+                            IsBoy = animal.IsBoy,
+                            Name = animal.Name,
+                            Photo = animal.Photo,
+                            YearOfBirth = animal.YearOfBirth,
+                            FkCategory = animal.FkCategory,
+                            FkShelter = animal.FkShelter,
+                            ChipId = animal.ChipId,
+                        });
+                }
+            }
+
+            return animalsByPhysicalPersonDTO;
+        }
+
+        public static int CountAnimalsByPhysicalPerson(int physicalPersonId)
+        {
+            var animalsByPhysicalPerson = GetAnimalsByPhysicalPerson(physicalPersonId);
+            return animalsByPhysicalPerson.Count();
+        }
+
+        public static int CountAnimalsByLegalPerson(int legalPersonId)
+        {
+            var animalsByLegalPerson = GetAnimalsByLegalPerson(legalPersonId);
+            return animalsByLegalPerson.Count();
+        }
     }
 }

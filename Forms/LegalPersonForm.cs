@@ -71,10 +71,23 @@ namespace PIS_PetRegistry
 
         private void ListOfAnimalsButton_Click(object sender, EventArgs e)
         {
-            AnimalRegistryForm form = new AnimalRegistryForm(/*currentLegalPerson*/);
-            //Hide();
-            form.ShowDialog();
-            Show();
+
+            if (mainLegalPerson == null)
+            {
+                MessageBox.Show("Это юридическое лицо еще не добавлено в реестр.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            var countAnimalsByLegalPerson = AnimalCardController.CountAnimalsByLegalPerson(mainLegalPerson.Id);
+            if (countAnimalsByLegalPerson == 0)
+            {
+                MessageBox.Show("У этого юридического лица нет животных.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                AnimalRegistryForm form = new AnimalRegistryForm(/*mainLegalPerson*/);
+                form.ShowDialog();
+                Show();
+            }
         }
 
         private void SaveLegalPersonButton_Click(object sender, EventArgs e)
