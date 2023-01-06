@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.EntityFrameworkCore;
 using PIS_PetRegistry.DTO;
@@ -48,6 +49,12 @@ namespace PIS_PetRegistry.Controllers
                 }
                 foreach (var personInfo in physicalPeople)
                 {
+                    var animalsCount = context.Contracts.Where(contract => 
+                    contract.FkPhysicalPerson == personInfo.Id && contract.FkLegalPerson == null).Count();
+                    var catsCount = context.Contracts.Where(contract => contract.FkPhysicalPerson == personInfo.Id &&
+                        context.AnimalCards.Where(card => card.FkCategory == 2 && card.Id == contract.FkAnimalCard).Count() != 0)
+                        .Count();
+                    var dogsCount = animalsCount - catsCount;
                     physicalPeopleDTO.Add(new PhysicalPersonDTO()
                     {
                         Id = personInfo.Id,
@@ -56,7 +63,10 @@ namespace PIS_PetRegistry.Controllers
                         Address = personInfo.Address,
                         Email = personInfo.Email,
                         FkLocality = personInfo.FkLocality,
-                        FkCountry = personInfo.FkCountry
+                        FkCountry = personInfo.FkCountry,
+                        AnimalCount = animalsCount,
+                        CatCount = catsCount,
+                        DogCount = dogsCount
                     });
                 }
             }
@@ -104,6 +114,11 @@ namespace PIS_PetRegistry.Controllers
                 }
                 foreach (var personInfo in legalPeople)
                 {
+                    var animalsCount = context.Contracts.Where(contract => contract.FkLegalPerson == personInfo.Id).Count();
+                    var catsCount = context.Contracts.Where(contract => contract.FkLegalPerson == personInfo.Id &&
+                        context.AnimalCards.Where(card => card.FkCategory == 2 && card.Id == contract.FkAnimalCard).Count() != 0)
+                        .Count();
+                    var dogsCount = animalsCount - catsCount;
                     legalPeopleDTO.Add(new LegalPersonDTO()
                     {
                         Id = personInfo.Id,
@@ -114,7 +129,10 @@ namespace PIS_PetRegistry.Controllers
                         Address = personInfo.Address,
                         Email = personInfo.Email,
                         FkLocality = personInfo.FkLocality,
-                        FkCountry = personInfo.FkCountry
+                        FkCountry = personInfo.FkCountry,
+                        AnimalCount = animalsCount,
+                        CatCount = catsCount,
+                        DogCount = dogsCount
                     });
                 }
             }
