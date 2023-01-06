@@ -39,8 +39,11 @@ namespace PIS_PetRegistry.Controllers
                     RoleId = user.FkRole,
                     LocationId = user.FkLocation,
                     Name = user.Name,
-                    ShelterLocationId = user.FkShelterNavigation.FkLocation,
                 };
+                if (user.FkShelter != null)
+                {
+                    userDTO.ShelterLocationId = user.FkShelterNavigation.FkLocation;
+                }
 
                 dbContext.Dispose();
                 Authorization.AuthorizedUserDto = userDTO;

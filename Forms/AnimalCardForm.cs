@@ -38,8 +38,8 @@ namespace PIS_PetRegistry
             InitializeComponent();
             
             SetupComboboxes();
-            Refetch();
             SetupDGV();
+            Refetch();
             
             FillFields();
         }

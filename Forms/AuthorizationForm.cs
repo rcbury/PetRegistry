@@ -22,17 +22,15 @@ namespace PIS_PetRegistry
         {
             UserDTO? userDTO;
 
-
-
-            //try
-            //{
+            try
+            {
                 userDTO = AuthorizationController.Authorize(loginTextBox.Text, passwordTextBox.Text);
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Ошибка при подключении к базе данных");
-            //    return;
-            //}
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка при подключении к базе данных");
+                return;
+            }
 
             if (userDTO == null)
             {
