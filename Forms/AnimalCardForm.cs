@@ -72,6 +72,7 @@ namespace PIS_PetRegistry
                 animalBirthYearTextBox.Enabled = false;
 
                 saveButton.Enabled = false;
+                deleteAnimalCardButton.Enabled = false;
                 uploadPictureButton.Enabled = false;
                 addParasiteTreatmentButton.Enabled = false;
                 addVaccinationButton.Enabled = false;

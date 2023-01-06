@@ -57,7 +57,6 @@
             this.addVeterinaryAppointmentButton = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.button7 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.legalLocationCombobox = new System.Windows.Forms.ComboBox();
@@ -89,6 +88,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.parasiteTreatmentDGV)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -403,16 +403,6 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Договор";
             // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(12, 51);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(129, 19);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Договор подписан";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
             // button7
             // 
             this.button7.Location = new System.Drawing.Point(10, 22);
@@ -715,6 +705,16 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(12, 51);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(129, 19);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "Договор подписан";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
             // AnimalCardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -802,7 +802,6 @@
         private Label label7;
         private CheckBox checkBox1;
         private GroupBox groupBox7;
-        private CheckBox checkBox2;
         private Button button7;
         private Button saveButton;
         private ComboBox animalSexComboBox;
@@ -812,5 +811,6 @@
         private ComboBox legalLocationCombobox;
         private ComboBox physicalLocationCombobox;
         private Label label4;
+        private CheckBox checkBox2;
     }
 }
