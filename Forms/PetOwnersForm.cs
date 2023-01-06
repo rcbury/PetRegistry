@@ -167,22 +167,22 @@ namespace PIS_PetRegistry
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var rowIndex = e.RowIndex;
+            /*var rowIndex = e.RowIndex;
             var selectedPhysicalPerson = listPhysicalPersonDTOs[rowIndex];
-            PhysicalPersonForm form = new PhysicalPersonForm();
+            PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson);
             Hide();
             form.ShowDialog();
-            Show();
+            Show();*/
         }
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var rowIndex = e.RowIndex;
+            /*var rowIndex = e.RowIndex;
 
             LegalPersonForm form = new LegalPersonForm(listLegalPersonDTOs[rowIndex]);
             Hide();
             form.ShowDialog();
-            Show();
+            Show();*/
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -224,6 +224,38 @@ namespace PIS_PetRegistry
         private void button6_Click(object sender, EventArgs e)
         {
             PetOwnersController.ExportLegalPeopleToExcel(listLegalPersonDTOs);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            PhysicalPersonForm form = new();
+            form.ShowDialog();
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var rowIndex = e.RowIndex;
+            var selectedPhysicalPerson = listPhysicalPersonDTOs[rowIndex];
+            PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson);
+
+            form.ShowDialog();
+            Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            LegalPersonForm form = new();
+            form.ShowDialog();
+        }
+
+        private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var rowIndex = e.RowIndex;
+            var selectedLegalPerson = listLegalPersonDTOs[rowIndex];
+            LegalPersonForm form = new(selectedLegalPerson);
+
+            form.ShowDialog();
+            Show();
         }
     }
 }

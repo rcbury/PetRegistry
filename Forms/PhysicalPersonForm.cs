@@ -1,12 +1,16 @@
-﻿using PIS_PetRegistry.Controllers;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
+using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -77,20 +81,28 @@ namespace PIS_PetRegistry
                 FkLocality = ((LocationDTO)LocalityComboBox.SelectedItem).Id,
             };
 
+            if(CountryComboBox.SelectedIndex == 0 || LocalityComboBox.SelectedIndex == 0)
+            {
+                MessageBox.Show("Пожалуйста, укажите страну и населенный пункт.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (mainPhysicalPerson == null)
             {
                 mainPhysicalPerson = PetOwnersController.AddPhysicalPerson(currentPhysicalPersonDTO);
             }
             else
             {
+                currentPhysicalPersonDTO.Id = mainPhysicalPerson.Id;
                 mainPhysicalPerson = PetOwnersController.UpdatePhysicalPerson(currentPhysicalPersonDTO);
             }
+            this.Close();
         }
 
         private void ListAnimalsButton_Click(object sender, EventArgs e)
         {
             AnimalRegistryForm form = new AnimalRegistryForm(/*mainPhysicalPerson*/);
-            Hide();
+            //Hide();
             form.ShowDialog();
             Show();
         }

@@ -196,6 +196,7 @@ namespace PIS_PetRegistry.Controllers
                         });
                 }
             }
+
             return animalsByLegalPersonDTO;
         }
 

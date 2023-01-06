@@ -200,12 +200,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1143, 337);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.ListAnimalsButton);
             this.Controls.Add(this.groupBox5);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MaximizeBox = false;
             this.Name = "PhysicalPersonForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Физическое лицо";
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();

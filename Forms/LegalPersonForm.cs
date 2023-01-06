@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,9 @@ namespace PIS_PetRegistry
             mainLegalPerson = selectedLegalPerson;
 
             InitializeComponent();
-            
+
+            CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            LocalityComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             var allCountries = PetOwnersController.GetCountries();
             var allLocalities = PetOwnersController.GetLocations();
@@ -69,7 +72,7 @@ namespace PIS_PetRegistry
         private void ListOfAnimalsButton_Click(object sender, EventArgs e)
         {
             AnimalRegistryForm form = new AnimalRegistryForm(/*currentLegalPerson*/);
-            Hide();
+            //Hide();
             form.ShowDialog();
             Show();
         }
@@ -88,14 +91,22 @@ namespace PIS_PetRegistry
                 FkLocality = ((LocationDTO)LocalityComboBox.SelectedItem).Id,
             };
 
+            if(CountryComboBox.SelectedIndex == 0 || LocalityComboBox.SelectedIndex == 0) 
+            {
+                MessageBox.Show("Пожалуйста, укажите страну и населенный пункт.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (mainLegalPerson == null)
             {
                 mainLegalPerson = PetOwnersController.AddLegalPerson(currentLegalPersonDTO);
             }
             else
             {
+                currentLegalPersonDTO.Id = mainLegalPerson.Id;
                 mainLegalPerson = PetOwnersController.UpdateLegalPerson(currentLegalPersonDTO);
             }
+            this.Close();
         }
     }
 }
