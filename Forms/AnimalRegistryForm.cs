@@ -109,8 +109,16 @@ namespace PIS_PetRegistry
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            AnimalCardForm form = new AnimalCardForm();
-            form.ShowDialog();
+            //possible exception due to permission fail
+            try
+            {
+                AnimalCardForm form = new AnimalCardForm();
+                form.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)

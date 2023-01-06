@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Spire.Doc;
 using DocumentFormat.OpenXml.Bibliography;
-using PIS_PetRegistry.Backend;
 
 namespace PIS_PetRegistry.Controllers
 {
