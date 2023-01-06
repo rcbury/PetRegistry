@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace PIS_PetRegistry.Models;
 
-public partial class AmimalCardLog
+public partial class AnimalCardLog
 {
     public int Id { get; set; }
 
     public string Description { get; set; } = null!;
 
-    public DateOnly CreateTime { get; set; }
+    public DateTime CreateTime { get; set; }
 
     public int FkLogsType { get; set; }
 

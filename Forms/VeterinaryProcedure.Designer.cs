@@ -28,22 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.veterinaryAppointmentDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.veterinaryAppointmentNameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.veterinaryAppointmentCompletedCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // button1
+            // saveButton
             // 
-            this.button1.Location = new System.Drawing.Point(12, 134);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(200, 23);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "Сохранить";
-            this.button1.UseVisualStyleBackColor = true;
+            this.saveButton.Location = new System.Drawing.Point(12, 134);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(200, 23);
+            this.saveButton.TabIndex = 14;
+            this.saveButton.Text = "Сохранить";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // label2
             // 
@@ -54,19 +55,21 @@
             this.label2.TabIndex = 13;
             this.label2.Text = "Дата проведения";
             // 
-            // dateTimePicker1
+            // veterinaryAppointmentDatePicker
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(12, 72);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 23);
-            this.dateTimePicker1.TabIndex = 11;
+            this.veterinaryAppointmentDatePicker.CustomFormat = "dd/MM/yyyy hh:mm:ss";
+            this.veterinaryAppointmentDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.veterinaryAppointmentDatePicker.Location = new System.Drawing.Point(12, 72);
+            this.veterinaryAppointmentDatePicker.Name = "veterinaryAppointmentDatePicker";
+            this.veterinaryAppointmentDatePicker.Size = new System.Drawing.Size(200, 23);
+            this.veterinaryAppointmentDatePicker.TabIndex = 11;
             // 
-            // textBox1
+            // veterinaryAppointmentNameTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 28);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(200, 23);
-            this.textBox1.TabIndex = 15;
+            this.veterinaryAppointmentNameTextBox.Location = new System.Drawing.Point(12, 28);
+            this.veterinaryAppointmentNameTextBox.Name = "veterinaryAppointmentNameTextBox";
+            this.veterinaryAppointmentNameTextBox.Size = new System.Drawing.Size(200, 23);
+            this.veterinaryAppointmentNameTextBox.TabIndex = 15;
             // 
             // label1
             // 
@@ -77,27 +80,27 @@
             this.label1.TabIndex = 16;
             this.label1.Text = "Назначение";
             // 
-            // checkBox1
+            // veterinaryAppointmentCompletedCheckBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(12, 101);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(87, 19);
-            this.checkBox1.TabIndex = 17;
-            this.checkBox1.Text = "Проведено";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.veterinaryAppointmentCompletedCheckBox.AutoSize = true;
+            this.veterinaryAppointmentCompletedCheckBox.Location = new System.Drawing.Point(12, 101);
+            this.veterinaryAppointmentCompletedCheckBox.Name = "veterinaryAppointmentCompletedCheckBox";
+            this.veterinaryAppointmentCompletedCheckBox.Size = new System.Drawing.Size(87, 19);
+            this.veterinaryAppointmentCompletedCheckBox.TabIndex = 17;
+            this.veterinaryAppointmentCompletedCheckBox.Text = "Проведено";
+            this.veterinaryAppointmentCompletedCheckBox.UseVisualStyleBackColor = true;
             // 
             // VeterinaryProcedure
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(224, 165);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.veterinaryAppointmentCompletedCheckBox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.veterinaryAppointmentNameTextBox);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.veterinaryAppointmentDatePicker);
             this.Name = "VeterinaryProcedure";
             this.Text = "Ветеринарное мероприятие";
             this.ResumeLayout(false);
@@ -107,11 +110,11 @@
 
         #endregion
 
-        private Button button1;
+        private Button saveButton;
         private Label label2;
-        private DateTimePicker dateTimePicker1;
-        private TextBox textBox1;
+        private DateTimePicker veterinaryAppointmentDatePicker;
+        private TextBox veterinaryAppointmentNameTextBox;
         private Label label1;
-        private CheckBox checkBox1;
+        private CheckBox veterinaryAppointmentCompletedCheckBox;
     }
 }

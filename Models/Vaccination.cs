@@ -5,7 +5,6 @@ namespace PIS_PetRegistry.Models;
 
 public partial class Vaccination
 {
-    public int Id { get; set; }
     public DateOnly DateEnd { get; set; }
 
     public int FkAnimal { get; set; }

@@ -14,5 +14,6 @@ namespace PIS_PetRegistry.DTO
         public int? ShelterId { get; set; }
         public int RoleId { get; set; }
         public int? LocationId { get; set; }
+        public int? ShelterLocationId { get; set; }
     }
 }

@@ -29,8 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnimalCardForm));
+            this.parasiteTreatmentDGV = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.deleteAnimalCardButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             this.animalSexComboBox = new System.Windows.Forms.ComboBox();
             this.animalNameTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -41,26 +44,24 @@
             this.label2 = new System.Windows.Forms.Label();
             this.animalCategoryComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.uploadPictureButton = new System.Windows.Forms.Button();
+            this.animalPictureBox = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.button4 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.button3 = new System.Windows.Forms.Button();
+            this.addParasiteTreatmentButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button2 = new System.Windows.Forms.Button();
+            this.vaccinationDGV = new System.Windows.Forms.DataGridView();
+            this.addVaccinationButton = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.button5 = new System.Windows.Forms.Button();
+            this.veterinaryAppointmentDGV = new System.Windows.Forms.DataGridView();
+            this.addVeterinaryAppointmentButton = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.button7 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.legalLocationCombobox = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.textBox17 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.textBox16 = new System.Windows.Forms.TextBox();
@@ -74,10 +75,9 @@
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.physicalLocationCombobox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
@@ -88,19 +88,17 @@
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.saveButton = new System.Windows.Forms.Button();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.parasiteTreatmentDGV)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.animalPictureBox)).BeginInit();
             this.tabPage2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vaccinationDGV)).BeginInit();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.veterinaryAppointmentDGV)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -108,20 +106,35 @@
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
+            // parasiteTreatmentDGV
+            // 
+            this.parasiteTreatmentDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.parasiteTreatmentDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.parasiteTreatmentDGV.Location = new System.Drawing.Point(3, 19);
+            this.parasiteTreatmentDGV.Name = "parasiteTreatmentDGV";
+            this.parasiteTreatmentDGV.RowTemplate.Height = 25;
+            this.parasiteTreatmentDGV.Size = new System.Drawing.Size(775, 232);
+            this.parasiteTreatmentDGV.TabIndex = 1;
+            this.parasiteTreatmentDGV.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.parasiteTreatmentDGV_CellContentDoubleClick);
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 562);
+            this.tabControl1.Size = new System.Drawing.Size(797, 603);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.deleteAnimalCardButton);
+            this.tabPage1.Controls.Add(this.saveButton);
             this.tabPage1.Controls.Add(this.animalSexComboBox);
             this.tabPage1.Controls.Add(this.animalNameTextBox);
             this.tabPage1.Controls.Add(this.label6);
@@ -132,15 +145,35 @@
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.animalCategoryComboBox);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.button1);
-            this.tabPage1.Controls.Add(this.pictureBox1);
+            this.tabPage1.Controls.Add(this.uploadPictureButton);
+            this.tabPage1.Controls.Add(this.animalPictureBox);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(792, 534);
+            this.tabPage1.Size = new System.Drawing.Size(789, 575);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основная информация";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // deleteAnimalCardButton
+            // 
+            this.deleteAnimalCardButton.Location = new System.Drawing.Point(434, 522);
+            this.deleteAnimalCardButton.Name = "deleteAnimalCardButton";
+            this.deleteAnimalCardButton.Size = new System.Drawing.Size(138, 47);
+            this.deleteAnimalCardButton.TabIndex = 25;
+            this.deleteAnimalCardButton.Text = "Удалить";
+            this.deleteAnimalCardButton.UseVisualStyleBackColor = true;
+            this.deleteAnimalCardButton.Click += new System.EventHandler(this.deleteAnimalCardButton_Click);
+            // 
+            // saveButton
+            // 
+            this.saveButton.Location = new System.Drawing.Point(643, 522);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(138, 47);
+            this.saveButton.TabIndex = 24;
+            this.saveButton.Text = "Сохранить";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // animalSexComboBox
             // 
@@ -227,160 +260,124 @@
             this.label1.Text = "Пол животного";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // button1
+            // uploadPictureButton
             // 
-            this.button1.Location = new System.Drawing.Point(618, 377);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(153, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Загрузить фотографию";
-            this.button1.UseVisualStyleBackColor = true;
+            this.uploadPictureButton.Location = new System.Drawing.Point(10, 443);
+            this.uploadPictureButton.Name = "uploadPictureButton";
+            this.uploadPictureButton.Size = new System.Drawing.Size(167, 35);
+            this.uploadPictureButton.TabIndex = 1;
+            this.uploadPictureButton.Text = "Загрузить фотографию";
+            this.uploadPictureButton.UseVisualStyleBackColor = true;
+            this.uploadPictureButton.Click += new System.EventHandler(this.uploadPictureButton_Click);
             // 
-            // pictureBox1
+            // animalPictureBox
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(8, 117);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(311, 320);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.animalPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("animalPictureBox.Image")));
+            this.animalPictureBox.Location = new System.Drawing.Point(8, 117);
+            this.animalPictureBox.Name = "animalPictureBox";
+            this.animalPictureBox.Size = new System.Drawing.Size(311, 320);
+            this.animalPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.animalPictureBox.TabIndex = 0;
+            this.animalPictureBox.TabStop = false;
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(792, 534);
+            this.tabPage2.Size = new System.Drawing.Size(789, 575);
             this.tabPage2.TabIndex = 4;
             this.tabPage2.Text = "Ветеринарные мероприятия";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.dataGridView3);
-            this.groupBox3.Controls.Add(this.button4);
-            this.groupBox3.Location = new System.Drawing.Point(8, 301);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(776, 142);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Дегельминтизация";
-            // 
-            // dataGridView3
-            // 
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dataGridView3.Location = new System.Drawing.Point(3, 19);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.RowTemplate.Height = 25;
-            this.dataGridView3.Size = new System.Drawing.Size(240, 95);
-            this.dataGridView3.TabIndex = 1;
-            // 
-            // button4
-            // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button4.Location = new System.Drawing.Point(3, 114);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(770, 25);
-            this.button4.TabIndex = 0;
-            this.button4.Text = "Добавить";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.dataGridView2);
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Location = new System.Drawing.Point(8, 153);
+            this.groupBox2.Controls.Add(this.parasiteTreatmentDGV);
+            this.groupBox2.Controls.Add(this.addParasiteTreatmentButton);
+            this.groupBox2.Location = new System.Drawing.Point(8, 252);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(776, 142);
+            this.groupBox2.Size = new System.Drawing.Size(781, 279);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Обработка от эктопаразитов";
+            this.groupBox2.Text = "Обработка от паразитов";
             // 
-            // dataGridView2
+            // addParasiteTreatmentButton
             // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dataGridView2.Location = new System.Drawing.Point(3, 19);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 25;
-            this.dataGridView2.Size = new System.Drawing.Size(240, 95);
-            this.dataGridView2.TabIndex = 1;
-            // 
-            // button3
-            // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button3.Location = new System.Drawing.Point(3, 114);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(770, 25);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "Добавить";
-            this.button3.UseVisualStyleBackColor = true;
+            this.addParasiteTreatmentButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.addParasiteTreatmentButton.Location = new System.Drawing.Point(3, 251);
+            this.addParasiteTreatmentButton.Name = "addParasiteTreatmentButton";
+            this.addParasiteTreatmentButton.Size = new System.Drawing.Size(775, 25);
+            this.addParasiteTreatmentButton.TabIndex = 0;
+            this.addParasiteTreatmentButton.Text = "Добавить";
+            this.addParasiteTreatmentButton.UseVisualStyleBackColor = true;
+            this.addParasiteTreatmentButton.Click += new System.EventHandler(this.addParasiteTreatmentButton_Click);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dataGridView1);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.vaccinationDGV);
+            this.groupBox1.Controls.Add(this.addVaccinationButton);
             this.groupBox1.Location = new System.Drawing.Point(8, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(776, 142);
+            this.groupBox1.Size = new System.Drawing.Size(776, 238);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Вакцинация";
             // 
-            // dataGridView1
+            // vaccinationDGV
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(240, 95);
-            this.dataGridView1.TabIndex = 1;
+            this.vaccinationDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.vaccinationDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vaccinationDGV.Location = new System.Drawing.Point(3, 19);
+            this.vaccinationDGV.Name = "vaccinationDGV";
+            this.vaccinationDGV.RowTemplate.Height = 25;
+            this.vaccinationDGV.Size = new System.Drawing.Size(770, 191);
+            this.vaccinationDGV.TabIndex = 1;
+            this.vaccinationDGV.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.vaccinationDGV_CellContentDoubleClick);
             // 
-            // button2
+            // addVaccinationButton
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button2.Location = new System.Drawing.Point(3, 114);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(770, 25);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "Добавить";
-            this.button2.UseVisualStyleBackColor = true;
+            this.addVaccinationButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.addVaccinationButton.Location = new System.Drawing.Point(3, 210);
+            this.addVaccinationButton.Name = "addVaccinationButton";
+            this.addVaccinationButton.Size = new System.Drawing.Size(770, 25);
+            this.addVaccinationButton.TabIndex = 0;
+            this.addVaccinationButton.Text = "Добавить";
+            this.addVaccinationButton.UseVisualStyleBackColor = true;
+            this.addVaccinationButton.Click += new System.EventHandler(this.addVaccinationButton_Click);
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.dataGridView4);
-            this.tabPage3.Controls.Add(this.button5);
+            this.tabPage3.Controls.Add(this.veterinaryAppointmentDGV);
+            this.tabPage3.Controls.Add(this.addVeterinaryAppointmentButton);
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(792, 534);
+            this.tabPage3.Size = new System.Drawing.Size(789, 575);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Ветеринарные назначения";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // dataGridView4
+            // veterinaryAppointmentDGV
             // 
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dataGridView4.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.RowTemplate.Height = 25;
-            this.dataGridView4.Size = new System.Drawing.Size(792, 509);
-            this.dataGridView4.TabIndex = 3;
+            this.veterinaryAppointmentDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.veterinaryAppointmentDGV.Dock = System.Windows.Forms.DockStyle.Left;
+            this.veterinaryAppointmentDGV.Location = new System.Drawing.Point(0, 0);
+            this.veterinaryAppointmentDGV.Name = "veterinaryAppointmentDGV";
+            this.veterinaryAppointmentDGV.RowTemplate.Height = 25;
+            this.veterinaryAppointmentDGV.Size = new System.Drawing.Size(792, 550);
+            this.veterinaryAppointmentDGV.TabIndex = 3;
+            this.veterinaryAppointmentDGV.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.veterinaryAppointmentDGV_CellContentDoubleClick);
             // 
-            // button5
+            // addVeterinaryAppointmentButton
             // 
-            this.button5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button5.Location = new System.Drawing.Point(0, 509);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(792, 25);
-            this.button5.TabIndex = 2;
-            this.button5.Text = "Добавить";
-            this.button5.UseVisualStyleBackColor = true;
+            this.addVeterinaryAppointmentButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.addVeterinaryAppointmentButton.Location = new System.Drawing.Point(0, 550);
+            this.addVeterinaryAppointmentButton.Name = "addVeterinaryAppointmentButton";
+            this.addVeterinaryAppointmentButton.Size = new System.Drawing.Size(789, 25);
+            this.addVeterinaryAppointmentButton.TabIndex = 2;
+            this.addVeterinaryAppointmentButton.Text = "Добавить";
+            this.addVeterinaryAppointmentButton.UseVisualStyleBackColor = true;
+            this.addVeterinaryAppointmentButton.Click += new System.EventHandler(this.addVeterinaryAppointmentButton_Click);
             // 
             // tabPage4
             // 
@@ -390,7 +387,7 @@
             this.tabPage4.Controls.Add(this.groupBox4);
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(792, 534);
+            this.tabPage4.Size = new System.Drawing.Size(789, 575);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Владелец";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -399,22 +396,12 @@
             // 
             this.groupBox7.Controls.Add(this.checkBox2);
             this.groupBox7.Controls.Add(this.button7);
-            this.groupBox7.Location = new System.Drawing.Point(3, 400);
+            this.groupBox7.Location = new System.Drawing.Point(4, 417);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(169, 82);
             this.groupBox7.TabIndex = 12;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Договор";
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(12, 51);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(129, 19);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Договор подписан";
-            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // button7
             // 
@@ -424,9 +411,13 @@
             this.button7.TabIndex = 0;
             this.button7.Text = "Выдать договор";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.legalLocationCombobox);
+            this.groupBox6.Controls.Add(this.label11);
+            this.groupBox6.Controls.Add(this.button2);
             this.groupBox6.Controls.Add(this.textBox17);
             this.groupBox6.Controls.Add(this.label18);
             this.groupBox6.Controls.Add(this.textBox16);
@@ -441,13 +432,42 @@
             this.groupBox6.Controls.Add(this.label13);
             this.groupBox6.Location = new System.Drawing.Point(4, 209);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(781, 185);
+            this.groupBox6.Size = new System.Drawing.Size(781, 202);
             this.groupBox6.TabIndex = 3;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Данные юридического лица";
             // 
+            // legalLocationCombobox
+            // 
+            this.legalLocationCombobox.Enabled = false;
+            this.legalLocationCombobox.FormattingEnabled = true;
+            this.legalLocationCombobox.Location = new System.Drawing.Point(11, 169);
+            this.legalLocationCombobox.Name = "legalLocationCombobox";
+            this.legalLocationCombobox.Size = new System.Drawing.Size(121, 23);
+            this.legalLocationCombobox.TabIndex = 12;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(11, 151);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(111, 15);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Населенный пункт";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(591, 37);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(173, 23);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Найти юр. лицо";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // textBox17
             // 
+            this.textBox17.Enabled = false;
             this.textBox17.Location = new System.Drawing.Point(403, 125);
             this.textBox17.Name = "textBox17";
             this.textBox17.Size = new System.Drawing.Size(361, 23);
@@ -464,6 +484,7 @@
             // 
             // textBox16
             // 
+            this.textBox16.Enabled = false;
             this.textBox16.Location = new System.Drawing.Point(205, 125);
             this.textBox16.Name = "textBox16";
             this.textBox16.Size = new System.Drawing.Size(190, 23);
@@ -480,6 +501,7 @@
             // 
             // textBox15
             // 
+            this.textBox15.Enabled = false;
             this.textBox15.Location = new System.Drawing.Point(11, 125);
             this.textBox15.Name = "textBox15";
             this.textBox15.Size = new System.Drawing.Size(190, 23);
@@ -496,9 +518,10 @@
             // 
             // textBox14
             // 
+            this.textBox14.Enabled = false;
             this.textBox14.Location = new System.Drawing.Point(395, 81);
             this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(375, 23);
+            this.textBox14.Size = new System.Drawing.Size(369, 23);
             this.textBox14.TabIndex = 17;
             // 
             // label15
@@ -512,6 +535,7 @@
             // 
             // textBox13
             // 
+            this.textBox13.Enabled = false;
             this.textBox13.Location = new System.Drawing.Point(9, 81);
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(375, 23);
@@ -530,7 +554,7 @@
             // 
             this.textBox12.Location = new System.Drawing.Point(9, 37);
             this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(755, 23);
+            this.textBox12.Size = new System.Drawing.Size(576, 23);
             this.textBox12.TabIndex = 13;
             // 
             // label13
@@ -544,10 +568,9 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.textBox11);
-            this.groupBox5.Controls.Add(this.label12);
-            this.groupBox5.Controls.Add(this.textBox10);
-            this.groupBox5.Controls.Add(this.label11);
+            this.groupBox5.Controls.Add(this.physicalLocationCombobox);
+            this.groupBox5.Controls.Add(this.label4);
+            this.groupBox5.Controls.Add(this.button1);
             this.groupBox5.Controls.Add(this.textBox9);
             this.groupBox5.Controls.Add(this.label10);
             this.groupBox5.Controls.Add(this.textBox8);
@@ -563,43 +586,40 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Данные физического лица";
             // 
-            // textBox11
+            // physicalLocationCombobox
             // 
-            this.textBox11.Location = new System.Drawing.Point(412, 80);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(192, 23);
-            this.textBox11.TabIndex = 11;
+            this.physicalLocationCombobox.Enabled = false;
+            this.physicalLocationCombobox.FormattingEnabled = true;
+            this.physicalLocationCombobox.Location = new System.Drawing.Point(319, 80);
+            this.physicalLocationCombobox.Name = "physicalLocationCombobox";
+            this.physicalLocationCombobox.Size = new System.Drawing.Size(121, 23);
+            this.physicalLocationCombobox.TabIndex = 10;
             // 
-            // label12
+            // label4
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(412, 62);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(58, 15);
-            this.label12.TabIndex = 10;
-            this.label12.Text = "Отчество";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(319, 62);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(111, 15);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Населенный пункт";
             // 
-            // textBox10
+            // button1
             // 
-            this.textBox10.Location = new System.Drawing.Point(214, 80);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(192, 23);
-            this.textBox10.TabIndex = 9;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(214, 62);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(31, 15);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "Имя";
+            this.button1.Location = new System.Drawing.Point(160, 35);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(173, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Найти физ. лицо";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox9
             // 
+            this.textBox9.Enabled = false;
             this.textBox9.Location = new System.Drawing.Point(9, 80);
             this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(192, 23);
+            this.textBox9.Size = new System.Drawing.Size(304, 23);
             this.textBox9.TabIndex = 7;
             // 
             // label10
@@ -607,21 +627,22 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(9, 62);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(58, 15);
+            this.label10.Size = new System.Drawing.Size(34, 15);
             this.label10.TabIndex = 6;
-            this.label10.Text = "Фамилия";
+            this.label10.Text = "ФИО";
             // 
             // textBox8
             // 
-            this.textBox8.Location = new System.Drawing.Point(316, 36);
+            this.textBox8.Enabled = false;
+            this.textBox8.Location = new System.Drawing.Point(498, 36);
             this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(459, 23);
+            this.textBox8.Size = new System.Drawing.Size(277, 23);
             this.textBox8.TabIndex = 5;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(319, 18);
+            this.label9.Location = new System.Drawing.Point(498, 18);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(192, 15);
             this.label9.TabIndex = 4;
@@ -629,7 +650,8 @@
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(160, 36);
+            this.textBox7.Enabled = false;
+            this.textBox7.Location = new System.Drawing.Point(339, 36);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(153, 23);
             this.textBox7.TabIndex = 3;
@@ -637,11 +659,12 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(160, 18);
+            this.label8.Location = new System.Drawing.Point(339, 18);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(153, 15);
             this.label8.TabIndex = 2;
             this.label8.Text = "Адрес электронной почты";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // textBox6
             // 
@@ -680,39 +703,37 @@
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "Юридическое лицо";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // saveButton
+            // checkBox2
             // 
-            this.saveButton.Location = new System.Drawing.Point(708, 568);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 24;
-            this.saveButton.Text = "Сохранить";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(12, 51);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(129, 19);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "Договор подписан";
+            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // AnimalCardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 603);
-            this.Controls.Add(this.saveButton);
+            this.ClientSize = new System.Drawing.Size(797, 603);
             this.Controls.Add(this.tabControl1);
             this.Name = "AnimalCardForm";
             this.Text = "Учетная карточка";
+            ((System.ComponentModel.ISupportInitialize)(this.parasiteTreatmentDGV)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.animalPictureBox)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vaccinationDGV)).EndInit();
             this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.veterinaryAppointmentDGV)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
@@ -731,8 +752,8 @@
         private TabControl tabControl1;
         private TabPage tabPage1;
         private Label label1;
-        private Button button1;
-        private PictureBox pictureBox1;
+        private Button uploadPictureButton;
+        private PictureBox animalPictureBox;
         private TextBox animalBirthYearTextBox;
         private Label label3;
         private Label label2;
@@ -742,18 +763,15 @@
         private TextBox animalChipIdTextBox;
         private Label label5;
         private TabPage tabPage2;
-        private GroupBox groupBox3;
-        private DataGridView dataGridView3;
-        private Button button4;
         private GroupBox groupBox2;
-        private DataGridView dataGridView2;
-        private Button button3;
+        private DataGridView parasiteTreatmentDGV;
+        private Button addParasiteTreatmentButton;
         private GroupBox groupBox1;
-        private DataGridView dataGridView1;
-        private Button button2;
+        private DataGridView vaccinationDGV;
+        private Button addVaccinationButton;
         private TabPage tabPage3;
-        private DataGridView dataGridView4;
-        private Button button5;
+        private DataGridView veterinaryAppointmentDGV;
+        private Button addVeterinaryAppointmentButton;
         private TabPage tabPage4;
         private GroupBox groupBox4;
         private GroupBox groupBox6;
@@ -784,9 +802,15 @@
         private Label label7;
         private CheckBox checkBox1;
         private GroupBox groupBox7;
-        private CheckBox checkBox2;
         private Button button7;
         private Button saveButton;
         private ComboBox animalSexComboBox;
+        private Button deleteAnimalCardButton;
+        private Button button1;
+        private Button button2;
+        private ComboBox legalLocationCombobox;
+        private ComboBox physicalLocationCombobox;
+        private Label label4;
+        private CheckBox checkBox2;
     }
 }

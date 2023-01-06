@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using DocumentFormat.OpenXml.Drawing;
 using Microsoft.EntityFrameworkCore;
 using PIS_PetRegistry.Backend;
 
@@ -16,7 +18,7 @@ public partial class RegistryPetsContext : DbContext
     {
     }
 
-    public virtual DbSet<AmimalCardLog> AmimalCardLogs { get; set; }
+    public virtual DbSet<AnimalCardLog> AnimalCardLogs { get; set; }
 
     public virtual DbSet<AnimalCard> AnimalCards { get; set; }
 
@@ -51,15 +53,17 @@ public partial class RegistryPetsContext : DbContext
     public virtual DbSet<VeterinaryAppointmentAnimal> VeterinaryAppointmentAnimals { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Host=localhost;Database=registry_pets;Username=postgres;Password=admin");
+        => optionsBuilder
+            .UseLazyLoadingProxies()
+            .UseNpgsql(ConfigurationManager.ConnectionStrings["RegestryPets"].ToString());
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AmimalCardLog>(entity =>
+        modelBuilder.Entity<AnimalCardLog>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("logs_pkey");
 
-            entity.ToTable("amimal_card_log");
+            entity.ToTable("animal_card_log");
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
@@ -113,6 +117,25 @@ public partial class RegistryPetsContext : DbContext
                 .HasForeignKey(d => d.FkShelter)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_shelter");
+
+            entity.HasIndex(e => e.ChipId).IsUnique();
+
+            // roles access limitations
+            if (Authorization.AuthorizedUserDto == null)
+                return;
+
+            if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
+            {
+                if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)
+                {
+                    entity.HasQueryFilter(e => e.FkShelterNavigation.FkLocation == Authorization.AuthorizedUserDto.LocationId);
+                }
+                else
+                {
+                    entity.HasQueryFilter(e => e.FkShelterNavigation.FkLocation == Authorization.AuthorizedUserDto.ShelterLocationId);
+                }
+
+            }
         });
 
         modelBuilder.Entity<AnimalCategory>(entity =>
@@ -219,6 +242,23 @@ public partial class RegistryPetsContext : DbContext
                 .HasForeignKey(d => d.FkLocality)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_locality");
+
+            // roles access limitations
+            if (Authorization.AuthorizedUserDto == null)
+                return;
+
+            if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
+            {
+                if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)
+                {
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.LocationId);
+                }
+                else
+                {
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.ShelterLocationId);
+                }
+
+            }
         });
 
         modelBuilder.Entity<Location>(entity =>
@@ -259,10 +299,6 @@ public partial class RegistryPetsContext : DbContext
             entity.Property(e => e.FkUser).HasColumnName("FK_user");
             entity.Property(e => e.FkMedication).HasColumnName("FK_medication");
             entity.Property(e => e.Date).HasColumnName("date");
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
 
             entity.HasOne(d => d.FkAnimalNavigation).WithMany(p => p.ParasiteTreatments)
                 .HasForeignKey(d => d.FkAnimal)
@@ -327,6 +363,23 @@ public partial class RegistryPetsContext : DbContext
                 .HasForeignKey(d => d.FkLocality)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_locality");
+
+            // roles access limitations
+            if (Authorization.AuthorizedUserDto == null)
+                return;
+
+            if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
+            {
+                if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)
+                {
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.LocationId);
+                }
+                else
+                {
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.ShelterLocationId);
+                }
+
+            }
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -457,10 +510,6 @@ public partial class RegistryPetsContext : DbContext
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.FkAnimal).HasColumnName("FK_animal");
             entity.Property(e => e.FkUser).HasColumnName("FK_user");
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
             entity.Property(e => e.IsCompleted).HasColumnName("is_completed");
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")

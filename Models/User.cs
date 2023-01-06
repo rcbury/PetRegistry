@@ -21,7 +21,7 @@ public partial class User
 
     public int? FkLocation { get; set; }
 
-    public virtual ICollection<AmimalCardLog> AmimalCardLogs { get; } = new List<AmimalCardLog>();
+    public virtual ICollection<AnimalCardLog> AmimalCardLogs { get; } = new List<AnimalCardLog>();
 
     public virtual ICollection<Contract> Contracts { get; } = new List<Contract>();
 

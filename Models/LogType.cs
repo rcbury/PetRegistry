@@ -9,5 +9,5 @@ public partial class LogType
 
     public string? Name { get; set; }
 
-    public virtual ICollection<AmimalCardLog> AmimalCardLogs { get; } = new List<AmimalCardLog>();
+    public virtual ICollection<AnimalCardLog> AmimalCardLogs { get; } = new List<AnimalCardLog>();
 }
