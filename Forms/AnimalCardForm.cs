@@ -39,6 +39,7 @@ namespace PIS_PetRegistry
             
             SetupComboboxes();
             SetupDGV();
+            SetupPermissions();
             Refetch();
             
             FillFields();
@@ -68,6 +69,7 @@ namespace PIS_PetRegistry
                 animalNameTextBox.Enabled = false;
                 animalChipIdTextBox.Enabled = false;
                 animalCategoryComboBox.Enabled = false;
+                animalBirthYearTextBox.Enabled = false;
 
                 saveButton.Enabled = false;
                 uploadPictureButton.Enabled = false;
@@ -75,8 +77,28 @@ namespace PIS_PetRegistry
                 addVaccinationButton.Enabled = false;
                 addVeterinaryAppointmentButton.Enabled = false;
                 veterinaryShtukiModificationAllowed = false;
+                
 
-                //TODO: Disable owners info
+                //Disable owners info
+                //nazvaniya controlov tupo kaif
+
+                textBox6.Enabled = false;
+                textBox12.Enabled = false;
+                button7.Enabled = false;
+                checkBox2.Enabled = false;
+                button1.Enabled = false;
+                button2.Enabled = false;
+            }
+
+            //Enable owners info
+            if (authorizedUser.RoleId == (int)UserRoles.ShelterOperator)
+            {
+                textBox6.Enabled = true;
+                textBox12.Enabled = true;
+                button7.Enabled = true;
+                checkBox2.Enabled = true;
+                button1.Enabled = true;
+                button2.Enabled = true;
             }
 
 
