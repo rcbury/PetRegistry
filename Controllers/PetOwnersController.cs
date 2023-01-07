@@ -80,11 +80,33 @@ namespace PIS_PetRegistry.Controllers
                 var person = context.PhysicalPeople.Where(person => person.Phone == phone).FirstOrDefault();
                 if (person == null)
                 {
-                    throw new Exception("Physical person with that phone number does not exists");
+                    return null;
                 }
                 return new PhysicalPersonDTO()
                 {
+                    Id = person.Id,
                     Phone = phone,
+                    Name = person.Name,
+                    Address = person.Address,
+                    Email = person.Email,
+                    FkLocality = person.FkLocality
+                };
+            }
+        }
+
+        public static PhysicalPersonDTO? GetPhysicalPersonById(int personId)
+        {
+            using (var context = new RegistryPetsContext())
+            {
+                var person = context.PhysicalPeople.Where(person => person.Id == personId).FirstOrDefault();
+                if (person == null)
+                {
+                    return null;
+                }
+                return new PhysicalPersonDTO()
+                {
+                    Id = person.Id,
+                    Phone = person.Phone,
                     Name = person.Name,
                     Address = person.Address,
                     Email = person.Email,
@@ -104,7 +126,30 @@ namespace PIS_PetRegistry.Controllers
                 }
                 return new LegalPersonDTO()
                 {
+                    Id = person.Id,
                     INN = INN,
+                    KPP = person.Kpp,
+                    Name = person.Name,
+                    Address = person.Address,
+                    Email = person.Email,
+                    Phone = person.Phone,
+                    FkLocality = person.FkLocality
+                };
+            }
+        }
+        public static LegalPersonDTO? GetLegalPersonById(int? personId)
+        {
+            using (var context = new RegistryPetsContext())
+            {
+                var person = context.LegalPeople.Where(person => person.Id == personId).FirstOrDefault();
+                if (person == null)
+                {
+                    return null;
+                }
+                return new LegalPersonDTO()
+                {
+                    Id = person.Id,
+                    INN = person.Inn,
                     KPP = person.Kpp,
                     Name = person.Name,
                     Address = person.Address,

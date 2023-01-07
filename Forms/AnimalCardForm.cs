@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Backend;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using PIS_PetRegistry.Backend;
 using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Forms;
@@ -33,7 +34,8 @@ namespace PIS_PetRegistry
         {
             this.animalCardDTO = animalCardDTO;
             this.parasiteTreatmentsDTO = new List<ParasiteTreatmentDTO>();
-            this.locationsDTO = PetOwnersController.GetLocations();
+            this.physicalLocationsDTO = PetOwnersController.GetLocations();
+            this.legalLocationsDTO = PetOwnersController.GetLocations();
 
             InitializeComponent();
             
@@ -51,7 +53,9 @@ namespace PIS_PetRegistry
         private List<ParasiteTreatmentDTO> parasiteTreatmentsDTO;
         private List<VeterinaryAppointmentDTO> veterinaryAppointmentsDTO;
         private List<VaccinationDTO> vaccinationsDTO;
-        private List<LocationDTO> locationsDTO;
+        private List<LocationDTO> physicalLocationsDTO;
+        private List<LocationDTO> legalLocationsDTO;
+        private ContractDTO? contractDTO;
         private bool veterinaryShtukiModificationAllowed = true;
 
         public void SetupPermissions()
@@ -236,11 +240,11 @@ namespace PIS_PetRegistry
             animalSexComboBox.ValueMember = "Key";
             animalSexComboBox.DisplayMember = "Value";
 
-            physicalLocationCombobox.DataSource = locationsDTO;
+            physicalLocationCombobox.DataSource = physicalLocationsDTO;
             physicalLocationCombobox.ValueMember = "Id";
             physicalLocationCombobox.DisplayMember = "Name";
 
-            legalLocationCombobox.DataSource = locationsDTO;
+            legalLocationCombobox.DataSource = legalLocationsDTO;
             legalLocationCombobox.ValueMember = "Id";
             legalLocationCombobox.DisplayMember = "Name";
         }
@@ -342,10 +346,28 @@ namespace PIS_PetRegistry
                 this.parasiteTreatmentsDTO = ParasiteTreatmentController.GetParasiteTreatmentsByAnimal(animalCardDTO.Id);
                 this.veterinaryAppointmentsDTO = VeterinaryAppointmentController.GetVeterinaryAppointmentsByAnimal(animalCardDTO.Id);
                 this.vaccinationsDTO = VaccinationController.GetVaccinationsByAnimal(animalCardDTO.Id);
+                contractDTO = AnimalCardController.GetContractByAnimal(animalCardDTO.Id);
+
+                if (contractDTO != null) 
+                {
+                    checkBox2.Checked = true;
+                    checkBox2.Enabled = false;
+                    physicalPersonDTO = PetOwnersController.GetPhysicalPersonById(contractDTO.FkPhysicalPerson);
+                    FillPhysical();
+                    if (contractDTO.FkLegalPerson != null)
+                    {
+                        checkBox1.Checked = true;
+                        checkBox1.Enabled = false;
+                        legalPersonDTO = PetOwnersController.GetLegalPersonById(contractDTO.FkLegalPerson);
+                        groupBox6.Show();
+                        FillLegal();
+                    }
+                }
 
                 parasiteTreatmentDGV.DataSource = parasiteTreatmentsDTO;
                 veterinaryAppointmentDGV.DataSource = veterinaryAppointmentsDTO;
                 vaccinationDGV.DataSource = vaccinationsDTO;
+                
             }
         }
 
@@ -461,10 +483,7 @@ namespace PIS_PetRegistry
             }
             else 
             {
-                textBox7.Text = physicalPersonDTO.Email;
-                textBox8.Text = physicalPersonDTO.Address;
-                textBox9.Text = physicalPersonDTO.Name;
-                physicalLocationCombobox.SelectedValue = physicalPersonDTO.FkLocality;
+                FillPhysical();
             }
         }
 
@@ -478,13 +497,28 @@ namespace PIS_PetRegistry
             }
             else
             {
-                textBox13.Text = legalPersonDTO.Name;
-                textBox14.Text = legalPersonDTO.KPP;
-                textBox15.Text = legalPersonDTO.Address;
-                textBox16.Text = legalPersonDTO.Phone;
-                textBox17.Text = legalPersonDTO.Email;
-                legalLocationCombobox.SelectedValue = legalPersonDTO.FkLocality;
+                FillLegal();
             }
+        }
+
+        private void FillLegal() 
+        {
+            textBox12.Text = legalPersonDTO.INN;
+            textBox13.Text = legalPersonDTO.Name;
+            textBox14.Text = legalPersonDTO.KPP;
+            textBox15.Text = legalPersonDTO.Address;
+            textBox16.Text = legalPersonDTO.Phone;
+            textBox17.Text = legalPersonDTO.Email;
+            legalLocationCombobox.SelectedValue = legalPersonDTO.FkLocality;
+        }
+
+        private void FillPhysical() 
+        {
+            textBox6.Text = physicalPersonDTO.Phone;
+            textBox7.Text = physicalPersonDTO.Email;
+            textBox8.Text = physicalPersonDTO.Address;
+            textBox9.Text = physicalPersonDTO.Name;
+            physicalLocationCombobox.SelectedValue = physicalPersonDTO.FkLocality;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -514,6 +548,16 @@ namespace PIS_PetRegistry
                     var filePath = saveFileDialog.FileName;
                     AnimalCardController.MakeContract(filePath, physicalPersonDTO, legalPersonDTO, animalCardDTO, currentUser);
                 }
+            }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            var currentUser = AuthorizationController.GetAuthorizedUser();
+            if (checkBox2.Checked && physicalPersonDTO != null) 
+            {
+                checkBox2.Enabled = false;
+                AnimalCardController.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO, currentUser); 
             }
         }
     }

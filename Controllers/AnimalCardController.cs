@@ -129,6 +129,29 @@ namespace PIS_PetRegistry.Controllers
             return AnimalCardDTO;
         }
 
+        public static ContractDTO? GetContractByAnimal(int animalId) 
+        {
+            var res = new ContractDTO();
+            using (var context = new RegistryPetsContext())
+            {
+                var contract = context.Contracts.Where(contract => contract.FkAnimalCard == animalId).FirstOrDefault();
+                if (contract == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    res.Number = contract.Number;
+                    res.Date = contract.Date;
+                    res.FkAnimalCard = contract.FkAnimalCard;
+                    res.FkUser = contract.FkUser;
+                    res.FkPhysicalPerson = contract.FkPhysicalPerson;
+                    res.FkLegalPerson = contract.FkLegalPerson;
+                }
+            }
+            return res;
+        }
+
         public static void ExportCardsToExcel(string path, List<AnimalCardDTO> cardsList) 
         {
             using (var workbook = new XLWorkbook())
@@ -295,6 +318,38 @@ namespace PIS_PetRegistry.Controllers
                 }
             }
         }
+
+        public static ContractDTO SaveContract(PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO? legalPersonDTO, 
+            AnimalCardDTO animalCardDTO, UserDTO currentUser) 
+        {
+            var res = new ContractDTO();
+            using (var context = new RegistryPetsContext()) 
+            {
+                var contract = new Contract();
+                var maxNum = context.Contracts
+                    .Where(contract => contract.Date.Year == DateTime.Now.Year)
+                    .Max(x => x.Number);
+                contract.Number = maxNum == null ? 1 : maxNum + 1;
+                res.Number = contract.Number;
+                contract.Date = DateOnly.FromDateTime(DateTime.Now);
+                res.Date = contract.Date;
+                contract.FkAnimalCard = animalCardDTO.Id;
+                res.FkAnimalCard = contract.FkAnimalCard;
+                contract.FkUser = currentUser.Id;
+                res.FkUser = contract.FkUser;
+                contract.FkPhysicalPerson = physicalPersonDTO.Id;
+                res.FkPhysicalPerson = contract.FkPhysicalPerson;
+                if (legalPersonDTO != null)
+                {
+                    contract.FkLegalPerson = legalPersonDTO.Id;
+                    res.FkLegalPerson = contract.FkLegalPerson;
+                }
+                context.Contracts.Add(contract);
+                context.SaveChanges();
+            }
+            return res;
+        }
+
         public static List<AnimalCardDTO> GetAnimalsByLegalPerson(int legalPersonId)
         {
             var animalsByLegalPersonDTO = new List<AnimalCardDTO>();
