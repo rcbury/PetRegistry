@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.DirectoryServices;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,10 @@ namespace PIS_PetRegistry
         List<PhysicalPersonDTO> listPhysicalPersonDTOs;
         List<CountryDTO> countries;
         List<LocationDTO> locations;
+        private int _physicalPreviousIndex;
+        private bool _physicalSortDirection;
+        private int _legalPreviousIndex;
+        private bool _legalSortDirection;
         public PetOwnersForm()
         {
             InitializeComponent();
@@ -202,6 +207,36 @@ namespace PIS_PetRegistry
             dataGridView1.DataSource = listPhysicalPersonDTOs;
         }
 
+        private List<PhysicalPersonDTO> SortData(List<PhysicalPersonDTO> list, string column, bool ascending)
+        {
+            try
+            {
+                return ascending ?
+                    list.OrderBy(_ => _.GetType().GetProperty(column).GetValue(_)).ToList() :
+                    list.OrderByDescending(_ => _.GetType().GetProperty(column).GetValue(_)).ToList();
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка сортировки");
+                return list;
+            }
+        }
+
+        private List<LegalPersonDTO> SortData(List<LegalPersonDTO> list, string column, bool ascending)
+        {
+            try
+            {
+                return ascending ?
+                    list.OrderBy(_ => _.GetType().GetProperty(column).GetValue(_)).ToList() :
+                    list.OrderByDescending(_ => _.GetType().GetProperty(column).GetValue(_)).ToList();
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка сортировки");
+                return list;
+            }
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             var inn = textBox8.Text;
@@ -278,6 +313,28 @@ namespace PIS_PetRegistry
 
             form.ShowDialog();
             Show();
+        }
+
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == _physicalPreviousIndex)
+                _physicalSortDirection ^= true;
+
+            dataGridView1.DataSource = SortData(
+                (List<PhysicalPersonDTO>)dataGridView1.DataSource, dataGridView1.Columns[e.ColumnIndex].Name, _physicalSortDirection);
+
+            _physicalPreviousIndex = e.ColumnIndex;
+        }
+
+        private void dataGridView2_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == _legalPreviousIndex)
+                _legalSortDirection ^= true;
+
+            dataGridView2.DataSource = SortData(
+                (List<LegalPersonDTO>)dataGridView2.DataSource, dataGridView2.Columns[e.ColumnIndex].Name, _legalSortDirection);
+
+            _legalPreviousIndex = e.ColumnIndex;
         }
     }
 }
