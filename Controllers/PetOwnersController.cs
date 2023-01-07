@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.EntityFrameworkCore;
 using PIS_PetRegistry.DTO;
@@ -48,6 +49,12 @@ namespace PIS_PetRegistry.Controllers
                 }
                 foreach (var personInfo in physicalPeople)
                 {
+                    var animalsCount = context.Contracts.Where(contract => 
+                    contract.FkPhysicalPerson == personInfo.Id && contract.FkLegalPerson == null).Count();
+                    var catsCount = context.Contracts.Where(contract => contract.FkPhysicalPerson == personInfo.Id &&
+                        context.AnimalCards.Where(card => card.FkCategory == 2 && card.Id == contract.FkAnimalCard).Count() != 0)
+                        .Count();
+                    var dogsCount = animalsCount - catsCount;
                     physicalPeopleDTO.Add(new PhysicalPersonDTO()
                     {
                         Id = personInfo.Id,
@@ -56,11 +63,101 @@ namespace PIS_PetRegistry.Controllers
                         Address = personInfo.Address,
                         Email = personInfo.Email,
                         FkLocality = personInfo.FkLocality,
-                        FkCountry = personInfo.FkCountry
+                        FkCountry = personInfo.FkCountry,
+                        AnimalCount = animalsCount,
+                        CatCount = catsCount,
+                        DogCount = dogsCount
                     });
                 }
             }
             return physicalPeopleDTO;
+        }
+
+        public static PhysicalPersonDTO GetPhysicalPersonByPhone(string phone)
+        {
+            using (var context = new RegistryPetsContext())
+            {
+                var person = context.PhysicalPeople.Where(person => person.Phone == phone).FirstOrDefault();
+                if (person == null)
+                {
+                    return null;
+                }
+                return new PhysicalPersonDTO()
+                {
+                    Id = person.Id,
+                    Phone = phone,
+                    Name = person.Name,
+                    Address = person.Address,
+                    Email = person.Email,
+                    FkLocality = person.FkLocality
+                };
+            }
+        }
+
+        public static PhysicalPersonDTO? GetPhysicalPersonById(int personId)
+        {
+            using (var context = new RegistryPetsContext())
+            {
+                var person = context.PhysicalPeople.Where(person => person.Id == personId).FirstOrDefault();
+                if (person == null)
+                {
+                    return null;
+                }
+                return new PhysicalPersonDTO()
+                {
+                    Id = person.Id,
+                    Phone = person.Phone,
+                    Name = person.Name,
+                    Address = person.Address,
+                    Email = person.Email,
+                    FkLocality = person.FkLocality
+                };
+            }
+        }
+
+        public static LegalPersonDTO? GetLegalPersonByINN(string INN)
+        {
+            using (var context = new RegistryPetsContext())
+            {
+                var person = context.LegalPeople.Where(person => person.Inn == INN).FirstOrDefault();
+                if (person == null)
+                {
+                    return null;
+                }
+                return new LegalPersonDTO()
+                {
+                    Id = person.Id,
+                    INN = INN,
+                    KPP = person.Kpp,
+                    Name = person.Name,
+                    Address = person.Address,
+                    Email = person.Email,
+                    Phone = person.Phone,
+                    FkLocality = person.FkLocality
+                };
+            }
+        }
+        public static LegalPersonDTO? GetLegalPersonById(int? personId)
+        {
+            using (var context = new RegistryPetsContext())
+            {
+                var person = context.LegalPeople.Where(person => person.Id == personId).FirstOrDefault();
+                if (person == null)
+                {
+                    return null;
+                }
+                return new LegalPersonDTO()
+                {
+                    Id = person.Id,
+                    INN = person.Inn,
+                    KPP = person.Kpp,
+                    Name = person.Name,
+                    Address = person.Address,
+                    Email = person.Email,
+                    Phone = person.Phone,
+                    FkLocality = person.FkLocality
+                };
+            }
         }
 
         public static List<LegalPersonDTO> GetLegalPeople(string inn, string kpp, string name, string email, 
@@ -104,6 +201,11 @@ namespace PIS_PetRegistry.Controllers
                 }
                 foreach (var personInfo in legalPeople)
                 {
+                    var animalsCount = context.Contracts.Where(contract => contract.FkLegalPerson == personInfo.Id).Count();
+                    var catsCount = context.Contracts.Where(contract => contract.FkLegalPerson == personInfo.Id &&
+                        context.AnimalCards.Where(card => card.FkCategory == 2 && card.Id == contract.FkAnimalCard).Count() != 0)
+                        .Count();
+                    var dogsCount = animalsCount - catsCount;
                     legalPeopleDTO.Add(new LegalPersonDTO()
                     {
                         Id = personInfo.Id,
@@ -114,7 +216,10 @@ namespace PIS_PetRegistry.Controllers
                         Address = personInfo.Address,
                         Email = personInfo.Email,
                         FkLocality = personInfo.FkLocality,
-                        FkCountry = personInfo.FkCountry
+                        FkCountry = personInfo.FkCountry,
+                        AnimalCount = animalsCount,
+                        CatCount = catsCount,
+                        DogCount = dogsCount
                     });
                 }
             }
@@ -164,40 +269,158 @@ namespace PIS_PetRegistry.Controllers
             }
             return countries;
         }
-
-        public static List<AnimalCardDTO> GetAnimalsByLegalPerson(int legalPersonId)
+       
+        public static LegalPersonDTO UpdateLegalPerson(LegalPersonDTO legalPersonDTO)
         {
-            var animalsLegalPersonDTO = new List<AnimalCardDTO>();
+            LegalPerson? legalPersonModel;
+
             using (var context = new RegistryPetsContext())
             {
-                var animalsNumber = context.Contracts
-                    .Where(x => x.FkLegalPerson == legalPersonId)
-                    .Select(x => x.FkAnimalCard)
-                    .Distinct();
+                legalPersonModel = context.LegalPeople
+                    .Where(x => x.Id.Equals(legalPersonDTO.Id))
+                    .FirstOrDefault();
 
-                foreach (var animalId in animalsNumber)
+                if (legalPersonModel == null)
                 {
-                    var animal = context.AnimalCards
-                        .Where(x => x.Id == animalId)
-                        .FirstOrDefault();
-                    animalsLegalPersonDTO.Add(
-                        new AnimalCardDTO()
-                        {
-                            Id = animal.Id,
-                            IsBoy = animal.IsBoy,
-                            Name = animal.Name,
-                            Photo = animal.Photo,
-                            YearOfBirth = animal.YearOfBirth,
-                            FkCategory = animal.FkCategory,
-                            FkShelter = animal.FkShelter,
-                            ChipId = animal.ChipId,
-                        });
+                    throw new Exception("trying to change unexisting legal person");
                 }
-                return animalsLegalPersonDTO;
+
+                legalPersonModel.Inn = legalPersonDTO.INN;
+                legalPersonModel.Kpp = legalPersonDTO.KPP;
+                legalPersonModel.Name= legalPersonDTO.Name;
+                legalPersonModel.Address = legalPersonDTO.Address;
+                legalPersonModel.Email = legalPersonDTO.Email;
+                legalPersonModel.Phone = legalPersonDTO.Phone;
+                legalPersonModel.FkCountry= legalPersonDTO.FkCountry;
+                legalPersonModel.FkLocality = legalPersonDTO.FkLocality;
+
+                context.SaveChanges();
             }
+
+            var newLegalPersonDTO = new LegalPersonDTO()
+            {
+                Id = legalPersonModel.Id,
+                INN = legalPersonModel.Inn,
+                KPP = legalPersonModel.Kpp,
+                Name = legalPersonModel.Name,
+                Address = legalPersonModel.Address,
+                Email = legalPersonModel.Email,
+                Phone = legalPersonModel.Phone,
+                FkCountry = legalPersonModel.FkCountry,
+                FkLocality = legalPersonModel.FkLocality,
+            };
+
+            return newLegalPersonDTO;
         }
 
-        public static void ExportPhysicalPeopleToExcel(List<PhysicalPersonDTO> physicalPeopleDTO)
+        public static LegalPersonDTO AddLegalPerson(LegalPersonDTO legalPersonDTO)
+        {
+            var legalPersonModel = new LegalPerson()
+            {
+                Inn = legalPersonDTO.INN,
+                Kpp = legalPersonDTO.KPP,
+                Name = legalPersonDTO.Name,
+                Address = legalPersonDTO.Address,
+                Email = legalPersonDTO.Email,
+                Phone = legalPersonDTO.Phone,
+                FkCountry = legalPersonDTO.FkCountry,
+                FkLocality = legalPersonDTO.FkLocality,
+            };
+
+            using (var context = new RegistryPetsContext())
+            {
+                context.LegalPeople.Add(legalPersonModel);
+                context.SaveChanges();
+            }
+
+            var newLegalPersonDTO = new LegalPersonDTO()
+            {
+                Id = legalPersonModel.Id,
+                INN = legalPersonModel.Inn,
+                KPP = legalPersonModel.Kpp,
+                Name = legalPersonModel.Name,
+                Address = legalPersonModel.Address,
+                Email = legalPersonModel.Email,
+                Phone = legalPersonModel.Phone,
+                FkCountry = legalPersonModel.FkCountry,
+                FkLocality = legalPersonModel.FkLocality,
+            };
+
+            return newLegalPersonDTO;
+        }
+
+        public static PhysicalPersonDTO AddPhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
+        {
+            var physicalPersonModel = new PhysicalPerson()
+            {
+                Name = physicalPersonDTO.Name,
+                Address = physicalPersonDTO.Address,
+                Email = physicalPersonDTO.Email,
+                Phone = physicalPersonDTO.Phone,
+                FkCountry = physicalPersonDTO.FkCountry,
+                FkLocality = physicalPersonDTO.FkLocality,
+            };
+
+            using (var context = new RegistryPetsContext())
+            {
+                context.PhysicalPeople.Add(physicalPersonModel);
+                context.SaveChanges();
+            }
+
+            var newPhysicalPersonDTO = new PhysicalPersonDTO()
+            {
+                Id = physicalPersonModel.Id,
+                Name = physicalPersonDTO.Name,
+                Address = physicalPersonDTO.Address,
+                Email = physicalPersonDTO.Email,
+                Phone = physicalPersonDTO.Phone,
+                FkCountry = physicalPersonDTO.FkCountry,
+                FkLocality = physicalPersonDTO.FkLocality,
+            };
+
+            return newPhysicalPersonDTO;
+        }
+
+        public static PhysicalPersonDTO UpdatePhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
+        {
+            PhysicalPerson? physicalPersonModel;
+
+            using (var context = new RegistryPetsContext())
+            {
+                physicalPersonModel = context.PhysicalPeople
+                    .Where(x => x.Id.Equals(physicalPersonDTO.Id))
+                    .FirstOrDefault();
+
+                if(physicalPersonModel == null)
+                {
+                    throw new Exception("trying to change unexisting physical person");
+                }
+
+                physicalPersonModel.Name = physicalPersonDTO.Name;
+                physicalPersonModel.Address = physicalPersonDTO.Address;
+                physicalPersonModel.Email = physicalPersonDTO.Email;
+                physicalPersonModel.Phone = physicalPersonDTO.Phone;
+                physicalPersonModel.FkCountry = physicalPersonDTO.FkCountry;
+                physicalPersonModel.FkLocality = physicalPersonDTO.FkLocality;
+
+                context.SaveChanges();
+            }
+
+            var newPhysicalPersonDTO = new PhysicalPersonDTO()
+            {
+                Id = physicalPersonModel.Id,
+                Name = physicalPersonModel.Name,
+                Address = physicalPersonModel.Address,
+                Email = physicalPersonModel.Email,
+                Phone = physicalPersonModel.Phone,
+                FkCountry = physicalPersonModel.FkCountry,
+                FkLocality= physicalPersonModel.FkLocality,
+            };
+
+            return newPhysicalPersonDTO;
+        }
+
+        public static void ExportPhysicalPeopleToExcel(string path, List<PhysicalPersonDTO> physicalPeopleDTO)
         {
             using (var workbook = new XLWorkbook())
             {
@@ -249,16 +472,11 @@ namespace PIS_PetRegistry.Controllers
                 }
                 worksheet.Columns().AdjustToContents();
                 worksheet.Rows().AdjustToContents();
-                var fileName = $"Выгрузка физических лиц от {DateOnly.FromDateTime(DateTime.Now)}.xlsx";
-                if (Directory.Exists(fileName)) 
-                {
-                    Directory.Delete(fileName);
-                }
-                workbook.SaveAs(fileName);
+                workbook.SaveAs(path);
             }
         }
 
-        public static void ExportLegalPeopleToExcel(List<LegalPersonDTO> legalPeopleDTO) 
+        public static void ExportLegalPeopleToExcel(string path, List<LegalPersonDTO> legalPeopleDTO) 
         {
             using (var workbook = new XLWorkbook())
             {
@@ -316,12 +534,7 @@ namespace PIS_PetRegistry.Controllers
                 }
                 worksheet.Columns().AdjustToContents();
                 worksheet.Rows().AdjustToContents();
-                var fileName = $"Выгрузка юридических лиц от {DateOnly.FromDateTime(DateTime.Now)}.xlsx";
-                if (Directory.Exists(fileName))
-                {
-                    Directory.Delete(fileName);
-                }
-                workbook.SaveAs(fileName);
+                workbook.SaveAs(path);
             }
         }
     }

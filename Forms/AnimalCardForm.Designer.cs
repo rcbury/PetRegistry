@@ -57,6 +57,7 @@
             this.addVeterinaryAppointmentButton = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.button7 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.legalLocationCombobox = new System.Windows.Forms.ComboBox();
@@ -88,7 +89,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.parasiteTreatmentDGV)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -112,6 +112,7 @@
             this.parasiteTreatmentDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.parasiteTreatmentDGV.Location = new System.Drawing.Point(3, 19);
             this.parasiteTreatmentDGV.Name = "parasiteTreatmentDGV";
+            this.parasiteTreatmentDGV.RowHeadersWidth = 62;
             this.parasiteTreatmentDGV.RowTemplate.Height = 25;
             this.parasiteTreatmentDGV.Size = new System.Drawing.Size(775, 232);
             this.parasiteTreatmentDGV.TabIndex = 1;
@@ -149,7 +150,7 @@
             this.tabPage1.Controls.Add(this.animalPictureBox);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.tabPage1.Size = new System.Drawing.Size(789, 575);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основная информация";
@@ -330,6 +331,7 @@
             this.vaccinationDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.vaccinationDGV.Location = new System.Drawing.Point(3, 19);
             this.vaccinationDGV.Name = "vaccinationDGV";
+            this.vaccinationDGV.RowHeadersWidth = 62;
             this.vaccinationDGV.RowTemplate.Height = 25;
             this.vaccinationDGV.Size = new System.Drawing.Size(770, 191);
             this.vaccinationDGV.TabIndex = 1;
@@ -363,6 +365,7 @@
             this.veterinaryAppointmentDGV.Dock = System.Windows.Forms.DockStyle.Left;
             this.veterinaryAppointmentDGV.Location = new System.Drawing.Point(0, 0);
             this.veterinaryAppointmentDGV.Name = "veterinaryAppointmentDGV";
+            this.veterinaryAppointmentDGV.RowHeadersWidth = 62;
             this.veterinaryAppointmentDGV.RowTemplate.Height = 25;
             this.veterinaryAppointmentDGV.Size = new System.Drawing.Size(792, 550);
             this.veterinaryAppointmentDGV.TabIndex = 3;
@@ -402,6 +405,17 @@
             this.groupBox7.TabIndex = 12;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Договор";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(12, 51);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(129, 19);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "Договор подписан";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // button7
             // 
@@ -705,23 +719,16 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(12, 51);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(129, 19);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Договор подписан";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
             // AnimalCardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(797, 603);
             this.Controls.Add(this.tabControl1);
+            this.MaximizeBox = false;
             this.Name = "AnimalCardForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Учетная карточка";
             ((System.ComponentModel.ISupportInitialize)(this.parasiteTreatmentDGV)).EndInit();
             this.tabControl1.ResumeLayout(false);

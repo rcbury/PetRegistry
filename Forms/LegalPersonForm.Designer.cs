@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.LocalityComboBox = new System.Windows.Forms.ComboBox();
+            this.CountryComboBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.EmailText = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.PhoneText = new System.Windows.Forms.TextBox();
@@ -41,12 +45,17 @@
             this.label14 = new System.Windows.Forms.Label();
             this.INNText = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.ListOfAnimalsButton = new System.Windows.Forms.Button();
+            this.SaveLegalPersonButton = new System.Windows.Forms.Button();
             this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.label3);
+            this.groupBox6.Controls.Add(this.LocalityComboBox);
+            this.groupBox6.Controls.Add(this.CountryComboBox);
+            this.groupBox6.Controls.Add(this.label1);
             this.groupBox6.Controls.Add(this.EmailText);
             this.groupBox6.Controls.Add(this.label18);
             this.groupBox6.Controls.Add(this.PhoneText);
@@ -63,10 +72,44 @@
             this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox6.Size = new System.Drawing.Size(1116, 308);
+            this.groupBox6.Size = new System.Drawing.Size(1116, 328);
             this.groupBox6.TabIndex = 6;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Данные юридического лица";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(401, 255);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(162, 25);
+            this.label3.TabIndex = 27;
+            this.label3.Text = "Населенный пункт";
+            // 
+            // LocalityComboBox
+            // 
+            this.LocalityComboBox.FormattingEnabled = true;
+            this.LocalityComboBox.Location = new System.Drawing.Point(403, 283);
+            this.LocalityComboBox.Name = "LocalityComboBox";
+            this.LocalityComboBox.Size = new System.Drawing.Size(369, 33);
+            this.LocalityComboBox.TabIndex = 25;
+            // 
+            // CountryComboBox
+            // 
+            this.CountryComboBox.FormattingEnabled = true;
+            this.CountryComboBox.Location = new System.Drawing.Point(16, 283);
+            this.CountryComboBox.Name = "CountryComboBox";
+            this.CountryComboBox.Size = new System.Drawing.Size(369, 33);
+            this.CountryComboBox.TabIndex = 8;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 255);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(69, 25);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "Страна";
             // 
             // EmailText
             // 
@@ -176,27 +219,42 @@
             this.label13.TabIndex = 12;
             this.label13.Text = "ИНН";
             // 
-            // button1
+            // ListOfAnimalsButton
             // 
-            this.button1.Location = new System.Drawing.Point(931, 353);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(186, 38);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Список животных";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.ListOfAnimalsButton.Location = new System.Drawing.Point(944, 358);
+            this.ListOfAnimalsButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ListOfAnimalsButton.Name = "ListOfAnimalsButton";
+            this.ListOfAnimalsButton.Size = new System.Drawing.Size(186, 38);
+            this.ListOfAnimalsButton.TabIndex = 7;
+            this.ListOfAnimalsButton.Text = "Список животных";
+            this.ListOfAnimalsButton.UseVisualStyleBackColor = true;
+            this.ListOfAnimalsButton.Click += new System.EventHandler(this.ListOfAnimalsButton_Click);
+            // 
+            // SaveLegalPersonButton
+            // 
+            this.SaveLegalPersonButton.Location = new System.Drawing.Point(750, 358);
+            this.SaveLegalPersonButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.SaveLegalPersonButton.Name = "SaveLegalPersonButton";
+            this.SaveLegalPersonButton.Size = new System.Drawing.Size(186, 38);
+            this.SaveLegalPersonButton.TabIndex = 8;
+            this.SaveLegalPersonButton.Text = "Сохранить";
+            this.SaveLegalPersonButton.UseVisualStyleBackColor = true;
+            this.SaveLegalPersonButton.Click += new System.EventHandler(this.SaveLegalPersonButton_Click);
             // 
             // LegalPersonForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1143, 410);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.SaveLegalPersonButton);
+            this.Controls.Add(this.ListOfAnimalsButton);
             this.Controls.Add(this.groupBox6);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MaximizeBox = false;
             this.Name = "LegalPersonForm";
-            this.Text = "Form3";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Юридическое лицо";
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
@@ -218,6 +276,11 @@
         private Label label14;
         private TextBox INNText;
         private Label label13;
-        private Button button1;
+        private Button ListOfAnimalsButton;
+        private Label label3;
+        private ComboBox LocalityComboBox;
+        private ComboBox CountryComboBox;
+        private Label label1;
+        private Button SaveLegalPersonButton;
     }
 }

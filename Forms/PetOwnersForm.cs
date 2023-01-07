@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.DirectoryServices;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,10 @@ namespace PIS_PetRegistry
         List<PhysicalPersonDTO> listPhysicalPersonDTOs;
         List<CountryDTO> countries;
         List<LocationDTO> locations;
+        private int _physicalPreviousIndex;
+        private bool _physicalSortDirection;
+        private int _legalPreviousIndex;
+        private bool _legalSortDirection;
         public PetOwnersForm()
         {
             InitializeComponent();
@@ -103,7 +108,7 @@ namespace PIS_PetRegistry
             innCol.DataPropertyName = "INN";
             var kppCol = new DataGridViewTextBoxColumn();
             kppCol.Name = "Kpp";
-            kppCol.HeaderText = "ИНН";
+            kppCol.HeaderText = "КПП";
             kppCol.DataPropertyName = "KPP";
             var legalNameCol = new DataGridViewTextBoxColumn();
             legalNameCol.HeaderText = "Наименование организации";
@@ -167,22 +172,22 @@ namespace PIS_PetRegistry
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var rowIndex = e.RowIndex;
+            /*var rowIndex = e.RowIndex;
             var selectedPhysicalPerson = listPhysicalPersonDTOs[rowIndex];
-            PhysicalPersonForm form = new PhysicalPersonForm();
+            PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson);
             Hide();
             form.ShowDialog();
-            Show();
+            Show();*/
         }
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var rowIndex = e.RowIndex;
+            /*var rowIndex = e.RowIndex;
 
             LegalPersonForm form = new LegalPersonForm(listLegalPersonDTOs[rowIndex]);
             Hide();
             form.ShowDialog();
-            Show();
+            Show();*/
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -202,6 +207,36 @@ namespace PIS_PetRegistry
             dataGridView1.DataSource = listPhysicalPersonDTOs;
         }
 
+        private List<PhysicalPersonDTO> SortData(List<PhysicalPersonDTO> list, string column, bool ascending)
+        {
+            try
+            {
+                return ascending ?
+                    list.OrderBy(_ => _.GetType().GetProperty(column).GetValue(_)).ToList() :
+                    list.OrderByDescending(_ => _.GetType().GetProperty(column).GetValue(_)).ToList();
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка сортировки");
+                return list;
+            }
+        }
+
+        private List<LegalPersonDTO> SortData(List<LegalPersonDTO> list, string column, bool ascending)
+        {
+            try
+            {
+                return ascending ?
+                    list.OrderBy(_ => _.GetType().GetProperty(column).GetValue(_)).ToList() :
+                    list.OrderByDescending(_ => _.GetType().GetProperty(column).GetValue(_)).ToList();
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка сортировки");
+                return list;
+            }
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             var inn = textBox8.Text;
@@ -218,12 +253,88 @@ namespace PIS_PetRegistry
 
         private void button5_Click(object sender, EventArgs e)
         {
-            PetOwnersController.ExportPhysicalPeopleToExcel(listPhysicalPersonDTOs);
+            using (var saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.InitialDirectory = "c:\\";
+                saveFileDialog.DefaultExt = ".xlsx";
+                saveFileDialog.RestoreDirectory = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = saveFileDialog.FileName;
+                    PetOwnersController.ExportPhysicalPeopleToExcel(filePath, listPhysicalPersonDTOs);
+                }
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            PetOwnersController.ExportLegalPeopleToExcel(listLegalPersonDTOs);
+            using (var saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.InitialDirectory = "c:\\";
+                saveFileDialog.DefaultExt = ".xlsx";
+                saveFileDialog.RestoreDirectory = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = saveFileDialog.FileName;
+                    PetOwnersController.ExportLegalPeopleToExcel(filePath, listLegalPersonDTOs);
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            PhysicalPersonForm form = new();
+            form.ShowDialog();
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var rowIndex = e.RowIndex;
+            var selectedPhysicalPerson = listPhysicalPersonDTOs[rowIndex];
+            PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson);
+
+            form.ShowDialog();
+            Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            LegalPersonForm form = new();
+            form.ShowDialog();
+        }
+
+        private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var rowIndex = e.RowIndex;
+            var selectedLegalPerson = listLegalPersonDTOs[rowIndex];
+            LegalPersonForm form = new(selectedLegalPerson);
+
+            form.ShowDialog();
+            Show();
+        }
+
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == _physicalPreviousIndex)
+                _physicalSortDirection ^= true;
+
+            dataGridView1.DataSource = SortData(
+                (List<PhysicalPersonDTO>)dataGridView1.DataSource, dataGridView1.Columns[e.ColumnIndex].Name, _physicalSortDirection);
+
+            _physicalPreviousIndex = e.ColumnIndex;
+        }
+
+        private void dataGridView2_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == _legalPreviousIndex)
+                _legalSortDirection ^= true;
+
+            dataGridView2.DataSource = SortData(
+                (List<LegalPersonDTO>)dataGridView2.DataSource, dataGridView2.Columns[e.ColumnIndex].Name, _legalSortDirection);
+
+            _legalPreviousIndex = e.ColumnIndex;
         }
     }
 }

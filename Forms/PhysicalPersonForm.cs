@@ -1,20 +1,122 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
+using PIS_PetRegistry.Controllers;
+using PIS_PetRegistry.DTO;
+using PIS_PetRegistry.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PIS_PetRegistry
 {
+    
     public partial class PhysicalPersonForm : Form
     {
-        public PhysicalPersonForm()
+        private PhysicalPersonDTO? mainPhysicalPerson;
+        public PhysicalPersonForm() : this(null) { }
+
+        public PhysicalPersonForm(PhysicalPersonDTO? selectedPhysicalPerson)
         {
             InitializeComponent();
+
+            mainPhysicalPerson = selectedPhysicalPerson;
+
+            CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            LocalityComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            var allCountries = PetOwnersController.GetCountries();
+            var allLocalities = PetOwnersController.GetLocations();
+
+            CountryComboBox.DataSource = allCountries;
+            CountryComboBox.DisplayMember = "Name";
+            CountryComboBox.ValueMember = "Id";
+
+            LocalityComboBox.DataSource = allLocalities;
+            LocalityComboBox.DisplayMember = "Name";
+            LocalityComboBox.ValueMember = "Id";
+
+            if (selectedPhysicalPerson != null)
+            {
+                NumberText.Text = selectedPhysicalPerson.Phone;
+                NameText.Text = selectedPhysicalPerson.Name;
+                AdressText.Text = selectedPhysicalPerson.Address;
+                EmailText.Text = selectedPhysicalPerson.Email;
+
+                var startCountry = allCountries
+                    .Where(x => x.Id.Equals(selectedPhysicalPerson.FkCountry))
+                    .FirstOrDefault();
+
+                var startLocality = allLocalities
+                    .Where(x => x.Id.Equals(selectedPhysicalPerson.FkLocality))
+                    .FirstOrDefault();
+
+                CountryComboBox.SelectedItem = startCountry;
+                LocalityComboBox.SelectedItem = startLocality;
+            }
+            else
+            {
+                CountryComboBox.SelectedIndex = 0;
+                LocalityComboBox.SelectedIndex = 0;
+            }
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            PhysicalPersonDTO currentPhysicalPersonDTO = new()
+            {
+                Name = NameText.Text,
+                Phone = NumberText.Text,
+                Address = AdressText.Text,
+                Email = EmailText.Text,
+                FkCountry = ((CountryDTO)CountryComboBox.SelectedItem).Id,
+                FkLocality = ((LocationDTO)LocalityComboBox.SelectedItem).Id,
+            };
+
+            if(CountryComboBox.SelectedIndex == 0 || LocalityComboBox.SelectedIndex == 0)
+            {
+                MessageBox.Show("Пожалуйста, укажите страну и населенный пункт.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (mainPhysicalPerson == null)
+            {
+                mainPhysicalPerson = PetOwnersController.AddPhysicalPerson(currentPhysicalPersonDTO);
+            }
+            else
+            {
+                currentPhysicalPersonDTO.Id = mainPhysicalPerson.Id;
+                mainPhysicalPerson = PetOwnersController.UpdatePhysicalPerson(currentPhysicalPersonDTO);
+            }
+            this.Close();
+        }
+
+        private void ListAnimalsButton_Click(object sender, EventArgs e)
+        {
+            if(mainPhysicalPerson == null)
+            {
+                MessageBox.Show("Этот человек еще не добавлен в реестр.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            var countAnimalsByPhysicalPerson = AnimalCardController.CountAnimalsByPhysicalPerson(mainPhysicalPerson.Id);
+            if (countAnimalsByPhysicalPerson == 0)
+            {
+                MessageBox.Show("У этого человека нет животных.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                AnimalRegistryForm form = new AnimalRegistryForm(/*mainPhysicalPerson*/);
+                form.ShowDialog();
+                Show();
+            }
         }
     }
 }
