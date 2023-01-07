@@ -359,7 +359,7 @@ namespace PIS_PetRegistry.Controllers
                 var animalsNumber = context.Contracts
                     .Where(x => x.FkLegalPerson.Equals(legalPersonId))
                     .Select(x => x.FkAnimalCard)
-                    .Distinct();
+                    .ToList();
 
                 foreach (var animalId in animalsNumber)
                 {
