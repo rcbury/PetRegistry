@@ -110,15 +110,7 @@ namespace PIS_PetRegistry
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             //possible exception due to permission fail
-            try
-            {
-                AnimalCardForm form = new AnimalCardForm();
-                form.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -135,7 +127,7 @@ namespace PIS_PetRegistry
             }
             else
             { 
-                _listAnimalCards = AnimalCardController.GetAnimals(Authorization.AuthorizedUserDto);
+                _listAnimalCards = AnimalCardController.GetAnimals();
             }
             
             dataGridViewListAnimals.DataSource = _listAnimalCards;
@@ -216,7 +208,30 @@ namespace PIS_PetRegistry
 
         private void задатьУсловиеФильтрацииПоПолюToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var saveFileDialog = new SaveFileDialog()) 
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                AnimalCardForm form = new AnimalCardForm();
+                form.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void ExportExcelMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (var saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.InitialDirectory = "c:\\";
                 saveFileDialog.DefaultExt = ".xlsx";

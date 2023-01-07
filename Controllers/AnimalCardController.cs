@@ -97,17 +97,52 @@ namespace PIS_PetRegistry.Controllers
             return newAnimalCardDTO;
         }
 
-        public static List<AnimalCardDTO> GetAnimals(UserDTO user) 
+        public static List<AnimalCardDTO> GetAnimals() 
         {
-            var animalsList = AnimalService.GetAnimalCards(user.ShelterId);
-            var animalsListDto = animalsList.Select(item => ConvertModelInDTO(item)).ToList();
+            var animalCardsList = new List<AnimalCard> { };
+
+            using (var context = new RegistryPetsContext())
+            {
+                animalCardsList = context.AnimalCards.ToList();
+            }
+
+            var animalsListDto = animalCardsList.Select(item => ConvertModelInDTO(item)).ToList();
 
             return animalsListDto;
         }
         public static List<AnimalCardDTO> GetAnimals(AnimalFilterDTO animalFilter)
         {
-            var animalsList = AnimalService.GetAnimalCards(animalFilter);
-            var animalsListDto = animalsList.Select(item => ConvertModelInDTO(item)).ToList();
+            var animalCardsList = new List<AnimalCard> { };
+
+            using (var context = new RegistryPetsContext())
+            {
+                var animalCards = context.AnimalCards.ToList();
+
+                if (animalFilter.ChipId.Length > 0)
+                {
+                    animalCards = animalCards.Where(item => item.ChipId == animalFilter.ChipId).ToList();
+                }
+                else
+                {
+                    if (animalFilter.Name.Length > 0)
+                    {
+                        animalCards = animalCards.Where(item => item.Name == animalFilter.Name).ToList();
+                    }
+
+                    if (animalFilter.IsSelectedSex)
+                    {
+                        animalCards = animalCards.Where(item => item.IsBoy == animalFilter.IsBoy).ToList();
+                    }
+
+                    if (animalFilter.AnimalCategory.Id != -1)
+                    {
+                        animalCards = animalCards.Where(item => item.FkCategory == animalFilter.AnimalCategory.Id).ToList();
+                    }
+                }
+
+                animalCardsList = animalCards;
+            }
+            var animalsListDto = animalCardsList.Select(item => ConvertModelInDTO(item)).ToList();
 
             return animalsListDto;
         }
