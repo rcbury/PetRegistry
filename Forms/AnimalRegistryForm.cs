@@ -192,8 +192,9 @@ namespace PIS_PetRegistry
             if (e.ColumnIndex == _previousIndex)
                 _sortDirection ^= true;
 
-            dataGridViewListAnimals.DataSource = SortData(
+            _listAnimalCards = SortData(
                 (List<AnimalCardDTO>)dataGridViewListAnimals.DataSource, dataGridViewListAnimals.Columns[e.ColumnIndex].Name, _sortDirection);
+            dataGridViewListAnimals.DataSource = _listAnimalCards;
 
             _previousIndex = e.ColumnIndex;
         }

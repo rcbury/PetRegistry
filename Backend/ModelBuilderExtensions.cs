@@ -129,11 +129,6 @@ namespace PIS_PetRegistry.Backend
                 {
                     Id = 4,
                     Name = "Сотрудник ОМСУ"
-                },
-                new Role()
-                {
-                    Id = 5,
-                    Name = "Сотрудник приюта"
                 }
             );
 
@@ -200,16 +195,98 @@ namespace PIS_PetRegistry.Backend
                     Email = "sidorov@gmail.com",
                     FkRole = 4,
                     FkLocation = 1
+                }
+            );
+
+            modelBuilder.Entity<PhysicalPerson>().HasData(
+                new PhysicalPerson() 
+                {
+                    Id = 1,
+                    Name = "Иван Иванов Иванович",
+                    Phone = "80000000000",
+                    Address = "Республики, 1",
+                    Email = "ivanovic@gmail.com",
+                    FkLocality = 1,
+                    FkCountry = 1
                 },
-                new User()
+                new PhysicalPerson()
+                {
+                    Id = 2,
+                    Name = "Петр Иванов Иванович",
+                    Phone = "80000000001",
+                    Address = "Республики, 1",
+                    Email = "ivanovic1@gmail.com",
+                    FkLocality = 2,
+                    FkCountry = 1
+                },
+                new PhysicalPerson()
+                {
+                    Id = 3,
+                    Name = "Григорий Иванов Иванович",
+                    Phone = "80000000002",
+                    Address = "Республики, 1",
+                    Email = "ivanovic@gmail.com",
+                    FkLocality = 3,
+                    FkCountry = 1
+                },
+                new PhysicalPerson()
+                {
+                    Id = 4,
+                    Name = "Антон Иванов Иванович",
+                    Phone = "80000000003",
+                    Address = "Республики, 1",
+                    Email = "ivanovic@gmail.com",
+                    FkLocality = 2,
+                    FkCountry = 1
+                },
+                new PhysicalPerson()
                 {
                     Id = 5,
-                    Login = "ivan5",
-                    Password = "8e5aa3866bb85289df35552106de5b21",
-                    Name = "Иванов Иван Иванович",
-                    Email = "ivanov@gmail.com",
-                    FkRole = 5,
-                    FkShelter = 1
+                    Name = "Алексей Иванов Иванович",
+                    Phone = "80000000004",
+                    Address = "Республики, 1",
+                    Email = "ivanovic@gmail.com",
+                    FkLocality = 1,
+                    FkCountry = 1
+                }
+            );
+
+            modelBuilder.Entity<LegalPerson>().HasData(
+                new LegalPerson()
+                {
+                    Id = 1,
+                    Inn = "0000000001",
+                    Kpp = "1231312312",
+                    Name = "ИвановыИвановичи",
+                    Phone = "80000000000",
+                    Address = "Республики, 1",
+                    Email = "ivanovic@gmail.com",
+                    FkLocality = 1,
+                    FkCountry = 1
+                },
+                new LegalPerson()
+                {
+                    Id = 2,
+                    Inn = "0000000002",
+                    Kpp = "1231312313",
+                    Name = "ПетрыИвановичи",
+                    Phone = "80000000001",
+                    Address = "Республики, 1",
+                    Email = "ivanovic1@gmail.com",
+                    FkLocality = 2,
+                    FkCountry = 1
+                },
+                new LegalPerson()
+                {
+                    Id = 3,
+                    Inn = "0000000003",
+                    Kpp = "1231312315",
+                    Name = "ГригорииИвановичи",
+                    Phone = "80000000002",
+                    Address = "Республики, 1",
+                    Email = "ivanovic@gmail.com",
+                    FkLocality = 3,
+                    FkCountry = 1
                 }
             );
         }

@@ -343,8 +343,9 @@ namespace PIS_PetRegistry
             if (e.ColumnIndex == _physicalPreviousIndex)
                 _physicalSortDirection ^= true;
 
-            dataGridView1.DataSource = SortData(
+            listPhysicalPersonDTOs = SortData(
                 (List<PhysicalPersonDTO>)dataGridView1.DataSource, dataGridView1.Columns[e.ColumnIndex].Name, _physicalSortDirection);
+            dataGridView1.DataSource = listPhysicalPersonDTOs;
 
             _physicalPreviousIndex = e.ColumnIndex;
         }
@@ -354,8 +355,9 @@ namespace PIS_PetRegistry
             if (e.ColumnIndex == _legalPreviousIndex)
                 _legalSortDirection ^= true;
 
-            dataGridView2.DataSource = SortData(
+            listLegalPersonDTOs = SortData(
                 (List<LegalPersonDTO>)dataGridView2.DataSource, dataGridView2.Columns[e.ColumnIndex].Name, _legalSortDirection);
+            dataGridView2.DataSource = listLegalPersonDTOs;
 
             _legalPreviousIndex = e.ColumnIndex;
         }
