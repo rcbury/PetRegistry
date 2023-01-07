@@ -3,20 +3,14 @@ using System.Collections.Generic;
 using System.Configuration;
 using DocumentFormat.OpenXml.Drawing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using PIS_PetRegistry.Backend;
+
 
 namespace PIS_PetRegistry.Models;
 
 public partial class RegistryPetsContext : DbContext
 {
-    public RegistryPetsContext()
-    {
-    }
-
-    public RegistryPetsContext(DbContextOptions<RegistryPetsContext> options)
-        : base(options)
-    {
-    }
 
     public virtual DbSet<AnimalCardLog> AnimalCardLogs { get; set; }
 
@@ -55,6 +49,7 @@ public partial class RegistryPetsContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
             .UseLazyLoadingProxies()
+            .ReplaceService<IModelCacheKeyFactory, DynamicModelCacheKeyFactoryDesignTimeSupport>()
             .UseNpgsql(ConfigurationManager.ConnectionStrings["RegestryPets"].ToString());
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

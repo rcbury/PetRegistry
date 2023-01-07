@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using PIS_PetRegistry.Backend;
 using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using System;
@@ -27,6 +28,8 @@ namespace PIS_PetRegistry
         public PetOwnersForm()
         {
             InitializeComponent();
+            SetupPermissions();
+
             listLegalPersonDTOs = new List<LegalPersonDTO>();
             listPhysicalPersonDTOs = new List<PhysicalPersonDTO>();
             countries = PetOwnersController.GetCountries();
@@ -161,6 +164,26 @@ namespace PIS_PetRegistry
             dataGridView2.Columns.Add(legalDogCountCol);
         }
 
+        private bool editAllowed = true;
+
+        private void SetupPermissions()
+        {
+            var authorizedUser = AuthorizationController.GetAuthorizedUser();
+
+            if (authorizedUser.RoleId != (int)UserRoles.Veterinarian && authorizedUser.RoleId != (int)UserRoles.ShelterOperator)
+            {
+                button3.Enabled = false;
+                button4.Enabled = false;
+                editAllowed = false;
+            }
+
+            if (authorizedUser.RoleId != (int)UserRoles.VetServiceStaff)
+            {
+                comboBox3.Enabled = false;
+                comboBox2.Enabled = false;
+            }
+        }
+
         private void задатьУсловиеФильтрацииToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -293,7 +316,7 @@ namespace PIS_PetRegistry
         {
             var rowIndex = e.RowIndex;
             var selectedPhysicalPerson = listPhysicalPersonDTOs[rowIndex];
-            PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson);
+            PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson, editAllowed);
 
             form.ShowDialog();
             Show();
@@ -309,7 +332,7 @@ namespace PIS_PetRegistry
         {
             var rowIndex = e.RowIndex;
             var selectedLegalPerson = listLegalPersonDTOs[rowIndex];
-            LegalPersonForm form = new(selectedLegalPerson);
+            LegalPersonForm form = new(selectedLegalPerson, editAllowed);
 
             form.ShowDialog();
             Show();

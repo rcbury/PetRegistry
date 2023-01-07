@@ -22,13 +22,20 @@ namespace PIS_PetRegistry
     public partial class PhysicalPersonForm : Form
     {
         private PhysicalPersonDTO? mainPhysicalPerson;
+
         public PhysicalPersonForm() : this(null) { }
 
-        public PhysicalPersonForm(PhysicalPersonDTO? selectedPhysicalPerson)
+        public PhysicalPersonForm(PhysicalPersonDTO? selectedPhysicalPerson, bool editAllowed = true)
         {
+
             InitializeComponent();
 
             mainPhysicalPerson = selectedPhysicalPerson;
+            
+            if (!editAllowed)
+            {
+                DisableEdit();
+            }
 
             CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             LocalityComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -67,6 +74,17 @@ namespace PIS_PetRegistry
                 CountryComboBox.SelectedIndex = 0;
                 LocalityComboBox.SelectedIndex = 0;
             }
+        }
+
+        private void DisableEdit()
+        {
+            NumberText.Enabled = false;
+            NameText.Enabled = false;
+            AdressText.Enabled = false;
+            EmailText.Enabled = false;
+            CountryComboBox.Enabled = false;
+            LocalityComboBox.Enabled = false;
+            SaveButton.Enabled = false;
         }
 
         private void SaveButton_Click(object sender, EventArgs e)

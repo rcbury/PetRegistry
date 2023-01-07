@@ -18,15 +18,22 @@ namespace PIS_PetRegistry
     public partial class LegalPersonForm : Form
     {
         private LegalPersonDTO? mainLegalPerson;
+        private bool editAllowed = true;
         public LegalPersonForm() : this(null)
         {
 
         }
-        public LegalPersonForm(LegalPersonDTO? selectedLegalPerson)
+        public LegalPersonForm(LegalPersonDTO? selectedLegalPerson, bool editAllowed = true)
         {
+
             mainLegalPerson = selectedLegalPerson;
 
             InitializeComponent();
+
+            if (!editAllowed)
+            {
+                DisableEdit();
+            }
 
             CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             LocalityComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -67,6 +74,19 @@ namespace PIS_PetRegistry
                 CountryComboBox.SelectedIndex = 0;
                 LocalityComboBox.SelectedIndex = 0;
             }
+        }
+
+        private void DisableEdit()
+        {
+            INNText.Enabled = false;
+            NameText.Enabled = false;
+            KPPText.Enabled = false;
+            AdressText.Enabled = false;
+            PhoneText.Enabled = false;
+            EmailText.Enabled = false;
+            CountryComboBox.Enabled = false;
+            LocalityComboBox.Enabled = false;
+            SaveLegalPersonButton.Enabled = false;
         }
 
         private void ListOfAnimalsButton_Click(object sender, EventArgs e)
