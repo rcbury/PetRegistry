@@ -121,6 +121,20 @@ namespace PIS_PetRegistry.Services
             {
                 var animalCards = context.AnimalCards.Include(card => card.FkCategoryNavigation).ToList();
 
+                if (animalFilter.PhysicalPerson != null)
+                { 
+                    animalCards = context.Contracts.Where(contract =>
+                    contract.FkPhysicalPerson == animalFilter.PhysicalPerson.Id && contract.FkLegalPerson == null)
+                        .Select(x => x.FkAnimalCardNavigation).ToList();
+                }
+
+                if (animalFilter.LegalPerson != null)
+                {
+                    animalCards = context.Contracts.Where(contract =>
+                    contract.FkLegalPerson == animalFilter.LegalPerson.Id)
+                        .Select(x => x.FkAnimalCardNavigation).ToList();
+                }
+
                 if (animalFilter.ChipId.Length > 0)
                 {
                     animalCards = animalCards.Where(item => item.ChipId == animalFilter.ChipId).ToList();

@@ -91,7 +91,6 @@ namespace PIS_PetRegistry
 
         private void ListOfAnimalsButton_Click(object sender, EventArgs e)
         {
-
             if (mainLegalPerson == null)
             {
                 MessageBox.Show("Это юридическое лицо еще не добавлено в реестр.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -104,7 +103,7 @@ namespace PIS_PetRegistry
             }
             else
             {
-                AnimalRegistryForm form = new AnimalRegistryForm(/*mainLegalPerson.Id*/);
+                AnimalRegistryForm form = new AnimalRegistryForm(mainLegalPerson);
                 form.ShowDialog();
                 Show();
             }
