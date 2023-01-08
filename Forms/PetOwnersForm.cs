@@ -32,14 +32,14 @@ namespace PIS_PetRegistry
 
             listLegalPersonDTOs = new List<LegalPersonDTO>();
             listPhysicalPersonDTOs = new List<PhysicalPersonDTO>();
-            countries = PetOwnersController.GetCountries();
+            countries = CountryController.GetCountries();
             comboBox1.DataSource = countries;
             comboBox1.DisplayMember = "Name";
             comboBox1.ValueMember = "Id";
             comboBox4.DataSource = countries;
             comboBox4.DisplayMember = "Name";
             comboBox4.ValueMember = "Id";
-            locations = PetOwnersController.GetLocations();
+            locations = LocationController.GetLocations();
             comboBox2.DataSource = locations;
             comboBox2.DisplayMember = "Name";
             comboBox2.ValueMember = "Id";

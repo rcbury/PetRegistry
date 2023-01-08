@@ -34,8 +34,8 @@ namespace PIS_PetRegistry
         {
             this.animalCardDTO = animalCardDTO;
             this.parasiteTreatmentsDTO = new List<ParasiteTreatmentDTO>();
-            this.physicalLocationsDTO = PetOwnersController.GetLocations();
-            this.legalLocationsDTO = PetOwnersController.GetLocations();
+            this.physicalLocationsDTO = LocationController.GetLocations();
+            this.legalLocationsDTO = LocationController.GetLocations();
 
             InitializeComponent();
             
@@ -306,9 +306,7 @@ namespace PIS_PetRegistry
                 tempAnimalCardDTO.FkShelter = animalCardDTO.FkShelter;
                 tempAnimalCardDTO.Id = animalCardDTO.Id;
 
-                var authorizedUser = AuthorizationController.GetAuthorizedUser();
-
-                this.animalCardDTO = AnimalCardController.UpdateAnimalCard(tempAnimalCardDTO, authorizedUser);
+                this.animalCardDTO = AnimalCardController.UpdateAnimalCard(tempAnimalCardDTO);
 
                 MessageBox.Show("Карточка изменена");
             }
@@ -459,9 +457,7 @@ namespace PIS_PetRegistry
             if (animalCardDTO == null)
                 this.Close();
 
-            var authorizedUser = AuthorizationController.GetAuthorizedUser();
-
-            AnimalCardController.DeleteAnimalCard(this.animalCardDTO, authorizedUser);
+            AnimalCardController.DeleteAnimalCard(this.animalCardDTO);
 
             MessageBox.Show("Карточка успешно удалена");
 
@@ -536,7 +532,6 @@ namespace PIS_PetRegistry
 
         private void button7_Click(object sender, EventArgs e)
         {
-            var currentUser = AuthorizationController.GetAuthorizedUser();
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.InitialDirectory = "c:\\";
@@ -546,18 +541,22 @@ namespace PIS_PetRegistry
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     var filePath = saveFileDialog.FileName;
-                    AnimalCardController.MakeContract(filePath, physicalPersonDTO, legalPersonDTO, animalCardDTO, currentUser);
+                    AnimalCardController.MakeContract(filePath, physicalPersonDTO, legalPersonDTO, animalCardDTO);
                 }
             }
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            var currentUser = AuthorizationController.GetAuthorizedUser();
             if (checkBox2.Checked && physicalPersonDTO != null) 
             {
                 checkBox2.Enabled = false;
-                AnimalCardController.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO, currentUser); 
+                if (legalPersonDTO == null) 
+                {
+                    checkBox1.Enabled = false;
+                    groupBox6.Hide();
+                }
+                AnimalCardController.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO); 
             }
         }
     }

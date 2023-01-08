@@ -16,5 +16,6 @@ namespace PIS_PetRegistry.DTO
         public int FkCategory { get; set; }
         public int FkShelter { get; set; }
         public string ChipId { get; set; } = null!;
+        public string CategoryName { get; set; }
     }
 }

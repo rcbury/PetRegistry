@@ -18,5 +18,7 @@ namespace PIS_PetRegistry.DTO
         public int AnimalCount { get; set; }
         public int CatCount { get; set; }
         public int DogCount { get; set; }
+        public string CountryName { get; set; }
+        public string LocationName { get; set; }
     }
 }
