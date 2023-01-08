@@ -34,7 +34,79 @@ namespace PIS_PetRegistry.Services
 
 
         }
+        
+        public static List<AnimalCard> GetAnimalsByPhysicalPerson(int physicalPersonId)
+        {
+            var animalsByPhysicalPerson = new List<AnimalCard>();
 
+            using (var context = new RegistryPetsContext())
+            {
+                var animalsNumber = context.Contracts
+                    .Where(x => x.FkPhysicalPerson.Equals(physicalPersonId))
+                    .Select(x => x.FkAnimalCard)
+                    .ToList();
 
+                var animals = context.AnimalCards;
+
+                foreach (var animalId in animalsNumber)
+                {
+                    var animal = animals
+                        .Where(x => x.Id.Equals(animalId))
+                        .FirstOrDefault();
+
+                    animalsByPhysicalPerson.Add(
+                        new AnimalCard()
+                        {
+                            Id = animal.Id,
+                            IsBoy = animal.IsBoy,
+                            Name = animal.Name,
+                            Photo = animal.Photo,
+                            YearOfBirth = animal.YearOfBirth,
+                            FkCategory = animal.FkCategory,
+                            FkShelter = animal.FkShelter,
+                            ChipId = animal.ChipId,
+                        });
+                }
+            }
+
+            return animalsByPhysicalPerson;
+        }
+
+        public static List<AnimalCard> GetAnimalsByLegalPerson(int legalPersonId)
+        {
+            var animalsByLegalPerson = new List<AnimalCard>();
+
+            using (var context = new RegistryPetsContext())
+            {
+                var animalsNumber = context.Contracts
+                    .Where(x => x.FkLegalPerson.Equals(legalPersonId))
+                    .Select(x => x.FkAnimalCard)
+                    .ToList();
+
+                var animals = context.AnimalCards;
+
+                foreach (var animalId in animalsNumber)
+                {
+                    var animal = animals
+                        .Where(x => x.Id.Equals(animalId))
+                        .FirstOrDefault();
+
+                    animalsByLegalPerson.Add(
+                        new AnimalCard()
+                        {
+                            Id = animal.Id,
+                            IsBoy = animal.IsBoy,
+                            Name = animal.Name,
+                            Photo = animal.Photo,
+                            YearOfBirth = animal.YearOfBirth,
+                            FkCategory = animal.FkCategory,
+                            FkShelter = animal.FkShelter,
+                            ChipId = animal.ChipId,
+                        });
+                }
+            }
+
+            return animalsByLegalPerson;
+        }
     }
 }

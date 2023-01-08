@@ -12,6 +12,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using PIS_PetRegistry.Services;
+using PIS_PetRegistry.Backend.Services;
+using PIS_PetRegistry.Backend;
 
 namespace PIS_PetRegistry.Controllers
 {
@@ -272,150 +275,36 @@ namespace PIS_PetRegistry.Controllers
        
         public static LegalPersonDTO UpdateLegalPerson(LegalPersonDTO legalPersonDTO)
         {
-            LegalPerson? legalPersonModel;
-
-            using (var context = new RegistryPetsContext())
-            {
-                legalPersonModel = context.LegalPeople
-                    .Where(x => x.Id.Equals(legalPersonDTO.Id))
-                    .FirstOrDefault();
-
-                if (legalPersonModel == null)
-                {
-                    throw new Exception("trying to change unexisting legal person");
-                }
-
-                legalPersonModel.Inn = legalPersonDTO.INN;
-                legalPersonModel.Kpp = legalPersonDTO.KPP;
-                legalPersonModel.Name= legalPersonDTO.Name;
-                legalPersonModel.Address = legalPersonDTO.Address;
-                legalPersonModel.Email = legalPersonDTO.Email;
-                legalPersonModel.Phone = legalPersonDTO.Phone;
-                legalPersonModel.FkCountry= legalPersonDTO.FkCountry;
-                legalPersonModel.FkLocality = legalPersonDTO.FkLocality;
-
-                context.SaveChanges();
-            }
-
-            var newLegalPersonDTO = new LegalPersonDTO()
-            {
-                Id = legalPersonModel.Id,
-                INN = legalPersonModel.Inn,
-                KPP = legalPersonModel.Kpp,
-                Name = legalPersonModel.Name,
-                Address = legalPersonModel.Address,
-                Email = legalPersonModel.Email,
-                Phone = legalPersonModel.Phone,
-                FkCountry = legalPersonModel.FkCountry,
-                FkLocality = legalPersonModel.FkLocality,
-            };
+            var legalPersonModel = DTOModelConverter.ConvertLegalPersonDTOToModel(legalPersonDTO);
+            PetOwnersService.UpdateLegalPerson(legalPersonModel);
+             var newLegalPersonDTO = DTOModelConverter.ConvertLegalPersonModelToDTO(legalPersonModel);
 
             return newLegalPersonDTO;
         }
 
         public static LegalPersonDTO AddLegalPerson(LegalPersonDTO legalPersonDTO)
         {
-            var legalPersonModel = new LegalPerson()
-            {
-                Inn = legalPersonDTO.INN,
-                Kpp = legalPersonDTO.KPP,
-                Name = legalPersonDTO.Name,
-                Address = legalPersonDTO.Address,
-                Email = legalPersonDTO.Email,
-                Phone = legalPersonDTO.Phone,
-                FkCountry = legalPersonDTO.FkCountry,
-                FkLocality = legalPersonDTO.FkLocality,
-            };
-
-            using (var context = new RegistryPetsContext())
-            {
-                context.LegalPeople.Add(legalPersonModel);
-                context.SaveChanges();
-            }
-
-            var newLegalPersonDTO = new LegalPersonDTO()
-            {
-                Id = legalPersonModel.Id,
-                INN = legalPersonModel.Inn,
-                KPP = legalPersonModel.Kpp,
-                Name = legalPersonModel.Name,
-                Address = legalPersonModel.Address,
-                Email = legalPersonModel.Email,
-                Phone = legalPersonModel.Phone,
-                FkCountry = legalPersonModel.FkCountry,
-                FkLocality = legalPersonModel.FkLocality,
-            };
+            var legalPersonModel = DTOModelConverter.ConvertLegalPersonDTOToModel(legalPersonDTO);
+            PetOwnersService.AddLegalPerson(legalPersonModel);
+            var newLegalPersonDTO = DTOModelConverter.ConvertLegalPersonModelToDTO(legalPersonModel);
 
             return newLegalPersonDTO;
         }
 
         public static PhysicalPersonDTO AddPhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
         {
-            var physicalPersonModel = new PhysicalPerson()
-            {
-                Name = physicalPersonDTO.Name,
-                Address = physicalPersonDTO.Address,
-                Email = physicalPersonDTO.Email,
-                Phone = physicalPersonDTO.Phone,
-                FkCountry = physicalPersonDTO.FkCountry,
-                FkLocality = physicalPersonDTO.FkLocality,
-            };
-
-            using (var context = new RegistryPetsContext())
-            {
-                context.PhysicalPeople.Add(physicalPersonModel);
-                context.SaveChanges();
-            }
-
-            var newPhysicalPersonDTO = new PhysicalPersonDTO()
-            {
-                Id = physicalPersonModel.Id,
-                Name = physicalPersonDTO.Name,
-                Address = physicalPersonDTO.Address,
-                Email = physicalPersonDTO.Email,
-                Phone = physicalPersonDTO.Phone,
-                FkCountry = physicalPersonDTO.FkCountry,
-                FkLocality = physicalPersonDTO.FkLocality,
-            };
+            var physicalPersonModel = DTOModelConverter.ConvertPhysicalPersonDTOToModel(physicalPersonDTO);
+            PetOwnersService.AddPhysicalPerson(physicalPersonModel);
+            var newPhysicalPersonDTO = DTOModelConverter.ConvertPhysicalPersonModelToDTO(physicalPersonModel);
 
             return newPhysicalPersonDTO;
         }
 
         public static PhysicalPersonDTO UpdatePhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
         {
-            PhysicalPerson? physicalPersonModel;
-
-            using (var context = new RegistryPetsContext())
-            {
-                physicalPersonModel = context.PhysicalPeople
-                    .Where(x => x.Id.Equals(physicalPersonDTO.Id))
-                    .FirstOrDefault();
-
-                if(physicalPersonModel == null)
-                {
-                    throw new Exception("trying to change unexisting physical person");
-                }
-
-                physicalPersonModel.Name = physicalPersonDTO.Name;
-                physicalPersonModel.Address = physicalPersonDTO.Address;
-                physicalPersonModel.Email = physicalPersonDTO.Email;
-                physicalPersonModel.Phone = physicalPersonDTO.Phone;
-                physicalPersonModel.FkCountry = physicalPersonDTO.FkCountry;
-                physicalPersonModel.FkLocality = physicalPersonDTO.FkLocality;
-
-                context.SaveChanges();
-            }
-
-            var newPhysicalPersonDTO = new PhysicalPersonDTO()
-            {
-                Id = physicalPersonModel.Id,
-                Name = physicalPersonModel.Name,
-                Address = physicalPersonModel.Address,
-                Email = physicalPersonModel.Email,
-                Phone = physicalPersonModel.Phone,
-                FkCountry = physicalPersonModel.FkCountry,
-                FkLocality= physicalPersonModel.FkLocality,
-            };
+            var physicalPersonModel = DTOModelConverter.ConvertPhysicalPersonDTOToModel(physicalPersonDTO);
+            PetOwnersService.UpdatePhysicalPerson(physicalPersonModel);
+            var newPhysicalPersonDTO = DTOModelConverter.ConvertPhysicalPersonModelToDTO(physicalPersonModel);
 
             return newPhysicalPersonDTO;
         }

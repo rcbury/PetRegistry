@@ -382,72 +382,50 @@ namespace PIS_PetRegistry.Controllers
 
         public static List<AnimalCardDTO> GetAnimalsByLegalPerson(int legalPersonId)
         {
-            var animalsByLegalPersonDTO = new List<AnimalCardDTO>();
+            var animalsModel = AnimalCardService.GetAnimalsByPhysicalPerson(legalPersonId);
+            List<AnimalCardDTO> animalsDTOByLegalPerson = new();
 
-            using (var context = new RegistryPetsContext())
+            foreach (var animalModel in animalsModel)
             {
-                var animalsNumber = context.Contracts
-                    .Where(x => x.FkLegalPerson.Equals(legalPersonId))
-                    .Select(x => x.FkAnimalCard)
-                    .ToList();
-
-                foreach (var animalId in animalsNumber)
+                var animalDTO = new AnimalCardDTO()
                 {
-                    var animal = context.AnimalCards
-                        .Where(x => x.Id.Equals(animalId))
-                        .FirstOrDefault();
-
-                    animalsByLegalPersonDTO.Add(
-                        new AnimalCardDTO()
-                        {
-                            Id = animal.Id,
-                            IsBoy = animal.IsBoy,
-                            Name = animal.Name,
-                            Photo = animal.Photo,
-                            YearOfBirth = animal.YearOfBirth,
-                            FkCategory = animal.FkCategory,
-                            FkShelter = animal.FkShelter,
-                            ChipId = animal.ChipId,
-                        });
-                }
+                    Id = animalModel.Id,
+                    IsBoy = animalModel.IsBoy,
+                    Name = animalModel.Name,
+                    Photo = animalModel.Photo,
+                    YearOfBirth = animalModel.YearOfBirth,
+                    FkCategory = animalModel.FkCategory,
+                    FkShelter = animalModel.FkShelter,
+                    ChipId = animalModel.ChipId,
+                };
+                animalsDTOByLegalPerson.Add(animalDTO);
             }
 
-            return animalsByLegalPersonDTO;
+            return animalsDTOByLegalPerson;
         }
 
         public static List<AnimalCardDTO> GetAnimalsByPhysicalPerson(int physicalPersonId)
         {
-            var animalsByPhysicalPersonDTO = new List<AnimalCardDTO>();
+            var animalsModel = AnimalCardService.GetAnimalsByPhysicalPerson(physicalPersonId);
+            List<AnimalCardDTO> animalsDTOByPhysicalPerson = new();
 
-            using (var context = new RegistryPetsContext())
+            foreach (var animalModel in animalsModel)
             {
-                var animalsNumber = context.Contracts
-                    .Where(x => x.FkPhysicalPerson.Equals(physicalPersonId))
-                    .Select(x => x.FkAnimalCard)
-                    .ToList();
-
-                foreach (var animalId in animalsNumber)
+                var animalDTO = new AnimalCardDTO()
                 {
-                    var animal = context.AnimalCards
-                        .Where(x => x.Id.Equals(animalId))
-                        .FirstOrDefault();
-
-                    animalsByPhysicalPersonDTO.Add(
-                        new AnimalCardDTO()
-                        {
-                            Id = animal.Id,
-                            IsBoy = animal.IsBoy,
-                            Name = animal.Name,
-                            Photo = animal.Photo,
-                            YearOfBirth = animal.YearOfBirth,
-                            FkCategory = animal.FkCategory,
-                            FkShelter = animal.FkShelter,
-                            ChipId = animal.ChipId,
-                        });
-                }
+                    Id = animalModel.Id,
+                    IsBoy= animalModel.IsBoy,
+                    Name = animalModel.Name,
+                    Photo = animalModel.Photo,
+                    YearOfBirth= animalModel.YearOfBirth,
+                    FkCategory= animalModel.FkCategory,
+                    FkShelter= animalModel.FkShelter,
+                    ChipId = animalModel.ChipId,
+                };
+                animalsDTOByPhysicalPerson.Add(animalDTO);
             }
 
-            return animalsByPhysicalPersonDTO;
+            return animalsDTOByPhysicalPerson;
         }
 
         public static int CountAnimalsByPhysicalPerson(int physicalPersonId)

@@ -104,7 +104,7 @@ namespace PIS_PetRegistry
             }
             else
             {
-                AnimalRegistryForm form = new AnimalRegistryForm(/*mainLegalPerson*/);
+                AnimalRegistryForm form = new AnimalRegistryForm(/*mainLegalPerson.Id*/);
                 form.ShowDialog();
                 Show();
             }
