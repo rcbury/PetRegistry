@@ -235,10 +235,12 @@ namespace PIS_PetRegistry
             animalCategoryComboBox.DataSource = animalCategories;
             animalCategoryComboBox.DisplayMember = "Name";
             animalCategoryComboBox.ValueMember = "Id";
+            animalCategoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             animalSexComboBox.DataSource = animalSexDict;
             animalSexComboBox.ValueMember = "Key";
             animalSexComboBox.DisplayMember = "Value";
+            animalSexComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             physicalLocationCombobox.DataSource = physicalLocationsDTO;
             physicalLocationCombobox.ValueMember = "Id";
@@ -278,17 +280,19 @@ namespace PIS_PetRegistry
             if (animalCardDTO == null)
             {
                 var tempAnimalCardDTO = new AnimalCardDTO();
+                
+                if (animalBirthYearTextBox.Text == "")
+                    tempAnimalCardDTO.YearOfBirth = null;
+                else
+                    tempAnimalCardDTO.YearOfBirth = int.Parse(animalBirthYearTextBox.Text);
 
                 tempAnimalCardDTO.Name = animalNameTextBox.Text;
                 tempAnimalCardDTO.ChipId = animalChipIdTextBox.Text;
                 tempAnimalCardDTO.FkCategory = int.Parse(animalCategoryComboBox.SelectedValue.ToString());
                 tempAnimalCardDTO.IsBoy = (bool)animalSexComboBox.SelectedValue;
-                tempAnimalCardDTO.YearOfBirth = int.Parse(animalBirthYearTextBox.Text);
                 tempAnimalCardDTO.Photo = animalPictureBox.ImageLocation;
 
-                var authorizedUser = AuthorizationController.GetAuthorizedUser();
-
-                this.animalCardDTO = AnimalCardController.AddAnimalCard(tempAnimalCardDTO, authorizedUser);
+                this.animalCardDTO = AnimalCardController.AddAnimalCard(tempAnimalCardDTO);
 
                 MessageBox.Show("Карточка добавлена");
             }
@@ -296,11 +300,16 @@ namespace PIS_PetRegistry
             {
                 var tempAnimalCardDTO = new AnimalCardDTO();
 
+                if (animalBirthYearTextBox.Text == "")
+                    tempAnimalCardDTO.YearOfBirth = null;
+                else
+                    tempAnimalCardDTO.YearOfBirth = int.Parse(animalBirthYearTextBox.Text);
+
                 tempAnimalCardDTO.Name = animalNameTextBox.Text;
                 tempAnimalCardDTO.ChipId = animalChipIdTextBox.Text;
+
                 tempAnimalCardDTO.FkCategory = int.Parse(animalCategoryComboBox.SelectedValue.ToString());
                 tempAnimalCardDTO.IsBoy = (bool)animalSexComboBox.SelectedValue;
-                tempAnimalCardDTO.YearOfBirth = int.Parse(animalBirthYearTextBox.Text);
                 tempAnimalCardDTO.Photo = "";
 
                 tempAnimalCardDTO.FkShelter = animalCardDTO.FkShelter;

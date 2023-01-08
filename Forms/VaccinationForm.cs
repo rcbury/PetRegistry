@@ -26,6 +26,7 @@ namespace PIS_PetRegistry.Forms
             vaccineComboBox.DataSource = vaccines;
             vaccineComboBox.ValueMember = "Id";
             vaccineComboBox.DisplayMember = "Name";
+            vaccineComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             FillFields();
         }
@@ -42,6 +43,7 @@ namespace PIS_PetRegistry.Forms
             vaccineComboBox.DataSource = vaccines;
             vaccineComboBox.ValueMember = "Id";
             vaccineComboBox.DisplayMember = "Name";
+            vaccineComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             FillFields();
         }

@@ -26,6 +26,7 @@ namespace PIS_PetRegistry.Forms
             medicationComboBox.DataSource = medications;
             medicationComboBox.ValueMember = "Id";
             medicationComboBox.DisplayMember = "Name";
+            medicationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             FillFields();
         }
@@ -42,6 +43,7 @@ namespace PIS_PetRegistry.Forms
             medicationComboBox.DataSource = medications;
             medicationComboBox.ValueMember = "Id";
             medicationComboBox.DisplayMember = "Name";
+            medicationComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             FillFields();
         }
