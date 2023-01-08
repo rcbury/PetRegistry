@@ -44,22 +44,19 @@ namespace PIS_PetRegistry.Backend
                 var len = physicalPeople.Count;
                 if (len > 0)
                 {
-                    using (var context = new RegistryPetsContext())
+                    var rowCnt = 2;
+                    foreach (var person in physicalPeople)
                     {
-                        var rowCnt = 2;
-                        foreach (var person in physicalPeople)
-                        {
-                            worksheet.Cell(rowCnt, 1).Value = person.Name;
-                            worksheet.Cell(rowCnt, 2).Value = person.Phone;
-                            worksheet.Cell(rowCnt, 3).Value = person.Address;
-                            worksheet.Cell(rowCnt, 4).Value = person.Email;
-                            worksheet.Cell(rowCnt, 5).Value = person.CountryName;
-                            worksheet.Cell(rowCnt, 6).Value = person.LocationName;
-                            worksheet.Cell(rowCnt, 7).Value = person.AnimalCount;
-                            worksheet.Cell(rowCnt, 8).Value = person.CatCount;
-                            worksheet.Cell(rowCnt, 9).Value = person.DogCount;
-                            rowCnt++;
-                        }
+                        worksheet.Cell(rowCnt, 1).Value = person.Name;
+                        worksheet.Cell(rowCnt, 2).Value = person.Phone;
+                        worksheet.Cell(rowCnt, 3).Value = person.Address;
+                        worksheet.Cell(rowCnt, 4).Value = person.Email;
+                        worksheet.Cell(rowCnt, 5).Value = person.CountryName;
+                        worksheet.Cell(rowCnt, 6).Value = person.LocationName;
+                        worksheet.Cell(rowCnt, 7).Value = person.AnimalCount;
+                        worksheet.Cell(rowCnt, 8).Value = person.CatCount;
+                        worksheet.Cell(rowCnt, 9).Value = person.DogCount;
+                        rowCnt++;
                     }
                 }
                 worksheet.Columns().AdjustToContents();
@@ -175,54 +172,51 @@ namespace PIS_PetRegistry.Backend
         {
             if (physicalPerson != null)
             {
-                using (var context = new RegistryPetsContext())
+                Document doc;
+                if (legalPerson != null)
                 {
-                    Document doc;
-                    if (legalPerson != null)
-                    {
-                        doc = new Document("Договор юры.docx");
-                        doc.Replace("<LegalPersonINN>", legalPerson.Inn, false, true);
-                        doc.Replace("<LegalPersonKPP>", legalPerson.Kpp, false, true);
-                        doc.Replace("<LegalPersonPhoneNumber>", legalPerson.Phone, false, true);
-                        doc.Replace("<LegalPersonName>", legalPerson.Name, false, true);
-                        doc.Replace("<LegalPersonLocation>", legalPerson.FkLocalityNavigation.Name, false, true);
-                        doc.Replace("<LegalPersonAddress>", legalPerson.Address, false, true);
-                        doc.Replace("<LegalPersonEmail>", legalPerson.Email, false, true);
-                    }
-                    else
-                    {
-                        doc = new Document("Договор физы.docx");
-                    }
-                    var animalCategory = animalCard.FkCategoryNavigation;
-                    var animalGender = animalCard.IsBoy ? "м" : "ж";
-                    var day = DateTime.Now.Day.ToString();
-                    var month = DateTime.Now.Month.ToString();
-                    var year = DateTime.Now.Year.ToString();
-                    var age = (int.Parse(year) - animalCard.YearOfBirth).ToString();
-                    var loggedUserCreds = Utils.GetCredsFromFullName(user.Name);
-                    var physicalPersonCreds = Utils.GetCredsFromFullName(physicalPerson.Name);
-                    var loggedUserRole = user.FkRoleNavigation;
-                    doc.Replace("<ShelterCity>", shelter.FkLocationNavigation.Name, false, true);
-                    doc.Replace("<Day>", day, false, true);
-                    doc.Replace("<Month>", month, false, true);
-                    doc.Replace("<Year>", year, false, true);
-                    doc.Replace("<ShelterName>", $"\"{shelter.Name}\"", false, true);
-                    doc.Replace("<ShelterAddress>", shelter.Address, false, true);
-                    doc.Replace("<PhysicalPersonName>", physicalPerson.Name, false, true);
-                    doc.Replace("<PhysicalPersonLocation>", physicalPerson.FkLocalityNavigation.Name, false, true);
-                    doc.Replace("<PhysicalPersonAddress>", physicalPerson.Address, false, true);
-                    doc.Replace("<AnimalCategoryName>", animalCategory.Name, false, true);
-                    doc.Replace("<AnimalAge>", age, false, true);
-                    doc.Replace("<AnimalGender>", animalGender, false, true);
-                    doc.Replace("<ChipId>", animalCard.ChipId, false, true);
-                    doc.Replace("<AnimalName>", animalCard.Name, false, true);
-                    doc.Replace("<LoggedUserCreds>", loggedUserCreds, false, true);
-                    doc.Replace("<LoggedUserRole>", loggedUserRole.Name, false, true);
-                    doc.Replace("<PhysicalPersonCreds>", physicalPersonCreds, false, true);
-                    doc.Replace("<PhysicalPersonNumber>", physicalPerson.Phone, false, true);
-                    doc.Replace("<PhysicalPersonEmail>", physicalPerson.Email, false, true);
-                    doc.SaveToFile(filePath, FileFormat.Docx);
+                    doc = new Document("Договор юры.docx");
+                    doc.Replace("<LegalPersonINN>", legalPerson.Inn, false, true);
+                    doc.Replace("<LegalPersonKPP>", legalPerson.Kpp, false, true);
+                    doc.Replace("<LegalPersonPhoneNumber>", legalPerson.Phone, false, true);
+                    doc.Replace("<LegalPersonName>", legalPerson.Name, false, true);
+                    doc.Replace("<LegalPersonLocation>", legalPerson.FkLocalityNavigation.Name, false, true);
+                    doc.Replace("<LegalPersonAddress>", legalPerson.Address, false, true);
+                    doc.Replace("<LegalPersonEmail>", legalPerson.Email, false, true);
                 }
+                else
+                {
+                    doc = new Document("Договор физы.docx");
+                }
+                var animalCategory = animalCard.FkCategoryNavigation;
+                var animalGender = animalCard.IsBoy ? "м" : "ж";
+                var day = DateTime.Now.Day.ToString();
+                var month = DateTime.Now.Month.ToString();
+                var year = DateTime.Now.Year.ToString();
+                var age = (int.Parse(year) - animalCard.YearOfBirth).ToString();
+                var loggedUserCreds = Utils.GetCredsFromFullName(user.Name);
+                var physicalPersonCreds = Utils.GetCredsFromFullName(physicalPerson.Name);
+                var loggedUserRole = user.FkRoleNavigation;
+                doc.Replace("<ShelterCity>", shelter.FkLocationNavigation.Name, false, true);
+                doc.Replace("<Day>", day, false, true);
+                doc.Replace("<Month>", month, false, true);
+                doc.Replace("<Year>", year, false, true);
+                doc.Replace("<ShelterName>", $"\"{shelter.Name}\"", false, true);
+                doc.Replace("<ShelterAddress>", shelter.Address, false, true);
+                doc.Replace("<PhysicalPersonName>", physicalPerson.Name, false, true);
+                doc.Replace("<PhysicalPersonLocation>", physicalPerson.FkLocalityNavigation.Name, false, true);
+                doc.Replace("<PhysicalPersonAddress>", physicalPerson.Address, false, true);
+                doc.Replace("<AnimalCategoryName>", animalCategory.Name, false, true);
+                doc.Replace("<AnimalAge>", age, false, true);
+                doc.Replace("<AnimalGender>", animalGender, false, true);
+                doc.Replace("<ChipId>", animalCard.ChipId, false, true);
+                doc.Replace("<AnimalName>", animalCard.Name, false, true);
+                doc.Replace("<LoggedUserCreds>", loggedUserCreds, false, true);
+                doc.Replace("<LoggedUserRole>", loggedUserRole.Name, false, true);
+                doc.Replace("<PhysicalPersonCreds>", physicalPersonCreds, false, true);
+                doc.Replace("<PhysicalPersonNumber>", physicalPerson.Phone, false, true);
+                doc.Replace("<PhysicalPersonEmail>", physicalPerson.Email, false, true);
+                doc.SaveToFile(filePath, FileFormat.Docx);
             }
         }
     }
