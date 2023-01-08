@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Backend.Services;
+﻿using PIS_PetRegistry.Backend;
+using PIS_PetRegistry.Backend.Services;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using System;
@@ -24,11 +25,7 @@ namespace PIS_PetRegistry.Controllers
             var countries = CountryService.GetCountries();
             foreach (var country in countries)
             {
-                res.Add(new CountryDTO()
-                {
-                    Id = country.Id,
-                    Name = country.Name
-                });
+                res.Add(DTOModelConverter.ConvertCountryToDTO(country));
             }
             return res;
         }

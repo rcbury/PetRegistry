@@ -29,24 +29,7 @@ namespace PIS_PetRegistry.Controllers
             var res = new List<PhysicalPersonDTO>();
             foreach (var physicalPerson in physicalPeople) 
             {
-                var animalCount = PetOwnersService.GetPhysicalPersonAnimalCount(physicalPerson.Id);
-                var catCount = PetOwnersService.GetPhysicalPersonCatCount(physicalPerson.Id);
-                var dogCount = PetOwnersService.GetPhysicalPersonDogCount(physicalPerson.Id);
-                res.Add(new PhysicalPersonDTO()
-                {
-                    Id = physicalPerson.Id,
-                    Name = physicalPerson.Name,
-                    Phone = physicalPerson.Phone,
-                    Address = physicalPerson.Address,
-                    Email = physicalPerson.Email,
-                    FkLocality = physicalPerson.FkLocality,
-                    FkCountry = physicalPerson.FkCountry,
-                    AnimalCount = animalCount,
-                    CatCount = catCount,
-                    DogCount = dogCount,
-                    CountryName = CountryService.GetCountryNameById(physicalPerson.FkCountry),
-                    LocationName = LocationService.GetLocationNameById(physicalPerson.FkLocality)
-                });
+                res.Add(DTOModelConverter.ConvertPhysicalPersonModelToDTO(physicalPerson));
             }
             return res;
         }
@@ -136,26 +119,7 @@ namespace PIS_PetRegistry.Controllers
             var res = new List<LegalPersonDTO>();
             foreach (var personInfo in legalPeople)
             {
-                var animalCount = PetOwnersService.GetLegalPersonAnimalCount(personInfo.Id);
-                var catCount = PetOwnersService.GetLegalPersonCatCount(personInfo.Id);
-                var dogCount = PetOwnersService.GetLegalPersonDogCount(personInfo.Id);
-                res.Add(new LegalPersonDTO()
-                {
-                    Id = personInfo.Id,
-                    INN = personInfo.Inn,
-                    KPP = personInfo.Kpp,
-                    Name = personInfo.Name,
-                    Phone = personInfo.Phone,
-                    Address = personInfo.Address,
-                    Email = personInfo.Email,
-                    FkLocality = personInfo.FkLocality,
-                    FkCountry = personInfo.FkCountry,
-                    AnimalCount = animalCount,
-                    CatCount = catCount,
-                    DogCount = dogCount,
-                    CountryName = CountryService.GetCountryNameById(personInfo.FkCountry),
-                    LocationName = LocationService.GetLocationNameById(personInfo.FkLocality)
-                });
+                res.Add(DTOModelConverter.ConvertLegalPersonModelToDTO(personInfo));
             }
             return res;
         }
