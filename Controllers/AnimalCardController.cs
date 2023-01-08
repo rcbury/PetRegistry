@@ -155,7 +155,7 @@ namespace PIS_PetRegistry.Controllers
                 FkShelter = model.FkShelter,
                 YearOfBirth = model.YearOfBirth,
                 Photo = model.Photo,
-                CategoryName = model.FkCategoryNavigation.Name
+                CategoryName = model.FkCategoryNavigation != null ? model.FkCategoryNavigation.Name : null
             };
 
             return AnimalCardDTO;
@@ -247,32 +247,18 @@ namespace PIS_PetRegistry.Controllers
         }
 
         public static ContractDTO SaveContract(PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO? legalPersonDTO, 
-            AnimalCardDTO animalCardDTO, UserDTO currentUser) 
+            AnimalCardDTO animalCardDTO) 
         {
+            var contract = AnimalCardService.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO);
             var res = new ContractDTO();
-            using (var context = new RegistryPetsContext()) 
+            res.Number = contract.Number;
+            res.Date = contract.Date;
+            res.FkAnimalCard = contract.FkAnimalCard;
+            res.FkUser = contract.FkUser;
+            res.FkPhysicalPerson = contract.FkPhysicalPerson;
+            if (legalPersonDTO != null)
             {
-                var contract = new Contract();
-                var maxNum = context.Contracts
-                    .Where(contract => contract.Date.Year == DateTime.Now.Year)
-                    .Max(x => x.Number);
-                contract.Number = maxNum == null ? 1 : maxNum + 1;
-                res.Number = contract.Number;
-                contract.Date = DateOnly.FromDateTime(DateTime.Now);
-                res.Date = contract.Date;
-                contract.FkAnimalCard = animalCardDTO.Id;
-                res.FkAnimalCard = contract.FkAnimalCard;
-                contract.FkUser = currentUser.Id;
-                res.FkUser = contract.FkUser;
-                contract.FkPhysicalPerson = physicalPersonDTO.Id;
-                res.FkPhysicalPerson = contract.FkPhysicalPerson;
-                if (legalPersonDTO != null)
-                {
-                    contract.FkLegalPerson = legalPersonDTO.Id;
-                    res.FkLegalPerson = contract.FkLegalPerson;
-                }
-                context.Contracts.Add(contract);
-                context.SaveChanges();
+                res.FkLegalPerson = contract.FkLegalPerson;
             }
             return res;
         }

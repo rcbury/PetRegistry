@@ -17,7 +17,7 @@ namespace PIS_PetRegistry.Services
             using (var context = new RegistryPetsContext())
             {
                 var categories = context.AnimalCategories.ToList();
-                
+
                 return categories;
             }
         }
@@ -43,6 +43,30 @@ namespace PIS_PetRegistry.Services
                     .Include(card => card.FkCategoryNavigation)
                     .FirstOrDefault();
             }
+        }
+
+        public static Contract SaveContract(PhysicalPersonDTO? physicalPersonDTO, LegalPersonDTO? legalPersonDTO, AnimalCardDTO animalCardDTO) 
+        {
+            var user = AuthorizationService.GetAuthorizedUser();
+            var contract = new Contract();
+            using (var context = new RegistryPetsContext())
+            {
+                var maxNum = context.Contracts
+                    .Where(contract => contract.Date.Year == DateTime.Now.Year)
+                    .Max(x => x.Number);
+                contract.Number = maxNum == null ? 1 : maxNum + 1;
+                contract.Date = DateOnly.FromDateTime(DateTime.Now);
+                contract.FkAnimalCard = animalCardDTO.Id;
+                contract.FkUser = user.Id;
+                contract.FkPhysicalPerson = physicalPersonDTO.Id;
+                if (legalPersonDTO != null)
+                {
+                    contract.FkLegalPerson = legalPersonDTO.Id;
+                }
+                context.Contracts.Add(contract);
+                context.SaveChanges();
+            }
+            return contract;
         }
     }
 }

@@ -536,7 +536,6 @@ namespace PIS_PetRegistry
 
         private void button7_Click(object sender, EventArgs e)
         {
-            var currentUser = AuthorizationController.GetAuthorizedUser();
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.InitialDirectory = "c:\\";
@@ -553,11 +552,15 @@ namespace PIS_PetRegistry
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            var currentUser = AuthorizationController.GetAuthorizedUser();
             if (checkBox2.Checked && physicalPersonDTO != null) 
             {
                 checkBox2.Enabled = false;
-                AnimalCardController.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO, currentUser); 
+                if (legalPersonDTO == null) 
+                {
+                    checkBox1.Enabled = false;
+                    groupBox6.Hide();
+                }
+                AnimalCardController.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO); 
             }
         }
     }
