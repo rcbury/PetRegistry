@@ -102,8 +102,6 @@ namespace PIS_PetRegistry.Forms
                     FkAnimal = parasiteTreatmentDTO.FkAnimal,
                 };
 
-                var authorizedUser = AuthorizationController.GetAuthorizedUser();
-
                 try
                 {
                     parasiteTreatmentDTO = ParasiteTreatmentController.UpdateParasiteTreatment(
