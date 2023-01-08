@@ -68,7 +68,7 @@ namespace PIS_PetRegistry.Services
 
             using (var context = new RegistryPetsContext())
             {
-                animalCardsList = context.AnimalCards.ToList();
+                animalCardsList = context.AnimalCards.Include(card => card.FkCategoryNavigation).ToList();
             }
 
             return animalCardsList;
@@ -79,7 +79,7 @@ namespace PIS_PetRegistry.Services
 
             using (var context = new RegistryPetsContext())
             {
-                var animalCards = context.AnimalCards.ToList();
+                var animalCards = context.AnimalCards.Include(card => card.FkCategoryNavigation).ToList();
 
                 if (animalFilter.ChipId.Length > 0)
                 {

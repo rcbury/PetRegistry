@@ -142,35 +142,6 @@ namespace PIS_PetRegistry.Controllers
         {
             Exporter.ExportCardsToExcel(path, cardsList);
         }
-
-                var len = cardsList.Count;
-                if (len > 0)
-                {
-                    using (var context = new RegistryPetsContext())
-                    {
-                        var rowCnt = 2;
-                        foreach (var card in cardsList)
-                        {
-                            var category = context.AnimalCategories.Where(category => category.Id == card.FkCategory).FirstOrDefault().Name;
-                            worksheet.Cell(rowCnt, 1).Value = card.Name;
-                            worksheet.Cell(rowCnt, 2).Value = card.ChipId;
-                            worksheet.Cell(rowCnt, 3).Value = card.YearOfBirth;
-                            worksheet.Cell(rowCnt, 4).Value = card.IsBoy ? "Мальчик" : "Девочка";
-                            worksheet.Cell(rowCnt, 5).Value = category;
-                            rowCnt++;
-                        }
-                    }
-                }
-                worksheet.Columns().AdjustToContents();
-                worksheet.Rows().AdjustToContents();
-                workbook.SaveAs(path);
-            }
-        }
-
-
-
-
-
         public static void DeleteAnimalCard(AnimalCardDTO animalCardDTO)
         {
             AnimalCardService.DeleteAnimalCard(animalCardDTO.Id);
