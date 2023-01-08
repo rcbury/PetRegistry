@@ -17,7 +17,7 @@ namespace PIS_PetRegistry.Backend
     {
         public object Create(DbContext context, bool designTime)
             => context is RegistryPetsContext dynamicContext
-                ? (context.GetType(), Authorization.AuthorizedUserDto == null ? 0 : Authorization.AuthorizedUserDto.Id, designTime)
+                ? (context.GetType(), Authorization.AuthorizedUser == null ? 0 : Authorization.AuthorizedUser.Id, designTime)
                 : (object)context.GetType();
 
         public object Create(DbContext context)

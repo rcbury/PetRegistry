@@ -116,18 +116,18 @@ public partial class RegistryPetsContext : DbContext
             entity.HasIndex(e => e.ChipId).IsUnique();
 
             // roles access limitations
-            if (Authorization.AuthorizedUserDto == null)
+            if (Authorization.AuthorizedUser == null)
                 return;
 
-            if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
+            if (Authorization.AuthorizedUser.FkRole != (int)UserRoles.VetServiceStaff)
             {
-                if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)
+                if (Authorization.AuthorizedUser.FkRole == (int)UserRoles.OMSUStaff)
                 {
-                    entity.HasQueryFilter(e => e.FkShelterNavigation.FkLocation == Authorization.AuthorizedUserDto.LocationId);
+                    entity.HasQueryFilter(e => e.FkShelterNavigation.FkLocation == Authorization.AuthorizedUser.FkLocation);
                 }
                 else
                 {
-                    entity.HasQueryFilter(e => e.FkShelterNavigation.FkLocation == Authorization.AuthorizedUserDto.ShelterLocationId);
+                    entity.HasQueryFilter(e => e.FkShelterNavigation.FkLocation == Authorization.AuthorizedUser.FkShelter);
                 }
 
             }
@@ -239,18 +239,18 @@ public partial class RegistryPetsContext : DbContext
                 .HasConstraintName("FK_locality");
 
             // roles access limitations
-            if (Authorization.AuthorizedUserDto == null)
+            if (Authorization.AuthorizedUser == null)
                 return;
 
-            if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
+            if (Authorization.AuthorizedUser.FkRole != (int)UserRoles.VetServiceStaff)
             {
-                if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)
+                if (Authorization.AuthorizedUser.FkRole == (int)UserRoles.OMSUStaff)
                 {
-                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.LocationId);
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUser.FkLocation);
                 }
                 else
                 {
-                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.ShelterLocationId);
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUser.FkShelter);
                 }
 
             }
@@ -360,18 +360,18 @@ public partial class RegistryPetsContext : DbContext
                 .HasConstraintName("FK_locality");
 
             // roles access limitations
-            if (Authorization.AuthorizedUserDto == null)
+            if (Authorization.AuthorizedUser == null)
                 return;
 
-            if (Authorization.AuthorizedUserDto.RoleId != (int)UserRoles.VetServiceStaff)
+            if (Authorization.AuthorizedUser.FkRole != (int)UserRoles.VetServiceStaff)
             {
-                if (Authorization.AuthorizedUserDto.RoleId == (int)UserRoles.OMSUStaff)
+                if (Authorization.AuthorizedUser.FkRole == (int)UserRoles.OMSUStaff)
                 {
-                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.LocationId);
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUser.FkLocation);
                 }
                 else
                 {
-                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUserDto.ShelterLocationId);
+                    entity.HasQueryFilter(e => e.FkLocality == Authorization.AuthorizedUser.FkShelter);
                 }
 
             }
