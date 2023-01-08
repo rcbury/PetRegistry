@@ -1,6 +1,7 @@
 ﻿using PIS_PetRegistry.Backend;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
+using PIS_PetRegistry.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,50 +13,46 @@ namespace PIS_PetRegistry.Controllers
 {
     internal static class AuthorizationController
     {
+        public static UserDTO ConvertUserToDTO(User user)
+        {
+            var userDTO = new UserDTO()
+            {
+                Login = user.Login,
+                Id = user.Id,
+                ShelterId = user.FkShelter,
+                RoleId = user.FkRole,
+                LocationId = user.FkLocation,
+                Name = user.Name,
+
+
+            };
+
+            if (user.FkShelter != null)
+            {
+                userDTO.ShelterLocationId = user.FkShelterNavigation.FkLocation;
+            }
+
+            return userDTO;
+        }
+
         public static UserDTO? Authorize(string login, string password)
         {
-            var dbContext = new RegistryPetsContext();
-
-            MD5Hash mD5Hash = new MD5Hash();
-            string hashedPassword = mD5Hash.HashPassword(password);
-
-            var user = dbContext.Users
-                .Where(x => x.Password.ToLower().Equals(hashedPassword.ToLower()) &&
-                    x.Login.ToLower().Equals(login.ToLower()))
-                .FirstOrDefault();
+            var user = AuthorizationService.Authorize(login, password);
 
             if (user == null)
-            {
-                dbContext.Dispose();
                 return null;
-            }
-            else
-            {
-                var userDTO = new UserDTO()
-                {
-                    Login = user.Login,
-                    Id = user.Id,
-                    ShelterId = user.FkShelter,
-                    RoleId = user.FkRole,
-                    LocationId = user.FkLocation,
-                    Name = user.Name,
-                };
-                if (user.FkShelter != null)
-                {
-                    userDTO.ShelterLocationId = user.FkShelterNavigation.FkLocation;
-                }
 
-                dbContext.Dispose();
-                Authorization.AuthorizedUserDto = userDTO;
-                return userDTO;
-            }
+            var userDTO = ConvertUserToDTO(user);
 
-            
+            return userDTO;
         }
 
         public static UserDTO GetAuthorizedUser()
         {
-            return Authorization.AuthorizedUserDto;
+            var user = AuthorizationService.GetAuthorizedUser();
+            var userDTO = ConvertUserToDTO(user);
+
+            return userDTO;
         }
     }
 }
