@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.DTO;
+﻿using PIS_PetRegistry.Backend.Services;
+using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using System;
 using System.Collections.Generic;
@@ -12,24 +13,24 @@ namespace PIS_PetRegistry.Controllers
     {
         public static List<LocationDTO> GetLocations()
         {
-            var locations = new List<LocationDTO>();
-            locations.Add(new LocationDTO()
+            var res = new List<LocationDTO>
             {
-                Id = 0,
-                Name = ""
-            });
-            using (var context = new RegistryPetsContext())
-            {
-                foreach (var location in context.Locations.ToList())
+                new LocationDTO()
                 {
-                    locations.Add(new LocationDTO()
-                    {
-                        Id = location.Id,
-                        Name = location.Name
-                    });
+                    Id = 0,
+                    Name = ""
                 }
+            };
+            var locations = LocationService.GetLocations();
+            foreach (var location in locations)
+            {
+                res.Add(new LocationDTO()
+                {
+                    Id = location.Id,
+                    Name = location.Name
+                });
             }
-            return locations;
+            return res;
         }
     }
 }

@@ -103,22 +103,19 @@ namespace PIS_PetRegistry.Controllers
         public static ContractDTO? GetContractByAnimal(int animalId) 
         {
             var res = new ContractDTO();
-            using (var context = new RegistryPetsContext())
+            var contract = AnimalCardService.GetContractByAnimalId(animalId);
+            if (contract == null)
             {
-                var contract = context.Contracts.Where(contract => contract.FkAnimalCard == animalId).FirstOrDefault();
-                if (contract == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    res.Number = contract.Number;
-                    res.Date = contract.Date;
-                    res.FkAnimalCard = contract.FkAnimalCard;
-                    res.FkUser = contract.FkUser;
-                    res.FkPhysicalPerson = contract.FkPhysicalPerson;
-                    res.FkLegalPerson = contract.FkLegalPerson;
-                }
+                return null;
+            }
+            else
+            {
+                res.Number = contract.Number;
+                res.Date = contract.Date;
+                res.FkAnimalCard = contract.FkAnimalCard;
+                res.FkUser = contract.FkUser;
+                res.FkPhysicalPerson = contract.FkPhysicalPerson;
+                res.FkLegalPerson = contract.FkLegalPerson;
             }
             return res;
         }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentFormat.OpenXml.InkML;
+using Microsoft.EntityFrameworkCore;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 
@@ -13,6 +14,14 @@ namespace PIS_PetRegistry.Services
                 var categories = context.AnimalCategories.ToList();
 
                 return categories;
+            }
+        }
+
+        public static Contract GetContractByAnimalId(int animalId) 
+        {
+            using (var context = new RegistryPetsContext()) 
+            {
+                return context.Contracts.Where(contract => contract.FkAnimalCard == animalId).FirstOrDefault();
             }
         }
 

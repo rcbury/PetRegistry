@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.DTO;
+﻿using PIS_PetRegistry.Backend.Services;
+using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using System;
 using System.Collections.Generic;
@@ -12,24 +13,24 @@ namespace PIS_PetRegistry.Controllers
     {
         public static List<CountryDTO> GetCountries()
         {
-            var countries = new List<CountryDTO>();
-            countries.Add(new CountryDTO()
+            var res = new List<CountryDTO>
             {
-                Id = 0,
-                Name = ""
-            });
-            using (var context = new RegistryPetsContext())
-            {
-                foreach (var country in context.Countries.ToList())
+                new CountryDTO()
                 {
-                    countries.Add(new CountryDTO()
-                    {
-                        Id = country.Id,
-                        Name = country.Name
-                    });
+                    Id = 0,
+                    Name = ""
                 }
+            };
+            var countries = CountryService.GetCountries();
+            foreach (var country in countries)
+            {
+                res.Add(new CountryDTO()
+                {
+                    Id = country.Id,
+                    Name = country.Name
+                });
             }
-            return countries;
+            return res;
         }
     }
 }
