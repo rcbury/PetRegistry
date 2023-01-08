@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Backend.Services;
+﻿using PIS_PetRegistry.Backend;
+using PIS_PetRegistry.Backend.Services;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using PIS_PetRegistry.Services;
@@ -31,29 +32,6 @@ namespace PIS_PetRegistry.Controllers
             return parasiteTreatmentMedicationsDTO;
         }
 
-        public static ParasiteTreatmentDTO ConvertParasiteTreatmentToDTO(ParasiteTreatment parasiteTreatment)
-        {
-            var parasiteTreatmentDTO = new ParasiteTreatmentDTO()
-            {
-                FkAnimal = parasiteTreatment.FkAnimal,
-                FkUser = parasiteTreatment.FkUser,
-                FkMedication = parasiteTreatment.FkMedication,
-                Date = parasiteTreatment.Date,
-            };
-
-            if (parasiteTreatment.FkUserNavigation != null)
-            {
-                parasiteTreatmentDTO.UserName = parasiteTreatment.FkUserNavigation.Name;
-            }
-
-            if (parasiteTreatment.FkMedicationNavigation != null)
-            {
-                parasiteTreatmentDTO.MedicationName = parasiteTreatment.FkMedicationNavigation.Name;
-            }
-
-            return parasiteTreatmentDTO;
-        }
-
         public static ParasiteTreatment ConvertParasiteTreatmentDTOToModel(ParasiteTreatmentDTO parasiteTreatmentDTO)
         {
             var parasiteTreatmentModel = new ParasiteTreatment()
@@ -74,7 +52,7 @@ namespace PIS_PetRegistry.Controllers
             
             foreach (var parasiteTreatment in parasiteTreatments)
             {
-                parasiteTreatmentsDTO.Add(ConvertParasiteTreatmentToDTO(parasiteTreatment));
+                parasiteTreatmentsDTO.Add(DTOModelConverter.ConvertParasiteTreatmentToDTO(parasiteTreatment));
             }
             
             return parasiteTreatmentsDTO;
@@ -96,7 +74,7 @@ namespace PIS_PetRegistry.Controllers
 
             parasiteTreatmentModel = ParasiteTreatmentService.AddParasiteTreatment(parasiteTreatmentModel);
 
-            var newParasiteTreatmentDTO = ConvertParasiteTreatmentToDTO(parasiteTreatmentModel);
+            var newParasiteTreatmentDTO = DTOModelConverter.ConvertParasiteTreatmentToDTO(parasiteTreatmentModel);
 
             return newParasiteTreatmentDTO;
         }
@@ -122,9 +100,11 @@ namespace PIS_PetRegistry.Controllers
                 FkMedication = modifiedParasiteTreatmentDTO.FkMedication,
             };
 
-            var updatedParasiteTreatment = ParasiteTreatmentService.UpdateParasiteTreatment(oldParasiteTreatmentModel, modifiedParasiteTreatmentModel);
+            var updatedParasiteTreatment = ParasiteTreatmentService.UpdateParasiteTreatment(
+                oldParasiteTreatmentModel, 
+                modifiedParasiteTreatmentModel);
 
-            var updatedParasiteTreatmentDTO = ConvertParasiteTreatmentToDTO(updatedParasiteTreatment);
+            var updatedParasiteTreatmentDTO = DTOModelConverter.ConvertParasiteTreatmentToDTO(updatedParasiteTreatment);
 
             return updatedParasiteTreatmentDTO;
         }

@@ -77,5 +77,88 @@ namespace PIS_PetRegistry.Backend
 
             return legalPersonModelDTO;
         }
+
+        public static ParasiteTreatmentDTO ConvertParasiteTreatmentToDTO(ParasiteTreatment parasiteTreatment)
+        {
+            var parasiteTreatmentDTO = new ParasiteTreatmentDTO()
+            {
+                FkAnimal = parasiteTreatment.FkAnimal,
+                FkUser = parasiteTreatment.FkUser,
+                FkMedication = parasiteTreatment.FkMedication,
+                Date = parasiteTreatment.Date,
+            };
+
+            if (parasiteTreatment.FkUserNavigation != null)
+            {
+                parasiteTreatmentDTO.UserName = parasiteTreatment.FkUserNavigation.Name;
+            }
+
+            if (parasiteTreatment.FkMedicationNavigation != null)
+            {
+                parasiteTreatmentDTO.MedicationName = parasiteTreatment.FkMedicationNavigation.Name;
+            }
+
+            return parasiteTreatmentDTO;
+        }
+
+        public static VaccinationDTO ConvertVaccinationToDTO(Vaccination vaccination)
+        {
+            var vaccinationDTO = new VaccinationDTO()
+            {
+                FkAnimal = vaccination.FkAnimal,
+                FkUser = vaccination.FkUser,
+                FkVaccine = vaccination.FkVaccine,
+                DateEnd = vaccination.DateEnd,
+            };
+
+            if (vaccination.FkVaccineNavigation != null)
+            {
+                vaccinationDTO.VaccineName = vaccination.FkVaccineNavigation.Name;
+            }
+            if (vaccination.FkUserNavigation != null)
+            {
+                vaccinationDTO.UserName = vaccination.FkUserNavigation.Name;
+            }
+
+
+            return vaccinationDTO;
+        }
+
+        public static VeterinaryAppointmentDTO ConvertVeterinaryAppointmentToDTO(VeterinaryAppointmentAnimal veterinaryAppointment)
+        {
+            var veterinaryAppointmentDTO = new VeterinaryAppointmentDTO()
+            {
+                FkAnimal = veterinaryAppointment.FkAnimal,
+                FkUser = veterinaryAppointment.FkUser,
+                Name = veterinaryAppointment.Name,
+                Date = veterinaryAppointment.Date.ToLocalTime(),
+                IsCompleted = veterinaryAppointment.IsCompleted,
+            };
+
+            if (veterinaryAppointment.FkUserNavigation != null)
+            {
+                veterinaryAppointmentDTO.UserName = veterinaryAppointment.FkUserNavigation.Name;
+            }
+
+            return veterinaryAppointmentDTO;
+        }
+
+        public static AnimalCardDTO ConvertAnimalCardToDTO(AnimalCard model)
+        {
+            var AnimalCardDTO = new AnimalCardDTO()
+            {
+                Id = model.Id,
+                ChipId = model.ChipId,
+                Name = model.Name,
+                IsBoy = model.IsBoy,
+                FkCategory = model.FkCategory,
+                FkShelter = model.FkShelter,
+                YearOfBirth = model.YearOfBirth,
+                Photo = model.Photo,
+                CategoryName = model.FkCategoryNavigation != null ? model.FkCategoryNavigation.Name : null
+            };
+
+            return AnimalCardDTO;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Backend.Services;
+﻿using PIS_PetRegistry.Backend;
+using PIS_PetRegistry.Backend.Services;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using PIS_PetRegistry.Services;
@@ -12,28 +13,7 @@ namespace PIS_PetRegistry.Controllers
 {
     public class VaccinationController
     {
-        public static VaccinationDTO ConvertVaccinationToDTO(Vaccination vaccination)
-        {
-            var vaccinationDTO = new VaccinationDTO()
-            {
-                FkAnimal = vaccination.FkAnimal,
-                FkUser = vaccination.FkUser,
-                FkVaccine = vaccination.FkVaccine,
-                DateEnd = vaccination.DateEnd,
-            };
-
-            if (vaccination.FkVaccineNavigation != null)
-            {
-                vaccinationDTO.VaccineName = vaccination.FkVaccineNavigation.Name;
-            }
-            if (vaccination.FkUserNavigation != null)
-            {
-                vaccinationDTO.UserName = vaccination.FkUserNavigation.Name;
-            }
-
-
-            return vaccinationDTO;
-        }
+        
 
         public static List<VaccineDTO> GetVaccines()
         {
@@ -60,7 +40,7 @@ namespace PIS_PetRegistry.Controllers
 
             foreach (var vaccination in vaccinations)
             {
-                vaccinationsDTO.Add(ConvertVaccinationToDTO(vaccination));
+                vaccinationsDTO.Add(DTOModelConverter.ConvertVaccinationToDTO(vaccination));
             }
 
             return vaccinationsDTO;
@@ -79,7 +59,7 @@ namespace PIS_PetRegistry.Controllers
 
             vaccinationModel = VaccinationService.AddVaccination(vaccinationModel, user);
 
-            var newVaccinationDTO = ConvertVaccinationToDTO(vaccinationModel);
+            var newVaccinationDTO = DTOModelConverter.ConvertVaccinationToDTO(vaccinationModel);
 
             return newVaccinationDTO;
         }
@@ -104,7 +84,7 @@ namespace PIS_PetRegistry.Controllers
 
             var updatedVaccination = VaccinationService.UpdateVaccination(oldVaccinationModel, modifiedVaccinationModel);
 
-            var newVaccinationDTO = ConvertVaccinationToDTO(updatedVaccination);
+            var newVaccinationDTO = DTOModelConverter.ConvertVaccinationToDTO(updatedVaccination);
 
             return newVaccinationDTO;
         }

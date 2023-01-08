@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Backend.Services;
+﻿using PIS_PetRegistry.Backend;
+using PIS_PetRegistry.Backend.Services;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using PIS_PetRegistry.Services;
@@ -22,30 +23,13 @@ namespace PIS_PetRegistry.Controllers
 
             foreach (var veterinaryAppointment in veterinaryAppointments)
             {
-                veterinaryAppointmentsDTO.Add(ConvertVeterinaryAppointmentToDTO(veterinaryAppointment));
+                veterinaryAppointmentsDTO.Add(DTOModelConverter.ConvertVeterinaryAppointmentToDTO(veterinaryAppointment));
             }
 
             return veterinaryAppointmentsDTO;
         }
 
-        public static VeterinaryAppointmentDTO ConvertVeterinaryAppointmentToDTO(VeterinaryAppointmentAnimal veterinaryAppointment)
-        {
-            var veterinaryAppointmentDTO = new VeterinaryAppointmentDTO()
-            {
-                FkAnimal = veterinaryAppointment.FkAnimal,
-                FkUser = veterinaryAppointment.FkUser,
-                Name = veterinaryAppointment.Name,
-                Date = veterinaryAppointment.Date.ToLocalTime(),
-                IsCompleted = veterinaryAppointment.IsCompleted,
-            };
-
-            if (veterinaryAppointment.FkUserNavigation != null)
-            {
-                veterinaryAppointmentDTO.UserName = veterinaryAppointment.FkUserNavigation.Name;
-            }
-
-            return veterinaryAppointmentDTO;
-        }
+        
 
         public static VeterinaryAppointmentDTO AddVeterinaryAppointment(VeterinaryAppointmentDTO veterinaryAppointmentDTO)
         {
@@ -61,7 +45,7 @@ namespace PIS_PetRegistry.Controllers
 
             veterinaryAppointmentModel = VeterinaryAppointmentService.AddVeterinaryAppointment(veterinaryAppointmentModel, user);
 
-            var newVeterinaryAppointmentDTO = ConvertVeterinaryAppointmentToDTO(veterinaryAppointmentModel);
+            var newVeterinaryAppointmentDTO = DTOModelConverter.ConvertVeterinaryAppointmentToDTO(veterinaryAppointmentModel);
 
             return newVeterinaryAppointmentDTO;
         }
@@ -92,7 +76,7 @@ namespace PIS_PetRegistry.Controllers
                 oldVeterinaryAppointmentModel, 
                 modifiedVeterinaryAppointmentModel);
 
-            var newVaccinationDTO = ConvertVeterinaryAppointmentToDTO(updatedVeterinaryAppointment);
+            var newVaccinationDTO = DTOModelConverter.ConvertVeterinaryAppointmentToDTO(updatedVeterinaryAppointment);
 
             return newVaccinationDTO;
         }
