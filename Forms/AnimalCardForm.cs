@@ -380,24 +380,12 @@ namespace PIS_PetRegistry
 
         private void parasiteTreatmentDGV_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (!veterinaryShtukiModificationAllowed) return;
-
-            var clickedDTO = (ParasiteTreatmentDTO)parasiteTreatmentDGV.Rows[e.RowIndex].DataBoundItem;
-
-            var form = new ParasiteTreatmentForm(clickedDTO);
-            form.ShowDialog();
-            Refetch();
+            
         }
 
         private void veterinaryAppointmentDGV_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (!veterinaryShtukiModificationAllowed) return;
-
-            var clickedDTO = (VeterinaryAppointmentDTO)veterinaryAppointmentDGV.Rows[e.RowIndex].DataBoundItem;
-
-            var form = new VeterinaryProcedure(clickedDTO);
-            form.ShowDialog();
-            Refetch();
+           
         }
 
         private void addVeterinaryAppointmentButton_Click(object sender, EventArgs e)
@@ -416,13 +404,7 @@ namespace PIS_PetRegistry
 
         private void vaccinationDGV_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (!veterinaryShtukiModificationAllowed) return;
-
-            var clickedDTO = (VaccinationDTO)vaccinationDGV.Rows[e.RowIndex].DataBoundItem;
-
-            var form = new VaccinationForm(clickedDTO);
-            form.ShowDialog();
-            Refetch();
+           
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -567,6 +549,39 @@ namespace PIS_PetRegistry
                 }
                 AnimalCardController.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO); 
             }
+        }
+
+        private void parasiteTreatmentDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!veterinaryShtukiModificationAllowed) return;
+
+            var clickedDTO = (ParasiteTreatmentDTO)parasiteTreatmentDGV.Rows[e.RowIndex].DataBoundItem;
+
+            var form = new ParasiteTreatmentForm(clickedDTO);
+            form.ShowDialog();
+            Refetch();
+        }
+
+        private void vaccinationDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!veterinaryShtukiModificationAllowed) return;
+
+            var clickedDTO = (VaccinationDTO)vaccinationDGV.Rows[e.RowIndex].DataBoundItem;
+
+            var form = new VaccinationForm(clickedDTO);
+            form.ShowDialog();
+            Refetch();
+        }
+
+        private void veterinaryAppointmentDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!veterinaryShtukiModificationAllowed) return;
+
+            var clickedDTO = (VeterinaryAppointmentDTO)veterinaryAppointmentDGV.Rows[e.RowIndex].DataBoundItem;
+
+            var form = new VeterinaryProcedure(clickedDTO);
+            form.ShowDialog();
+            Refetch();
         }
     }
 }
