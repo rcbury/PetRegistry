@@ -160,5 +160,25 @@ namespace PIS_PetRegistry.Backend
 
             return AnimalCardDTO;
         }
+
+        public static UserDTO ConvertUserToDTO(User user)
+        {
+            var userDTO = new UserDTO()
+            {
+                Login = user.Login,
+                Id = user.Id,
+                ShelterId = user.FkShelter,
+                RoleId = user.FkRole,
+                LocationId = user.FkLocation,
+                Name = user.Name,
+            };
+
+            if (user.FkShelter != null)
+            {
+                userDTO.ShelterLocationId = user.FkShelterNavigation.FkLocation;
+            }
+
+            return userDTO;
+        }
     }
 }
