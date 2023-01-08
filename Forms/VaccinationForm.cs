@@ -74,11 +74,9 @@ namespace PIS_PetRegistry.Forms
                     FkAnimal = vaccinationDTO.FkAnimal,
                 };
 
-                var authorizedUser = AuthorizationController.GetAuthorizedUser();
-
                 try
                 {
-                    vaccinationDTO = VaccinationController.AddVaccination(tempVaccinationDTO, authorizedUser);
+                    vaccinationDTO = VaccinationController.AddVaccination(tempVaccinationDTO);
                 }
                 catch(Exception ex)
                 {
@@ -95,10 +93,9 @@ namespace PIS_PetRegistry.Forms
                     FkAnimal = vaccinationDTO.FkAnimal,
                 };
 
-                var authorizedUser = AuthorizationController.GetAuthorizedUser();
                 try
                 {
-                    vaccinationDTO = VaccinationController.UpdateVaccination(vaccinationDTO, tempVaccinationDTO, authorizedUser);
+                    vaccinationDTO = VaccinationController.UpdateVaccination(vaccinationDTO, tempVaccinationDTO);
                 }
                 catch (Exception ex)
                 {

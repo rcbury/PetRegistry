@@ -14,6 +14,7 @@ using DocumentFormat.OpenXml.Bibliography;
 using PIS_PetRegistry.Backend;
 using ClosedXML.Excel;
 using PIS_PetRegistry.Services;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 
 namespace PIS_PetRegistry.Controllers
 {
@@ -51,41 +52,29 @@ namespace PIS_PetRegistry.Controllers
                 Photo = animalCardDTO.Photo,
             };
 
-            AnimalCardService.AddAnimalCard(animalCardModel);
+            animalCardModel = AnimalCardService.AddAnimalCard(animalCardModel);
 
             var newAnimalCardDTO = ConvertModelInDTO(animalCardModel);
 
             return newAnimalCardDTO;
         }
 
-        public static AnimalCardDTO UpdateAnimalCard(AnimalCardDTO animalCardDTO, UserDTO userDTO)
+        public static AnimalCardDTO UpdateAnimalCard(AnimalCardDTO animalCardDTO)
         {
-            AnimalCard oldAnimalCardModel;
-            AnimalCard animalCardModel;
 
-            using (var context = new RegistryPetsContext())
+            var animalCardModel = new AnimalCard()
             {
-                oldAnimalCardModel = context.AnimalCards.Where(x => x.Id.Equals(animalCardDTO.Id)).FirstOrDefault();
+                Id = animalCardDTO.Id,
+                ChipId = animalCardDTO.ChipId,
+                Name = animalCardDTO.Name,
+                FkCategory = animalCardDTO.FkCategory,
+                FkShelter = animalCardDTO.FkShelter,
+                YearOfBirth = animalCardDTO.YearOfBirth,
+                IsBoy = animalCardDTO.IsBoy,
+                Photo = animalCardDTO.Photo
+            };
 
-                if (oldAnimalCardModel == null)
-                    throw new Exception("trying to change unexisting animal card");
-            }
-
-            using (var context = new RegistryPetsContext())
-            {
-                animalCardModel = context.AnimalCards.Where(x => x.Id.Equals(animalCardDTO.Id)).FirstOrDefault();
-
-                animalCardModel.ChipId = animalCardDTO.ChipId;
-                animalCardModel.Name = animalCardDTO.Name;
-                animalCardModel.FkCategory = animalCardDTO.FkCategory;
-                animalCardModel.YearOfBirth = animalCardDTO.YearOfBirth;
-                animalCardModel.IsBoy = animalCardDTO.IsBoy;
-                animalCardModel.Photo = animalCardDTO.Photo;
-
-                context.SaveChanges();
-
-                AnimalCardLogService.LogUpdate(oldAnimalCardModel, animalCardModel, userDTO.Id);
-            }
+            AnimalCardService.UpdateAnimalCard(animalCardModel);
 
             var newAnimalCardDTO = ConvertModelInDTO(animalCardModel);
 
@@ -94,49 +83,14 @@ namespace PIS_PetRegistry.Controllers
 
         public static List<AnimalCardDTO> GetAnimals() 
         {
-            var animalCardsList = new List<AnimalCard> { };
-
-            using (var context = new RegistryPetsContext())
-            {
-                animalCardsList = context.AnimalCards.ToList();
-            }
-
+            var animalCardsList = AnimalCardService.GetAnimals();
             var animalsListDto = animalCardsList.Select(item => ConvertModelInDTO(item)).ToList();
 
             return animalsListDto;
         }
         public static List<AnimalCardDTO> GetAnimals(AnimalFilterDTO animalFilter)
         {
-            var animalCardsList = new List<AnimalCard> { };
-
-            using (var context = new RegistryPetsContext())
-            {
-                var animalCards = context.AnimalCards.ToList();
-
-                if (animalFilter.ChipId.Length > 0)
-                {
-                    animalCards = animalCards.Where(item => item.ChipId == animalFilter.ChipId).ToList();
-                }
-                else
-                {
-                    if (animalFilter.Name.Length > 0)
-                    {
-                        animalCards = animalCards.Where(item => item.Name == animalFilter.Name).ToList();
-                    }
-
-                    if (animalFilter.IsSelectedSex)
-                    {
-                        animalCards = animalCards.Where(item => item.IsBoy == animalFilter.IsBoy).ToList();
-                    }
-
-                    if (animalFilter.AnimalCategory.Id != -1)
-                    {
-                        animalCards = animalCards.Where(item => item.FkCategory == animalFilter.AnimalCategory.Id).ToList();
-                    }
-                }
-
-                animalCardsList = animalCards;
-            }
+            var animalCardsList = AnimalCardService.GetAnimals(animalFilter);
             var animalsListDto = animalCardsList.Select(item => ConvertModelInDTO(item)).ToList();
 
             return animalsListDto;
@@ -232,49 +186,9 @@ namespace PIS_PetRegistry.Controllers
         }
 
 
-        public static void DeleteAnimalCard(AnimalCardDTO animalCardDTO, UserDTO userDTO)
+        public static void DeleteAnimalCard(AnimalCardDTO animalCardDTO)
         {
-            using (var context = new RegistryPetsContext())
-            {
-                var animalCard = context.AnimalCards.Where(x => x.Id == animalCardDTO.Id).FirstOrDefault();
-
-                if (animalCard == null)
-                    throw new Exception("trying to delete non existent model");
-
-                var animalCardVaccinations = animalCard.Vaccinations.ToList();
-
-                foreach(var animalCardVaccination in animalCardVaccinations)
-                {
-                    context.Vaccinations.Remove(animalCardVaccination);
-                }
-
-                var animalCardParasiteTreatments = animalCard.ParasiteTreatments.ToList();
-
-                foreach (var animalCardParasiteTreatment in animalCardParasiteTreatments)
-                {
-                    context.ParasiteTreatments.Remove(animalCardParasiteTreatment);
-                }
-
-                var animalCardVeterinaryAppointments = animalCard.VeterinaryAppointmentAnimals.ToList();
-
-                foreach (var animalCardVeterinaryAppointment in animalCardVeterinaryAppointments)
-                {
-                    context.VeterinaryAppointmentAnimals.Remove(animalCardVeterinaryAppointment);
-                }
-
-                var animalCardContracts = animalCard.Contracts.ToList();
-
-                foreach (var animalCardContract in animalCardContracts)
-                {
-                    context.Contracts.Remove(animalCardContract);
-                }
-
-                context.AnimalCards.Remove(animalCard);
-
-                AnimalCardLogService.LogDelete(animalCard, userDTO.Id);
-
-                context.SaveChanges();
-            }
+            AnimalCardService.DeleteAnimalCard(animalCardDTO.Id);
         }
 
         public static void MakeContract(string filePath, PhysicalPersonDTO? physicalPerson, 
