@@ -108,8 +108,7 @@ namespace PIS_PetRegistry.Forms
                 {
                     parasiteTreatmentDTO = ParasiteTreatmentController.UpdateParasiteTreatment(
                         parasiteTreatmentDTO,
-                        tempParasiteTreatmentDTO, 
-                        authorizedUser);
+                        tempParasiteTreatmentDTO);
 
                 }
                 catch (Exception ex)
