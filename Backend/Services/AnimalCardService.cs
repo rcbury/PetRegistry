@@ -28,7 +28,7 @@ namespace PIS_PetRegistry.Services
                 context.AnimalCards.Add(animalCardModel);
                 context.SaveChanges();
 
-                AnimalCardLogService.LogCreate(animalCardModel, );
+                AnimalCardLogService.LogCreate(animalCardModel, AuthorizationService.GetAuthorizedUser().Id);
                 return animalCardModel;
             }
 
