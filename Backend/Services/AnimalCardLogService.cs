@@ -8,9 +8,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace PIS_PetRegistry.Controllers
+namespace PIS_PetRegistry.Services
 {
-    public class AnimalCardLogController
+    public class AnimalCardLogService
     {
         public static void LogDelete(AnimalCard animalCard, int fkUser)
         {
@@ -25,7 +25,7 @@ namespace PIS_PetRegistry.Controllers
 
             };
 
-            using(var context = new RegistryPetsContext())
+            using (var context = new RegistryPetsContext())
             {
                 context.AnimalCardLogs.Add(animalCardLog);
                 context.SaveChanges();
@@ -34,7 +34,7 @@ namespace PIS_PetRegistry.Controllers
 
         public static void LogUpdate(AnimalCard oldAnimalCard, AnimalCard animalCard, int fkUser)
         {
-            var jsonString = JsonSerializer.Serialize(new List<AnimalCard>() { oldAnimalCard, animalCard } );
+            var jsonString = JsonSerializer.Serialize(new List<AnimalCard>() { oldAnimalCard, animalCard });
 
             var animalCardLog = new AnimalCardLog()
             {

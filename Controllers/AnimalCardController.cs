@@ -13,6 +13,7 @@ using Spire.Doc;
 using DocumentFormat.OpenXml.Bibliography;
 using PIS_PetRegistry.Backend;
 using ClosedXML.Excel;
+using PIS_PetRegistry.Services;
 
 namespace PIS_PetRegistry.Controllers
 {
@@ -20,19 +21,19 @@ namespace PIS_PetRegistry.Controllers
     {
         public static List<AnimalCategoryDTO> GetAnimalCategories()
         {
+            var animalCategories = AnimalCardService.GetAnimalCategories();
             var animalCategoriesDTO = new List<AnimalCategoryDTO>();
-            using (var context = new RegistryPetsContext())
+            
+            foreach (var animaCategory in animalCategories)
             {
-                foreach (var animaCategory in context.AnimalCategories)
-                {
-                    animalCategoriesDTO.Add(
-                        new AnimalCategoryDTO()
-                        {
-                            Id = animaCategory.Id,
-                            Name = animaCategory.Name
-                        });
-                }
+                animalCategoriesDTO.Add(
+                    new AnimalCategoryDTO()
+                    {
+                        Id = animaCategory.Id,
+                        Name = animaCategory.Name
+                    });
             }
+            
             return animalCategoriesDTO;
         }
 
@@ -50,13 +51,7 @@ namespace PIS_PetRegistry.Controllers
                 Photo = animalCardDTO.Photo,
             };
 
-            using (var context = new RegistryPetsContext())
-            {
-                context.AnimalCards.Add(animalCardModel);
-                context.SaveChanges();
-
-                AnimalCardLogController.LogCreate(animalCardModel, userDTO.Id);
-            }
+            AnimalCardService.AddAnimalCard(animalCardModel);
 
             var newAnimalCardDTO = ConvertModelInDTO(animalCardModel);
 
@@ -89,7 +84,7 @@ namespace PIS_PetRegistry.Controllers
 
                 context.SaveChanges();
 
-                AnimalCardLogController.LogUpdate(oldAnimalCardModel, animalCardModel, userDTO.Id);
+                AnimalCardLogService.LogUpdate(oldAnimalCardModel, animalCardModel, userDTO.Id);
             }
 
             var newAnimalCardDTO = ConvertModelInDTO(animalCardModel);
@@ -276,7 +271,7 @@ namespace PIS_PetRegistry.Controllers
 
                 context.AnimalCards.Remove(animalCard);
 
-                AnimalCardLogController.LogDelete(animalCard, userDTO.Id);
+                AnimalCardLogService.LogDelete(animalCard, userDTO.Id);
 
                 context.SaveChanges();
             }
