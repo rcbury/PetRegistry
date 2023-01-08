@@ -81,8 +81,7 @@ namespace PIS_PetRegistry.Controllers
 
         public static ParasiteTreatmentDTO UpdateParasiteTreatment(
             ParasiteTreatmentDTO oldParasiteTreatmentDTO,
-            ParasiteTreatmentDTO modifiedParasiteTreatmentDTO,
-            UserDTO userDTO)
+            ParasiteTreatmentDTO modifiedParasiteTreatmentDTO)
         {
             var oldParasiteTreatmentModel = new ParasiteTreatment()
             {
