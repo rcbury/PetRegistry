@@ -13,26 +13,6 @@ namespace PIS_PetRegistry.Controllers
 {
     internal static class AuthorizationController
     {
-        public static UserDTO ConvertUserToDTO(User user)
-        {
-            var userDTO = new UserDTO()
-            {
-                Login = user.Login,
-                Id = user.Id,
-                ShelterId = user.FkShelter,
-                RoleId = user.FkRole,
-                LocationId = user.FkLocation,
-                Name = user.Name,
-            };
-
-            if (user.FkShelter != null)
-            {
-                userDTO.ShelterLocationId = user.FkShelterNavigation.FkLocation;
-            }
-
-            return userDTO;
-        }
-
         public static UserDTO? Authorize(string login, string password)
         {
             var user = AuthorizationService.Authorize(login, password);
@@ -40,7 +20,7 @@ namespace PIS_PetRegistry.Controllers
             if (user == null)
                 return null;
 
-            var userDTO = ConvertUserToDTO(user);
+            var userDTO = DTOModelConverter.ConvertUserToDTO(user);
 
             return userDTO;
         }
@@ -48,7 +28,7 @@ namespace PIS_PetRegistry.Controllers
         public static UserDTO GetAuthorizedUser()
         {
             var user = AuthorizationService.GetAuthorizedUser();
-            var userDTO = ConvertUserToDTO(user);
+            var userDTO = DTOModelConverter.ConvertUserToDTO(user);
 
             return userDTO;
         }
