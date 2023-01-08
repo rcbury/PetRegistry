@@ -60,12 +60,10 @@ namespace PIS_PetRegistry.Forms
                     IsCompleted = veterinaryAppointmentCompletedCheckBox.Checked,
                 };
 
-                var authorizedUser = AuthorizationController.GetAuthorizedUser();
                 try
                 {
                     veterinaryAppointmentDTO = VeterinaryAppointmentController.AddVeterinaryAppointment(
-                        tempVeterinaryAppointmentDTO, 
-                        authorizedUser);
+                        tempVeterinaryAppointmentDTO);
                 }
                 catch (Exception ex)
                 {
@@ -83,13 +81,11 @@ namespace PIS_PetRegistry.Forms
                     IsCompleted = veterinaryAppointmentCompletedCheckBox.Checked
                 };
 
-                var authorizedUser = AuthorizationController.GetAuthorizedUser();
                 try
                 {
                     veterinaryAppointmentDTO = VeterinaryAppointmentController.UpdateVeterinaryAppointment(
                         veterinaryAppointmentDTO, 
-                        tempVeterinaryAppointmentDTO, 
-                        authorizedUser);
+                        tempVeterinaryAppointmentDTO);
                 }
                 catch(Exception ex)
                 {

@@ -306,9 +306,7 @@ namespace PIS_PetRegistry
                 tempAnimalCardDTO.FkShelter = animalCardDTO.FkShelter;
                 tempAnimalCardDTO.Id = animalCardDTO.Id;
 
-                var authorizedUser = AuthorizationController.GetAuthorizedUser();
-
-                this.animalCardDTO = AnimalCardController.UpdateAnimalCard(tempAnimalCardDTO, authorizedUser);
+                this.animalCardDTO = AnimalCardController.UpdateAnimalCard(tempAnimalCardDTO);
 
                 MessageBox.Show("Карточка изменена");
             }
@@ -459,9 +457,7 @@ namespace PIS_PetRegistry
             if (animalCardDTO == null)
                 this.Close();
 
-            var authorizedUser = AuthorizationController.GetAuthorizedUser();
-
-            AnimalCardController.DeleteAnimalCard(this.animalCardDTO, authorizedUser);
+            AnimalCardController.DeleteAnimalCard(this.animalCardDTO);
 
             MessageBox.Show("Карточка успешно удалена");
 
