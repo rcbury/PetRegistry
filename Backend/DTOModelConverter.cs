@@ -47,9 +47,9 @@ namespace PIS_PetRegistry.Backend
 
         public static PhysicalPersonDTO ConvertPhysicalPersonModelToDTO(PhysicalPerson physicalPersonModel)
         {
-            var animalCount = PetOwnersService.GetPhysicalPersonAnimalCount(physicalPerson.Id);
-            var catCount = PetOwnersService.GetPhysicalPersonCatCount(physicalPerson.Id);
-            var dogCount = PetOwnersService.GetPhysicalPersonDogCount(physicalPerson.Id);
+            var animalCount = PetOwnersService.GetPhysicalPersonAnimalCount(physicalPersonModel.Id);
+            var catCount = PetOwnersService.GetPhysicalPersonCatCount(physicalPersonModel.Id);
+            var dogCount = PetOwnersService.GetPhysicalPersonDogCount(physicalPersonModel.Id);
             var physicalPersonModelDTO = new PhysicalPersonDTO()
             {
                 Id = physicalPersonModel.Id,
@@ -71,9 +71,9 @@ namespace PIS_PetRegistry.Backend
 
         public static LegalPersonDTO ConvertLegalPersonModelToDTO(LegalPerson legalPersonModel)
         {
-            var animalCount = PetOwnersService.GetLegalPersonAnimalCount(personInfo.Id);
-            var catCount = PetOwnersService.GetLegalPersonCatCount(personInfo.Id);
-            var dogCount = PetOwnersService.GetLegalPersonDogCount(personInfo.Id);
+            var animalCount = PetOwnersService.GetLegalPersonAnimalCount(legalPersonModel.Id);
+            var catCount = PetOwnersService.GetLegalPersonCatCount(legalPersonModel.Id);
+            var dogCount = PetOwnersService.GetLegalPersonDogCount(legalPersonModel.Id);
             var legalPersonModelDTO = new LegalPersonDTO()
             {
                 Id = legalPersonModel.Id,
