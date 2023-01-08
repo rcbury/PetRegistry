@@ -244,5 +244,14 @@ namespace PIS_PetRegistry
                 }
             }
         }
+
+        private void dataGridViewListAnimals_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                AnimalCardForm animalForm = new AnimalCardForm(_listAnimalCards[e.RowIndex]);
+                animalForm.ShowDialog();
+            }
+        }
     }
 }

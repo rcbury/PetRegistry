@@ -53,7 +53,8 @@
             this.toolStripDropDownButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(957, 25);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(1367, 34);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -65,7 +66,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(69, 22);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(101, 29);
             this.toolStripDropDownButton1.Tag = "";
             this.toolStripDropDownButton1.Text = "Таблицы";
             this.toolStripDropDownButton1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
@@ -74,7 +75,7 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(194, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(290, 34);
             this.toolStripMenuItem2.Text = "Владельцы животных";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
@@ -82,14 +83,16 @@
             // 
             this.dataGridViewListAnimals.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewListAnimals.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridViewListAnimals.Location = new System.Drawing.Point(0, 79);
+            this.dataGridViewListAnimals.Location = new System.Drawing.Point(0, 132);
+            this.dataGridViewListAnimals.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridViewListAnimals.Name = "dataGridViewListAnimals";
             this.dataGridViewListAnimals.RowHeadersWidth = 72;
             this.dataGridViewListAnimals.RowTemplate.Height = 25;
-            this.dataGridViewListAnimals.Size = new System.Drawing.Size(957, 371);
+            this.dataGridViewListAnimals.Size = new System.Drawing.Size(1367, 618);
             this.dataGridViewListAnimals.TabIndex = 1;
             this.dataGridViewListAnimals.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridViewListAnimals.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewListAnimals_CellContentDoubleClick);
+            this.dataGridViewListAnimals.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewListAnimals_CellDoubleClick);
             this.dataGridViewListAnimals.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewListAnimals_ColumnHeaderMouseClick);
             // 
             // groupBox1
@@ -102,18 +105,21 @@
             this.groupBox1.Controls.Add(this.textBoxChipId);
             this.groupBox1.Controls.Add(this.textBoxName);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 25);
+            this.groupBox1.Location = new System.Drawing.Point(0, 34);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(957, 53);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(1367, 88);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Фильтры";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(489, 18);
+            this.button2.Location = new System.Drawing.Point(699, 30);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(147, 23);
+            this.button2.Size = new System.Drawing.Size(210, 38);
             this.button2.TabIndex = 6;
             this.button2.Text = "Экспорт в Excel";
             this.button2.UseVisualStyleBackColor = true;
@@ -121,9 +127,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(642, 18);
+            this.button1.Location = new System.Drawing.Point(917, 30);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(147, 23);
+            this.button1.Size = new System.Drawing.Size(210, 38);
             this.button1.TabIndex = 5;
             this.button1.Text = "Завести карточку";
             this.button1.UseVisualStyleBackColor = true;
@@ -131,9 +138,10 @@
             // 
             // buttonClickQuery
             // 
-            this.buttonClickQuery.Location = new System.Drawing.Point(795, 18);
+            this.buttonClickQuery.Location = new System.Drawing.Point(1136, 30);
+            this.buttonClickQuery.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonClickQuery.Name = "buttonClickQuery";
-            this.buttonClickQuery.Size = new System.Drawing.Size(147, 23);
+            this.buttonClickQuery.Size = new System.Drawing.Size(210, 38);
             this.buttonClickQuery.TabIndex = 4;
             this.buttonClickQuery.Text = "Сделать запрос";
             this.buttonClickQuery.UseVisualStyleBackColor = true;
@@ -142,9 +150,10 @@
             // comboBoxCategory
             // 
             this.comboBoxCategory.FormattingEnabled = true;
-            this.comboBoxCategory.Location = new System.Drawing.Point(361, 19);
+            this.comboBoxCategory.Location = new System.Drawing.Point(516, 32);
+            this.comboBoxCategory.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBoxCategory.Name = "comboBoxCategory";
-            this.comboBoxCategory.Size = new System.Drawing.Size(122, 23);
+            this.comboBoxCategory.Size = new System.Drawing.Size(173, 33);
             this.comboBoxCategory.TabIndex = 3;
             this.comboBoxCategory.Text = "Категория";
             this.comboBoxCategory.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
@@ -155,37 +164,41 @@
             this.comboBoxSex.Items.AddRange(new object[] {
             "Девочка",
             "Мальчик"});
-            this.comboBoxSex.Location = new System.Drawing.Point(246, 19);
+            this.comboBoxSex.Location = new System.Drawing.Point(351, 32);
+            this.comboBoxSex.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBoxSex.Name = "comboBoxSex";
-            this.comboBoxSex.Size = new System.Drawing.Size(110, 23);
+            this.comboBoxSex.Size = new System.Drawing.Size(155, 33);
             this.comboBoxSex.TabIndex = 2;
             this.comboBoxSex.Text = "Пол";
             // 
             // textBoxChipId
             // 
-            this.textBoxChipId.Location = new System.Drawing.Point(126, 19);
+            this.textBoxChipId.Location = new System.Drawing.Point(180, 32);
+            this.textBoxChipId.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxChipId.Name = "textBoxChipId";
             this.textBoxChipId.PlaceholderText = "Номер чипа";
-            this.textBoxChipId.Size = new System.Drawing.Size(115, 23);
+            this.textBoxChipId.Size = new System.Drawing.Size(163, 31);
             this.textBoxChipId.TabIndex = 1;
             // 
             // textBoxName
             // 
-            this.textBoxName.Location = new System.Drawing.Point(6, 19);
+            this.textBoxName.Location = new System.Drawing.Point(9, 32);
+            this.textBoxName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.PlaceholderText = "Кличка";
-            this.textBoxName.Size = new System.Drawing.Size(115, 23);
+            this.textBoxName.Size = new System.Drawing.Size(163, 31);
             this.textBoxName.TabIndex = 0;
             // 
             // AnimalRegistryForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(957, 450);
+            this.ClientSize = new System.Drawing.Size(1367, 750);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridViewListAnimals);
             this.Controls.Add(this.toolStrip1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "AnimalRegistryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
