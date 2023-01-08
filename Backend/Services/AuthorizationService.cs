@@ -24,6 +24,7 @@ namespace PIS_PetRegistry.Services
                 .Where(x => x.Password.ToLower().Equals(hashedPassword.ToLower()) &&
                     x.Login.ToLower().Equals(login.ToLower()))
                 .Include(u => u.FkShelterNavigation)
+                .Include(u => u.FkRoleNavigation)
                 .FirstOrDefault();
 
             dbContext.Dispose();

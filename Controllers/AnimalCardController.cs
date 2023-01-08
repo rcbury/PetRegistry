@@ -14,6 +14,7 @@ using DocumentFormat.OpenXml.Bibliography;
 using PIS_PetRegistry.Backend;
 using ClosedXML.Excel;
 using PIS_PetRegistry.Services;
+using PIS_PetRegistry.Backend.Services;
 
 namespace PIS_PetRegistry.Controllers
 {
@@ -98,7 +99,7 @@ namespace PIS_PetRegistry.Controllers
 
             using (var context = new RegistryPetsContext())
             {
-                animalCardsList = context.AnimalCards.ToList();
+                animalCardsList = context.AnimalCards.Include(card => card.FkCategoryNavigation).ToList();
             }
 
             var animalsListDto = animalCardsList.Select(item => ConvertModelInDTO(item)).ToList();
@@ -111,7 +112,7 @@ namespace PIS_PetRegistry.Controllers
 
             using (var context = new RegistryPetsContext())
             {
-                var animalCards = context.AnimalCards.ToList();
+                var animalCards = context.AnimalCards.Include(card => card.FkCategoryNavigation).ToList();
 
                 if (animalFilter.ChipId.Length > 0)
                 {
@@ -153,7 +154,8 @@ namespace PIS_PetRegistry.Controllers
                 FkCategory = model.FkCategory,
                 FkShelter = model.FkShelter,
                 YearOfBirth = model.YearOfBirth,
-                Photo = model.Photo
+                Photo = model.Photo,
+                CategoryName = model.FkCategoryNavigation.Name
             };
 
             return AnimalCardDTO;
@@ -184,51 +186,7 @@ namespace PIS_PetRegistry.Controllers
 
         public static void ExportCardsToExcel(string path, List<AnimalCardDTO> cardsList) 
         {
-            using (var workbook = new XLWorkbook())
-            {
-                IXLWorksheet worksheet = workbook.Worksheets.Add("Учетные карточки");
-
-                var heads = new string[5]
-                {
-                    "Кличка",
-                    "Номер чипа",
-                    "Дата рождения",
-                    "Пол животного",
-                    "Категория животного"
-                };
-
-                var cnt = 1;
-                foreach (var head in heads)
-                {
-                    var currCell = worksheet.Cell(1, cnt);
-                    currCell.Value = head;
-                    currCell.Style.Alignment.WrapText = true;
-                    currCell.Style.Font.Bold = true;
-                    cnt++;
-                }
-
-                var len = cardsList.Count;
-                if (len > 0)
-                {
-                    using (var context = new RegistryPetsContext())
-                    {
-                        var rowCnt = 2;
-                        foreach (var card in cardsList)
-                        {
-                            var category = context.AnimalCategories.Where(category => category.Id == card.FkCategory).FirstOrDefault().Name;
-                            worksheet.Cell(rowCnt, 1).Value = card.Name;
-                            worksheet.Cell(rowCnt, 2).Value = card.ChipId;
-                            worksheet.Cell(rowCnt, 3).Value = card.YearOfBirth;
-                            worksheet.Cell(rowCnt, 4).Value = card.IsBoy ? "Мальчик" : "Девочка";
-                            worksheet.Cell(rowCnt, 5).Value = category;
-                            rowCnt++;
-                        }
-                    }
-                }
-                worksheet.Columns().AdjustToContents();
-                worksheet.Rows().AdjustToContents();
-                workbook.SaveAs(path);
-            }
+            Exporter.ExportCardsToExcel(path, cardsList);
         }
 
 
@@ -277,76 +235,15 @@ namespace PIS_PetRegistry.Controllers
             }
         }
 
-        public static void MakeContract(string filePath, PhysicalPersonDTO? physicalPerson, 
-            LegalPersonDTO? legalPerson, AnimalCardDTO animalCard, UserDTO user) 
+        public static void MakeContract(string filePath, PhysicalPersonDTO? physicalPersonDTO, 
+            LegalPersonDTO? legalPersonDTO, AnimalCardDTO animalCardDTO) 
         {
-            if (physicalPerson != null)
-            {
-                using (var context = new RegistryPetsContext()) 
-                {
-                    Document doc;
-                    if (legalPerson != null)
-                    {
-                        var city = context.Locations.Where(location => location.Id == legalPerson.FkLocality)
-                            .FirstOrDefault()
-                            .Name;
-                        doc = new Document("Договор юры.docx");
-                        doc.Replace("<LegalPersonINN>", legalPerson.INN, false, true);
-                        doc.Replace("<LegalPersonKPP>", legalPerson.KPP, false, true);
-                        doc.Replace("<LegalPersonPhoneNumber>", legalPerson.Phone, false, true);
-                        doc.Replace("<LegalPersonName>", legalPerson.Name, false, true);
-                        doc.Replace("<LegalPersonLocation>", city, false, true);
-                        doc.Replace("<LegalPersonAddress>", legalPerson.Address, false, true);
-                        doc.Replace("<LegalPersonEmail>", legalPerson.Email, false, true);
-                    }
-                    else
-                    {
-                        doc = new Document("Договор физы.docx");
-                    }
-                    var shelter = context.Shelters.Where(shelter => shelter.Id == user.ShelterId)
-                        .FirstOrDefault();
-                    var personCity = context.Locations.Where(location => location.Id == physicalPerson.FkLocality)
-                        .FirstOrDefault()
-                        .Name;
-                    var shelterCity = context.Locations
-                        .Where(location => location.Id == context.Shelters
-                            .Where(shelter => shelter.Id == animalCard.FkShelter).FirstOrDefault().FkLocation)
-                        .FirstOrDefault()
-                        .Name;
-                    var animalCategoryName = context.AnimalCategories.Where(animalCategory => animalCategory.Id == animalCard.FkCategory)
-                        .FirstOrDefault()
-                        .Name
-                        .ToLower();
-                    var animalGender = animalCard.IsBoy ? "м" : "ж";
-                    var day = DateTime.Now.Day.ToString();
-                    var month = DateTime.Now.Month.ToString();
-                    var year = DateTime.Now.Year.ToString();
-                    var age = (int.Parse(year) - animalCard.YearOfBirth).ToString();
-                    var loggedUserCreds = Utils.GetCredsFromFullName(user.Name);
-                    var physicalPersonCreds = Utils.GetCredsFromFullName(physicalPerson.Name);
-                    var loggedUserRole = context.Roles.Where(role => role.Id == user.RoleId).FirstOrDefault().Name;
-                    doc.Replace("<ShelterCity>", shelterCity, false, true);
-                    doc.Replace("<Day>", day, false, true);
-                    doc.Replace("<Month>", month, false, true);
-                    doc.Replace("<Year>", year, false, true);
-                    doc.Replace("<ShelterName>", $"\"{shelter.Name}\"", false, true);
-                    doc.Replace("<ShelterAddress>", shelter.Address, false, true);
-                    doc.Replace("<PhysicalPersonName>", physicalPerson.Name, false, true);
-                    doc.Replace("<PhysicalPersonLocation>", personCity, false, true);
-                    doc.Replace("<PhysicalPersonAddress>", physicalPerson.Address, false, true);
-                    doc.Replace("<AnimalCategoryName>", animalCategoryName, false, true);
-                    doc.Replace("<AnimalAge>", age, false, true);
-                    doc.Replace("<AnimalGender>", animalGender, false, true);
-                    doc.Replace("<ChipId>", animalCard.ChipId, false, true);
-                    doc.Replace("<AnimalName>", animalCard.Name, false, true);
-                    doc.Replace("<LoggedUserCreds>", loggedUserCreds, false, true);
-                    doc.Replace("<LoggedUserRole>", loggedUserRole, false, true);
-                    doc.Replace("<PhysicalPersonCreds>", physicalPersonCreds, false, true);
-                    doc.Replace("<PhysicalPersonNumber>", physicalPerson.Phone, false, true);
-                    doc.Replace("<PhysicalPersonEmail>", physicalPerson.Email, false, true);
-                    doc.SaveToFile(filePath, FileFormat.Docx);
-                }
-            }
+            var physicalPerson = PetOwnersService.GetPhysicalPersonById(physicalPersonDTO.Id);
+            var legalPerson = legalPersonDTO != null ? PetOwnersService.GetLegalPersonById(legalPersonDTO.Id) : null;
+            var animalCard = AnimalCardService.GetAnimalCardById(animalCardDTO.Id);
+            var user = AuthorizationService.GetAuthorizedUser();
+            var shelter = ShelterService.GetShelterById(user.FkShelter);
+            Exporter.MakeContract(filePath, physicalPerson, legalPerson, animalCard, user, shelter);
         }
 
         public static ContractDTO SaveContract(PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO? legalPersonDTO, 
@@ -452,14 +349,12 @@ namespace PIS_PetRegistry.Controllers
 
         public static int CountAnimalsByPhysicalPerson(int physicalPersonId)
         {
-            var animalsByPhysicalPerson = GetAnimalsByPhysicalPerson(physicalPersonId);
-            return animalsByPhysicalPerson.Count();
+            return PetOwnersService.GetPhysicalPersonAnimalCount(physicalPersonId);
         }
 
         public static int CountAnimalsByLegalPerson(int legalPersonId)
         {
-            var animalsByLegalPerson = GetAnimalsByLegalPerson(legalPersonId);
-            return animalsByLegalPerson.Count();
+            return PetOwnersService.GetLegalPersonAnimalCount(legalPersonId);
         }
     }
 }

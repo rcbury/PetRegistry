@@ -34,8 +34,8 @@ namespace PIS_PetRegistry
         {
             this.animalCardDTO = animalCardDTO;
             this.parasiteTreatmentsDTO = new List<ParasiteTreatmentDTO>();
-            this.physicalLocationsDTO = PetOwnersController.GetLocations();
-            this.legalLocationsDTO = PetOwnersController.GetLocations();
+            this.physicalLocationsDTO = LocationController.GetLocations();
+            this.legalLocationsDTO = LocationController.GetLocations();
 
             InitializeComponent();
             
@@ -546,7 +546,7 @@ namespace PIS_PetRegistry
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     var filePath = saveFileDialog.FileName;
-                    AnimalCardController.MakeContract(filePath, physicalPersonDTO, legalPersonDTO, animalCardDTO, currentUser);
+                    AnimalCardController.MakeContract(filePath, physicalPersonDTO, legalPersonDTO, animalCardDTO);
                 }
             }
         }

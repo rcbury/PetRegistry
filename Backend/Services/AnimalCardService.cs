@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Controllers;
+﻿using Microsoft.EntityFrameworkCore;
+using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using System;
@@ -31,10 +32,17 @@ namespace PIS_PetRegistry.Services
                 AnimalCardLogService.LogCreate(animalCardModel, AuthorizationService.GetAuthorizedUser().Id);
                 return animalCardModel;
             }
-
-
         }
 
-
+        public static AnimalCard GetAnimalCardById(int cardId)
+        {
+            using (var context = new RegistryPetsContext())
+            {
+                return context.AnimalCards
+                    .Where(card => card.Id == cardId)
+                    .Include(card => card.FkCategoryNavigation)
+                    .FirstOrDefault();
+            }
+        }
     }
 }

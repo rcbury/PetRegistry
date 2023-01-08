@@ -40,8 +40,8 @@ namespace PIS_PetRegistry
             CountryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             LocalityComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            var allCountries = PetOwnersController.GetCountries();
-            var allLocalities = PetOwnersController.GetLocations();
+            var allCountries = CountryController.GetCountries();
+            var allLocalities = LocationController.GetLocations();
 
             CountryComboBox.DataSource = allCountries;
             CountryComboBox.DisplayMember = "Name";

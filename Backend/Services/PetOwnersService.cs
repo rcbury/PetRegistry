@@ -2,6 +2,7 @@
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Vml.Office;
 using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
@@ -166,7 +167,10 @@ namespace PIS_PetRegistry.Backend.Services
             }
             using (var context = new RegistryPetsContext()) 
             {
-                return context.LegalPeople.Where(person => person.Id == personId).FirstOrDefault();
+                return context.LegalPeople
+                    .Where(person => person.Id == personId)
+                    .Include(person => person.FkLocalityNavigation)
+                    .FirstOrDefault();
             }
         }
 
@@ -174,7 +178,10 @@ namespace PIS_PetRegistry.Backend.Services
         {
             using (var context = new RegistryPetsContext())
             {
-                return context.PhysicalPeople.Where(person => person.Id == personId).FirstOrDefault();
+                return context.PhysicalPeople
+                    .Where(person => person.Id == personId)
+                    .Include(person => person.FkLocalityNavigation)
+                    .FirstOrDefault();
             }
         }
 
