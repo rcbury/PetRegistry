@@ -25,10 +25,51 @@ namespace PIS_PetRegistry
         private int _previousIndex;
         private bool _sortDirection;
 
-        public AnimalRegistryForm(UserDTO user = null!)
+        private PhysicalPersonDTO _physicalPersonFilter = null;
+        private LegalPersonDTO _legalPersonFilter = null;
+
+        public AnimalRegistryForm(PhysicalPersonDTO physicalPerson)
+        {
+            InitForm();
+            _physicalPersonFilter = physicalPerson;
+            UpdateAnimalToFilter();
+        }
+
+        public AnimalRegistryForm(LegalPersonDTO legalPersonFilter)
+        {
+            InitForm();
+            _legalPersonFilter = legalPersonFilter;
+            UpdateAnimalToFilter();
+        }
+
+        public AnimalRegistryForm()
+        {
+            InitForm();
+        }
+
+        private void UpdateAnimalToFilter()
+        {
+            if (_physicalPersonFilter != null)
+            {
+                var animals = AnimalCardController.GetAnimalsByPhysicalPerson(_physicalPersonFilter.Id);
+                _listAnimalCards = animals;
+                dataGridViewListAnimals.DataSource = _listAnimalCards;
+
+                this.Text = String.Format("Список животных {0}", _physicalPersonFilter.Name);
+            }
+            else
+            { 
+                var animals = AnimalCardController.GetAnimalsByLegalPerson(_legalPersonFilter.Id);
+                _listAnimalCards = animals;
+                dataGridViewListAnimals.DataSource = _listAnimalCards;
+             
+                this.Text = String.Format("Список животных {0}", _legalPersonFilter.Name);
+            }
+        }
+
+        private void InitForm()
         {
             InitializeComponent();
-
             var defualtAnimalCategory = new AnimalCategoryDTO();
             defualtAnimalCategory.Id = -1;
             defualtAnimalCategory.Name = "Категория";
@@ -150,6 +191,9 @@ namespace PIS_PetRegistry
                 filterDTO.IsSelectedSex = comboBoxSex.SelectedIndex >= 0;
             }
 
+            filterDTO.LegalPerson = _legalPersonFilter;
+            filterDTO.PhysicalPerson = _physicalPersonFilter;
+
             return filterDTO;
         }
 
@@ -165,6 +209,9 @@ namespace PIS_PetRegistry
                 return true;
 
             if (this.comboBoxCategory.SelectedIndex > 0)
+                return true;
+
+            if (this._legalPersonFilter != null || this._physicalPersonFilter != null)
                 return true;
 
             return false;

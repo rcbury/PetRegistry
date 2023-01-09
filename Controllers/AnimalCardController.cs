@@ -140,21 +140,21 @@ namespace PIS_PetRegistry.Controllers
             Exporter.MakeContract(filePath, physicalPerson, legalPerson, animalCard, user, shelter);
         }
 
-        public static ContractDTO SaveContract(PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO? legalPersonDTO, 
+        public static void SaveContract(PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO? legalPersonDTO, 
             AnimalCardDTO animalCardDTO) 
         {
             var contract = AnimalCardService.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO);
-            var res = new ContractDTO();
-            res.Number = contract.Number;
-            res.Date = contract.Date;
-            res.FkAnimalCard = contract.FkAnimalCard;
-            res.FkUser = contract.FkUser;
-            res.FkPhysicalPerson = contract.FkPhysicalPerson;
-            if (legalPersonDTO != null)
-            {
-                res.FkLegalPerson = contract.FkLegalPerson;
-            }
-            return res;
+            //var res = new ContractDTO();
+            //res.Number = contract.Number;
+            //res.Date = contract.Date;
+            //res.FkAnimalCard = contract.FkAnimalCard;
+            //res.FkUser = contract.FkUser;
+            //res.FkPhysicalPerson = contract.FkPhysicalPerson;
+            //if (legalPersonDTO != null)
+            //{
+            //    res.FkLegalPerson = contract.FkLegalPerson;
+            //}
+            //return res;
         }
 
         public static List<AnimalCardDTO> GetAnimalsByLegalPerson(int legalPersonId)

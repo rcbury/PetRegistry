@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Backend.Services;
+﻿using PIS_PetRegistry.Backend;
+using PIS_PetRegistry.Backend.Services;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using System;
@@ -24,11 +25,7 @@ namespace PIS_PetRegistry.Controllers
             var locations = LocationService.GetLocations();
             foreach (var location in locations)
             {
-                res.Add(new LocationDTO()
-                {
-                    Id = location.Id,
-                    Name = location.Name
-                });
+                res.Add(DTOModelConverter.ConvertLocationToDTO(location));
             }
             return res;
         }

@@ -85,7 +85,6 @@ namespace PIS_PetRegistry
                 
 
                 //Disable owners info
-                //nazvaniya controlov tupo kaif
 
                 textBox6.Enabled = false;
                 textBox12.Enabled = false;

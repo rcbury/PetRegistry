@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.DTO;
+﻿using PIS_PetRegistry.Backend.Services;
+using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,9 @@ namespace PIS_PetRegistry.Backend
 
         public static PhysicalPersonDTO ConvertPhysicalPersonModelToDTO(PhysicalPerson physicalPersonModel)
         {
+            var animalCount = PetOwnersService.GetPhysicalPersonAnimalCount(physicalPersonModel.Id);
+            var catCount = PetOwnersService.GetPhysicalPersonCatCount(physicalPersonModel.Id);
+            var dogCount = PetOwnersService.GetPhysicalPersonDogCount(physicalPersonModel.Id);
             var physicalPersonModelDTO = new PhysicalPersonDTO()
             {
                 Id = physicalPersonModel.Id,
@@ -55,6 +59,11 @@ namespace PIS_PetRegistry.Backend
                 Phone = physicalPersonModel.Phone,
                 FkCountry = physicalPersonModel.FkCountry,
                 FkLocality = physicalPersonModel.FkLocality,
+                AnimalCount = animalCount,
+                CatCount = catCount,
+                DogCount = dogCount,
+                CountryName = CountryService.GetCountryNameById(physicalPersonModel.FkCountry),
+                LocationName = LocationService.GetLocationNameById(physicalPersonModel.FkLocality)
             };
 
             return physicalPersonModelDTO;
@@ -62,6 +71,9 @@ namespace PIS_PetRegistry.Backend
 
         public static LegalPersonDTO ConvertLegalPersonModelToDTO(LegalPerson legalPersonModel)
         {
+            var animalCount = PetOwnersService.GetLegalPersonAnimalCount(legalPersonModel.Id);
+            var catCount = PetOwnersService.GetLegalPersonCatCount(legalPersonModel.Id);
+            var dogCount = PetOwnersService.GetLegalPersonDogCount(legalPersonModel.Id);
             var legalPersonModelDTO = new LegalPersonDTO()
             {
                 Id = legalPersonModel.Id,
@@ -73,6 +85,11 @@ namespace PIS_PetRegistry.Backend
                 Phone = legalPersonModel.Phone,
                 FkCountry = legalPersonModel.FkCountry,
                 FkLocality = legalPersonModel.FkLocality,
+                AnimalCount = animalCount,
+                CatCount = catCount,
+                DogCount = dogCount,
+                CountryName = CountryService.GetCountryNameById(legalPersonModel.FkCountry),
+                LocationName = LocationService.GetLocationNameById(legalPersonModel.FkLocality)
             };
 
             return legalPersonModelDTO;
@@ -179,6 +196,28 @@ namespace PIS_PetRegistry.Backend
             }
 
             return userDTO;
+        }
+
+        public static CountryDTO ConvertCountryToDTO(Country country)
+        {
+            var countryDTO = new CountryDTO()
+            {
+                Id= country.Id,
+                Name = country.Name
+            };
+
+            return countryDTO;
+        }
+
+        public static LocationDTO ConvertLocationToDTO(Location location)
+        {
+            var locationDTO = new LocationDTO()
+            {
+                Id = location.Id,
+                Name = location.Name
+            };
+
+            return locationDTO;
         }
     }
 }

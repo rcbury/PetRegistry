@@ -131,7 +131,7 @@ namespace PIS_PetRegistry
             }
             else
             {
-                AnimalRegistryForm form = new AnimalRegistryForm(/*mainPhysicalPerson.Id*/);
+                AnimalRegistryForm form = new AnimalRegistryForm(mainPhysicalPerson);
                 form.ShowDialog();
                 Show();
             }
