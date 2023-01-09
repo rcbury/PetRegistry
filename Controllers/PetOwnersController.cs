@@ -29,7 +29,9 @@ namespace PIS_PetRegistry.Controllers
             var res = new List<PhysicalPersonDTO>();
             foreach (var physicalPerson in physicalPeople) 
             {
-                res.Add(DTOModelConverter.ConvertModelToDTO(physicalPerson));
+                var personInfo = PetOwnersService.GetPhysicalPersonDetailInfo(physicalPerson.Id,
+                    physicalPerson.FkCountry, physicalPerson.FkLocality);
+                res.Add(DTOModelConverter.ConvertModelToDTO(physicalPerson, personInfo));
             }
             return res;
         }
@@ -41,7 +43,9 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            return DTOModelConverter.ConvertModelToDTO(person);
+            var personInfo = PetOwnersService.GetPhysicalPersonDetailInfo(person.Id,
+                person.FkCountry, person.FkLocality);
+            return DTOModelConverter.ConvertModelToDTO(person, personInfo);
         }
 
         public static PhysicalPersonDTO? GetPhysicalPersonById(int personId)
@@ -51,7 +55,9 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            return DTOModelConverter.ConvertModelToDTO(person);
+            var personInfo = PetOwnersService.GetPhysicalPersonDetailInfo(person.Id,
+                person.FkCountry, person.FkLocality);
+            return DTOModelConverter.ConvertModelToDTO(person, personInfo);
         }
 
         public static LegalPersonDTO? GetLegalPersonByINN(string INN)
@@ -61,7 +67,9 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            return DTOModelConverter.ConvertModelToDTO(person);
+            var personInfo = PetOwnersService.GetLegalPersonDetailInfo(person.Id,
+                person.FkCountry, person.FkLocality);
+            return DTOModelConverter.ConvertModelToDTO(person, personInfo);
         }
         public static LegalPersonDTO? GetLegalPersonById(int? personId)
         {
@@ -70,7 +78,9 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            return DTOModelConverter.ConvertModelToDTO(person);
+            var personInfo = PetOwnersService.GetLegalPersonDetailInfo(person.Id,
+                person.FkCountry, person.FkLocality);
+            return DTOModelConverter.ConvertModelToDTO(person, personInfo);
         }
 
         public static List<LegalPersonDTO> GetLegalPeople(string inn, string kpp, string name, string email, 
@@ -78,9 +88,11 @@ namespace PIS_PetRegistry.Controllers
         {
             var legalPeople = PetOwnersService.GetLegalPeople(inn, kpp, name, email, address, phone, country, location);
             var res = new List<LegalPersonDTO>();
-            foreach (var personInfo in legalPeople)
+            foreach (var legalPerson in legalPeople)
             {
-                res.Add(DTOModelConverter.ConvertModelToDTO(personInfo));
+                var personInfo = PetOwnersService.GetLegalPersonDetailInfo(legalPerson.Id,
+                    legalPerson.FkCountry, legalPerson.FkLocality);
+                res.Add(DTOModelConverter.ConvertModelToDTO(legalPerson, personInfo));
             }
             return res;
         }
@@ -89,7 +101,9 @@ namespace PIS_PetRegistry.Controllers
         {
             var legalPersonModel = DTOModelConverter.ConvertDTOToModel(legalPersonDTO);
             PetOwnersService.UpdateLegalPerson(legalPersonModel);
-             var newLegalPersonDTO = DTOModelConverter.ConvertModelToDTO(legalPersonModel);
+            var personInfo = PetOwnersService.GetLegalPersonDetailInfo(legalPersonDTO.Id,
+                legalPersonDTO.FkCountry, legalPersonDTO.FkLocality);
+            var newLegalPersonDTO = DTOModelConverter.ConvertModelToDTO(legalPersonModel, personInfo);
 
             return newLegalPersonDTO;
         }
@@ -98,7 +112,9 @@ namespace PIS_PetRegistry.Controllers
         {
             var legalPersonModel = DTOModelConverter.ConvertDTOToModel(legalPersonDTO);
             PetOwnersService.AddLegalPerson(legalPersonModel);
-            var newLegalPersonDTO = DTOModelConverter.ConvertModelToDTO(legalPersonModel);
+            var personInfo = PetOwnersService.GetLegalPersonDetailInfo(legalPersonDTO.Id,
+                legalPersonDTO.FkCountry, legalPersonDTO.FkLocality);
+            var newLegalPersonDTO = DTOModelConverter.ConvertModelToDTO(legalPersonModel, personInfo);
 
             return newLegalPersonDTO;
         }
@@ -107,7 +123,9 @@ namespace PIS_PetRegistry.Controllers
         {
             var physicalPersonModel = DTOModelConverter.ConvertDTOToModel(physicalPersonDTO);
             PetOwnersService.AddPhysicalPerson(physicalPersonModel);
-            var newPhysicalPersonDTO = DTOModelConverter.ConvertModelToDTO(physicalPersonModel);
+            var personInfo = PetOwnersService.GetPhysicalPersonDetailInfo(physicalPersonModel.Id,
+                physicalPersonModel.FkCountry, physicalPersonModel.FkLocality);
+            var newPhysicalPersonDTO = DTOModelConverter.ConvertModelToDTO(physicalPersonModel, personInfo);
 
             return newPhysicalPersonDTO;
         }
@@ -116,7 +134,9 @@ namespace PIS_PetRegistry.Controllers
         {
             var physicalPersonModel = DTOModelConverter.ConvertDTOToModel(physicalPersonDTO);
             PetOwnersService.UpdatePhysicalPerson(physicalPersonModel);
-            var newPhysicalPersonDTO = DTOModelConverter.ConvertModelToDTO(physicalPersonModel);
+            var personInfo = PetOwnersService.GetPhysicalPersonDetailInfo(physicalPersonModel.Id,
+                physicalPersonModel.FkCountry, physicalPersonModel.FkLocality);
+            var newPhysicalPersonDTO = DTOModelConverter.ConvertModelToDTO(physicalPersonModel, personInfo);
 
             return newPhysicalPersonDTO;
         }

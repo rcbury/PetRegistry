@@ -243,5 +243,41 @@ namespace PIS_PetRegistry.Backend.Services
             return physicalPersonModel;
         }
 
+        public static PersonInfo GetPhysicalPersonDetailInfo(int personId, int countryId, int locationId) 
+        {
+            var animalCount = GetPhysicalPersonAnimalCount(personId);
+            var catCount = GetPhysicalPersonCatCount(personId);
+            var dogCount = GetPhysicalPersonDogCount(personId);
+            var countryName = CountryService.GetCountryNameById(countryId);
+            var locationName = LocationService.GetLocationNameById(locationId);
+            var personDetailInfoDTO = new PersonInfo()
+            {
+                AnimalCount = animalCount,
+                CatCount = catCount,
+                DogCount = dogCount,
+                CountryName = countryName,
+                LocationName = locationName
+            };
+            return personDetailInfoDTO;
+        }
+
+        public static PersonInfo GetLegalPersonDetailInfo(int personId, int countryId, int locationId)
+        {
+            var animalCount = GetLegalPersonAnimalCount(personId);
+            var catCount = GetLegalPersonCatCount(personId);
+            var dogCount = GetLegalPersonDogCount(personId);
+            var countryName = CountryService.GetCountryNameById(countryId);
+            var locationName = LocationService.GetLocationNameById(locationId);
+            var personDetailInfoDTO = new PersonInfo()
+            {
+                AnimalCount = animalCount,
+                CatCount = catCount,
+                DogCount = dogCount,
+                CountryName = countryName,
+                LocationName = locationName
+            };
+            return personDetailInfoDTO;
+        }
+
     }
 }
