@@ -32,19 +32,6 @@ namespace PIS_PetRegistry.Controllers
             return parasiteTreatmentMedicationsDTO;
         }
 
-        public static ParasiteTreatment ConvertParasiteTreatmentDTOToModel(ParasiteTreatmentDTO parasiteTreatmentDTO)
-        {
-            var parasiteTreatmentModel = new ParasiteTreatment()
-            {
-                FkAnimal = parasiteTreatmentDTO.FkAnimal,
-                FkUser = (int)parasiteTreatmentDTO.FkUser,
-                FkMedication = parasiteTreatmentDTO.FkMedication,
-                Date = parasiteTreatmentDTO.Date,
-            };
-
-            return parasiteTreatmentModel;
-        }
-
         public static List<ParasiteTreatmentDTO> GetParasiteTreatmentsByAnimal(int FkAnimal)
         {
             var parasiteTreatments = ParasiteTreatmentService.GetParasiteTreatmentsByAnimal(FkAnimal);
