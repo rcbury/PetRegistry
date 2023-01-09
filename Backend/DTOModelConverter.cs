@@ -233,5 +233,17 @@ namespace PIS_PetRegistry.Backend
 
             return locationDTO;
         }
+
+        public static ContractDTO ConvertModelToDTO(Contract contract) 
+        {
+            var res = new ContractDTO();
+            res.Number = contract.Number;
+            res.Date = contract.Date;
+            res.FkAnimalCard = contract.FkAnimalCard;
+            res.FkUser = contract.FkUser;
+            res.FkPhysicalPerson = contract.FkPhysicalPerson;
+            res.FkLegalPerson = contract.FkLegalPerson;
+            return res;
+        }
     }
 }
