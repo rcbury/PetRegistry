@@ -4,6 +4,7 @@ using PIS_PetRegistry.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace PIS_PetRegistry.Backend
 {
     internal class DTOModelConverter
     {
-        public static LegalPerson ConvertLegalPersonDTOToModel(LegalPersonDTO legalPersonDTO)
+        public static LegalPerson ConvertDTOToModel(LegalPersonDTO legalPersonDTO)
         {
             var legalPersonModel = new LegalPerson()
             {
@@ -29,7 +30,7 @@ namespace PIS_PetRegistry.Backend
             return legalPersonModel;
         }
 
-        public static PhysicalPerson ConvertPhysicalPersonDTOToModel(PhysicalPersonDTO physicalPersonDTO)
+        public static PhysicalPerson ConvertDTOToModel(PhysicalPersonDTO physicalPersonDTO)
         {
             var physicalPersonModel = new PhysicalPerson()
             {
@@ -45,7 +46,7 @@ namespace PIS_PetRegistry.Backend
             return physicalPersonModel;
         }
 
-        public static PhysicalPersonDTO ConvertPhysicalPersonModelToDTO(PhysicalPerson physicalPersonModel)
+        public static PhysicalPersonDTO ConvertModelToDTO(PhysicalPerson physicalPersonModel)
         {
             var animalCount = PetOwnersService.GetPhysicalPersonAnimalCount(physicalPersonModel.Id);
             var catCount = PetOwnersService.GetPhysicalPersonCatCount(physicalPersonModel.Id);
@@ -69,7 +70,7 @@ namespace PIS_PetRegistry.Backend
             return physicalPersonModelDTO;
         }
 
-        public static LegalPersonDTO ConvertLegalPersonModelToDTO(LegalPerson legalPersonModel)
+        public static LegalPersonDTO ConvertModelToDTO(LegalPerson legalPersonModel)
         {
             var animalCount = PetOwnersService.GetLegalPersonAnimalCount(legalPersonModel.Id);
             var catCount = PetOwnersService.GetLegalPersonCatCount(legalPersonModel.Id);
@@ -95,7 +96,7 @@ namespace PIS_PetRegistry.Backend
             return legalPersonModelDTO;
         }
 
-        public static ParasiteTreatmentDTO ConvertParasiteTreatmentToDTO(ParasiteTreatment parasiteTreatment)
+        public static ParasiteTreatmentDTO ConvertModelToDTO(ParasiteTreatment parasiteTreatment)
         {
             var parasiteTreatmentDTO = new ParasiteTreatmentDTO()
             {
@@ -118,7 +119,7 @@ namespace PIS_PetRegistry.Backend
             return parasiteTreatmentDTO;
         }
 
-        public static VaccinationDTO ConvertVaccinationToDTO(Vaccination vaccination)
+        public static VaccinationDTO ConvertModelToDTO(Vaccination vaccination)
         {
             var vaccinationDTO = new VaccinationDTO()
             {
@@ -141,7 +142,7 @@ namespace PIS_PetRegistry.Backend
             return vaccinationDTO;
         }
 
-        public static VeterinaryAppointmentDTO ConvertVeterinaryAppointmentToDTO(VeterinaryAppointmentAnimal veterinaryAppointment)
+        public static VeterinaryAppointmentDTO ConvertModelToDTO(VeterinaryAppointmentAnimal veterinaryAppointment)
         {
             var veterinaryAppointmentDTO = new VeterinaryAppointmentDTO()
             {
@@ -160,7 +161,20 @@ namespace PIS_PetRegistry.Backend
             return veterinaryAppointmentDTO;
         }
 
-        public static AnimalCardDTO ConvertAnimalCardToDTO(AnimalCard model)
+        public static VaccineDTO ConvertModelToDTO(Vaccine vaccine)
+        {
+            var vaccineDTO = new VaccineDTO()
+            {
+                Id = vaccine.Id,
+                Name = vaccine.Name,
+                Number = vaccine.Number,
+                ValidityPeriod = vaccine.ValidityPeriod,
+            };
+
+            return vaccineDTO;
+        }
+
+        public static AnimalCardDTO ConvertModelToDTO(AnimalCard model)
         {
             var AnimalCardDTO = new AnimalCardDTO()
             {
@@ -178,7 +192,7 @@ namespace PIS_PetRegistry.Backend
             return AnimalCardDTO;
         }
 
-        public static UserDTO ConvertUserToDTO(User user)
+        public static UserDTO ConvertModelToDTO(User user)
         {
             var userDTO = new UserDTO()
             {
@@ -198,7 +212,7 @@ namespace PIS_PetRegistry.Backend
             return userDTO;
         }
 
-        public static CountryDTO ConvertCountryToDTO(Country country)
+        public static CountryDTO ConvertModelToDTO(Country country)
         {
             var countryDTO = new CountryDTO()
             {
@@ -209,7 +223,7 @@ namespace PIS_PetRegistry.Backend
             return countryDTO;
         }
 
-        public static LocationDTO ConvertLocationToDTO(Location location)
+        public static LocationDTO ConvertModelToDTO(Location location)
         {
             var locationDTO = new LocationDTO()
             {

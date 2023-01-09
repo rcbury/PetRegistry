@@ -20,7 +20,7 @@ namespace PIS_PetRegistry.Controllers
             if (user == null)
                 return null;
 
-            var userDTO = DTOModelConverter.ConvertUserToDTO(user);
+            var userDTO = DTOModelConverter.ConvertModelToDTO(user);
 
             return userDTO;
         }
@@ -28,7 +28,7 @@ namespace PIS_PetRegistry.Controllers
         public static UserDTO GetAuthorizedUser()
         {
             var user = AuthorizationService.GetAuthorizedUser();
-            var userDTO = DTOModelConverter.ConvertUserToDTO(user);
+            var userDTO = DTOModelConverter.ConvertModelToDTO(user);
 
             return userDTO;
         }

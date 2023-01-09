@@ -23,7 +23,7 @@ namespace PIS_PetRegistry.Controllers
 
             foreach (var veterinaryAppointment in veterinaryAppointments)
             {
-                veterinaryAppointmentsDTO.Add(DTOModelConverter.ConvertVeterinaryAppointmentToDTO(veterinaryAppointment));
+                veterinaryAppointmentsDTO.Add(DTOModelConverter.ConvertModelToDTO(veterinaryAppointment));
             }
 
             return veterinaryAppointmentsDTO;
@@ -45,7 +45,7 @@ namespace PIS_PetRegistry.Controllers
 
             veterinaryAppointmentModel = VeterinaryAppointmentService.AddVeterinaryAppointment(veterinaryAppointmentModel, user);
 
-            var newVeterinaryAppointmentDTO = DTOModelConverter.ConvertVeterinaryAppointmentToDTO(veterinaryAppointmentModel);
+            var newVeterinaryAppointmentDTO = DTOModelConverter.ConvertModelToDTO(veterinaryAppointmentModel);
 
             return newVeterinaryAppointmentDTO;
         }
@@ -76,7 +76,7 @@ namespace PIS_PetRegistry.Controllers
                 oldVeterinaryAppointmentModel, 
                 modifiedVeterinaryAppointmentModel);
 
-            var newVaccinationDTO = DTOModelConverter.ConvertVeterinaryAppointmentToDTO(updatedVeterinaryAppointment);
+            var newVaccinationDTO = DTOModelConverter.ConvertModelToDTO(updatedVeterinaryAppointment);
 
             return newVaccinationDTO;
         }

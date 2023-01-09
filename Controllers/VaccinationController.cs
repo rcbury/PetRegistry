@@ -19,17 +19,12 @@ namespace PIS_PetRegistry.Controllers
         {
             var vaccinesDTO = new List<VaccineDTO>();
             var vaccines = VaccineService.GetVaccines();
+            
             foreach (var vaccine in vaccines)
             {
-                vaccinesDTO.Add(
-                    new VaccineDTO()
-                    {
-                        Id = vaccine.Id,
-                        Name = vaccine.Name,
-                        Number = vaccine.Number,
-                        ValidityPeriod = vaccine.ValidityPeriod,
-                    });
+                vaccinesDTO.Add(DTOModelConverter.ConvertModelToDTO(vaccine));
             }
+
             return vaccinesDTO;
         }
 
@@ -40,7 +35,7 @@ namespace PIS_PetRegistry.Controllers
 
             foreach (var vaccination in vaccinations)
             {
-                vaccinationsDTO.Add(DTOModelConverter.ConvertVaccinationToDTO(vaccination));
+                vaccinationsDTO.Add(DTOModelConverter.ConvertModelToDTO(vaccination));
             }
 
             return vaccinationsDTO;
@@ -59,7 +54,7 @@ namespace PIS_PetRegistry.Controllers
 
             vaccinationModel = VaccinationService.AddVaccination(vaccinationModel, user);
 
-            var newVaccinationDTO = DTOModelConverter.ConvertVaccinationToDTO(vaccinationModel);
+            var newVaccinationDTO = DTOModelConverter.ConvertModelToDTO(vaccinationModel);
 
             return newVaccinationDTO;
         }
@@ -84,7 +79,7 @@ namespace PIS_PetRegistry.Controllers
 
             var updatedVaccination = VaccinationService.UpdateVaccination(oldVaccinationModel, modifiedVaccinationModel);
 
-            var newVaccinationDTO = DTOModelConverter.ConvertVaccinationToDTO(updatedVaccination);
+            var newVaccinationDTO = DTOModelConverter.ConvertModelToDTO(updatedVaccination);
 
             return newVaccinationDTO;
         }

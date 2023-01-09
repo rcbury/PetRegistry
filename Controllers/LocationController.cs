@@ -25,7 +25,7 @@ namespace PIS_PetRegistry.Controllers
             var locations = LocationService.GetLocations();
             foreach (var location in locations)
             {
-                res.Add(DTOModelConverter.ConvertLocationToDTO(location));
+                res.Add(DTOModelConverter.ConvertModelToDTO(location));
             }
             return res;
         }

@@ -56,7 +56,7 @@ namespace PIS_PetRegistry.Controllers
 
             animalCardModel = AnimalCardService.AddAnimalCard(animalCardModel);
 
-            var newAnimalCardDTO = DTOModelConverter.ConvertAnimalCardToDTO(animalCardModel);
+            var newAnimalCardDTO = DTOModelConverter.ConvertModelToDTO(animalCardModel);
 
             return newAnimalCardDTO;
         }
@@ -78,7 +78,7 @@ namespace PIS_PetRegistry.Controllers
 
             AnimalCardService.UpdateAnimalCard(animalCardModel);
 
-            var newAnimalCardDTO = DTOModelConverter.ConvertAnimalCardToDTO(animalCardModel);
+            var newAnimalCardDTO = DTOModelConverter.ConvertModelToDTO(animalCardModel);
 
             return newAnimalCardDTO;
         }
@@ -86,14 +86,14 @@ namespace PIS_PetRegistry.Controllers
         public static List<AnimalCardDTO> GetAnimals() 
         {
             var animalCardsList = AnimalCardService.GetAnimals();
-            var animalsListDto = animalCardsList.Select(item => DTOModelConverter.ConvertAnimalCardToDTO(item)).ToList();
+            var animalsListDto = animalCardsList.Select(item => DTOModelConverter.ConvertModelToDTO(item)).ToList();
 
             return animalsListDto;
         }
         public static List<AnimalCardDTO> GetAnimals(AnimalFilterDTO animalFilter)
         {
             var animalCardsList = AnimalCardService.GetAnimals(animalFilter);
-            var animalsListDto = animalCardsList.Select(item => DTOModelConverter.ConvertAnimalCardToDTO(item)).ToList();
+            var animalsListDto = animalCardsList.Select(item => DTOModelConverter.ConvertModelToDTO(item)).ToList();
 
             return animalsListDto;
         }

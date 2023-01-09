@@ -29,7 +29,7 @@ namespace PIS_PetRegistry.Controllers
             var res = new List<PhysicalPersonDTO>();
             foreach (var physicalPerson in physicalPeople) 
             {
-                res.Add(DTOModelConverter.ConvertPhysicalPersonModelToDTO(physicalPerson));
+                res.Add(DTOModelConverter.ConvertModelToDTO(physicalPerson));
             }
             return res;
         }
@@ -41,7 +41,7 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            return DTOModelConverter.ConvertPhysicalPersonModelToDTO(person);
+            return DTOModelConverter.ConvertModelToDTO(person);
         }
 
         public static PhysicalPersonDTO? GetPhysicalPersonById(int personId)
@@ -51,7 +51,7 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            return DTOModelConverter.ConvertPhysicalPersonModelToDTO(person);
+            return DTOModelConverter.ConvertModelToDTO(person);
         }
 
         public static LegalPersonDTO? GetLegalPersonByINN(string INN)
@@ -61,7 +61,7 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            return DTOModelConverter.ConvertLegalPersonModelToDTO(person);
+            return DTOModelConverter.ConvertModelToDTO(person);
         }
         public static LegalPersonDTO? GetLegalPersonById(int? personId)
         {
@@ -70,7 +70,7 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            return DTOModelConverter.ConvertLegalPersonModelToDTO(person);
+            return DTOModelConverter.ConvertModelToDTO(person);
         }
 
         public static List<LegalPersonDTO> GetLegalPeople(string inn, string kpp, string name, string email, 
@@ -80,43 +80,43 @@ namespace PIS_PetRegistry.Controllers
             var res = new List<LegalPersonDTO>();
             foreach (var personInfo in legalPeople)
             {
-                res.Add(DTOModelConverter.ConvertLegalPersonModelToDTO(personInfo));
+                res.Add(DTOModelConverter.ConvertModelToDTO(personInfo));
             }
             return res;
         }
        
         public static LegalPersonDTO UpdateLegalPerson(LegalPersonDTO legalPersonDTO)
         {
-            var legalPersonModel = DTOModelConverter.ConvertLegalPersonDTOToModel(legalPersonDTO);
+            var legalPersonModel = DTOModelConverter.ConvertDTOToModel(legalPersonDTO);
             PetOwnersService.UpdateLegalPerson(legalPersonModel);
-             var newLegalPersonDTO = DTOModelConverter.ConvertLegalPersonModelToDTO(legalPersonModel);
+             var newLegalPersonDTO = DTOModelConverter.ConvertModelToDTO(legalPersonModel);
 
             return newLegalPersonDTO;
         }
 
         public static LegalPersonDTO AddLegalPerson(LegalPersonDTO legalPersonDTO)
         {
-            var legalPersonModel = DTOModelConverter.ConvertLegalPersonDTOToModel(legalPersonDTO);
+            var legalPersonModel = DTOModelConverter.ConvertDTOToModel(legalPersonDTO);
             PetOwnersService.AddLegalPerson(legalPersonModel);
-            var newLegalPersonDTO = DTOModelConverter.ConvertLegalPersonModelToDTO(legalPersonModel);
+            var newLegalPersonDTO = DTOModelConverter.ConvertModelToDTO(legalPersonModel);
 
             return newLegalPersonDTO;
         }
 
         public static PhysicalPersonDTO AddPhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
         {
-            var physicalPersonModel = DTOModelConverter.ConvertPhysicalPersonDTOToModel(physicalPersonDTO);
+            var physicalPersonModel = DTOModelConverter.ConvertDTOToModel(physicalPersonDTO);
             PetOwnersService.AddPhysicalPerson(physicalPersonModel);
-            var newPhysicalPersonDTO = DTOModelConverter.ConvertPhysicalPersonModelToDTO(physicalPersonModel);
+            var newPhysicalPersonDTO = DTOModelConverter.ConvertModelToDTO(physicalPersonModel);
 
             return newPhysicalPersonDTO;
         }
 
         public static PhysicalPersonDTO UpdatePhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
         {
-            var physicalPersonModel = DTOModelConverter.ConvertPhysicalPersonDTOToModel(physicalPersonDTO);
+            var physicalPersonModel = DTOModelConverter.ConvertDTOToModel(physicalPersonDTO);
             PetOwnersService.UpdatePhysicalPerson(physicalPersonModel);
-            var newPhysicalPersonDTO = DTOModelConverter.ConvertPhysicalPersonModelToDTO(physicalPersonModel);
+            var newPhysicalPersonDTO = DTOModelConverter.ConvertModelToDTO(physicalPersonModel);
 
             return newPhysicalPersonDTO;
         }

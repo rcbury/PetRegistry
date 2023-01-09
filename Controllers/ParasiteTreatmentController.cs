@@ -39,7 +39,7 @@ namespace PIS_PetRegistry.Controllers
             
             foreach (var parasiteTreatment in parasiteTreatments)
             {
-                parasiteTreatmentsDTO.Add(DTOModelConverter.ConvertParasiteTreatmentToDTO(parasiteTreatment));
+                parasiteTreatmentsDTO.Add(DTOModelConverter.ConvertModelToDTO(parasiteTreatment));
             }
             
             return parasiteTreatmentsDTO;
@@ -61,7 +61,7 @@ namespace PIS_PetRegistry.Controllers
 
             parasiteTreatmentModel = ParasiteTreatmentService.AddParasiteTreatment(parasiteTreatmentModel);
 
-            var newParasiteTreatmentDTO = DTOModelConverter.ConvertParasiteTreatmentToDTO(parasiteTreatmentModel);
+            var newParasiteTreatmentDTO = DTOModelConverter.ConvertModelToDTO(parasiteTreatmentModel);
 
             return newParasiteTreatmentDTO;
         }
@@ -90,7 +90,7 @@ namespace PIS_PetRegistry.Controllers
                 oldParasiteTreatmentModel, 
                 modifiedParasiteTreatmentModel);
 
-            var updatedParasiteTreatmentDTO = DTOModelConverter.ConvertParasiteTreatmentToDTO(updatedParasiteTreatment);
+            var updatedParasiteTreatmentDTO = DTOModelConverter.ConvertModelToDTO(updatedParasiteTreatment);
 
             return updatedParasiteTreatmentDTO;
         }

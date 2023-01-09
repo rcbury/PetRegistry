@@ -25,7 +25,7 @@ namespace PIS_PetRegistry.Controllers
             var countries = CountryService.GetCountries();
             foreach (var country in countries)
             {
-                res.Add(DTOModelConverter.ConvertCountryToDTO(country));
+                res.Add(DTOModelConverter.ConvertModelToDTO(country));
             }
             return res;
         }
