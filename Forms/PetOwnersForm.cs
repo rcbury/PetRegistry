@@ -166,6 +166,32 @@ namespace PIS_PetRegistry
 
         private bool editAllowed = true;
 
+        private void FetchPhysicalWithFilters() 
+        {
+            var phone = textBox1.Text;
+            var name = textBox3.Text;
+            var address = textBox4.Text;
+            var email = textBox2.Text;
+            var country = Convert.ToInt16(comboBox1.SelectedValue);
+            var location = Convert.ToInt16(comboBox2.SelectedValue);
+            listPhysicalPersonDTOs = PetOwnersController.GetPhysicalPeople(phone, name, address, email, country, location);
+            dataGridView1.DataSource = listPhysicalPersonDTOs;
+        }
+
+        private void FetchLegalWithFilters() 
+        {
+            var inn = textBox8.Text;
+            var kpp = textBox6.Text;
+            var name = textBox5.Text;
+            var email = textBox7.Text;
+            var address = textBox9.Text;
+            var phone = textBox10.Text;
+            var country = Convert.ToInt16(comboBox4.SelectedValue);
+            var location = Convert.ToInt16(comboBox3.SelectedValue);
+            listLegalPersonDTOs = PetOwnersController.GetLegalPeople(inn, kpp, name, email, address, phone, country, location);
+            dataGridView2.DataSource = listLegalPersonDTOs;
+        }
+
         private void SetupPermissions()
         {
             var authorizedUser = AuthorizationController.GetAuthorizedUser();
@@ -195,22 +221,12 @@ namespace PIS_PetRegistry
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            /*var rowIndex = e.RowIndex;
-            var selectedPhysicalPerson = listPhysicalPersonDTOs[rowIndex];
-            PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson);
-            Hide();
-            form.ShowDialog();
-            Show();*/
+
         }
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            /*var rowIndex = e.RowIndex;
 
-            LegalPersonForm form = new LegalPersonForm(listLegalPersonDTOs[rowIndex]);
-            Hide();
-            form.ShowDialog();
-            Show();*/
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -220,14 +236,7 @@ namespace PIS_PetRegistry
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var phone = textBox1.Text;
-            var name = textBox3.Text;
-            var address = textBox4.Text;
-            var email = textBox2.Text;
-            var country = Convert.ToInt16(comboBox1.SelectedValue);
-            var location = Convert.ToInt16(comboBox2.SelectedValue);
-            listPhysicalPersonDTOs = PetOwnersController.GetPhysicalPeople(phone, name, address, email, country, location);
-            dataGridView1.DataSource = listPhysicalPersonDTOs;
+            FetchPhysicalWithFilters();
         }
 
         private List<PhysicalPersonDTO> SortData(List<PhysicalPersonDTO> list, string column, bool ascending)
@@ -262,16 +271,7 @@ namespace PIS_PetRegistry
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var inn = textBox8.Text;
-            var kpp = textBox6.Text;
-            var name = textBox5.Text;
-            var email = textBox7.Text;
-            var address = textBox9.Text;
-            var phone = textBox10.Text;
-            var country = Convert.ToInt16(comboBox4.SelectedValue);
-            var location = Convert.ToInt16(comboBox3.SelectedValue);
-            listLegalPersonDTOs = PetOwnersController.GetLegalPeople(inn,kpp,name,email,address,phone,country,location);
-            dataGridView2.DataSource = listLegalPersonDTOs;
+            FetchLegalWithFilters();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -310,6 +310,7 @@ namespace PIS_PetRegistry
         {
             PhysicalPersonForm form = new();
             form.ShowDialog();
+            FetchPhysicalWithFilters();
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -319,13 +320,14 @@ namespace PIS_PetRegistry
             PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson, editAllowed);
 
             form.ShowDialog();
-            Show();
+            FetchPhysicalWithFilters();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             LegalPersonForm form = new();
             form.ShowDialog();
+            FetchLegalWithFilters();
         }
 
         private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -335,7 +337,7 @@ namespace PIS_PetRegistry
             LegalPersonForm form = new(selectedLegalPerson, editAllowed);
 
             form.ShowDialog();
-            Show();
+            FetchLegalWithFilters();
         }
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
