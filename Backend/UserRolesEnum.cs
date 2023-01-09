@@ -12,7 +12,5 @@ namespace PIS_PetRegistry.Backend
 		ShelterOperator,
 		VetServiceStaff,
 		OMSUStaff,
-		ShelterStaff,
-		
 	}
 }

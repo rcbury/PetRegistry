@@ -143,18 +143,7 @@ namespace PIS_PetRegistry.Controllers
         public static void SaveContract(PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO? legalPersonDTO, 
             AnimalCardDTO animalCardDTO) 
         {
-            var contract = AnimalCardService.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO);
-            //var res = new ContractDTO();
-            //res.Number = contract.Number;
-            //res.Date = contract.Date;
-            //res.FkAnimalCard = contract.FkAnimalCard;
-            //res.FkUser = contract.FkUser;
-            //res.FkPhysicalPerson = contract.FkPhysicalPerson;
-            //if (legalPersonDTO != null)
-            //{
-            //    res.FkLegalPerson = contract.FkLegalPerson;
-            //}
-            //return res;
+            AnimalCardService.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO);
         }
 
         public static List<AnimalCardDTO> GetAnimalsByLegalPerson(int legalPersonId)
