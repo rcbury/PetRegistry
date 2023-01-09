@@ -56,17 +56,15 @@ namespace PIS_PetRegistry
             if (_physicalPersonFilter != null)
             {
                 var animals = AnimalCardController.GetAnimalsByPhysicalPerson(_physicalPersonFilter.Id);
-                _listAnimalCards = animals;
-                dataGridViewListAnimals.DataSource = _listAnimalCards;
+                SetListAnimalsInterface(animals);
 
                 this.Text = String.Format("Список животных {0}", _physicalPersonFilter.Name);
             }
             else
             { 
                 var animals = AnimalCardController.GetAnimalsByLegalPerson(_legalPersonFilter.Id);
-                _listAnimalCards = animals;
-                dataGridViewListAnimals.DataSource = _listAnimalCards;
-             
+                SetListAnimalsInterface(animals);
+
                 this.Text = String.Format("Список животных {0}", _legalPersonFilter.Name);
             }
         }
@@ -181,7 +179,7 @@ namespace PIS_PetRegistry
                 _listAnimalCards = AnimalCardController.GetAnimals();
             }
             
-            dataGridViewListAnimals.DataSource = _listAnimalCards;
+            SetListAnimalsInterface(_listAnimalCards);
 
             if (_listAnimalCards.Count == 0)
                 MessageBox.Show("По вашему запросу нечего не найдено");
@@ -311,13 +309,19 @@ namespace PIS_PetRegistry
             }
         }
 
+        private void SetListAnimalsInterface(List<AnimalCardDTO> list)
+        {
+            _listAnimalCards = list;
+            dataGridViewListAnimals.DataSource = _listAnimalCards;
+        }
+
         private void button3_Click(object sender, EventArgs e)
         {
             var filterParams = this.GenerateFilterDTO();
             filterParams.SearchTimeVetProcedure = dateTimePickerVetProcedure.Value;
             
-            _listAnimalCards = AnimalCardController.GetAnimals(filterParams);
-            dataGridViewListAnimals.DataSource = _listAnimalCards;
+            var animalList = AnimalCardController.GetAnimals(filterParams);
+            SetListAnimalsInterface(animalList);
         }
     }
 }
