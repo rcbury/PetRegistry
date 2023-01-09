@@ -164,7 +164,7 @@ namespace PIS_PetRegistry.Controllers
 
             foreach (var animalModel in animalsModel)
             {
-                var animalDTO = DTOModelConverter.ConvertAnimalCardToDTO(animalModel);
+                var animalDTO = DTOModelConverter.ConvertModelToDTO(animalModel);
                 animalsDTOByLegalPerson.Add(animalDTO);
             }
 
@@ -178,7 +178,7 @@ namespace PIS_PetRegistry.Controllers
 
             foreach (var animalModel in animalsModel)
             {
-                var animalDTO = DTOModelConverter.ConvertAnimalCardToDTO(animalModel);
+                var animalDTO = DTOModelConverter.ConvertModelToDTO(animalModel);
                 animalsDTOByPhysicalPerson.Add(animalDTO);
             }
 
