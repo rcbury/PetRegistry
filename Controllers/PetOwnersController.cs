@@ -70,10 +70,7 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            else 
-            {
-                return DTOModelConverter.ConvertLegalPersonModelToDTO(person);
-            }
+            return DTOModelConverter.ConvertLegalPersonModelToDTO(person);
         }
 
         public static List<LegalPersonDTO> GetLegalPeople(string inn, string kpp, string name, string email, 
