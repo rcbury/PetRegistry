@@ -155,6 +155,11 @@ namespace PIS_PetRegistry.Services
                     {
                         animalCards = animalCards.Where(item => item.FkCategory == animalFilter.AnimalCategory.Id).ToList();
                     }
+
+                    if (animalFilter.SearchTimeVetProcedure != null)
+                    {
+                        animalCards = animalCards.Where(item => item.VeterinaryAppointmentAnimals.Where(x => x.Date <= animalFilter.SearchTimeVetProcedure).Count() > 0).ToList();
+                    }
                 }
 
                 animalCardsList = animalCards;

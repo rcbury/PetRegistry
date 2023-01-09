@@ -128,6 +128,12 @@ namespace PIS_PetRegistry
             dataGridViewListAnimals.AutoGenerateColumns = false;
             dataGridViewListAnimals.AllowUserToAddRows = false;
             dataGridViewListAnimals.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            if (AuthorizationController.GetAuthorizedUser().RoleId != (int)UserRoles.Veterinarian)
+            { 
+                this.dateTimePickerVetProcedure.Enabled = false;
+                this.buttonSearchVetProcedure.Enabled = false;
+            }
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -303,6 +309,15 @@ namespace PIS_PetRegistry
                 AnimalCardForm animalForm = new AnimalCardForm(_listAnimalCards[e.RowIndex]);
                 animalForm.ShowDialog();
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var filterParams = this.GenerateFilterDTO();
+            filterParams.SearchTimeVetProcedure = dateTimePickerVetProcedure.Value;
+            
+            _listAnimalCards = AnimalCardController.GetAnimals(filterParams);
+            dataGridViewListAnimals.DataSource = _listAnimalCards;
         }
     }
 }

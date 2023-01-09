@@ -15,5 +15,6 @@ namespace PIS_PetRegistry.DTO
         public AnimalCategoryDTO AnimalCategory { get; set; }
         public LegalPersonDTO LegalPerson { get; set; }
         public PhysicalPersonDTO PhysicalPerson { get; set; }
+        public DateTime? SearchTimeVetProcedure { get; set; }
     }
 }
