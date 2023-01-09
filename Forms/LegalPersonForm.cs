@@ -121,6 +121,7 @@ namespace PIS_PetRegistry
                 Email = EmailText.Text,
                 FkCountry = ((CountryDTO)CountryComboBox.SelectedItem).Id,
                 FkLocality = ((LocationDTO)LocalityComboBox.SelectedItem).Id,
+                Id = mainLegalPerson != null ? mainLegalPerson.Id : 0
             };
 
             if(CountryComboBox.SelectedIndex == 0 || LocalityComboBox.SelectedIndex == 0) 
@@ -131,12 +132,11 @@ namespace PIS_PetRegistry
 
             if (mainLegalPerson == null)
             {
-                mainLegalPerson = PetOwnersController.AddLegalPerson(currentLegalPersonDTO);
+                PetOwnersController.AddLegalPerson(currentLegalPersonDTO);
             }
             else
             {
-                currentLegalPersonDTO.Id = mainLegalPerson.Id;
-                mainLegalPerson = PetOwnersController.UpdateLegalPerson(currentLegalPersonDTO);
+                PetOwnersController.UpdateLegalPerson(currentLegalPersonDTO);
             }
             this.Close();
         }

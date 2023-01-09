@@ -97,6 +97,7 @@ namespace PIS_PetRegistry
                 Email = EmailText.Text,
                 FkCountry = ((CountryDTO)CountryComboBox.SelectedItem).Id,
                 FkLocality = ((LocationDTO)LocalityComboBox.SelectedItem).Id,
+                Id = mainPhysicalPerson != null ? mainPhysicalPerson.Id : 0
             };
 
             if(CountryComboBox.SelectedIndex == 0 || LocalityComboBox.SelectedIndex == 0)
@@ -107,12 +108,11 @@ namespace PIS_PetRegistry
 
             if (mainPhysicalPerson == null)
             {
-                mainPhysicalPerson = PetOwnersController.AddPhysicalPerson(currentPhysicalPersonDTO);
+                PetOwnersController.AddPhysicalPerson(currentPhysicalPersonDTO);
             }
             else
             {
-                currentPhysicalPersonDTO.Id = mainPhysicalPerson.Id;
-                mainPhysicalPerson = PetOwnersController.UpdatePhysicalPerson(currentPhysicalPersonDTO);
+                PetOwnersController.UpdatePhysicalPerson(currentPhysicalPersonDTO);
             }
             this.Close();
         }
