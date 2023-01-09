@@ -28,6 +28,8 @@ namespace PIS_PetRegistry
         private PhysicalPersonDTO _physicalPersonFilter = null;
         private LegalPersonDTO _legalPersonFilter = null;
 
+        
+
         public AnimalRegistryForm(PhysicalPersonDTO physicalPerson)
         {
             InitForm();
@@ -49,6 +51,8 @@ namespace PIS_PetRegistry
 
         private void UpdateAnimalToFilter()
         {
+            toolStrip1.Enabled = false;
+            button1.Enabled = false;
             if (_physicalPersonFilter != null)
             {
                 var animals = AnimalCardController.GetAnimalsByPhysicalPerson(_physicalPersonFilter.Id);

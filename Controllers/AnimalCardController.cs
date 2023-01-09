@@ -164,17 +164,7 @@ namespace PIS_PetRegistry.Controllers
 
             foreach (var animalModel in animalsModel)
             {
-                var animalDTO = new AnimalCardDTO()
-                {
-                    Id = animalModel.Id,
-                    IsBoy = animalModel.IsBoy,
-                    Name = animalModel.Name,
-                    Photo = animalModel.Photo,
-                    YearOfBirth = animalModel.YearOfBirth,
-                    FkCategory = animalModel.FkCategory,
-                    FkShelter = animalModel.FkShelter,
-                    ChipId = animalModel.ChipId,
-                };
+                var animalDTO = DTOModelConverter.ConvertAnimalCardToDTO(animalModel);
                 animalsDTOByLegalPerson.Add(animalDTO);
             }
 
@@ -188,17 +178,7 @@ namespace PIS_PetRegistry.Controllers
 
             foreach (var animalModel in animalsModel)
             {
-                var animalDTO = new AnimalCardDTO()
-                {
-                    Id = animalModel.Id,
-                    IsBoy= animalModel.IsBoy,
-                    Name = animalModel.Name,
-                    Photo = animalModel.Photo,
-                    YearOfBirth= animalModel.YearOfBirth,
-                    FkCategory= animalModel.FkCategory,
-                    FkShelter= animalModel.FkShelter,
-                    ChipId = animalModel.ChipId,
-                };
+                var animalDTO = DTOModelConverter.ConvertAnimalCardToDTO(animalModel);
                 animalsDTOByPhysicalPerson.Add(animalDTO);
             }
 
