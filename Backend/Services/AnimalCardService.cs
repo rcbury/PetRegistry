@@ -82,7 +82,7 @@ namespace PIS_PetRegistry.Services
 
             using (var context = new RegistryPetsContext())
             {
-                oldAnimalCardModel = context.AnimalCards.Where(x => x.Id.Equals(animalCard.Id)).FirstOrDefault();
+                oldAnimalCardModel = GetAnimalCardById(animalCard.Id);
 
                 if (oldAnimalCardModel == null)
                     throw new Exception("trying to change unexisting animal card");
@@ -169,7 +169,7 @@ namespace PIS_PetRegistry.Services
             {
                 var user = AuthorizationService.GetAuthorizedUser();
 
-                var animalCard = context.AnimalCards.Where(x => x.Id == animalCardId).FirstOrDefault();
+                var animalCard = GetAnimalCardById(animalCardId);
 
                 if (animalCard == null)
                     throw new Exception("trying to delete non existent model");

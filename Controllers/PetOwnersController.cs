@@ -130,5 +130,15 @@ namespace PIS_PetRegistry.Controllers
         {
             Exporter.ExportLegalPeopleToExcel(path, legalPeopleDTO);
         }
+
+        public static int CountAnimalsByPhysicalPerson(int physicalPersonId)
+        {
+            return PetOwnersService.GetPhysicalPersonAnimalCount(physicalPersonId);
+        }
+
+        public static int CountAnimalsByLegalPerson(int legalPersonId)
+        {
+            return PetOwnersService.GetLegalPersonAnimalCount(legalPersonId);
+        }
     }
 }

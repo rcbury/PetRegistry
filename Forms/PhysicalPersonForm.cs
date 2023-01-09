@@ -124,7 +124,7 @@ namespace PIS_PetRegistry
                 MessageBox.Show("Этот человек еще не добавлен в реестр.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var countAnimalsByPhysicalPerson = AnimalCardController.CountAnimalsByPhysicalPerson(mainPhysicalPerson.Id);
+            var countAnimalsByPhysicalPerson = PetOwnersController.CountAnimalsByPhysicalPerson(mainPhysicalPerson.Id);
             if (countAnimalsByPhysicalPerson == 0)
             {
                 MessageBox.Show("У этого человека нет животных.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
