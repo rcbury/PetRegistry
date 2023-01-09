@@ -97,48 +97,28 @@ namespace PIS_PetRegistry.Controllers
             return res;
         }
        
-        public static LegalPersonDTO UpdateLegalPerson(LegalPersonDTO legalPersonDTO)
+        public static void UpdateLegalPerson(LegalPersonDTO legalPersonDTO)
         {
             var legalPersonModel = DTOModelConverter.ConvertDTOToModel(legalPersonDTO);
             PetOwnersService.UpdateLegalPerson(legalPersonModel);
-            var personInfo = PetOwnersService.GetLegalPersonDetailInfo(legalPersonDTO.Id,
-                legalPersonDTO.FkCountry, legalPersonDTO.FkLocality);
-            var newLegalPersonDTO = DTOModelConverter.ConvertModelToDTO(legalPersonModel, personInfo);
-
-            return newLegalPersonDTO;
         }
 
-        public static LegalPersonDTO AddLegalPerson(LegalPersonDTO legalPersonDTO)
+        public static void AddLegalPerson(LegalPersonDTO legalPersonDTO)
         {
             var legalPersonModel = DTOModelConverter.ConvertDTOToModel(legalPersonDTO);
             PetOwnersService.AddLegalPerson(legalPersonModel);
-            var personInfo = PetOwnersService.GetLegalPersonDetailInfo(legalPersonDTO.Id,
-                legalPersonDTO.FkCountry, legalPersonDTO.FkLocality);
-            var newLegalPersonDTO = DTOModelConverter.ConvertModelToDTO(legalPersonModel, personInfo);
-
-            return newLegalPersonDTO;
         }
 
-        public static PhysicalPersonDTO AddPhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
+        public static void AddPhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
         {
             var physicalPersonModel = DTOModelConverter.ConvertDTOToModel(physicalPersonDTO);
             PetOwnersService.AddPhysicalPerson(physicalPersonModel);
-            var personInfo = PetOwnersService.GetPhysicalPersonDetailInfo(physicalPersonModel.Id,
-                physicalPersonModel.FkCountry, physicalPersonModel.FkLocality);
-            var newPhysicalPersonDTO = DTOModelConverter.ConvertModelToDTO(physicalPersonModel, personInfo);
-
-            return newPhysicalPersonDTO;
         }
 
-        public static PhysicalPersonDTO UpdatePhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
+        public static void UpdatePhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
         {
             var physicalPersonModel = DTOModelConverter.ConvertDTOToModel(physicalPersonDTO);
             PetOwnersService.UpdatePhysicalPerson(physicalPersonModel);
-            var personInfo = PetOwnersService.GetPhysicalPersonDetailInfo(physicalPersonModel.Id,
-                physicalPersonModel.FkCountry, physicalPersonModel.FkLocality);
-            var newPhysicalPersonDTO = DTOModelConverter.ConvertModelToDTO(physicalPersonModel, personInfo);
-
-            return newPhysicalPersonDTO;
         }
 
         public static void ExportPhysicalPeopleToExcel(string path, List<PhysicalPersonDTO> physicalPeopleDTO)

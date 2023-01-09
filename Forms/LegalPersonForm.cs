@@ -131,12 +131,11 @@ namespace PIS_PetRegistry
 
             if (mainLegalPerson == null)
             {
-                mainLegalPerson = PetOwnersController.AddLegalPerson(currentLegalPersonDTO);
+                PetOwnersController.AddLegalPerson(currentLegalPersonDTO);
             }
             else
             {
-                currentLegalPersonDTO.Id = mainLegalPerson.Id;
-                mainLegalPerson = PetOwnersController.UpdateLegalPerson(currentLegalPersonDTO);
+                PetOwnersController.UpdateLegalPerson(currentLegalPersonDTO);
             }
             this.Close();
         }

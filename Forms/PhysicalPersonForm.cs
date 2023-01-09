@@ -107,12 +107,11 @@ namespace PIS_PetRegistry
 
             if (mainPhysicalPerson == null)
             {
-                mainPhysicalPerson = PetOwnersController.AddPhysicalPerson(currentPhysicalPersonDTO);
+                PetOwnersController.AddPhysicalPerson(currentPhysicalPersonDTO);
             }
             else
             {
-                currentPhysicalPersonDTO.Id = mainPhysicalPerson.Id;
-                mainPhysicalPerson = PetOwnersController.UpdatePhysicalPerson(currentPhysicalPersonDTO);
+                PetOwnersController.UpdatePhysicalPerson(currentPhysicalPersonDTO);
             }
             this.Close();
         }
