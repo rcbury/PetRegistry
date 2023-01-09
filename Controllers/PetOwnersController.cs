@@ -41,15 +41,7 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            return new PhysicalPersonDTO()
-            {
-                Id = person.Id,
-                Phone = phone,
-                Name = person.Name,
-                Address = person.Address,
-                Email = person.Email,
-                FkLocality = person.FkLocality
-            };
+            return DTOModelConverter.ConvertPhysicalPersonModelToDTO(person);
         }
 
         public static PhysicalPersonDTO? GetPhysicalPersonById(int personId)
@@ -59,15 +51,7 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            return new PhysicalPersonDTO()
-            {
-                Id = person.Id,
-                Phone = person.Phone,
-                Name = person.Name,
-                Address = person.Address,
-                Email = person.Email,
-                FkLocality = person.FkLocality
-            };
+            return DTOModelConverter.ConvertPhysicalPersonModelToDTO(person);
         }
 
         public static LegalPersonDTO? GetLegalPersonByINN(string INN)
@@ -77,17 +61,7 @@ namespace PIS_PetRegistry.Controllers
             {
                 return null;
             }
-            return new LegalPersonDTO()
-            {
-                Id = person.Id,
-                INN = INN,
-                KPP = person.Kpp,
-                Name = person.Name,
-                Address = person.Address,
-                Email = person.Email,
-                Phone = person.Phone,
-                FkLocality = person.FkLocality
-            };
+            return DTOModelConverter.ConvertLegalPersonModelToDTO(person);
         }
         public static LegalPersonDTO? GetLegalPersonById(int? personId)
         {
@@ -98,17 +72,7 @@ namespace PIS_PetRegistry.Controllers
             }
             else 
             {
-                return new LegalPersonDTO()
-                {
-                    Id = person.Id,
-                    INN = person.Inn,
-                    KPP = person.Kpp,
-                    Name = person.Name,
-                    Address = person.Address,
-                    Email = person.Email,
-                    Phone = person.Phone,
-                    FkLocality = person.FkLocality
-                };
+                return DTOModelConverter.ConvertLegalPersonModelToDTO(person);
             }
         }
 
