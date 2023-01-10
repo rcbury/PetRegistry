@@ -220,6 +220,7 @@
             // animalBirthYearTextBox
             // 
             this.animalBirthYearTextBox.Location = new System.Drawing.Point(311, 35);
+            this.animalBirthYearTextBox.MaxLength = 4;
             this.animalBirthYearTextBox.Name = "animalBirthYearTextBox";
             this.animalBirthYearTextBox.Size = new System.Drawing.Size(104, 23);
             this.animalBirthYearTextBox.TabIndex = 7;
@@ -537,9 +538,11 @@
             // 
             this.textBox14.Enabled = false;
             this.textBox14.Location = new System.Drawing.Point(395, 81);
+            this.textBox14.MaxLength = 9;
             this.textBox14.Name = "textBox14";
             this.textBox14.Size = new System.Drawing.Size(369, 23);
             this.textBox14.TabIndex = 17;
+            this.textBox14.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox14_KeyPress);
             // 
             // label15
             // 
@@ -570,9 +573,11 @@
             // textBox12
             // 
             this.textBox12.Location = new System.Drawing.Point(9, 37);
+            this.textBox12.MaxLength = 10;
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(576, 23);
             this.textBox12.TabIndex = 13;
+            this.textBox12.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox12_KeyPress);
             // 
             // label13
             // 
@@ -635,6 +640,7 @@
             // 
             this.textBox9.Enabled = false;
             this.textBox9.Location = new System.Drawing.Point(9, 80);
+            this.textBox9.MaxLength = 11;
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(304, 23);
             this.textBox9.TabIndex = 7;
@@ -686,9 +692,11 @@
             // textBox6
             // 
             this.textBox6.Location = new System.Drawing.Point(9, 36);
+            this.textBox6.MaxLength = 11;
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(145, 23);
             this.textBox6.TabIndex = 1;
+            this.textBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox6_KeyPress);
             // 
             // label7
             // 
