@@ -29,9 +29,7 @@ namespace PIS_PetRegistry.Controllers
             var res = new List<PhysicalPersonDTO>();
             foreach (var physicalPerson in physicalPeople) 
             {
-                var personInfo = PetOwnersService.GetPhysicalPersonDetailInfo(physicalPerson.Id,
-                    physicalPerson.FkCountry, physicalPerson.FkLocality);
-                res.Add(DTOModelConverter.ConvertModelToDTO(physicalPerson, personInfo));
+                res.Add(DTOModelConverter.ConvertModelToDTO(physicalPerson));
             }
             return res;
         }
@@ -39,48 +37,48 @@ namespace PIS_PetRegistry.Controllers
         public static PhysicalPersonDTO? GetPhysicalPersonByPhone(string phone)
         {
             var person = PetOwnersService.GetPhysicalPersonByPhone(phone);
+
             if (person == null)
             {
                 return null;
             }
-            var personInfo = PetOwnersService.GetPhysicalPersonDetailInfo(person.Id,
-                person.FkCountry, person.FkLocality);
-            return DTOModelConverter.ConvertModelToDTO(person, personInfo);
+
+            return DTOModelConverter.ConvertModelToDTO(person);
         }
 
         public static PhysicalPersonDTO? GetPhysicalPersonById(int personId)
         {
             var person = PetOwnersService.GetPhysicalPersonById(personId);
+
             if (person == null)
             {
                 return null;
             }
-            var personInfo = PetOwnersService.GetPhysicalPersonDetailInfo(person.Id,
-                person.FkCountry, person.FkLocality);
-            return DTOModelConverter.ConvertModelToDTO(person, personInfo);
+
+            return DTOModelConverter.ConvertModelToDTO(person);
         }
 
         public static LegalPersonDTO? GetLegalPersonByINN(string INN)
         {
             var person = PetOwnersService.GetLegalPersonByInn(INN);
+            
             if (person == null)
             {
                 return null;
             }
-            var personInfo = PetOwnersService.GetLegalPersonDetailInfo(person.Id,
-                person.FkCountry, person.FkLocality);
-            return DTOModelConverter.ConvertModelToDTO(person, personInfo);
+
+            return DTOModelConverter.ConvertModelToDTO(person);
         }
         public static LegalPersonDTO? GetLegalPersonById(int? personId)
         {
             var person = PetOwnersService.GetLegalPersonById(personId);
+            
             if (person == null)
             {
                 return null;
             }
-            var personInfo = PetOwnersService.GetLegalPersonDetailInfo(person.Id,
-                person.FkCountry, person.FkLocality);
-            return DTOModelConverter.ConvertModelToDTO(person, personInfo);
+
+            return DTOModelConverter.ConvertModelToDTO(person);
         }
 
         public static List<LegalPersonDTO> GetLegalPeople(string inn, string kpp, string name, string email, 
@@ -88,12 +86,12 @@ namespace PIS_PetRegistry.Controllers
         {
             var legalPeople = PetOwnersService.GetLegalPeople(inn, kpp, name, email, address, phone, country, location);
             var res = new List<LegalPersonDTO>();
+            
             foreach (var legalPerson in legalPeople)
             {
-                var personInfo = PetOwnersService.GetLegalPersonDetailInfo(legalPerson.Id,
-                    legalPerson.FkCountry, legalPerson.FkLocality);
-                res.Add(DTOModelConverter.ConvertModelToDTO(legalPerson, personInfo));
+                res.Add(DTOModelConverter.ConvertModelToDTO(legalPerson));
             }
+
             return res;
         }
        
@@ -133,12 +131,16 @@ namespace PIS_PetRegistry.Controllers
 
         public static int CountAnimalsByPhysicalPerson(int physicalPersonId)
         {
-            return PetOwnersService.GetPhysicalPersonAnimalCount(physicalPersonId);
+            var physicalPerson = PetOwnersService.GetPhysicalPersonById(physicalPersonId);
+
+            return physicalPerson.GetAnimalCount();
         }
 
         public static int CountAnimalsByLegalPerson(int legalPersonId)
         {
-            return PetOwnersService.GetLegalPersonAnimalCount(legalPersonId);
+            var legalPerson = PetOwnersService.GetLegalPersonById(legalPersonId);
+
+            return legalPerson.GetAnimalCount();
         }
     }
 }

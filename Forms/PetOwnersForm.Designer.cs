@@ -182,10 +182,12 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(6, 19);
+            this.textBox1.MaxLength = 11;
             this.textBox1.Name = "textBox1";
             this.textBox1.PlaceholderText = "Номер телефона";
             this.textBox1.Size = new System.Drawing.Size(114, 23);
             this.textBox1.TabIndex = 0;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // dataGridView1
             // 
@@ -260,10 +262,12 @@
             // textBox10
             // 
             this.textBox10.Location = new System.Drawing.Point(681, 19);
+            this.textBox10.MaxLength = 11;
             this.textBox10.Name = "textBox10";
             this.textBox10.PlaceholderText = "Номер телефона";
             this.textBox10.Size = new System.Drawing.Size(114, 23);
             this.textBox10.TabIndex = 8;
+            this.textBox10.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox10_KeyPress);
             // 
             // textBox9
             // 
@@ -284,10 +288,12 @@
             // textBox6
             // 
             this.textBox6.Location = new System.Drawing.Point(126, 19);
+            this.textBox6.MaxLength = 9;
             this.textBox6.Name = "textBox6";
             this.textBox6.PlaceholderText = "КПП";
             this.textBox6.Size = new System.Drawing.Size(114, 23);
             this.textBox6.TabIndex = 5;
+            this.textBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox6_KeyPress);
             // 
             // button2
             // 
@@ -328,10 +334,12 @@
             // textBox8
             // 
             this.textBox8.Location = new System.Drawing.Point(6, 19);
+            this.textBox8.MaxLength = 10;
             this.textBox8.Name = "textBox8";
             this.textBox8.PlaceholderText = "ИНН";
             this.textBox8.Size = new System.Drawing.Size(114, 23);
             this.textBox8.TabIndex = 0;
+            this.textBox8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox8_KeyPress);
             // 
             // dataGridView2
             // 

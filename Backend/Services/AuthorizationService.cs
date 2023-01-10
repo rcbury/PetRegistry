@@ -15,22 +15,22 @@ namespace PIS_PetRegistry.Services
     {
         public static User? Authorize(string login, string password)
         {
-            var dbContext = new RegistryPetsContext();
 
-            MD5Hash mD5Hash = new MD5Hash();
-            string hashedPassword = mD5Hash.HashPassword(password);
+            using (var dbContext = new RegistryPetsContext())
+            {
+                MD5Hash mD5Hash = new MD5Hash();
+                string hashedPassword = mD5Hash.HashPassword(password);
 
-            var user = dbContext.Users
-                .Where(x => x.Password.ToLower().Equals(hashedPassword.ToLower()) &&
-                    x.Login.ToLower().Equals(login.ToLower()))
-                .Include(u => u.FkShelterNavigation)
-                .Include(u => u.FkRoleNavigation)
-                .FirstOrDefault();
+                var user = dbContext.Users
+                    .Where(x => x.Password.ToLower().Equals(hashedPassword.ToLower()) &&
+                        x.Login.ToLower().Equals(login.ToLower()))
+                    .Include(u => u.FkShelterNavigation)
+                    .Include(u => u.FkRoleNavigation)
+                    .FirstOrDefault();
 
-            dbContext.Dispose();
-
-            Authorization.AuthorizedUser = user;
-            return user;
+                Authorization.AuthorizedUser = user;
+                return user;
+            }
         }
 
         public static User? GetAuthorizedUser()

@@ -316,11 +316,15 @@ namespace PIS_PetRegistry
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             var rowIndex = e.RowIndex;
-            var selectedPhysicalPerson = listPhysicalPersonDTOs[rowIndex];
-            PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson, editAllowed);
+        
+            if (rowIndex >= 0)
+            {
+                var selectedPhysicalPerson = listPhysicalPersonDTOs[rowIndex];
+                PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson, editAllowed);
 
-            form.ShowDialog();
-            FetchPhysicalWithFilters();
+                form.ShowDialog();
+                FetchPhysicalWithFilters();
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -333,17 +337,21 @@ namespace PIS_PetRegistry
         private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             var rowIndex = e.RowIndex;
-            var selectedLegalPerson = listLegalPersonDTOs[rowIndex];
-            LegalPersonForm form = new(selectedLegalPerson, editAllowed);
 
-            form.ShowDialog();
-            FetchLegalWithFilters();
+            if (rowIndex >= 0)
+            {
+                var selectedLegalPerson = listLegalPersonDTOs[rowIndex];
+                LegalPersonForm form = new(selectedLegalPerson, editAllowed);
+
+                form.ShowDialog();
+                FetchLegalWithFilters();
+            }
         }
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.ColumnIndex == _physicalPreviousIndex)
-                _physicalSortDirection ^= true;
+            _physicalSortDirection ^= true;
 
             listPhysicalPersonDTOs = SortData(
                 (List<PhysicalPersonDTO>)dataGridView1.DataSource, dataGridView1.Columns[e.ColumnIndex].Name, _physicalSortDirection);
@@ -362,6 +370,42 @@ namespace PIS_PetRegistry
             dataGridView2.DataSource = listLegalPersonDTOs;
 
             _legalPreviousIndex = e.ColumnIndex;
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+              (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBox10_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+              (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+              (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBox8_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+              (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

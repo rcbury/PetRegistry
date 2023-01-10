@@ -60,11 +60,9 @@
             this.groupBox5.Controls.Add(this.label8);
             this.groupBox5.Controls.Add(this.NumberText);
             this.groupBox5.Controls.Add(this.label7);
-            this.groupBox5.Location = new System.Drawing.Point(17, 20);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox5.Location = new System.Drawing.Point(12, 12);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox5.Size = new System.Drawing.Size(1116, 247);
+            this.groupBox5.Size = new System.Drawing.Size(781, 148);
             this.groupBox5.TabIndex = 8;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Данные физического лица";
@@ -72,115 +70,112 @@
             // LocalityComboBox
             // 
             this.LocalityComboBox.FormattingEnabled = true;
-            this.LocalityComboBox.Location = new System.Drawing.Point(451, 131);
+            this.LocalityComboBox.Location = new System.Drawing.Point(316, 79);
+            this.LocalityComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.LocalityComboBox.Name = "LocalityComboBox";
-            this.LocalityComboBox.Size = new System.Drawing.Size(334, 33);
+            this.LocalityComboBox.Size = new System.Drawing.Size(235, 23);
             this.LocalityComboBox.TabIndex = 14;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(451, 105);
+            this.label2.Location = new System.Drawing.Point(316, 63);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(162, 25);
+            this.label2.Size = new System.Drawing.Size(111, 15);
             this.label2.TabIndex = 13;
             this.label2.Text = "Населенный пункт";
             // 
             // CountryComboBox
             // 
             this.CountryComboBox.FormattingEnabled = true;
-            this.CountryComboBox.Location = new System.Drawing.Point(791, 131);
+            this.CountryComboBox.Location = new System.Drawing.Point(554, 79);
+            this.CountryComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.CountryComboBox.Name = "CountryComboBox";
-            this.CountryComboBox.Size = new System.Drawing.Size(314, 33);
+            this.CountryComboBox.Size = new System.Drawing.Size(221, 23);
             this.CountryComboBox.TabIndex = 12;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(791, 103);
+            this.label1.Location = new System.Drawing.Point(554, 62);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 25);
+            this.label1.Size = new System.Drawing.Size(46, 15);
             this.label1.TabIndex = 11;
             this.label1.Text = "Страна";
             // 
             // NameText
             // 
-            this.NameText.Location = new System.Drawing.Point(13, 133);
-            this.NameText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.NameText.Location = new System.Drawing.Point(9, 80);
             this.NameText.Name = "NameText";
-            this.NameText.Size = new System.Drawing.Size(433, 31);
+            this.NameText.Size = new System.Drawing.Size(304, 23);
             this.NameText.TabIndex = 7;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(13, 103);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Location = new System.Drawing.Point(9, 62);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(52, 25);
+            this.label10.Size = new System.Drawing.Size(34, 15);
             this.label10.TabIndex = 6;
             this.label10.Text = "ФИО";
             // 
             // AdressText
             // 
-            this.AdressText.Location = new System.Drawing.Point(451, 60);
-            this.AdressText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.AdressText.Location = new System.Drawing.Point(316, 36);
             this.AdressText.Name = "AdressText";
-            this.AdressText.Size = new System.Drawing.Size(654, 31);
+            this.AdressText.Size = new System.Drawing.Size(459, 23);
             this.AdressText.TabIndex = 5;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(456, 30);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(319, 18);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(287, 25);
+            this.label9.Size = new System.Drawing.Size(192, 15);
             this.label9.TabIndex = 4;
             this.label9.Text = "Адрес фактического проживания";
             // 
             // EmailText
             // 
-            this.EmailText.Location = new System.Drawing.Point(229, 60);
-            this.EmailText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.EmailText.Location = new System.Drawing.Point(160, 36);
             this.EmailText.Name = "EmailText";
-            this.EmailText.Size = new System.Drawing.Size(217, 31);
+            this.EmailText.Size = new System.Drawing.Size(153, 23);
             this.EmailText.TabIndex = 3;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(229, 30);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(160, 18);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(228, 25);
+            this.label8.Size = new System.Drawing.Size(153, 15);
             this.label8.TabIndex = 2;
             this.label8.Text = "Адрес электронной почты";
             // 
             // NumberText
             // 
-            this.NumberText.Location = new System.Drawing.Point(13, 60);
-            this.NumberText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.NumberText.Location = new System.Drawing.Point(9, 36);
+            this.NumberText.MaxLength = 11;
             this.NumberText.Name = "NumberText";
-            this.NumberText.Size = new System.Drawing.Size(208, 31);
+            this.NumberText.Size = new System.Drawing.Size(147, 23);
             this.NumberText.TabIndex = 1;
+            this.NumberText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumberText_KeyPress);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(13, 30);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(9, 18);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(81, 25);
+            this.label7.Size = new System.Drawing.Size(55, 15);
             this.label7.TabIndex = 0;
             this.label7.Text = "Телефон";
             // 
             // ListAnimalsButton
             // 
-            this.ListAnimalsButton.Location = new System.Drawing.Point(939, 277);
-            this.ListAnimalsButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ListAnimalsButton.Location = new System.Drawing.Point(657, 166);
             this.ListAnimalsButton.Name = "ListAnimalsButton";
-            this.ListAnimalsButton.Size = new System.Drawing.Size(186, 38);
+            this.ListAnimalsButton.Size = new System.Drawing.Size(130, 23);
             this.ListAnimalsButton.TabIndex = 9;
             this.ListAnimalsButton.Text = "Список животных";
             this.ListAnimalsButton.UseVisualStyleBackColor = true;
@@ -188,9 +183,10 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(722, 277);
+            this.SaveButton.Location = new System.Drawing.Point(505, 166);
+            this.SaveButton.Margin = new System.Windows.Forms.Padding(2);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(210, 38);
+            this.SaveButton.Size = new System.Drawing.Size(147, 23);
             this.SaveButton.TabIndex = 10;
             this.SaveButton.Text = "Сохранить изменения";
             this.SaveButton.UseVisualStyleBackColor = true;
@@ -198,14 +194,13 @@
             // 
             // PhysicalPersonForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1143, 337);
+            this.ClientSize = new System.Drawing.Size(800, 202);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.ListAnimalsButton);
             this.Controls.Add(this.groupBox5);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "PhysicalPersonForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

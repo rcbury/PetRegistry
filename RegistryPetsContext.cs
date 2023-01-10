@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using DocumentFormat.OpenXml.Drawing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using PIS_PetRegistry.Backend;
 
@@ -49,6 +50,7 @@ public partial class RegistryPetsContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
             .UseLazyLoadingProxies()
+            //.ConfigureWarnings(warnings => warnings.Default(WarningBehavior.Ignore).Ignore(CoreEventId.LazyLoadOnDisposedContextWarning))
             .ReplaceService<IModelCacheKeyFactory, DynamicModelCacheKeyFactoryDesignTimeSupport>()
             .UseNpgsql(ConfigurationManager.ConnectionStrings["RegestryPets"].ToString());
 

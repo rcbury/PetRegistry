@@ -145,11 +145,6 @@ namespace PIS_PetRegistry
             form.ShowDialog();
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             //FilterOption form = new FilterOption();
@@ -167,7 +162,7 @@ namespace PIS_PetRegistry
 
         }
 
-        private void buttonClickQuery_Click(object sender, EventArgs e)
+        private void FetchAnimalCards()
         {
             if (IsSelectedFilters())
             {
@@ -175,11 +170,16 @@ namespace PIS_PetRegistry
                 _listAnimalCards = AnimalCardController.GetAnimals(filterParams);
             }
             else
-            { 
+            {
                 _listAnimalCards = AnimalCardController.GetAnimals();
             }
-            
+
             SetListAnimalsInterface(_listAnimalCards);
+        }
+
+        private void buttonClickQuery_Click(object sender, EventArgs e)
+        {
+            FetchAnimalCards();
 
             if (_listAnimalCards.Count == 0)
                 MessageBox.Show("По вашему запросу нечего не найдено");
@@ -225,15 +225,6 @@ namespace PIS_PetRegistry
             return false;
         }
 
-        private void dataGridViewListAnimals_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            { 
-                AnimalCardForm animalForm = new AnimalCardForm(_listAnimalCards[e.RowIndex]);
-                animalForm.ShowDialog();
-            }
-        }
-
         private void dataGridViewListAnimals_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.ColumnIndex == _previousIndex)
@@ -272,6 +263,7 @@ namespace PIS_PetRegistry
             {
                 AnimalCardForm form = new AnimalCardForm();
                 form.ShowDialog();
+                FetchAnimalCards();
             }
             catch (Exception ex)
             {
@@ -306,6 +298,7 @@ namespace PIS_PetRegistry
             {
                 AnimalCardForm animalForm = new AnimalCardForm(_listAnimalCards[e.RowIndex]);
                 animalForm.ShowDialog();
+                FetchAnimalCards();
             }
         }
 
