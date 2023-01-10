@@ -237,6 +237,9 @@ namespace PIS_PetRegistry.Services
                 return context.AnimalCards
                     .Where(card => card.Id == cardId)
                     .Include(card => card.FkCategoryNavigation)
+                    .Include(card => card.Vaccinations)
+                    .Include(card => card.VeterinaryAppointmentAnimals)
+                    .Include(card => card.ParasiteTreatments)
                     .FirstOrDefault();
             }
         }
