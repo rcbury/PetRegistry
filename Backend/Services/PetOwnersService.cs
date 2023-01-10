@@ -93,72 +93,6 @@ namespace PIS_PetRegistry.Backend.Services
             }
         }
 
-        public static int GetPhysicalPersonAnimalCount(int personId) 
-        {
-            using (var context = new RegistryPetsContext()) 
-            {
-                var animalsCount = context.Contracts.Where(contract =>
-                    contract.FkPhysicalPerson == personId && contract.FkLegalPerson == null).Count();
-                return animalsCount;
-            }
-        }
-
-        public static int GetLegalPersonAnimalCount(int personId) 
-        {
-            using (var context = new RegistryPetsContext())
-            {
-                var animalsCount = context.Contracts.Where(contract =>
-                    contract.FkLegalPerson == personId).Count();
-                return animalsCount;
-            }
-        }
-
-        public static int GetPhysicalPersonCatCount(int personId) 
-        {
-            using (var context = new RegistryPetsContext()) 
-            {
-                var catsCount = context.Contracts.Where(contract => contract.FkPhysicalPerson == personId && 
-                    contract.FkLegalPerson == null &&
-                    context.AnimalCards.Where(card => card.FkCategory == 2 && card.Id == contract.FkAnimalCard).Count() != 0)
-                    .Count();
-                return catsCount;
-            }
-        }
-
-        public static int GetLegalPersonCatCount(int personId) 
-        {
-            using (var context = new RegistryPetsContext())
-            {
-                var catsCount = context.Contracts.Where(contract => contract.FkLegalPerson == personId &&
-                    context.AnimalCards.Where(card => card.FkCategory == 2 && card.Id == contract.FkAnimalCard).Count() != 0)
-                    .Count();
-                return catsCount;
-            }
-        }
-
-        public static int GetPhysicalPersonDogCount(int personId) 
-        {
-            using (var context = new RegistryPetsContext())
-            {
-                var catsCount = context.Contracts.Where(contract => contract.FkPhysicalPerson == personId &&
-                    contract.FkLegalPerson == null &&
-                    context.AnimalCards.Where(card => card.FkCategory == 1 && card.Id == contract.FkAnimalCard).Count() != 0)
-                    .Count();
-                return catsCount;
-            }
-        }
-
-        public static int GetLegalPersonDogCount(int personId) 
-        {
-            using (var context = new RegistryPetsContext())
-            {
-                var catsCount = context.Contracts.Where(contract => contract.FkLegalPerson == personId &&
-                    context.AnimalCards.Where(card => card.FkCategory == 1 && card.Id == contract.FkAnimalCard).Count() != 0)
-                    .Count();
-                return catsCount;
-            }
-        }
-
         public static LegalPerson? GetLegalPersonById(int? personId)
         {
             if (personId == null) 
@@ -245,9 +179,13 @@ namespace PIS_PetRegistry.Backend.Services
 
         public static PersonInfo GetPhysicalPersonDetailInfo(int personId, int countryId, int locationId) 
         {
-            var animalCount = GetPhysicalPersonAnimalCount(personId);
-            var catCount = GetPhysicalPersonCatCount(personId);
-            var dogCount = GetPhysicalPersonDogCount(personId);
+            var physicalPerson = GetPhysicalPersonById(personId);
+
+            //var animalCount = GetPhysicalPersonAnimalCount(personId);
+            var animalCount = physicalPerson.GetAnimalCount();
+
+            var catCount = physicalPerson.GetCatCount();
+            var dogCount = physicalPerson.GetDogCount();
             var countryName = CountryService.GetCountryNameById(countryId);
             var locationName = LocationService.GetLocationNameById(locationId);
             var personDetailInfoDTO = new PersonInfo()
@@ -263,9 +201,12 @@ namespace PIS_PetRegistry.Backend.Services
 
         public static PersonInfo GetLegalPersonDetailInfo(int personId, int countryId, int locationId)
         {
-            var animalCount = GetLegalPersonAnimalCount(personId);
-            var catCount = GetLegalPersonCatCount(personId);
-            var dogCount = GetLegalPersonDogCount(personId);
+            var legalPerson = GetLegalPersonById(personId);
+
+
+            var animalCount = legalPerson.GetAnimalCount();
+            var catCount = legalPerson.GetCatCount();
+            var dogCount = legalPerson.GetDogCount();
             var countryName = CountryService.GetCountryNameById(countryId);
             var locationName = LocationService.GetLocationNameById(locationId);
             var personDetailInfoDTO = new PersonInfo()

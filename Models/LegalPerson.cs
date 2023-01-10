@@ -28,4 +28,40 @@ public partial class LegalPerson
     public virtual Country FkCountryNavigation { get; set; } = null!;
 
     public virtual Location FkLocalityNavigation { get; set; } = null!;
+
+    public int GetAnimalCount()
+    {
+        using (var context = new RegistryPetsContext())
+        {
+            var animalsCount = context.Contracts.Where(contract => contract.FkLegalPerson == this.Id).Count();
+
+            return animalsCount;
+        }
+    }
+
+    public int GetDogCount()
+    {
+        using (var context = new RegistryPetsContext())
+        {
+            var dogsCount = context.Contracts.Where(contract =>
+                   contract.FkLegalPerson == this.Id &&
+                   context.AnimalCards.Where(card => card.FkCategory == 1 && card.Id == contract.FkAnimalCard).Count() != 0)
+                   .Count();
+
+            return dogsCount;
+        }
+    }
+
+    public int GetCatCount()
+    {
+        using (var context = new RegistryPetsContext())
+        {
+            var catsCount = context.Contracts.Where(contract =>
+                   contract.FkLegalPerson == this.Id &&
+                   context.AnimalCards.Where(card => card.FkCategory == 2 && card.Id == contract.FkAnimalCard).Count() != 0)
+                   .Count();
+
+            return catsCount;
+        }
+    }
 }

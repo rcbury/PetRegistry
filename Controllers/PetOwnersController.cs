@@ -133,12 +133,16 @@ namespace PIS_PetRegistry.Controllers
 
         public static int CountAnimalsByPhysicalPerson(int physicalPersonId)
         {
-            return PetOwnersService.GetPhysicalPersonAnimalCount(physicalPersonId);
+            var physicalPerson = PetOwnersService.GetPhysicalPersonById(physicalPersonId);
+
+            return physicalPerson.GetAnimalCount();
         }
 
         public static int CountAnimalsByLegalPerson(int legalPersonId)
         {
-            return PetOwnersService.GetLegalPersonAnimalCount(legalPersonId);
+            var legalPerson = PetOwnersService.GetLegalPersonById(legalPersonId);
+
+            return legalPerson.GetAnimalCount();
         }
     }
 }
