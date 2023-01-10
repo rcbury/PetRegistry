@@ -137,41 +137,57 @@ namespace PIS_PetRegistry.Services
                 if (animalFilter.PhysicalPerson != null)
                 { 
                     animalCards = context.Contracts.Where(contract =>
-                    contract.FkPhysicalPerson == animalFilter.PhysicalPerson.Id && contract.FkLegalPerson == null)
-                        .Select(x => x.FkAnimalCardNavigation).ToList();
+                    contract.FkPhysicalPerson == animalFilter.PhysicalPerson.Id 
+                    && contract.FkLegalPerson == null)
+                        .Select(x => x.FkAnimalCardNavigation)
+                        .ToList();
                 }
 
                 if (animalFilter.LegalPerson != null)
                 {
                     animalCards = context.Contracts.Where(contract =>
                     contract.FkLegalPerson == animalFilter.LegalPerson.Id)
-                        .Select(x => x.FkAnimalCardNavigation).ToList();
+                        .Select(x => x.FkAnimalCardNavigation)
+                        .ToList();
                 }
 
                 if (animalFilter.ChipId.Length > 0)
                 {
-                    animalCards = animalCards.Where(item => item.ChipId == animalFilter.ChipId).ToList();
+                    animalCards = animalCards
+                        .Where(item => item.ChipId == animalFilter.ChipId)
+                        .ToList();
                 }
                 else
                 {
                     if (animalFilter.Name.Length > 0)
                     {
-                        animalCards = animalCards.Where(item => item.Name == animalFilter.Name).ToList();
+                        animalCards = animalCards
+                            .Where(item => item.Name == animalFilter.Name)
+                            .ToList();
                     }
 
                     if (animalFilter.IsSelectedSex)
                     {
-                        animalCards = animalCards.Where(item => item.IsBoy == animalFilter.IsBoy).ToList();
+                        animalCards = animalCards
+                            .Where(item => item.IsBoy == animalFilter.IsBoy)
+                            .ToList();
                     }
 
                     if (animalFilter.AnimalCategory.Id != -1)
                     {
-                        animalCards = animalCards.Where(item => item.FkCategory == animalFilter.AnimalCategory.Id).ToList();
+                        animalCards = animalCards
+                            .Where(item => item.FkCategory == animalFilter.AnimalCategory.Id)
+                            .ToList();
                     }
 
                     if (animalFilter.SearchTimeVetProcedure != null)
                     {
-                        animalCards = animalCards.Where(item => item.VeterinaryAppointmentAnimals.Where(x => x.Date <= animalFilter.SearchTimeVetProcedure).Count() > 0).ToList();
+                        animalCards = animalCards
+                            .Where(item => item.VeterinaryAppointmentAnimals
+                                .Where(x => x.Date <= animalFilter.SearchTimeVetProcedure)
+                                .Where(x => !x.IsCompleted)
+                                .Count() > 0)
+                            .ToList();
                     }
                 }
 
