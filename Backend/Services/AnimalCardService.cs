@@ -108,7 +108,13 @@ namespace PIS_PetRegistry.Services
 
             using (var context = new RegistryPetsContext())
             {
-                animalCardsList = context.AnimalCards.Include(card => card.FkCategoryNavigation).ToList();
+                animalCardsList = context.AnimalCards
+                    .Include(card => card.FkCategoryNavigation)
+                    .Include(card => card.Vaccinations)
+                    .Include(card => card.VeterinaryAppointmentAnimals)
+                    .Include(card => card.ParasiteTreatments)
+                    .Include(card => card.Contracts)
+                    .ToList();
             }
 
             return animalCardsList;
@@ -120,7 +126,13 @@ namespace PIS_PetRegistry.Services
 
             using (var context = new RegistryPetsContext())
             {
-                var animalCards = context.AnimalCards.Include(card => card.FkCategoryNavigation).ToList();
+                var animalCards = context.AnimalCards
+                    .Include(card => card.FkCategoryNavigation)
+                    .Include(card => card.Vaccinations)
+                    .Include(card => card.VeterinaryAppointmentAnimals)
+                    .Include(card => card.ParasiteTreatments)
+                    .Include(card => card.Contracts)
+                    .ToList();
 
                 if (animalFilter.PhysicalPerson != null)
                 { 
@@ -176,6 +188,7 @@ namespace PIS_PetRegistry.Services
                 var user = AuthorizationService.GetAuthorizedUser();
 
                 var animalCard = GetAnimalCardById(animalCardId);
+                context.AnimalCards.Attach(animalCard);
 
                 if (animalCard == null)
                     throw new Exception("trying to delete non existent model");
@@ -249,6 +262,7 @@ namespace PIS_PetRegistry.Services
                     .Include(card => card.Vaccinations)
                     .Include(card => card.VeterinaryAppointmentAnimals)
                     .Include(card => card.ParasiteTreatments)
+                    .Include(card => card.Contracts)
                     .FirstOrDefault();
             }
         }
