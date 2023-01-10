@@ -46,7 +46,7 @@ namespace PIS_PetRegistry.Backend
             return physicalPersonModel;
         }
 
-        public static PhysicalPersonDTO ConvertModelToDTO(PhysicalPerson physicalPersonModel, PersonInfo personInfo)
+        public static PhysicalPersonDTO ConvertModelToDTO(PhysicalPerson physicalPersonModel)
         {
             var physicalPersonModelDTO = new PhysicalPersonDTO()
             {
@@ -57,17 +57,17 @@ namespace PIS_PetRegistry.Backend
                 Phone = physicalPersonModel.Phone,
                 FkCountry = physicalPersonModel.FkCountry,
                 FkLocality = physicalPersonModel.FkLocality,
-                AnimalCount = personInfo.AnimalCount,
-                CatCount = personInfo.CatCount,
-                DogCount = personInfo.DogCount,
-                CountryName = personInfo.CountryName,
-                LocationName = personInfo.LocationName
+                AnimalCount = physicalPersonModel.GetAnimalCount(),
+                CatCount = physicalPersonModel.GetCatCount(),
+                DogCount = physicalPersonModel.GetDogCount(),
+                CountryName = physicalPersonModel.FkCountryNavigation.Name,
+                LocationName = physicalPersonModel.FkLocalityNavigation.Name
             };
 
             return physicalPersonModelDTO;
         }
 
-        public static LegalPersonDTO ConvertModelToDTO(LegalPerson legalPersonModel, PersonInfo personInfo)
+        public static LegalPersonDTO ConvertModelToDTO(LegalPerson legalPersonModel)
         {
             var legalPersonModelDTO = new LegalPersonDTO()
             {
@@ -80,11 +80,11 @@ namespace PIS_PetRegistry.Backend
                 Phone = legalPersonModel.Phone,
                 FkCountry = legalPersonModel.FkCountry,
                 FkLocality = legalPersonModel.FkLocality,
-                AnimalCount = personInfo.AnimalCount,
-                CatCount = personInfo.CatCount,
-                DogCount = personInfo.DogCount,
-                CountryName = personInfo.CountryName,
-                LocationName = personInfo.LocationName
+                AnimalCount = legalPersonModel.GetAnimalCount(),
+                CatCount = legalPersonModel.GetCatCount(),
+                DogCount = legalPersonModel.GetDogCount(),
+                CountryName = legalPersonModel.FkCountryNavigation.Name,
+                LocationName = legalPersonModel.FkLocalityNavigation.Name
             };
 
             return legalPersonModelDTO;

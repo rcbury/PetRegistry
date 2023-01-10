@@ -22,7 +22,11 @@ namespace PIS_PetRegistry.Backend.Services
         {
             using (var context = new RegistryPetsContext())
             {
-                var physicalPeople = context.PhysicalPeople.ToList();
+                var physicalPeople = context.PhysicalPeople
+                    .Include(x => x.FkLocalityNavigation)
+                    .Include(x => x.FkCountryNavigation)
+                    .ToList();
+
                 if (phone != null && phone != "")
                 {
                     physicalPeople = physicalPeople.Where(person => person.Phone.Contains(phone)).ToList();
@@ -56,7 +60,11 @@ namespace PIS_PetRegistry.Backend.Services
         {
             using (var context = new RegistryPetsContext())
             {
-                var legalPeople = context.LegalPeople.ToList();
+                var legalPeople = context.LegalPeople
+                    .Include(x => x.FkLocalityNavigation)
+                    .Include(x => x.FkCountryNavigation)
+                    .ToList();
+
                 if (inn != null && inn != "")
                 {
                     legalPeople = legalPeople.Where(person => person.Phone.Contains(inn)).ToList();
@@ -104,6 +112,7 @@ namespace PIS_PetRegistry.Backend.Services
                 return context.LegalPeople
                     .Where(person => person.Id == personId)
                     .Include(person => person.FkLocalityNavigation)
+                    .Include(person => person.FkCountryNavigation)
                     .FirstOrDefault();
             }
         }
@@ -115,6 +124,7 @@ namespace PIS_PetRegistry.Backend.Services
                 return context.PhysicalPeople
                     .Where(person => person.Id == personId)
                     .Include(person => person.FkLocalityNavigation)
+                    .Include(person => person.FkCountryNavigation)
                     .FirstOrDefault();
             }
         }
@@ -123,14 +133,22 @@ namespace PIS_PetRegistry.Backend.Services
         {
             using (var context = new RegistryPetsContext())
             {
-                return context.PhysicalPeople.Where(person => person.Phone == phone).FirstOrDefault();
+                return context.PhysicalPeople
+                    .Where(person => person.Phone == phone)
+                    .Include(person => person.FkLocalityNavigation)
+                    .Include(person => person.FkCountryNavigation)
+                    .FirstOrDefault();
             }
         }
         public static LegalPerson? GetLegalPersonByInn(string INN)
         {
             using (var context = new RegistryPetsContext())
             {
-                return context.LegalPeople.Where(person => person.Inn == INN).FirstOrDefault();
+                return context.LegalPeople
+                    .Where(person => person.Inn == INN)
+                    .Include(person => person.FkLocalityNavigation)
+                    .Include(person => person.FkCountryNavigation)
+                    .FirstOrDefault();
             }
         }
         public static LegalPerson AddLegalPerson(LegalPerson legalPersonModel)
@@ -176,49 +194,5 @@ namespace PIS_PetRegistry.Backend.Services
 
             return physicalPersonModel;
         }
-
-        public static PersonInfo GetPhysicalPersonDetailInfo(int personId, int countryId, int locationId) 
-        {
-            var physicalPerson = GetPhysicalPersonById(personId);
-
-            //var animalCount = GetPhysicalPersonAnimalCount(personId);
-            var animalCount = physicalPerson.GetAnimalCount();
-
-            var catCount = physicalPerson.GetCatCount();
-            var dogCount = physicalPerson.GetDogCount();
-            var countryName = CountryService.GetCountryNameById(countryId);
-            var locationName = LocationService.GetLocationNameById(locationId);
-            var personDetailInfoDTO = new PersonInfo()
-            {
-                AnimalCount = animalCount,
-                CatCount = catCount,
-                DogCount = dogCount,
-                CountryName = countryName,
-                LocationName = locationName
-            };
-            return personDetailInfoDTO;
-        }
-
-        public static PersonInfo GetLegalPersonDetailInfo(int personId, int countryId, int locationId)
-        {
-            var legalPerson = GetLegalPersonById(personId);
-
-
-            var animalCount = legalPerson.GetAnimalCount();
-            var catCount = legalPerson.GetCatCount();
-            var dogCount = legalPerson.GetDogCount();
-            var countryName = CountryService.GetCountryNameById(countryId);
-            var locationName = LocationService.GetLocationNameById(locationId);
-            var personDetailInfoDTO = new PersonInfo()
-            {
-                AnimalCount = animalCount,
-                CatCount = catCount,
-                DogCount = dogCount,
-                CountryName = countryName,
-                LocationName = locationName
-            };
-            return personDetailInfoDTO;
-        }
-
     }
 }
