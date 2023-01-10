@@ -17,14 +17,6 @@ namespace PIS_PetRegistry.Backend.Services
 {
     public class CountryService
     {
-        public static string GetCountryNameById(int countryId) 
-        {
-            using (var context = new RegistryPetsContext()) 
-            {
-                return context.Countries.Where(country => country.Id == countryId).FirstOrDefault().Name;
-            }
-        }
-
         public static List<Country> GetCountries() 
         {
             using (var context = new RegistryPetsContext()) 
