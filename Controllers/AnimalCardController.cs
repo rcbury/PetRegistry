@@ -83,7 +83,14 @@ namespace PIS_PetRegistry.Controllers
             return newAnimalCardDTO;
         }
 
-        public static List<AnimalCardDTO> GetAnimals(AnimalFilterDTO? animalFilter = null)
+        public static List<AnimalCardDTO> GetAnimals() 
+        {
+            var animalCardsList = AnimalCardService.GetAnimals();
+            var animalsListDto = animalCardsList.Select(item => DTOModelConverter.ConvertModelToDTO(item)).ToList();
+
+            return animalsListDto;
+        }
+        public static List<AnimalCardDTO> GetAnimals(AnimalFilterDTO animalFilter)
         {
             var animalCardsList = AnimalCardService.GetAnimals(animalFilter);
             var animalsListDto = animalCardsList.Select(item => DTOModelConverter.ConvertModelToDTO(item)).ToList();
