@@ -113,13 +113,16 @@ namespace PIS_PetRegistry.Services
 
             return animalCardsList;
         }
-        public static List<AnimalCard> GetAnimals(AnimalFilterDTO animalFilter)
+        public static List<AnimalCard> GetAnimals(AnimalFilterDTO? animalFilter)
         {
             var animalCardsList = new List<AnimalCard> { };
 
             using (var context = new RegistryPetsContext())
             {
                 var animalCards = context.AnimalCards.Include(card => card.FkCategoryNavigation).ToList();
+
+                if (animalFilter == null)
+                    return animalCards;
 
                 if (animalFilter.PhysicalPerson != null)
                 { 
