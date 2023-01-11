@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using PIS_PetRegistry.Backend;
+using PIS_PetRegistry.Backend.Models;
 using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using System;
@@ -25,11 +26,13 @@ namespace PIS_PetRegistry
         private bool _physicalSortDirection;
         private int _legalPreviousIndex;
         private bool _legalSortDirection;
+        private LegalPeopleRegistry legalPeopleRegistry;
         public PetOwnersForm()
         {
             InitializeComponent();
             SetupPermissions();
 
+            legalPeopleRegistry = new LegalPeopleRegistry();
             listLegalPersonDTOs = new List<LegalPersonDTO>();
             listPhysicalPersonDTOs = new List<PhysicalPersonDTO>();
             countries = CountryController.GetCountries();
@@ -188,7 +191,7 @@ namespace PIS_PetRegistry
             var phone = textBox10.Text;
             var country = Convert.ToInt16(comboBox4.SelectedValue);
             var location = Convert.ToInt16(comboBox3.SelectedValue);
-            listLegalPersonDTOs = PetOwnersController.GetLegalPeople(inn, kpp, name, email, address, phone, country, location);
+            listLegalPersonDTOs = legalPeopleRegistry.GetLegalPeople(inn, kpp, name, email, address, phone, country, location);
             dataGridView2.DataSource = listLegalPersonDTOs;
         }
 

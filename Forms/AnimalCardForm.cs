@@ -354,21 +354,23 @@ namespace PIS_PetRegistry
                 this.vaccinationsDTO = VaccinationController.GetVaccinationsByAnimal(animalCardDTO.Id);
                 contractDTO = AnimalCardController.GetContractByAnimal(animalCardDTO.Id);
 
-                if (contractDTO != null) 
-                {
-                    checkBox2.Checked = true;
-                    checkBox2.Enabled = false;
-                    physicalPersonDTO = PetOwnersController.GetPhysicalPersonById(contractDTO.FkPhysicalPerson);
-                    FillPhysical();
-                    if (contractDTO.FkLegalPerson != null)
-                    {
-                        checkBox1.Checked = true;
-                        checkBox1.Enabled = false;
-                        legalPersonDTO = PetOwnersController.GetLegalPersonById(contractDTO.FkLegalPerson);
-                        groupBox6.Show();
-                        FillLegal();
-                    }
-                }
+
+                //TODO:
+                //if (contractDTO != null) 
+                //{
+                //    checkBox2.Checked = true;
+                //    checkBox2.Enabled = false;
+                //    physicalPersonDTO = PetOwnersController.GetPhysicalPersonById(contractDTO.FkPhysicalPerson);
+                //    FillPhysical();
+                //    if (contractDTO.FkLegalPerson != null)
+                //    {
+                //        checkBox1.Checked = true;
+                //        checkBox1.Enabled = false;
+                //        legalPersonDTO = PetOwnersController.GetLegalPersonById(contractDTO.FkLegalPerson);
+                //        groupBox6.Show();
+                //        FillLegal();
+                //    }
+                //}
 
                 parasiteTreatmentDGV.DataSource = parasiteTreatmentsDTO;
                 veterinaryAppointmentDGV.DataSource = veterinaryAppointmentsDTO;
@@ -476,7 +478,8 @@ namespace PIS_PetRegistry
         private void button2_Click(object sender, EventArgs e)
         {
             var inn = textBox12.Text;
-            legalPersonDTO = PetOwnersController.GetLegalPersonByINN(inn);
+            //TODO:
+            //legalPersonDTO = PetOwnersController.GetLegalPersonByINN(inn);
             if (legalPersonDTO == null)
             {
                 MessageBox.Show("Юр. лицо с указанным ИНН не найдено.");

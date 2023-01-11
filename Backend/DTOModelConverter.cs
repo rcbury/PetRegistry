@@ -67,7 +67,7 @@ namespace PIS_PetRegistry.Backend
             return physicalPersonModelDTO;
         }
 
-        public static LegalPersonDTO ConvertModelToDTO(LegalPerson legalPersonModel)
+        public static LegalPersonDTO ConvertModelToDTO(Models.LegalPerson legalPersonModel)
         {
             var legalPersonModelDTO = new LegalPersonDTO()
             {
@@ -78,13 +78,13 @@ namespace PIS_PetRegistry.Backend
                 Address = legalPersonModel.Address,
                 Email = legalPersonModel.Email,
                 Phone = legalPersonModel.Phone,
-                FkCountry = legalPersonModel.FkCountry,
-                FkLocality = legalPersonModel.FkLocality,
+                FkCountry = legalPersonModel.Country.Id,
+                FkLocality = legalPersonModel.Location.Id,
                 AnimalCount = legalPersonModel.GetAnimalCount(),
                 CatCount = legalPersonModel.GetCatCount(),
                 DogCount = legalPersonModel.GetDogCount(),
-                CountryName = legalPersonModel.FkCountryNavigation.Name,
-                LocationName = legalPersonModel.FkLocalityNavigation.Name
+                CountryName = legalPersonModel.Country.Name,
+                LocationName = legalPersonModel.Location.Name
             };
 
             return legalPersonModelDTO;

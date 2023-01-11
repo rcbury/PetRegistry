@@ -58,43 +58,6 @@ namespace PIS_PetRegistry.Controllers
             return DTOModelConverter.ConvertModelToDTO(person);
         }
 
-        public static LegalPersonDTO? GetLegalPersonByINN(string INN)
-        {
-            var person = PetOwnersService.GetLegalPersonByInn(INN);
-            
-            if (person == null)
-            {
-                return null;
-            }
-
-            return DTOModelConverter.ConvertModelToDTO(person);
-        }
-        public static LegalPersonDTO? GetLegalPersonById(int? personId)
-        {
-            var person = PetOwnersService.GetLegalPersonById(personId);
-            
-            if (person == null)
-            {
-                return null;
-            }
-
-            return DTOModelConverter.ConvertModelToDTO(person);
-        }
-
-        public static List<LegalPersonDTO> GetLegalPeople(string inn, string kpp, string name, string email, 
-            string address, string phone, int country, int location)
-        {
-            var legalPeople = PetOwnersService.GetLegalPeople(inn, kpp, name, email, address, phone, country, location);
-            var res = new List<LegalPersonDTO>();
-            
-            foreach (var legalPerson in legalPeople)
-            {
-                res.Add(DTOModelConverter.ConvertModelToDTO(legalPerson));
-            }
-
-            return res;
-        }
-       
         public static void UpdateLegalPerson(LegalPersonDTO legalPersonDTO)
         {
             var legalPersonModel = DTOModelConverter.ConvertDTOToModel(legalPersonDTO);

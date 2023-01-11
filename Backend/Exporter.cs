@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
-using Microsoft.VisualBasic.ApplicationServices;
 using Spire.Doc;
 using PIS_PetRegistry.Services;
 
@@ -168,7 +167,7 @@ namespace PIS_PetRegistry.Backend
         }
 
         public static void MakeContract(string filePath, PhysicalPerson physicalPerson, LegalPerson legalPerson, 
-            AnimalCard animalCard, Models.User user, Shelter shelter) 
+            AnimalCard animalCard, User user, Shelter shelter) 
         {
             if (physicalPerson != null)
             {

@@ -114,23 +114,23 @@ namespace PIS_PetRegistry.Services
             return animalCardsList;
         }
         
-        public static List<AnimalCard> GetAnimals(AnimalFilterDTO? animalFilter)
-        {
-            var animalCardsList = new List<AnimalCard> { };
+        //public static List<AnimalCard> GetAnimals(AnimalFilterDTO? animalFilter)
+        //{
+        //    var animalCardsList = new List<AnimalCard> { };
 
-            using (var context = new RegistryPetsContext())
-            {
-                animalCardsList = context.AnimalCards
-                    .Include(card => card.FkCategoryNavigation)
-                    .Include(card => card.Vaccinations)
-                    .Include(card => card.VeterinaryAppointmentAnimals)
-                    .Include(card => card.ParasiteTreatments)
-                    .Include(card => card.Contracts)
-                    .ToList();
-            }
+        //    using (var context = new RegistryPetsContext())
+        //    {
+        //        animalCardsList = context.AnimalCards
+        //            .Include(card => card.FkCategoryNavigation)
+        //            .Include(card => card.Vaccinations)
+        //            .Include(card => card.VeterinaryAppointmentAnimals)
+        //            .Include(card => card.ParasiteTreatments)
+        //            .Include(card => card.Contracts)
+        //            .ToList();
+        //    }
 
-            return animalCardsList;
-        }
+        //    return animalCardsList;
+        //}
 
         public static List<AnimalCard> GetAnimals(AnimalFilterDTO animalFilter)
         {
