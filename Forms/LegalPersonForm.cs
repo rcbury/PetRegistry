@@ -9,7 +9,6 @@ namespace PIS_PetRegistry
     {
         private LegalPersonDTO? mainLegalPerson;
         private AnimalCardRegistry? mainRegistry;
-        private bool editAllowed = true;
         public LegalPersonForm(AnimalCardRegistry registry) : this(selectedLegalPerson: null, registry: registry)
         {
 
