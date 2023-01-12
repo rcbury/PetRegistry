@@ -24,7 +24,7 @@ namespace PIS_PetRegistry.Backend.Services
             }
         }
 
-        public static VeterinaryAppointmentAnimal AddVeterinaryAppointment(VeterinaryAppointmentAnimal veterinaryAppointment, User user)
+        public static VeterinaryAppointmentAnimal AddVeterinaryAppointment(VeterinaryAppointmentAnimal veterinaryAppointment)
         {
             var existingVeterinaryAppointmentModel = GetVeterinaryAppointment(
                 veterinaryAppointment.FkAnimal,
@@ -35,8 +35,6 @@ namespace PIS_PetRegistry.Backend.Services
             {
                 throw new Exception("Данная запись уже существует");
             }
-
-            veterinaryAppointment.FkUser = user.Id;
 
             using (var context = new RegistryPetsContext())
             {
