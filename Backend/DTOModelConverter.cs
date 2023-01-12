@@ -1,7 +1,6 @@
 ﻿using PIS_PetRegistry.Backend.Models;
 using PIS_PetRegistry.Backend.Services;
 using PIS_PetRegistry.DTO;
-using PIS_PetRegistry.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,40 +12,6 @@ namespace PIS_PetRegistry.Backend
 {
     internal class DTOModelConverter
     {
-        public static LegalPerson ConvertDTOToRegistryModel(LegalPersonDTO legalPersonDTO)
-        {
-            var legalPersonModel = new LegalPerson()
-            {
-                Id= legalPersonDTO.Id,
-                Inn = legalPersonDTO.INN,
-                Kpp = legalPersonDTO.KPP,
-                Name = legalPersonDTO.Name,
-                Address = legalPersonDTO.Address,
-                Email = legalPersonDTO.Email,
-                Phone = legalPersonDTO.Phone,
-                FkCountry = legalPersonDTO.FkCountry,
-                FkLocality = legalPersonDTO.FkLocality,
-            };
-
-            return legalPersonModel;
-        }
-
-        public static PhysicalPerson ConvertDTOToRegistryModel(PhysicalPersonDTO physicalPersonDTO)
-        {
-            var physicalPersonModel = new PhysicalPerson()
-            {
-                Id = physicalPersonDTO.Id,
-                Name = physicalPersonDTO.Name,
-                Address = physicalPersonDTO.Address,
-                Email = physicalPersonDTO.Email,
-                Phone = physicalPersonDTO.Phone,
-                FkCountry = physicalPersonDTO.FkCountry,
-                FkLocality = physicalPersonDTO.FkLocality,
-            };
-
-            return physicalPersonModel;
-        }
-
         public static PhysicalPersonDTO ConvertModelToDTO(Models.PhysicalPerson physicalPersonModel)
         {
             var physicalPersonModelDTO = new PhysicalPersonDTO()
@@ -93,21 +58,13 @@ namespace PIS_PetRegistry.Backend
         {
             var parasiteTreatmentDTO = new ParasiteTreatmentDTO()
             {
-                FkAnimal = parasiteTreatment.FkAnimal,
-                FkUser = parasiteTreatment.FkUser,
-                FkMedication = parasiteTreatment.FkMedication,
+                FkAnimal = parasiteTreatment.AnimalCard.Id,
+                FkUser = parasiteTreatment.User.Id,
+                FkMedication = parasiteTreatment.Medication.Id,
                 Date = parasiteTreatment.Date,
+                MedicationName = parasiteTreatment.Medication.Name,
+                UserName = parasiteTreatment.User.Name
             };
-
-            if (parasiteTreatment.FkUserNavigation != null)
-            {
-                parasiteTreatmentDTO.UserName = parasiteTreatment.FkUserNavigation.Name;
-            }
-
-            if (parasiteTreatment.FkMedicationNavigation != null)
-            {
-                parasiteTreatmentDTO.MedicationName = parasiteTreatment.FkMedicationNavigation.Name;
-            }
 
             return parasiteTreatmentDTO;
         }
@@ -116,40 +73,28 @@ namespace PIS_PetRegistry.Backend
         {
             var vaccinationDTO = new VaccinationDTO()
             {
-                FkAnimal = vaccination.FkAnimal,
-                FkUser = vaccination.FkUser,
-                FkVaccine = vaccination.FkVaccine,
+                FkAnimal = vaccination.AnimalCard.Id,
+                FkUser = vaccination.User.Id,
+                FkVaccine = vaccination.Vaccine.Id,
                 DateEnd = vaccination.DateEnd,
+                VaccineName = vaccination.Vaccine.Name,
+                UserName = vaccination.User.Name
             };
-
-            if (vaccination.FkVaccineNavigation != null)
-            {
-                vaccinationDTO.VaccineName = vaccination.FkVaccineNavigation.Name;
-            }
-            if (vaccination.FkUserNavigation != null)
-            {
-                vaccinationDTO.UserName = vaccination.FkUserNavigation.Name;
-            }
-
 
             return vaccinationDTO;
         }
 
-        public static VeterinaryAppointmentDTO ConvertModelToDTO(VeterinaryAppointmentAnimal veterinaryAppointment)
+        public static VeterinaryAppointmentDTO ConvertModelToDTO(VeterinaryAppointment veterinaryAppointment)
         {
             var veterinaryAppointmentDTO = new VeterinaryAppointmentDTO()
             {
-                FkAnimal = veterinaryAppointment.FkAnimal,
-                FkUser = veterinaryAppointment.FkUser,
+                FkAnimal = veterinaryAppointment.AnimalCard.Id,
+                FkUser = veterinaryAppointment.User.Id,
                 Name = veterinaryAppointment.Name,
                 Date = veterinaryAppointment.Date.ToLocalTime(),
                 IsCompleted = veterinaryAppointment.IsCompleted,
+                UserName = veterinaryAppointment.User.Name,
             };
-
-            if (veterinaryAppointment.FkUserNavigation != null)
-            {
-                veterinaryAppointmentDTO.UserName = veterinaryAppointment.FkUserNavigation.Name;
-            }
 
             return veterinaryAppointmentDTO;
         }
@@ -167,19 +112,19 @@ namespace PIS_PetRegistry.Backend
             return vaccineDTO;
         }
 
-        public static AnimalCardDTO ConvertModelToDTO(AnimalCard model)
+        public static AnimalCardDTO ConvertModelToDTO(AnimalCard animalCard)
         {
             var AnimalCardDTO = new AnimalCardDTO()
             {
-                Id = model.Id,
-                ChipId = model.ChipId,
-                Name = model.Name,
-                IsBoy = model.IsBoy,
-                FkCategory = model.FkCategory,
-                FkShelter = model.FkShelter,
-                YearOfBirth = model.YearOfBirth,
-                Photo = model.Photo,
-                CategoryName = model.FkCategoryNavigation != null ? model.FkCategoryNavigation.Name : null
+                Id = animalCard.Id,
+                ChipId = animalCard.ChipId,
+                Name = animalCard.Name,
+                IsBoy = animalCard.IsBoy,
+                FkCategory = animalCard.AnimalCategory.Id,
+                FkShelter = animalCard.Shelter.Id,
+                YearOfBirth = animalCard.YearOfBirth,
+                Photo = animalCard.Photo,
+                CategoryName = animalCard.AnimalCategory.Name
             };
 
             return AnimalCardDTO;
@@ -191,16 +136,12 @@ namespace PIS_PetRegistry.Backend
             {
                 Login = user.Login,
                 Id = user.Id,
-                ShelterId = user.FkShelter,
+                ShelterId = user.Shelter.Id,
                 RoleId = user.FkRole,
-                LocationId = user.FkLocation,
+                LocationId = user.Location.Id,
                 Name = user.Name,
+                ShelterLocationId = user.Shelter.Location.Id
             };
-
-            if (user.FkShelter != null)
-            {
-                userDTO.ShelterLocationId = user.FkShelterNavigation.FkLocation;
-            }
 
             return userDTO;
         }
@@ -233,25 +174,12 @@ namespace PIS_PetRegistry.Backend
             {
                 Number = contract.Number,
                 Date = contract.Date,
-                FkAnimalCard = contract.FkAnimalCard,
-                FkUser = contract.FkUser,
-                FkPhysicalPerson = contract.FkPhysicalPerson,
-                FkLegalPerson = contract.FkLegalPerson
+                FkAnimalCard = contract.AnimalCard.Id,
+                FkUser = contract.User.Id,
+                FkPhysicalPerson = contract.PhysicalPerson.Id,
+                FkLegalPerson = contract.LegalPerson.Id
             };
-            return res;
-        }
 
-        public static Models.PhysicalPerson ConvertModelToRegistryModel(PIS_PetRegistry.Models.PhysicalPerson person, Countries countries, Locations locations)
-        {
-            var res = new Models.PhysicalPerson()
-            {
-                Id = person.Id,
-                Name = person.Name,
-                Address = person.Address,
-                Email = person.Email,
-                Country = countries.GetCountry(person.FkCountry),
-                Location = locations.GetLocation(person.FkLocality)
-            };
             return res;
         }
     }
