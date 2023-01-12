@@ -18,7 +18,7 @@ namespace PIS_PetRegistry.Backend.Services
 {
     public class PetOwnersService
     {
-        public static List<PhysicalPerson> GetPhysicalPeople(string phone, string name, string address, string email, int country, int location) 
+        public static List<PhysicalPerson> GetPhysicalPeople() 
         {
             using (var context = new RegistryPetsContext())
             {
@@ -27,36 +27,11 @@ namespace PIS_PetRegistry.Backend.Services
                     .Include(x => x.FkCountryNavigation)
                     .ToList();
 
-                if (phone != null && phone != "")
-                {
-                    physicalPeople = physicalPeople.Where(person => person.Phone.Contains(phone)).ToList();
-                }
-                if (name != null && name != "")
-                {
-                    physicalPeople = physicalPeople.Where(person => person.Name.Contains(name)).ToList();
-                }
-                if (address != null && address != "")
-                {
-                    physicalPeople = physicalPeople.Where(person => person.Address.Contains(address)).ToList();
-                }
-                if (email != null && email != "")
-                {
-                    physicalPeople = physicalPeople.Where(person => person.Email.Contains(email)).ToList();
-                }
-                if (country != 0)
-                {
-                    physicalPeople = physicalPeople.Where(person => person.FkCountry == country).ToList();
-                }
-                if (location != 0)
-                {
-                    physicalPeople = physicalPeople.Where(person => person.FkLocality == location).ToList();
-                }
                 return physicalPeople;
             }
         }
 
-        public static List<LegalPerson> GetLegalPeople(string inn, string kpp, string name, string email, 
-            string address, string phone, int country, int location)
+        public static List<LegalPerson> GetLegalPeople()
         {
             using (var context = new RegistryPetsContext())
             {
@@ -65,38 +40,6 @@ namespace PIS_PetRegistry.Backend.Services
                     .Include(x => x.FkCountryNavigation)
                     .ToList();
 
-                if (inn != null && inn != "")
-                {
-                    legalPeople = legalPeople.Where(person => person.Phone.Contains(inn)).ToList();
-                }
-                if (kpp != null && kpp != "")
-                {
-                    legalPeople = legalPeople.Where(person => person.Phone.Contains(kpp)).ToList();
-                }
-                if (name != null && name != "")
-                {
-                    legalPeople = legalPeople.Where(person => person.Phone.Contains(name)).ToList();
-                }
-                if (email != null && email != "")
-                {
-                    legalPeople = legalPeople.Where(person => person.Phone.Contains(email)).ToList();
-                }
-                if (address != null && address != "")
-                {
-                    legalPeople = legalPeople.Where(person => person.Phone.Contains(address)).ToList();
-                }
-                if (phone != null && phone != "")
-                {
-                    legalPeople = legalPeople.Where(person => person.Phone.Contains(phone)).ToList();
-                }
-                if (country != 0)
-                {
-                    legalPeople = legalPeople.Where(person => person.FkCountry == country).ToList();
-                }
-                if (location != 0)
-                {
-                    legalPeople = legalPeople.Where(person => person.FkLocality == location).ToList();
-                }
                 return legalPeople;
             }
         }
