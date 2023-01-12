@@ -565,5 +565,15 @@ namespace PIS_PetRegistry.Backend.Models
 
             Exporter.MakeContract(filePath, physicalPerson, legalPerson, card, user);
         }
+
+        public void SaveContract(PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO legalPersonDTO, AnimalCardDTO animalCardDTO) 
+        {
+            var physicalPerson = PhysicalPeople.Where(item => item.Id == physicalPersonDTO.Id).FirstOrDefault();
+            var legalPerson = LegalPeople.Where(item => item.Id == legalPersonDTO.Id).FirstOrDefault();
+            var card = AnimalCards.Where(item => item.Id == animalCardDTO.Id).FirstOrDefault();
+            var user = AuthorizationController.User;
+
+            Contracts.SaveContract(physicalPerson, legalPerson, card, user);
+        }
     }
 }
