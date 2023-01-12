@@ -22,43 +22,38 @@ namespace PIS_PetRegistry.Backend.Models
 
         public Location Location { get; set; } = null!;
 
+        public Contracts Contracts { get; set; } 
+
         public int GetAnimalCount()
         {
-            //var animalsCount = context.Contracts.Where(contract => contract.FkLegalPerson == this.Id).Count();
+            var animalsCount = Contracts.ContractList
+                .Where(contract => contract.PhysicalPerson.Id == this.Id)
+                .Where(contract => contract.LegalPerson == null)
+                .Count();
 
-            //return animalsCount;
-
-            return 0;
+            return animalsCount;
         }
 
         public int GetDogCount()
         {
-            //using (var context = new RegistryPetsContext())
-            //{
-            //    var dogsCount = context.Contracts.Where(contract =>
-            //           contract.FkLegalPerson == this.Id &&
-            //           context.AnimalCards.Where(card => card.FkCategory == 1 && card.Id == contract.FkAnimalCard).Count() != 0)
-            //           .Count();
+            var dogsCount = Contracts.ContractList
+                .Where(contract => contract.PhysicalPerson.Id == this.Id)
+                .Where(contract => contract.LegalPerson == null)
+                .Where(contract => contract.AnimalCard.AnimalCategory.Id == 1)
+                .Count();
 
-            //    return dogsCount;
-            //}
-
-            return 0;
+            return dogsCount;
         }
 
         public int GetCatCount()
         {
-            //using (var context = new RegistryPetsContext())
-            //{
-            //    var catsCount = context.Contracts.Where(contract =>
-            //           contract.FkLegalPerson == this.Id &&
-            //           context.AnimalCards.Where(card => card.FkCategory == 2 && card.Id == contract.FkAnimalCard).Count() != 0)
-            //           .Count();
+            var catsCount = Contracts.ContractList
+                .Where(contract => contract.PhysicalPerson.Id == this.Id)
+                .Where(contract => contract.LegalPerson == null)
+                .Where(contract => contract.AnimalCard.AnimalCategory.Id == 2)
+                .Count();
 
-            //    return catsCount;
-            //}
-
-            return 0;
+            return catsCount;
         }
     }
 }
