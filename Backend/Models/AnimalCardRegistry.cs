@@ -145,7 +145,7 @@ namespace PIS_PetRegistry.Backend.Models
             PetOwnersService.UpdateLegalPerson(legalPersonModel);
         }
 
-        public List<AnimalCategoryDTO> GetAnimalCardCategories()
+        public List<AnimalCategoryDTO> GetAnimalCategories()
         {
             return AnimalCategories.Select(x => new AnimalCategoryDTO(x)).ToList();
         }

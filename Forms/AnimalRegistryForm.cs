@@ -81,7 +81,7 @@ namespace PIS_PetRegistry
             defualtAnimalCategory.Id = -1;
             defualtAnimalCategory.Name = "Категория";
 
-            _animalCategories = animalCardRegistry.GetAnimalCardCategories();
+            _animalCategories = animalCardRegistry.GetAnimalCategories();
             _animalCategories.Insert(0, defualtAnimalCategory);
             comboBoxCategory.DataSource = _animalCategories;
             comboBoxCategory.DisplayMember = "Name";

@@ -224,7 +224,7 @@ namespace PIS_PetRegistry
                 new KeyValuePair<bool, string>(false, "ж"),
             };
 
-            var animalCategories = animalCardRegistry.GetAnimalCardCategories();
+            var animalCategories = animalCardRegistry.GetAnimalCategories();
 
             animalCategoryComboBox.DataSource = animalCategories;
             animalCategoryComboBox.DisplayMember = "Name";
