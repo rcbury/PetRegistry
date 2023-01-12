@@ -52,21 +52,32 @@ namespace PIS_PetRegistry.Backend.Models
             return ContractList.Where(x => x.Id == contractId).FirstOrDefault();
         }
 
-        public void SaveContract(PhysicalPerson physicalPerson, LegalPerson legalPerson, AnimalCard card, User user) 
+        public void SaveContract(PhysicalPerson physicalPerson, LegalPerson? legalPerson, AnimalCard card, User user) 
         {
-            var contract = new Contract();
-                contract.Number = maxNum == null ? 1 : maxNum + 1;
-                contract.Date = DateOnly.FromDateTime(DateTime.Now);
-                contract.FkAnimalCard = animalCardDTO.Id;
-                contract.FkUser = user.Id;
-                contract.FkPhysicalPerson = physicalPersonDTO.Id;
-                if (legalPersonDTO != null)
-                {
-                    contract.FkLegalPerson = legalPersonDTO.Id;
-                }
-                context.Contracts.Add(contract);
-                context.SaveChanges();
-            return contract;
+            var maxNum = AnimalCardService.GetContractNumber();
+            var contract = new PIS_PetRegistry.Models.Contract()
+            {
+                Number = maxNum,
+                Date = DateOnly.FromDateTime(DateTime.Now),
+                FkAnimalCard = card.Id,
+                FkUser = user.Id,
+                FkPhysicalPerson = physicalPerson.Id,
+                FkLegalPerson = legalPerson == null ? null : legalPerson.Id
+            };
+
+            contract = AnimalCardService.SaveContract(contract);
+
+            var registryContract = new Contract()
+            {
+                Id = contract.Id,
+                Number = contract.Number,
+                Date = contract.Date,
+                AnimalCard = card,
+                User = user,
+                PhysicalPerson = physicalPerson
+            };
+
+            ContractList.Add(registryContract);
         }
 
     }
