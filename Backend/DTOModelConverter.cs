@@ -24,6 +24,17 @@ namespace PIS_PetRegistry.Backend
             return animalCategoryDTO;
         }
 
+        public static ParasiteTreatmentMedicationDTO ConvertModelToDTO(Medication medication)
+        {
+            var medicationDTO = new ParasiteTreatmentMedicationDTO()
+            {
+                Name = medication.Name,
+                Id = medication.Id,
+            };
+
+            return medicationDTO;
+        }
+
         public static PhysicalPersonDTO ConvertModelToDTO(Models.PhysicalPerson physicalPersonModel)
         {
             var physicalPersonModelDTO = new PhysicalPersonDTO()
@@ -148,12 +159,20 @@ namespace PIS_PetRegistry.Backend
             {
                 Login = user.Login,
                 Id = user.Id,
-                ShelterId = user.Shelter.Id,
                 RoleId = user.FkRole,
-                LocationId = user.Location.Id,
                 Name = user.Name,
-                ShelterLocationId = user.Shelter.Location.Id
             };
+
+            if (user.Location != null) 
+            {
+                userDTO.LocationId = user.Location.Id;
+            }
+
+            if (user.Shelter != null)
+            {
+                userDTO.ShelterId = user.Shelter.Id;
+                userDTO.ShelterLocationId = user.Shelter.Location.Id;
+            }
 
             return userDTO;
         }

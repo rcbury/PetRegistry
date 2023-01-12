@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PIS_PetRegistry.Backend.Models;
 using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 
@@ -14,9 +15,13 @@ namespace PIS_PetRegistry.Forms
 {
     public partial class VaccinationForm : Form
     {
-        public VaccinationForm(int FKAnimal)
+        private AnimalCardRegistry animalCardRegistry;
+
+        public VaccinationForm(AnimalCardRegistry animalCardRegistry, int FKAnimal)
         {
-            var vaccines = VaccinationController.GetVaccines();
+            this.animalCardRegistry = animalCardRegistry;
+
+            var vaccines = animalCardRegistry.GetVaccines();
 
             vaccinationDTO = new VaccinationDTO();
             vaccinationDTO.FkAnimal = FKAnimal;
@@ -32,9 +37,11 @@ namespace PIS_PetRegistry.Forms
         }
 
 
-        public VaccinationForm(VaccinationDTO vaccinationDTO)
+        public VaccinationForm(AnimalCardRegistry animalCardRegistry, VaccinationDTO vaccinationDTO)
         {
-            var vaccines = VaccinationController.GetVaccines();
+            this.animalCardRegistry = animalCardRegistry;
+
+            var vaccines = animalCardRegistry.GetVaccines();
 
             this.vaccinationDTO = vaccinationDTO;
 
@@ -78,7 +85,7 @@ namespace PIS_PetRegistry.Forms
 
                 try
                 {
-                    vaccinationDTO = VaccinationController.AddVaccination(tempVaccinationDTO);
+                    vaccinationDTO = animalCardRegistry.AddVaccination(tempVaccinationDTO);
                 }
                 catch(Exception ex)
                 {
@@ -97,7 +104,7 @@ namespace PIS_PetRegistry.Forms
 
                 try
                 {
-                    vaccinationDTO = VaccinationController.UpdateVaccination(vaccinationDTO, tempVaccinationDTO);
+                    vaccinationDTO = animalCardRegistry.UpdateVaccination(vaccinationDTO, tempVaccinationDTO);
                 }
                 catch (Exception ex)
                 {

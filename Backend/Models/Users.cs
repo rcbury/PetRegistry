@@ -11,6 +11,8 @@ namespace PIS_PetRegistry.Backend.Models
     {
         public Users(Locations locations, Shelters shelters)
         {
+            UserList = new List<User>();
+
             using (var context = new RegistryPetsContext())
             {
                 var usersDB = context.Users.ToList();

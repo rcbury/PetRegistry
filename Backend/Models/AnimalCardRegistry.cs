@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.InkML;
+﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
+using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.ApplicationServices;
@@ -99,9 +100,9 @@ namespace PIS_PetRegistry.Backend.Models
         private AnimalCategories AnimalCategories { get; set; }
         private Vaccines Vaccines { get; set; }
         private Medications Medications { get; set; }
-        private List<AnimalCard> AnimalCards { get; set; }
-        private List<LegalPerson> LegalPeople { get; set; }
-        private List<PhysicalPerson> PhysicalPeople { get; set; }
+        private List<AnimalCard> AnimalCards { get; set; } = new List<AnimalCard>();
+        private List<LegalPerson> LegalPeople { get; set; } = new List<LegalPerson>();
+        private List<PhysicalPerson> PhysicalPeople { get; set; } = new List<PhysicalPerson>();
         private Countries Countries { get; set; }
         private Locations Locations { get; set; }
         private Shelters Shelters { get; set; }
@@ -109,6 +110,34 @@ namespace PIS_PetRegistry.Backend.Models
         
         private Users Users { get; set; }
 
+
+        public List<CountryDTO> GetCountries()
+        {
+            return Countries.CountryList
+                .Select(x => DTOModelConverter.ConvertModelToDTO(x))
+                .ToList();
+        }
+
+        public List<VaccineDTO> GetVaccines()
+        {
+            return Vaccines.VaccineList
+                .Select(x => DTOModelConverter.ConvertModelToDTO(x))
+                .ToList();
+        }
+
+        public List<ParasiteTreatmentMedicationDTO> GetMedications()
+        {
+            return Medications.MedicationList
+                .Select(x => DTOModelConverter.ConvertModelToDTO(x))
+                .ToList();
+        }
+
+        public List<LocationDTO> GetLocations()
+        {
+            return Locations.LocationsList
+                .Select(x => DTOModelConverter.ConvertModelToDTO(x))
+                .ToList();
+        }
 
         public List<AnimalCategoryDTO> GetAnimalCategories()
         {
@@ -262,7 +291,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public List<AnimalCardDTO> GetAnimals()
         {
-            var animalsListDto = AnimalCards.Select(item => new AnimalCardDTO(item)).ToList();
+            var animalsListDto = AnimalCards.Select(item => DTOModelConverter.ConvertModelToDTO(item)).ToList();
 
             return animalsListDto;
         }
@@ -356,7 +385,15 @@ namespace PIS_PetRegistry.Backend.Models
 
             animalCardDB = AnimalCardService.AddAnimalCard(animalCardDB);
 
-            var animalCard = new AnimalCard(animalCardDB);
+            var animalCard = new AnimalCard(
+                animalCardDB.Id,
+                animalCardDB.ChipId,
+                animalCardDB.Name,
+                AnimalCategories.AnimalCategoryList.Where(x => x.Id == animalCardDB.FkCategory).FirstOrDefault(),
+                user.Shelter,
+                animalCardDB.YearOfBirth,
+                animalCardDB.IsBoy,
+                animalCardDB.Photo);
 
             var vaccinations = new Vaccinations(animalCard, Users);
             var parasiteTreatments = new ParasiteTreatments(animalCard, Users);
@@ -542,6 +579,7 @@ namespace PIS_PetRegistry.Backend.Models
 
             var animalCardDB = new PIS_PetRegistry.Models.AnimalCard()
             {
+                Id = animalCardDTO.Id,
                 ChipId = animalCardDTO.ChipId,
                 Name = animalCardDTO.Name,
                 FkCategory = animalCardDTO.FkCategory,
@@ -660,21 +698,25 @@ namespace PIS_PetRegistry.Backend.Models
             /*physicalPersonDB = */
                 PetOwnersService.AddPhysicalPerson(physicalPersonDB);
         }
-        public List<AnimalCard> GetAnimalsByLegalPerson(LegalPersonDTO legalPersonDTO)
+        public List<AnimalCardDTO> GetAnimalsByLegalPerson(int legalPersonId)
         {
             var animalsListDTO = Contracts.ContractList
-                .Where(x => x.LegalPerson.Id == legalPersonDTO.Id)
+                .Where(x => x.LegalPerson.Id == legalPersonId)
                 .Select(x => x.AnimalCard)
+                .Select(x => DTOModelConverter.ConvertModelToDTO(x))
                 .ToList();
+
             return animalsListDTO;
         }
 
-        public List<AnimalCard> GetAnimalsByPhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
+        public List<AnimalCardDTO> GetAnimalsByPhysicalPerson(int physicalPersonId)
         {
             var animalsListDTO = Contracts.ContractList
-                .Where(x => x.PhysicalPerson.Id == physicalPersonDTO.Id)
+                .Where(x => x.PhysicalPerson.Id == physicalPersonId)
                 .Select(x => x.AnimalCard)
+                .Select(x => DTOModelConverter.ConvertModelToDTO(x))
                 .ToList();
+
             return animalsListDTO;
         }
 

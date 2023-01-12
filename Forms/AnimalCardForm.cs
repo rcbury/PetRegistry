@@ -25,11 +25,13 @@ namespace PIS_PetRegistry
         /// <param name="animalCardDTO"></param>
         public AnimalCardForm(AuthorizationController authorizationController, AnimalCardRegistry animalCardRegistry, AnimalCardDTO? animalCardDTO = null)
         {
+            this.authorizationController = authorizationController;
+
             this.animalCardRegistry = animalCardRegistry;
             this.animalCardDTO = animalCardDTO;
             this.parasiteTreatmentsDTO = new List<ParasiteTreatmentDTO>();
-            this.physicalLocationsDTO = LocationController.GetLocations();
-            this.legalLocationsDTO = LocationController.GetLocations();
+            this.physicalLocationsDTO = animalCardRegistry.GetLocations();
+            this.legalLocationsDTO = animalCardRegistry.GetLocations();
 
             InitializeComponent();
             
@@ -287,7 +289,7 @@ namespace PIS_PetRegistry
                 tempAnimalCardDTO.IsBoy = (bool)animalSexComboBox.SelectedValue;
                 tempAnimalCardDTO.Photo = animalPictureBox.ImageLocation;
 
-                this.animalCardDTO = AnimalCardController.AddAnimalCard(tempAnimalCardDTO);
+                this.animalCardDTO = animalCardRegistry.AddAnimalCard(tempAnimalCardDTO);
 
                 MessageBox.Show("Карточка добавлена");
             }
@@ -305,12 +307,12 @@ namespace PIS_PetRegistry
 
                 tempAnimalCardDTO.FkCategory = int.Parse(animalCategoryComboBox.SelectedValue.ToString());
                 tempAnimalCardDTO.IsBoy = (bool)animalSexComboBox.SelectedValue;
-                tempAnimalCardDTO.Photo = "";
+                tempAnimalCardDTO.Photo = animalPictureBox.ImageLocation;
 
                 tempAnimalCardDTO.FkShelter = animalCardDTO.FkShelter;
                 tempAnimalCardDTO.Id = animalCardDTO.Id;
 
-                this.animalCardDTO = AnimalCardController.UpdateAnimalCard(tempAnimalCardDTO);
+                this.animalCardDTO = animalCardRegistry.UpdateAnimalCard(tempAnimalCardDTO);
 
                 MessageBox.Show("Карточка изменена");
             }
@@ -336,7 +338,7 @@ namespace PIS_PetRegistry
 
         private void addParasiteTreatmentButton_Click(object sender, EventArgs e)
         {
-            var form = new ParasiteTreatmentForm(animalCardDTO.Id);
+            var form = new ParasiteTreatmentForm(animalCardRegistry, animalCardDTO.Id);
             form.ShowDialog();
             Refetch();
         }
@@ -348,25 +350,25 @@ namespace PIS_PetRegistry
                 this.parasiteTreatmentsDTO = animalCardRegistry.GetParasiteTreatmentsByAnimal(animalCardDTO.Id);
                 this.veterinaryAppointmentsDTO = animalCardRegistry.GetVeterinaryAppointmentsByAnimal(animalCardDTO.Id);
                 this.vaccinationsDTO = animalCardRegistry.GetVaccinationsByAnimal(animalCardDTO.Id);
-                contractDTO = AnimalCardController.GetContractByAnimal(animalCardDTO.Id);
-
-
+                
                 //TODO:
-                //if (contractDTO != null) 
-                //{
-                //    checkBox2.Checked = true;
-                //    checkBox2.Enabled = false;
-                //    physicalPersonDTO = PetOwnersController.GetPhysicalPersonById(contractDTO.FkPhysicalPerson);
-                //    FillPhysical();
-                //    if (contractDTO.FkLegalPerson != null)
-                //    {
-                //        checkBox1.Checked = true;
-                //        checkBox1.Enabled = false;
-                //        legalPersonDTO = PetOwnersController.GetLegalPersonById(contractDTO.FkLegalPerson);
-                //        groupBox6.Show();
-                //        FillLegal();
-                //    }
-                //}
+                //contractDTO = animalCardRegistry.GetContractByAnimal(animalCardDTO.Id);
+
+                if (contractDTO != null)
+                {
+                    checkBox2.Checked = true;
+                    checkBox2.Enabled = false;
+                    physicalPersonDTO = animalCardRegistry.GetPhysicalPersonById(contractDTO.FkPhysicalPerson);
+                    FillPhysical();
+                    if (contractDTO.FkLegalPerson != null)
+                    {
+                        checkBox1.Checked = true;
+                        checkBox1.Enabled = false;
+                        legalPersonDTO = animalCardRegistry.GetLegalPersonById(contractDTO.FkLegalPerson);
+                        groupBox6.Show();
+                        FillLegal();
+                    }
+                }
 
                 parasiteTreatmentDGV.DataSource = parasiteTreatmentsDTO;
                 veterinaryAppointmentDGV.DataSource = veterinaryAppointmentsDTO;
@@ -387,14 +389,14 @@ namespace PIS_PetRegistry
 
         private void addVeterinaryAppointmentButton_Click(object sender, EventArgs e)
         {
-            var form = new VeterinaryProcedure(animalCardDTO.Id);
+            var form = new VeterinaryProcedure(animalCardRegistry, animalCardDTO.Id);
             form.ShowDialog();
             Refetch();
         }
 
         private void addVaccinationButton_Click(object sender, EventArgs e)
         {
-            var form = new VaccinationForm(animalCardDTO.Id);
+            var form = new VaccinationForm(animalCardRegistry, animalCardDTO.Id);
             form.ShowDialog();
             Refetch();
         }
@@ -445,7 +447,7 @@ namespace PIS_PetRegistry
             if (animalCardDTO == null)
                 this.Close();
 
-            AnimalCardController.DeleteAnimalCard(this.animalCardDTO);
+            animalCardRegistry.DeleteAnimalCard(animalCardDTO.Id);
 
             MessageBox.Show("Карточка успешно удалена");
 
@@ -530,7 +532,7 @@ namespace PIS_PetRegistry
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     var filePath = saveFileDialog.FileName;
-                    AnimalCardController.MakeContract(filePath, physicalPersonDTO, legalPersonDTO, animalCardDTO);
+                    animalCardRegistry.MakeContract(filePath, physicalPersonDTO, legalPersonDTO, animalCardDTO);
                 }
             }
         }
@@ -545,7 +547,7 @@ namespace PIS_PetRegistry
                     checkBox1.Enabled = false;
                     groupBox6.Hide();
                 }
-                AnimalCardController.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO); 
+                animalCardRegistry.SaveContract(physicalPersonDTO, legalPersonDTO, animalCardDTO); 
             }
         }
 
@@ -555,7 +557,7 @@ namespace PIS_PetRegistry
 
             var clickedDTO = (ParasiteTreatmentDTO)parasiteTreatmentDGV.Rows[e.RowIndex].DataBoundItem;
 
-            var form = new ParasiteTreatmentForm(clickedDTO);
+            var form = new ParasiteTreatmentForm(animalCardRegistry, clickedDTO);
             form.ShowDialog();
             Refetch();
         }
@@ -566,7 +568,7 @@ namespace PIS_PetRegistry
 
             var clickedDTO = (VaccinationDTO)vaccinationDGV.Rows[e.RowIndex].DataBoundItem;
 
-            var form = new VaccinationForm(clickedDTO);
+            var form = new VaccinationForm(animalCardRegistry, clickedDTO);
             form.ShowDialog();
             Refetch();
         }
@@ -577,7 +579,7 @@ namespace PIS_PetRegistry
 
             var clickedDTO = (VeterinaryAppointmentDTO)veterinaryAppointmentDGV.Rows[e.RowIndex].DataBoundItem;
 
-            var form = new VeterinaryProcedure(clickedDTO);
+            var form = new VeterinaryProcedure(animalCardRegistry, clickedDTO);
             form.ShowDialog();
             Refetch();
         }

@@ -36,15 +36,19 @@ namespace PIS_PetRegistry.Controllers
                 Shelters.ShelterList.Where(x => x.Id == userDB.FkShelter).FirstOrDefault(),
                 userDB);
 
-            var userDTO = DTOModelConverter.ConvertModelToDTO(userDB);
+            User = user;
+
+            var userDTO = DTOModelConverter.ConvertModelToDTO(user);
 
             return true;
         }
 
-        public UserDTO GetAuthorizedUser()
+        public UserDTO? GetAuthorizedUser()
         {
-            var user = AuthorizationService.GetAuthorizedUser();
-            var userDTO = DTOModelConverter.ConvertModelToDTO(user);
+            if (User == null)
+                return null;
+
+            var userDTO = DTOModelConverter.ConvertModelToDTO(User);
 
             return userDTO;
         }

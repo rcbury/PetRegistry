@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.VisualBasic.ApplicationServices;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using System;
@@ -12,6 +13,26 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class AnimalCard
     {
+        public AnimalCard(
+            int id,
+            string chipId,
+            string name,
+            AnimalCategory animalCategory,
+            Shelter shelter,
+            int? yearOfBirth,
+            bool isBoy,
+            string photo)
+        {
+            Id = id;
+            IsBoy = isBoy;
+            Name = name;
+            Photo = photo;
+            YearOfBirth = yearOfBirth;
+            ChipId = chipId;
+            AnimalCategory = animalCategory;
+            Shelter = shelter;
+        }
+
         public AnimalCard(
             PIS_PetRegistry.Models.AnimalCard animalCardDB)
         {

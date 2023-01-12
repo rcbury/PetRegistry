@@ -50,6 +50,8 @@ namespace PIS_PetRegistry.Backend.Models
                 user,
                 date);
 
+            ParasiteTreatmentList.Add(parasiteTreatment);
+
             return parasiteTreatment;
         }
 

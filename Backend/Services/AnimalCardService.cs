@@ -69,6 +69,9 @@ namespace PIS_PetRegistry.Services
                 context.AnimalCards.Add(animalCardModel);
                 context.SaveChanges();
 
+                _ = animalCardModel.FkCategoryNavigation;
+                _ = animalCardModel.FkShelterNavigation;
+
                 var user = AuthorizationService.GetAuthorizedUser();
 
                 AnimalCardLogService.LogCreate(animalCardModel, user.Id);
@@ -114,6 +117,7 @@ namespace PIS_PetRegistry.Services
                     .Include(card => card.ParasiteTreatments)
                     .Include(card => card.FkCategoryNavigation)
                     .Include(card => card.Contracts)
+                    .Include(card => card.FkShelterNavigation)
                     .ToList();
             }
 

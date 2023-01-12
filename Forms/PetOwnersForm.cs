@@ -26,23 +26,28 @@ namespace PIS_PetRegistry
         private bool _physicalSortDirection;
         private int _legalPreviousIndex;
         private bool _legalSortDirection;
-        private LegalPeopleRegistry legalPeopleRegistry;
-        public PetOwnersForm()
+        private AnimalCardRegistry animalCardRegistry;
+        private AuthorizationController authorizationController;
+
+
+        public PetOwnersForm(AnimalCardRegistry animalCardRegistry, AuthorizationController authorizationController)
         {
             InitializeComponent();
             SetupPermissions();
 
-            legalPeopleRegistry = new LegalPeopleRegistry();
+            animalCardRegistry = animalCardRegistry;
+            authorizationController = authorizationController;
+
             listLegalPersonDTOs = new List<LegalPersonDTO>();
             listPhysicalPersonDTOs = new List<PhysicalPersonDTO>();
-            countries = CountryController.GetCountries();
+            countries = animalCardRegistry.GetCountries();
             comboBox1.DataSource = countries;
             comboBox1.DisplayMember = "Name";
             comboBox1.ValueMember = "Id";
             comboBox4.DataSource = countries;
             comboBox4.DisplayMember = "Name";
             comboBox4.ValueMember = "Id";
-            locations = LocationController.GetLocations();
+            locations = animalCardRegistry.GetLocations();
             comboBox2.DataSource = locations;
             comboBox2.DisplayMember = "Name";
             comboBox2.ValueMember = "Id";
@@ -177,7 +182,7 @@ namespace PIS_PetRegistry
             var email = textBox2.Text;
             var country = Convert.ToInt16(comboBox1.SelectedValue);
             var location = Convert.ToInt16(comboBox2.SelectedValue);
-            listPhysicalPersonDTOs = PetOwnersController.GetPhysicalPeople(phone, name, address, email, country, location);
+            listPhysicalPersonDTOs = animalCardRegistry.GetPhysicalPeople(phone, name, address, email, country, location);
             dataGridView1.DataSource = listPhysicalPersonDTOs;
         }
 
@@ -191,13 +196,13 @@ namespace PIS_PetRegistry
             var phone = textBox10.Text;
             var country = Convert.ToInt16(comboBox4.SelectedValue);
             var location = Convert.ToInt16(comboBox3.SelectedValue);
-            listLegalPersonDTOs = legalPeopleRegistry.GetLegalPeople(inn, kpp, name, email, address, phone, country, location);
+            listLegalPersonDTOs = animalCardRegistry.GetLegalPeople(inn, kpp, name, email, address, phone, country, location);
             dataGridView2.DataSource = listLegalPersonDTOs;
         }
 
         private void SetupPermissions()
         {
-            var authorizedUser = AuthorizationController.GetAuthorizedUser();
+            var authorizedUser = authorizationController.GetAuthorizedUser();
 
             if (authorizedUser.RoleId != (int)UserRoles.Veterinarian && authorizedUser.RoleId != (int)UserRoles.ShelterOperator)
             {
@@ -288,7 +293,7 @@ namespace PIS_PetRegistry
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     var filePath = saveFileDialog.FileName;
-                    PetOwnersController.ExportPhysicalPeopleToExcel(filePath, listPhysicalPersonDTOs);
+                    animalCardRegistry.ExportPhysicalPeopleToExcel(filePath, listPhysicalPersonDTOs);
                 }
             }
         }
@@ -304,14 +309,14 @@ namespace PIS_PetRegistry
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     var filePath = saveFileDialog.FileName;
-                    PetOwnersController.ExportLegalPeopleToExcel(filePath, listLegalPersonDTOs);
+                    animalCardRegistry.ExportLegalPeopleToExcel(filePath, listLegalPersonDTOs);
                 }
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            PhysicalPersonForm form = new();
+            var form = new PhysicalPersonForm(animalCardRegistry);
             form.ShowDialog();
             FetchPhysicalWithFilters();
         }
@@ -332,7 +337,7 @@ namespace PIS_PetRegistry
 
         private void button4_Click(object sender, EventArgs e)
         {
-            LegalPersonForm form = new();
+            var form = new LegalPersonForm(animalCardRegistry);
             form.ShowDialog();
             FetchLegalWithFilters();
         }

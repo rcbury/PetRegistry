@@ -10,6 +10,8 @@ namespace PIS_PetRegistry
 #endif
         public AuthorizationForm()
         {
+            authorizationController = new AuthorizationController();
+
             InitializeComponent();
             if (s_bDoDebugOnlyCode)
             {
@@ -22,11 +24,11 @@ namespace PIS_PetRegistry
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            UserDTO? userDTO;
+            bool loginResult = false;
 
             try
             {
-                userDTO = authorizationController.Authorize(loginTextBox.Text, passwordTextBox.Text);
+                loginResult = authorizationController.Authorize(loginTextBox.Text, passwordTextBox.Text);
             }
             catch
             {
@@ -34,7 +36,7 @@ namespace PIS_PetRegistry
                 return;
             }
 
-            if (userDTO == null)
+            if (!loginResult)
             {
                 MessageBox.Show("Неверный логин или пароль");
                 return;

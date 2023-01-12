@@ -56,6 +56,8 @@ namespace PIS_PetRegistry.Backend.Models
                 name,
                 isCompleted);
 
+            VeterinaryAppointmentList.Add(veterinaryAppointment);
+
             return veterinaryAppointment;
         }
 

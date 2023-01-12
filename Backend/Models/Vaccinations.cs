@@ -53,6 +53,8 @@ namespace PIS_PetRegistry.Backend.Models
                 animalCard,
                 user);
 
+            VaccinationList.Add(vaccination);
+
             return vaccination;
         }
 
@@ -91,7 +93,7 @@ namespace PIS_PetRegistry.Backend.Models
 
 
         private List<Vaccine> Vaccines { get; set; }
-        public List<Vaccination> VaccinationList { get; set; }
+        public List<Vaccination> VaccinationList { get; set; } = new List<Vaccination>();
     }
 
 }

@@ -62,14 +62,14 @@ namespace PIS_PetRegistry
             button1.Enabled = false;
             if (_physicalPersonFilter != null)
             {
-                var animals = AnimalCardController.GetAnimalsByPhysicalPerson(_physicalPersonFilter.Id);
+                var animals = animalCardRegistry.GetAnimalsByPhysicalPerson(_physicalPersonFilter.Id);
                 SetListAnimalsInterface(animals);
 
                 this.Text = String.Format("Список животных {0}", _physicalPersonFilter.Name);
             }
             else
             { 
-                var animals = AnimalCardController.GetAnimalsByLegalPerson(_legalPersonFilter.Id);
+                var animals = animalCardRegistry.GetAnimalsByLegalPerson(_legalPersonFilter.Id);
                 SetListAnimalsInterface(animals);
 
                 this.Text = String.Format("Список животных {0}", _legalPersonFilter.Name);
@@ -134,7 +134,7 @@ namespace PIS_PetRegistry
             dataGridViewListAnimals.AllowUserToAddRows = false;
             dataGridViewListAnimals.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            if (AuthorizationController.GetAuthorizedUser().RoleId != (int)UserRoles.Veterinarian)
+            if (authorizationController.GetAuthorizedUser().RoleId != (int)UserRoles.Veterinarian)
             { 
                 this.dateTimePickerVetProcedure.Enabled = false;
                 this.buttonSearchVetProcedure.Enabled = false;
@@ -148,7 +148,7 @@ namespace PIS_PetRegistry
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            PetOwnersForm form = new PetOwnersForm();
+            PetOwnersForm form = new PetOwnersForm(animalCardRegistry, authorizationController);
             form.ShowDialog();
         }
 
@@ -268,7 +268,7 @@ namespace PIS_PetRegistry
         {
             try
             {
-                AnimalCardForm form = new AnimalCardForm(animalCardRegistry);
+                AnimalCardForm form = new AnimalCardForm(authorizationController, animalCardRegistry);
                 form.ShowDialog();
                 FetchAnimalCards();
             }
@@ -294,7 +294,9 @@ namespace PIS_PetRegistry
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     var filePath = saveFileDialog.FileName;
-                    AnimalCardController.ExportCardsToExcel(filePath, _listAnimalCards);
+                    
+                    //TODO:
+                    //animalCardRegistry.ExportCardsToExcel(filePath, _listAnimalCards);
                 }
             }
         }
@@ -303,7 +305,7 @@ namespace PIS_PetRegistry
         {
             if (e.RowIndex >= 0)
             {
-                AnimalCardForm animalForm = new AnimalCardForm(animalCardRegistry, _listAnimalCards[e.RowIndex]);
+                AnimalCardForm animalForm = new AnimalCardForm(authorizationController, animalCardRegistry, _listAnimalCards[e.RowIndex]);
                 animalForm.ShowDialog();
                 FetchAnimalCards();
             }

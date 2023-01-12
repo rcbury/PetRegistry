@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Controllers;
+﻿using PIS_PetRegistry.Backend.Models;
+using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,12 @@ namespace PIS_PetRegistry.Forms
 {
     public partial class VeterinaryProcedure : Form
     {
-        public VeterinaryProcedure(int FKAnimal)
+        private AnimalCardRegistry animalCardRegistry;
+
+        public VeterinaryProcedure(AnimalCardRegistry animalCardRegistry, int FKAnimal)
         {
+            this.animalCardRegistry = animalCardRegistry;
+
             veterinaryAppointmentDTO = new VeterinaryAppointmentDTO();
             veterinaryAppointmentDTO.FkAnimal = FKAnimal;
 
@@ -23,10 +28,13 @@ namespace PIS_PetRegistry.Forms
             FillFields();
         }
 
-        public VeterinaryProcedure(VeterinaryAppointmentDTO parasiteTreatmentDTO)
+        public VeterinaryProcedure(AnimalCardRegistry animalCardRegistry, VeterinaryAppointmentDTO parasiteTreatmentDTO)
         {
+            this.animalCardRegistry = animalCardRegistry;
+
             this.veterinaryAppointmentDTO = parasiteTreatmentDTO;
             this.veterinaryAppointmentDTO.Date = this.veterinaryAppointmentDTO.Date.ToUniversalTime();
+            
             InitializeComponent();
             FillFields();
         }
@@ -62,7 +70,7 @@ namespace PIS_PetRegistry.Forms
 
                 try
                 {
-                    veterinaryAppointmentDTO = VeterinaryAppointmentController.AddVeterinaryAppointment(
+                    veterinaryAppointmentDTO = animalCardRegistry.AddVeterinaryAppointment(
                         tempVeterinaryAppointmentDTO);
                 }
                 catch (Exception ex)
@@ -83,7 +91,7 @@ namespace PIS_PetRegistry.Forms
 
                 try
                 {
-                    veterinaryAppointmentDTO = VeterinaryAppointmentController.UpdateVeterinaryAppointment(
+                    veterinaryAppointmentDTO = animalCardRegistry.UpdateVeterinaryAppointment(
                         veterinaryAppointmentDTO, 
                         tempVeterinaryAppointmentDTO);
                 }

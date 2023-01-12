@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PIS_PetRegistry.Backend.Models;
 using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 
@@ -14,9 +15,13 @@ namespace PIS_PetRegistry.Forms
 {
     public partial class ParasiteTreatmentForm : Form
     {
-        public ParasiteTreatmentForm(int FKAnimal)
+        private AnimalCardRegistry animalCardRegistry;
+
+        public ParasiteTreatmentForm(AnimalCardRegistry animalCardRegistry, int FKAnimal)
         {
-            var medications = ParasiteTreatmentController.GetMedications();
+            this.animalCardRegistry = animalCardRegistry;
+
+            var medications = animalCardRegistry.GetMedications();
 
             parasiteTreatmentDTO = new ParasiteTreatmentDTO();
             parasiteTreatmentDTO.FkAnimal = FKAnimal;
@@ -32,9 +37,11 @@ namespace PIS_PetRegistry.Forms
         }
 
 
-        public ParasiteTreatmentForm(ParasiteTreatmentDTO parasiteTreatmentDTO)
+        public ParasiteTreatmentForm(AnimalCardRegistry animalCardRegistry, ParasiteTreatmentDTO parasiteTreatmentDTO)
         {
-            var medications = ParasiteTreatmentController.GetMedications();
+            this.animalCardRegistry = animalCardRegistry;
+            
+            var medications = animalCardRegistry.GetMedications();
 
             this.parasiteTreatmentDTO = parasiteTreatmentDTO;
 
@@ -85,7 +92,7 @@ namespace PIS_PetRegistry.Forms
 
                 try
                 {
-                    parasiteTreatmentDTO = ParasiteTreatmentController.AddParasiteTreatment(tempParasiteTreatmentDTO);
+                    parasiteTreatmentDTO = animalCardRegistry.AddParasiteTreatment(tempParasiteTreatmentDTO);
                 }
                 catch (Exception ex)
                 {
@@ -104,7 +111,7 @@ namespace PIS_PetRegistry.Forms
 
                 try
                 {
-                    parasiteTreatmentDTO = ParasiteTreatmentController.UpdateParasiteTreatment(
+                    parasiteTreatmentDTO = animalCardRegistry.UpdateParasiteTreatment(
                         parasiteTreatmentDTO,
                         tempParasiteTreatmentDTO);
 
