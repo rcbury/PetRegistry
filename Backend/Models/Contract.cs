@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace PIS_PetRegistry.Backend.Models
 {
-    internal class Contract
+    public class Contract
     {
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

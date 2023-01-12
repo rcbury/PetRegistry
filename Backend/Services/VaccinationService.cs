@@ -39,18 +39,16 @@ namespace PIS_PetRegistry.Backend.Services
             }
         }
 
-        public static Vaccination AddVaccination(Vaccination vaccination, User user)
+        public static Vaccination AddVaccination(Vaccination vaccination)
         {
             var existingVaccination = GetVaccination(
                 vaccination.FkAnimal,
-                user.Id,
+                vaccination.FkUser,
                 vaccination.FkVaccine,
                 vaccination.DateEnd);
 
             if (existingVaccination != null)
                 throw new Exception("Данная запись уже существует");
-
-            vaccination.FkUser = user.Id;
 
             using (var context = new RegistryPetsContext())
             {

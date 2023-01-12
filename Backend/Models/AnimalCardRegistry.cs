@@ -29,6 +29,7 @@ namespace PIS_PetRegistry.Backend.Models
             Locations = new Locations();
             Shelters = new Shelters(Locations);
             Contracts = new Contracts();
+            Users = new Users(Locations, Shelters);
 
             var legalPeopleDB = PetOwnersService.GetLegalPeople();
             var physicalPeopleDB = PetOwnersService.GetPhysicalPeople();
@@ -37,11 +38,16 @@ namespace PIS_PetRegistry.Backend.Models
 
             foreach (var animalCardDB in animalCardsDB)
             {
-                var vaccinations = new Vaccinations(animalCardDB.Id);
-                var parasiteTreatments = new ParasiteTreatments(animalCardDB.Id);
-                var veterinaryAppointments = new VeterinaryAppointments(animalCardDB.Id);
+                var animalCard = new AnimalCard(animalCardDB);
+                
+                var vaccinations = new Vaccinations(animalCard, Users);
+                var parasiteTreatments = new ParasiteTreatments(animalCard, Users);
+                var veterinaryAppointments = new VeterinaryAppointments(animalCard, Users);
 
-                var animalCard = new AnimalCard(vaccinations, veterinaryAppointments, parasiteTreatments, animalCardDB);
+                animalCard.Vaccinations = vaccinations;
+                animalCard.VeterinaryAppointments = veterinaryAppointments;
+                animalCard.ParasiteTreatments = parasiteTreatments;
+
                 AnimalCards.Add(animalCard);
             }
             foreach (var legalPerson in legalPeopleDB)
@@ -76,18 +82,18 @@ namespace PIS_PetRegistry.Backend.Models
         }
 
         private AuthorizationController AuthorizationController { get; set; }
-
         private AnimalCategories AnimalCategories { get; set; }
         private Vaccines Vaccines { get; set; }
         private Medications Medications { get; set; }
         private List<AnimalCard> AnimalCards { get; set; }
-
-        private List<LegalPerson> LegalPeople;
-        private List<PhysicalPerson> PhysicalPeople;
-        private Countries Countries;
-        private Locations Locations;
-        private Shelters Shelters;
-        private Contracts Contracts;
+        private List<LegalPerson> LegalPeople { get; set; }
+        private List<PhysicalPerson> PhysicalPeople { get; set; }
+        private Countries Countries { get; set; }
+        private Locations Locations { get; set; }
+        private Shelters Shelters { get; set; }
+        private Contracts Contracts { get; set; }
+        
+        private Users Users { get; set; }
 
 
         public List<LegalPersonDTO> GetLegalPeople(string inn, string kpp, string name, string email,
@@ -329,11 +335,17 @@ namespace PIS_PetRegistry.Backend.Models
 
             animalCardDB = AnimalCardService.AddAnimalCard(animalCardDB);
 
-            var vaccinations = new Vaccinations(animalCardDB.Id);
-            var parasiteTreatments = new ParasiteTreatments(animalCardDB.Id);
-            var veterinaryAppointments = new VeterinaryAppointments(animalCardDB.Id);
+            var animalCard = new AnimalCard(animalCardDB);
 
-            var animalCard = new AnimalCard(vaccinations, veterinaryAppointments, parasiteTreatments, animalCardDB);
+            var vaccinations = new Vaccinations(animalCard, Users);
+            var parasiteTreatments = new ParasiteTreatments(animalCard, Users);
+            var veterinaryAppointments = new VeterinaryAppointments(animalCard, Users);
+
+            animalCard.Vaccinations = vaccinations;
+            animalCard.VeterinaryAppointments = veterinaryAppointments;
+            animalCard.ParasiteTreatments = parasiteTreatments;
+
+            AnimalCards.Add(animalCard);
 
             return new AnimalCardDTO(animalCard);
         }
@@ -505,6 +517,30 @@ namespace PIS_PetRegistry.Backend.Models
                 .Select(x => x.AnimalCard)
                 .Count();
             return countAnimals;
+        }
+
+        public void ExportPhysicalPeopleToExcel(string path, List<PhysicalPersonDTO> physicalPeopleDTO)
+        {
+            Exporter.ExportPhysicalPeopleToExcel(path, physicalPeopleDTO);
+        }
+
+        public void ExportLegalPeopleToExcel(string path, List<LegalPersonDTO> legalPeopleDTO)
+        {
+            Exporter.ExportLegalPeopleToExcel(path, legalPeopleDTO);
+        }
+
+        public int CountAnimalsByPhysicalPerson(int physicalPersonId)
+        {
+            var physicalPerson = PhysicalPeople.Where(person => person.Id == physicalPersonId).FirstOrDefault();
+
+            return physicalPerson.GetAnimalCount();
+        }
+
+        public int CountAnimalsByLegalPerson(int legalPersonId)
+        {
+            var legalPerson = LegalPeople.Where(person => person.Id == legalPersonId).FirstOrDefault();
+
+            return legalPerson.GetAnimalCount();
         }
     }
 }

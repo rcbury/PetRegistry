@@ -13,9 +13,6 @@ namespace PIS_PetRegistry.Backend.Models
     public class AnimalCard
     {
         public AnimalCard(
-            Vaccinations vaccinations,
-            VeterinaryAppointments veterinaryAppointments,
-            ParasiteTreatments parasiteTreatments,
             PIS_PetRegistry.Models.AnimalCard animalCardDB)
         {
             Id = animalCardDB.Id;
@@ -30,9 +27,6 @@ namespace PIS_PetRegistry.Backend.Models
                 Id = animalCardDB.FkShelterNavigation.Id,
                 Name = animalCardDB.FkShelterNavigation.Name
             };
-            Vaccinations = vaccinations;
-            VeterinaryAppointments = veterinaryAppointments;
-            ParasiteTreatments = parasiteTreatments;
         }
 
         public AnimalCard(AnimalCategory animalCategory, Shelter shelter, AnimalCardDTO animalCardDTO)
@@ -59,15 +53,15 @@ namespace PIS_PetRegistry.Backend.Models
 
         public string ChipId { get; set; } = null!;
 
-        public virtual AnimalCategory AnimalCategory { get; set; } = null!;
+        public  AnimalCategory AnimalCategory { get; set; } = null!;
 
-        public virtual Shelter Shelter { get; set; } = null!;
+        public  Shelter Shelter { get; set; } = null!;
 
-        public virtual ParasiteTreatments ParasiteTreatments { get; }
+        public ParasiteTreatments ParasiteTreatments { get; set; }
 
         public Vaccinations Vaccinations { get; set; }
 
-        public VeterinaryAppointments VeterinaryAppointments { get; }
+        public VeterinaryAppointments VeterinaryAppointments { get; set; }
 
         public AnimalCardDTO ConvertToDTO()
         {

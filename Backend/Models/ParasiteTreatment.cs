@@ -9,17 +9,17 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class ParasiteTreatment
     {
-        public ParasiteTreatment(PIS_PetRegistry.Models.ParasiteTreatment parasiteTreatmentDB)
+        public ParasiteTreatment(Medication medication, AnimalCard animalCard, User user, DateOnly date)
         {
-            FkAnimal = parasiteTreatmentDB.FkAnimal;
-            FkUser = parasiteTreatmentDB.FkUser;
-            Medication = new Medication(parasiteTreatmentDB.FkMedicationNavigation);
-            Date = parasiteTreatmentDB.Date;
+            AnimalCard = animalCard;
+            User = user;
+            Medication = medication;
+            Date = date;
         }
 
-        public int FkAnimal { get; set; }
+        public AnimalCard AnimalCard { get; set; }
 
-        public int FkUser { get; set; }
+        public User User { get; set; }
 
         public Medication Medication { get; set; }
 

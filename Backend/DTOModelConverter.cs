@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Backend.Services;
+﻿using PIS_PetRegistry.Backend.Models;
+using PIS_PetRegistry.Backend.Services;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using System;
@@ -226,15 +227,31 @@ namespace PIS_PetRegistry.Backend
             return locationDTO;
         }
 
-        public static ContractDTO ConvertModelToDTO(Contract contract) 
+        public static ContractDTO ConvertModelToDTO(Contract contract)
         {
-            var res = new ContractDTO();
-            res.Number = contract.Number;
-            res.Date = contract.Date;
-            res.FkAnimalCard = contract.FkAnimalCard;
-            res.FkUser = contract.FkUser;
-            res.FkPhysicalPerson = contract.FkPhysicalPerson;
-            res.FkLegalPerson = contract.FkLegalPerson;
+            var res = new ContractDTO()
+            {
+                Number = contract.Number,
+                Date = contract.Date,
+                FkAnimalCard = contract.FkAnimalCard,
+                FkUser = contract.FkUser,
+                FkPhysicalPerson = contract.FkPhysicalPerson,
+                FkLegalPerson = contract.FkLegalPerson
+            };
+            return res;
+        }
+
+        public static Models.PhysicalPerson ConvertModelToRegistryModel(PIS_PetRegistry.Models.PhysicalPerson person, Countries countries, Locations locations)
+        {
+            var res = new Models.PhysicalPerson()
+            {
+                Id = person.Id,
+                Name = person.Name,
+                Address = person.Address,
+                Email = person.Email,
+                Country = countries.GetCountry(person.FkCountry),
+                Location = locations.GetLocation(person.FkLocality)
+            };
             return res;
         }
     }
