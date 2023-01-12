@@ -126,5 +126,11 @@ namespace PIS_PetRegistry.Backend.Models
 
             return animalsListDto;
         }
+
+        public AnimalCardDTO AddAnimalCard(AnimalCardDTO animalCardDTO)
+        {
+            var animalCategory = AnimalCardCategories.Where(x => x.Id == animalCardDTO.FkShelter).FirstOrDefault();
+            var animalCard = new AnimalCard(animalCategory, animalCardDTO);
+        }
     }
 }

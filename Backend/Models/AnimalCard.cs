@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.DTO;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using System;
 using System.Collections.Generic;
@@ -24,13 +25,26 @@ namespace PIS_PetRegistry.Backend.Models
             YearOfBirth = animalCardDB.YearOfBirth;
             ChipId = animalCardDB.ChipId;
             AnimalCategory = new AnimalCategory(animalCardDB.FkCategoryNavigation);
-            Shelter = new Shelter() { 
+            Shelter = new Shelter()
+            {
                 Id = animalCardDB.FkShelterNavigation.Id,
                 Name = animalCardDB.FkShelterNavigation.Name
             };
             Vaccinations = vaccinations;
             VeterinaryAppointments = veterinaryAppointments;
             ParasiteTreatments = parasiteTreatments;
+        }
+
+        public AnimalCard(AnimalCategory animalCategory, Shelter shelter, AnimalCardDTO animalCardDTO)
+        {
+            Id = animalCardDTO.Id;
+            ChipId = animalCardDTO.ChipId;
+            Name = animalCardDTO.Name;
+            AnimalCategory = animalCategory;
+            Shelter = shelter;
+            YearOfBirth = animalCardDTO.YearOfBirth;
+            IsBoy = animalCardDTO.IsBoy;
+            Photo = animalCardDTO.Photo;
         }
 
         public int Id { get; set; }
