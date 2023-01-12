@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
 using PIS_PetRegistry.Backend;
+using PIS_PetRegistry.Backend.Models;
 using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Forms;
@@ -19,19 +20,12 @@ namespace PIS_PetRegistry
     public partial class AnimalCardForm : Form
     {
         /// <summary>
-        /// opens empty animal card
-        /// </summary>
-        public AnimalCardForm() : this(null)
-        {
-            
-        }
-
-        /// <summary>
         /// Opens animal card with existing data
         /// </summary>
         /// <param name="animalCardDTO"></param>
-        public AnimalCardForm(AnimalCardDTO? animalCardDTO)
+        public AnimalCardForm(AnimalCardRegistry animalCardRegistry, AnimalCardDTO? animalCardDTO = null)
         {
+            this.animalCardRegistry = animalCardRegistry;
             this.animalCardDTO = animalCardDTO;
             this.parasiteTreatmentsDTO = new List<ParasiteTreatmentDTO>();
             this.physicalLocationsDTO = LocationController.GetLocations();
@@ -47,6 +41,7 @@ namespace PIS_PetRegistry
             FillFields();
         }
 
+        private AnimalCardRegistry animalCardRegistry;
         private AnimalCardDTO? animalCardDTO;
         private PhysicalPersonDTO? physicalPersonDTO;
         private LegalPersonDTO? legalPersonDTO;
@@ -229,7 +224,7 @@ namespace PIS_PetRegistry
                 new KeyValuePair<bool, string>(false, "ж"),
             };
 
-            var animalCategories = AnimalCardController.GetAnimalCategories();
+            var animalCategories = animalCardRegistry.GetAnimalCardCategories();
 
             animalCategoryComboBox.DataSource = animalCategories;
             animalCategoryComboBox.DisplayMember = "Name";

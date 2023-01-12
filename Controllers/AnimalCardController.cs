@@ -21,24 +21,6 @@ namespace PIS_PetRegistry.Controllers
 {
     internal class AnimalCardController
     {
-        public static List<AnimalCategoryDTO> GetAnimalCategories()
-        {
-            var animalCategories = AnimalCardService.GetAnimalCategories();
-            var animalCategoriesDTO = new List<AnimalCategoryDTO>();
-            
-            foreach (var animaCategory in animalCategories)
-            {
-                animalCategoriesDTO.Add(
-                    new AnimalCategoryDTO()
-                    {
-                        Id = animaCategory.Id,
-                        Name = animaCategory.Name
-                    });
-            }
-            
-            return animalCategoriesDTO;
-        }
-
         public static AnimalCardDTO AddAnimalCard(AnimalCardDTO animalCardDTO)
         {
             var user = AuthorizationService.GetAuthorizedUser();
@@ -82,24 +64,7 @@ namespace PIS_PetRegistry.Controllers
 
             return newAnimalCardDTO;
         }
-
-        public static List<AnimalCardDTO> GetAnimals() 
-        {
-            var animalCardsList = AnimalCardService.GetAnimals();
-            var animalsListDto = animalCardsList.Select(item => DTOModelConverter.ConvertModelToDTO(item)).ToList();
-
-            return animalsListDto;
-        }
-        public static List<AnimalCardDTO> GetAnimals(AnimalFilterDTO animalFilter)
-        {
-            var animalCardsList = AnimalCardService.GetAnimals(animalFilter);
-            var animalsListDto = animalCardsList.Select(item => DTOModelConverter.ConvertModelToDTO(item)).ToList();
-
-            return animalsListDto;
-        }
-
         
-
         public static ContractDTO? GetContractByAnimal(int animalId) 
         {
             var contract = AnimalCardService.GetContractByAnimalId(animalId);

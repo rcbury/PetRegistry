@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PIS_PetRegistry.Backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;

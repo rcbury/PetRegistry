@@ -1,4 +1,5 @@
 ﻿using PIS_PetRegistry.Backend;
+using PIS_PetRegistry.Backend.Models;
 using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using System;
@@ -27,11 +28,13 @@ namespace PIS_PetRegistry
 
         private PhysicalPersonDTO _physicalPersonFilter = null;
         private LegalPersonDTO _legalPersonFilter = null;
+        private AnimalCardRegistry animalCardRegistry;
 
         
 
         public AnimalRegistryForm(PhysicalPersonDTO physicalPerson)
         {
+            this.animalCardRegistry = new AnimalCardRegistry();
             InitForm();
             _physicalPersonFilter = physicalPerson;
             UpdateAnimalToFilter();
@@ -39,6 +42,7 @@ namespace PIS_PetRegistry
 
         public AnimalRegistryForm(LegalPersonDTO legalPersonFilter)
         {
+            this.animalCardRegistry = new AnimalCardRegistry();
             InitForm();
             _legalPersonFilter = legalPersonFilter;
             UpdateAnimalToFilter();
@@ -46,6 +50,7 @@ namespace PIS_PetRegistry
 
         public AnimalRegistryForm()
         {
+            this.animalCardRegistry = new AnimalCardRegistry();
             InitForm();
         }
 
@@ -76,7 +81,7 @@ namespace PIS_PetRegistry
             defualtAnimalCategory.Id = -1;
             defualtAnimalCategory.Name = "Категория";
 
-            _animalCategories = AnimalCardController.GetAnimalCategories();
+            _animalCategories = animalCardRegistry.GetAnimalCardCategories();
             _animalCategories.Insert(0, defualtAnimalCategory);
             comboBoxCategory.DataSource = _animalCategories;
             comboBoxCategory.DisplayMember = "Name";
@@ -167,11 +172,11 @@ namespace PIS_PetRegistry
             if (IsSelectedFilters())
             {
                 var filterParams = this.GenerateFilterDTO();
-                _listAnimalCards = AnimalCardController.GetAnimals(filterParams);
+                _listAnimalCards = animalCardRegistry.GetAnimals(filterParams);
             }
             else
             {
-                _listAnimalCards = AnimalCardController.GetAnimals();
+                _listAnimalCards = animalCardRegistry.GetAnimals();
             }
 
             SetListAnimalsInterface(_listAnimalCards);
@@ -261,7 +266,7 @@ namespace PIS_PetRegistry
         {
             try
             {
-                AnimalCardForm form = new AnimalCardForm();
+                AnimalCardForm form = new AnimalCardForm(animalCardRegistry);
                 form.ShowDialog();
                 FetchAnimalCards();
             }
@@ -296,7 +301,7 @@ namespace PIS_PetRegistry
         {
             if (e.RowIndex >= 0)
             {
-                AnimalCardForm animalForm = new AnimalCardForm(_listAnimalCards[e.RowIndex]);
+                AnimalCardForm animalForm = new AnimalCardForm(animalCardRegistry, _listAnimalCards[e.RowIndex]);
                 animalForm.ShowDialog();
                 FetchAnimalCards();
             }
@@ -313,7 +318,7 @@ namespace PIS_PetRegistry
             var filterParams = this.GenerateFilterDTO();
             filterParams.SearchTimeVetProcedure = dateTimePickerVetProcedure.Value;
             
-            var animalList = AnimalCardController.GetAnimals(filterParams);
+            var animalList = animalCardRegistry.GetAnimals(filterParams);
             SetListAnimalsInterface(animalList);
         }
     }

@@ -9,5 +9,4 @@ public partial class AnimalCategory
 
     public string? Name { get; set; }
 
-    public virtual ICollection<AnimalCard> AnimalCards { get; } = new List<AnimalCard>();
 }

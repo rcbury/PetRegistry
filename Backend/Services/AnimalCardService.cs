@@ -108,102 +108,13 @@ namespace PIS_PetRegistry.Services
 
             using (var context = new RegistryPetsContext())
             {
-                animalCardsList = context.AnimalCards.Include(card => card.FkCategoryNavigation).ToList();
-            }
-
-            return animalCardsList;
-        }
-        
-        //public static List<AnimalCard> GetAnimals(AnimalFilterDTO? animalFilter)
-        //{
-        //    var animalCardsList = new List<AnimalCard> { };
-
-        //    using (var context = new RegistryPetsContext())
-        //    {
-        //        animalCardsList = context.AnimalCards
-        //            .Include(card => card.FkCategoryNavigation)
-        //            .Include(card => card.Vaccinations)
-        //            .Include(card => card.VeterinaryAppointmentAnimals)
-        //            .Include(card => card.ParasiteTreatments)
-        //            .Include(card => card.Contracts)
-        //            .ToList();
-        //    }
-
-        //    return animalCardsList;
-        //}
-
-        public static List<AnimalCard> GetAnimals(AnimalFilterDTO animalFilter)
-        {
-            var animalCardsList = new List<AnimalCard> { };
-
-            using (var context = new RegistryPetsContext())
-            {
-                var animalCards = context.AnimalCards
-                    .Include(card => card.FkCategoryNavigation)
+                animalCardsList = context.AnimalCards
                     .Include(card => card.Vaccinations)
                     .Include(card => card.VeterinaryAppointmentAnimals)
                     .Include(card => card.ParasiteTreatments)
+                    .Include(card => card.FkCategoryNavigation)
                     .Include(card => card.Contracts)
                     .ToList();
-
-                if (animalFilter.PhysicalPerson != null)
-                { 
-                    animalCards = context.Contracts.Where(contract =>
-                    contract.FkPhysicalPerson == animalFilter.PhysicalPerson.Id 
-                    && contract.FkLegalPerson == null)
-                        .Select(x => x.FkAnimalCardNavigation)
-                        .ToList();
-                }
-
-                if (animalFilter.LegalPerson != null)
-                {
-                    animalCards = context.Contracts.Where(contract =>
-                    contract.FkLegalPerson == animalFilter.LegalPerson.Id)
-                        .Select(x => x.FkAnimalCardNavigation)
-                        .ToList();
-                }
-
-                if (animalFilter.ChipId.Length > 0)
-                {
-                    animalCards = animalCards
-                        .Where(item => item.ChipId == animalFilter.ChipId)
-                        .ToList();
-                }
-                else
-                {
-                    if (animalFilter.Name.Length > 0)
-                    {
-                        animalCards = animalCards
-                            .Where(item => item.Name == animalFilter.Name)
-                            .ToList();
-                    }
-
-                    if (animalFilter.IsSelectedSex)
-                    {
-                        animalCards = animalCards
-                            .Where(item => item.IsBoy == animalFilter.IsBoy)
-                            .ToList();
-                    }
-
-                    if (animalFilter.AnimalCategory.Id != -1)
-                    {
-                        animalCards = animalCards
-                            .Where(item => item.FkCategory == animalFilter.AnimalCategory.Id)
-                            .ToList();
-                    }
-
-                    if (animalFilter.SearchTimeVetProcedure != null)
-                    {
-                        animalCards = animalCards
-                            .Where(item => item.VeterinaryAppointmentAnimals
-                                .Where(x => x.Date <= animalFilter.SearchTimeVetProcedure)
-                                .Where(x => !x.IsCompleted)
-                                .Count() > 0)
-                            .ToList();
-                    }
-                }
-
-                animalCardsList = animalCards;
             }
 
             return animalCardsList;
