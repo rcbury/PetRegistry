@@ -294,9 +294,9 @@ namespace PIS_PetRegistry
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     var filePath = saveFileDialog.FileName;
-                    
+
                     //TODO:
-                    //animalCardRegistry.ExportCardsToExcel(filePath, _listAnimalCards);
+                    animalCardRegistry.ExportCardsToExcel(filePath, _listAnimalCards);
                 }
             }
         }

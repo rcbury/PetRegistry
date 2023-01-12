@@ -13,7 +13,7 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class Contracts
     {
-        public Contracts(List<AnimalCard> cards, List<LegalPerson> legalPeopleList, List<PhysicalPerson> physicalPeopleList)
+        public Contracts(List<AnimalCard> cards, List<LegalPerson> legalPeopleList, List<PhysicalPerson> physicalPeopleList, Users users)
         {
             using (var context = new RegistryPetsContext())
             {
@@ -30,7 +30,8 @@ namespace PIS_PetRegistry.Backend.Models
                         Date = contractDB.Date,
                         AnimalCard = cards.Where(card => card.Id == contractDB.FkAnimalCard).FirstOrDefault(),
                         LegalPerson = legalPeopleList.Where(person => person.Id == contractDB.FkLegalPerson).FirstOrDefault(),
-                        PhysicalPerson = physicalPeopleList.Where(person => person.Id == contractDB.FkPhysicalPerson).FirstOrDefault()
+                        PhysicalPerson = physicalPeopleList.Where(person => person.Id == contractDB.FkPhysicalPerson).FirstOrDefault(),
+                        User = users.UserList.Where(user => user.Id == contractDB.FkUser).FirstOrDefault()
                     });
                 }
             }
@@ -74,7 +75,8 @@ namespace PIS_PetRegistry.Backend.Models
                 Date = contract.Date,
                 AnimalCard = card,
                 User = user,
-                PhysicalPerson = physicalPerson
+                PhysicalPerson = physicalPerson,
+                LegalPerson = legalPerson
             };
 
             ContractList.Add(registryContract);

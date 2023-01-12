@@ -33,10 +33,10 @@ namespace PIS_PetRegistry
         public PetOwnersForm(AnimalCardRegistry animalCardRegistry, AuthorizationController authorizationController)
         {
             InitializeComponent();
-            SetupPermissions();
 
-            animalCardRegistry = animalCardRegistry;
-            authorizationController = authorizationController;
+            this.animalCardRegistry = animalCardRegistry;
+            this.authorizationController = authorizationController;
+            SetupPermissions();
 
             listLegalPersonDTOs = new List<LegalPersonDTO>();
             listPhysicalPersonDTOs = new List<PhysicalPersonDTO>();
@@ -328,7 +328,7 @@ namespace PIS_PetRegistry
             if (rowIndex >= 0)
             {
                 var selectedPhysicalPerson = listPhysicalPersonDTOs[rowIndex];
-                PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson, editAllowed);
+                PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson, animalCardRegistry, editAllowed);
 
                 form.ShowDialog();
                 FetchPhysicalWithFilters();

@@ -48,7 +48,9 @@ namespace PIS_PetRegistry.Backend
                 CatCount = physicalPersonModel.GetCatCount(),
                 DogCount = physicalPersonModel.GetDogCount(),
                 CountryName = physicalPersonModel.Country.Name,
-                LocationName = physicalPersonModel.Location.Name
+                LocationName = physicalPersonModel.Location.Name,
+                FkLocality = physicalPersonModel.Location.Id,
+                FkCountry = physicalPersonModel.Country.Id
             };
 
             return physicalPersonModelDTO;
@@ -201,17 +203,21 @@ namespace PIS_PetRegistry.Backend
 
         public static ContractDTO ConvertModelToDTO(Contract contract)
         {
-            var res = new ContractDTO()
+            var contractDTO = new ContractDTO()
             {
                 Number = contract.Number,
                 Date = contract.Date,
                 FkAnimalCard = contract.AnimalCard.Id,
                 FkUser = contract.User.Id,
-                FkPhysicalPerson = contract.PhysicalPerson.Id,
-                FkLegalPerson = contract.LegalPerson.Id
+                FkPhysicalPerson = contract.PhysicalPerson.Id
             };
 
-            return res;
+            if (contract.LegalPerson != null)
+            {
+                contractDTO.FkLegalPerson = contract.LegalPerson.Id;
+            }
+
+            return contractDTO;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace PIS_PetRegistry
 
         public PhysicalPersonForm(AnimalCardRegistry registry) : this(selectedPhysicalPerson: null, registry: registry) { }
 
-        public PhysicalPersonForm(PhysicalPersonDTO? selectedPhysicalPerson, bool editAllowed = true, AnimalCardRegistry? registry = null)
+        public PhysicalPersonForm(PhysicalPersonDTO? selectedPhysicalPerson, AnimalCardRegistry? registry, bool editAllowed = true)
         {
 
             InitializeComponent();

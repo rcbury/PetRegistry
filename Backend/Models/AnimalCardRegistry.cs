@@ -79,7 +79,7 @@ namespace PIS_PetRegistry.Backend.Models
                     Phone = physicalPerson.Phone
                 });
             }
-            Contracts = new Contracts(AnimalCards, LegalPeople, PhysicalPeople);
+            Contracts = new Contracts(AnimalCards, LegalPeople, PhysicalPeople, Users);
             foreach (var physicalPerson in PhysicalPeople)
             {
                 physicalPerson.Contracts = new Contracts(Contracts.ContractList
@@ -653,7 +653,7 @@ namespace PIS_PetRegistry.Backend.Models
 
             physicalPersonDB = PetOwnersService.UpdatePhysicalPerson(physicalPersonDB);
 
-            var modifiedPhysicalPerson = LegalPeople.Where(x => x.Id == physicalPersonDTO.Id).FirstOrDefault();
+            var modifiedPhysicalPerson = PhysicalPeople.Where(x => x.Id == physicalPersonDTO.Id).FirstOrDefault();
 
             modifiedPhysicalPerson.Name = physicalPersonDTO.Name;
             modifiedPhysicalPerson.Address = physicalPersonDTO.Address;
@@ -720,6 +720,12 @@ namespace PIS_PetRegistry.Backend.Models
             return animalsListDTO;
         }
 
+        public ContractDTO GetContractByAnimal(int animalCardId) 
+        {
+            var contract = Contracts.ContractList.Where(contract => contract.AnimalCard.Id == animalCardId).FirstOrDefault();
+            return DTOModelConverter.ConvertModelToDTO(contract);
+        }
+
         public int CountAnimalsByLegalPerson(LegalPersonDTO legalPersonDTO)
         {
             var countAnimals = Contracts.ContractList
@@ -746,6 +752,11 @@ namespace PIS_PetRegistry.Backend.Models
         public void ExportLegalPeopleToExcel(string path, List<LegalPersonDTO> legalPeopleDTO)
         {
             Exporter.ExportLegalPeopleToExcel(path, legalPeopleDTO);
+        }
+
+        public void ExportCardsToExcel(string path, List<AnimalCardDTO> cardsDTO) 
+        {
+            Exporter.ExportCardsToExcel(path, cardsDTO);
         }
 
         public int CountAnimalsByPhysicalPerson(int physicalPersonId)

@@ -350,9 +350,8 @@ namespace PIS_PetRegistry
                 this.parasiteTreatmentsDTO = animalCardRegistry.GetParasiteTreatmentsByAnimal(animalCardDTO.Id);
                 this.veterinaryAppointmentsDTO = animalCardRegistry.GetVeterinaryAppointmentsByAnimal(animalCardDTO.Id);
                 this.vaccinationsDTO = animalCardRegistry.GetVaccinationsByAnimal(animalCardDTO.Id);
-                
-                //TODO:
-                //contractDTO = animalCardRegistry.GetContractByAnimal(animalCardDTO.Id);
+
+                contractDTO = animalCardRegistry.GetContractByAnimal(animalCardDTO.Id);
 
                 if (contractDTO != null)
                 {
@@ -476,8 +475,7 @@ namespace PIS_PetRegistry
         private void button2_Click(object sender, EventArgs e)
         {
             var inn = textBox12.Text;
-            //TODO:
-            //legalPersonDTO = PetOwnersController.GetLegalPersonByINN(inn);
+            legalPersonDTO = animalCardRegistry.GetLegalPersonByINN(inn);
             if (legalPersonDTO == null)
             {
                 MessageBox.Show("Юр. лицо с указанным ИНН не найдено.");
