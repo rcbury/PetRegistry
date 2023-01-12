@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
+using Spire.Doc;
 using PIS_PetRegistry.Services;
 
 namespace PIS_PetRegistry.Backend
@@ -162,6 +163,57 @@ namespace PIS_PetRegistry.Backend
                 worksheet.Columns().AdjustToContents();
                 worksheet.Rows().AdjustToContents();
                 workbook.SaveAs(path);
+            }
+        }
+
+        public static void MakeContract(string filePath, Models.PhysicalPerson physicalPerson, Models.LegalPerson legalPerson,
+            Models.AnimalCard animalCard, Models.User user) 
+        {
+            if (physicalPerson != null)
+            {
+                Document doc;
+                if (legalPerson != null)
+                {
+                    doc = new Document("Договор юры.docx");
+                    doc.Replace("<LegalPersonINN>", legalPerson.Inn, false, true);
+                    doc.Replace("<LegalPersonKPP>", legalPerson.Kpp, false, true);
+                    doc.Replace("<LegalPersonPhoneNumber>", legalPerson.Phone, false, true);
+                    doc.Replace("<LegalPersonName>", legalPerson.Name, false, true);
+                    doc.Replace("<LegalPersonLocation>", legalPerson.Location.Name, false, true);
+                    doc.Replace("<LegalPersonAddress>", legalPerson.Address, false, true);
+                    doc.Replace("<LegalPersonEmail>", legalPerson.Email, false, true);
+                }
+                else
+                {
+                    doc = new Document("Договор физы.docx");
+                }
+                var animalCategory = animalCard.AnimalCategory;
+                var animalGender = animalCard.IsBoy ? "м" : "ж";
+                var day = DateTime.Now.Day.ToString();
+                var month = DateTime.Now.Month.ToString();
+                var year = DateTime.Now.Year.ToString();
+                var age = (int.Parse(year) - animalCard.YearOfBirth).ToString();
+                var loggedUserCreds = Utils.GetCredsFromFullName(user.Name);
+                var physicalPersonCreds = Utils.GetCredsFromFullName(physicalPerson.Name);
+                doc.Replace("<ShelterCity>", user.Shelter.Location.Name, false, true);
+                doc.Replace("<Day>", day, false, true);
+                doc.Replace("<Month>", month, false, true);
+                doc.Replace("<Year>", year, false, true);
+                doc.Replace("<ShelterName>", $"\"{user.Shelter.Name}\"", false, true);
+                doc.Replace("<ShelterAddress>", user.Shelter.Address, false, true);
+                doc.Replace("<PhysicalPersonName>", physicalPerson.Name, false, true);
+                doc.Replace("<PhysicalPersonLocation>", physicalPerson.Location.Name, false, true);
+                doc.Replace("<PhysicalPersonAddress>", physicalPerson.Address, false, true);
+                doc.Replace("<AnimalCategoryName>", animalCategory.Name, false, true);
+                doc.Replace("<AnimalAge>", age, false, true);
+                doc.Replace("<AnimalGender>", animalGender, false, true);
+                doc.Replace("<ChipId>", animalCard.ChipId, false, true);
+                doc.Replace("<AnimalName>", animalCard.Name, false, true);
+                doc.Replace("<LoggedUserCreds>", loggedUserCreds, false, true);
+                doc.Replace("<PhysicalPersonCreds>", physicalPersonCreds, false, true);
+                doc.Replace("<PhysicalPersonNumber>", physicalPerson.Phone, false, true);
+                doc.Replace("<PhysicalPersonEmail>", physicalPerson.Email, false, true);
+                doc.SaveToFile(filePath, FileFormat.Docx);
             }
         }
     }
