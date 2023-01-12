@@ -91,7 +91,7 @@ namespace PIS_PetRegistry.Backend.Models
 
 
         private List<Vaccine> Vaccines { get; set; }
-        private List<Vaccination> VaccinationList { get; set; }
+        public List<Vaccination> VaccinationList { get; set; }
     }
 
 }

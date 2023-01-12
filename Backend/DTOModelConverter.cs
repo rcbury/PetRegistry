@@ -3,6 +3,7 @@ using PIS_PetRegistry.Backend.Services;
 using PIS_PetRegistry.DTO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
@@ -12,6 +13,17 @@ namespace PIS_PetRegistry.Backend
 {
     internal class DTOModelConverter
     {
+        public static AnimalCategoryDTO ConvertModelToDTO(AnimalCategory animalCategory)
+        {
+            var animalCategoryDTO = new AnimalCategoryDTO()
+            {
+                Name = animalCategory.Name,
+                Id = animalCategory.Id,
+            };
+
+            return animalCategoryDTO;
+        }
+
         public static PhysicalPersonDTO ConvertModelToDTO(Models.PhysicalPerson physicalPersonModel)
         {
             var physicalPersonModelDTO = new PhysicalPersonDTO()

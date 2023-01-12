@@ -59,7 +59,7 @@ namespace PIS_PetRegistry.Backend.Models
             return veterinaryAppointment;
         }
 
-        public VeterinaryAppointment UpdateVaccination(
+        public VeterinaryAppointment UpdateVeterinaryAppointment(
             VeterinaryAppointment oldVeterinaryAppointment,
             DateTime modifiedDate,
             AnimalCard modifiedAnimalCard,

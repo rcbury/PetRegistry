@@ -345,9 +345,9 @@ namespace PIS_PetRegistry
         {
             if (animalCardDTO != null)
             {
-                this.parasiteTreatmentsDTO = ParasiteTreatmentController.GetParasiteTreatmentsByAnimal(animalCardDTO.Id);
-                this.veterinaryAppointmentsDTO = VeterinaryAppointmentController.GetVeterinaryAppointmentsByAnimal(animalCardDTO.Id);
-                this.vaccinationsDTO = VaccinationController.GetVaccinationsByAnimal(animalCardDTO.Id);
+                this.parasiteTreatmentsDTO = animalCardRegistry.GetParasiteTreatmentsByAnimal(animalCardDTO.Id);
+                this.veterinaryAppointmentsDTO = animalCardRegistry.GetVeterinaryAppointmentsByAnimal(animalCardDTO.Id);
+                this.vaccinationsDTO = animalCardRegistry.GetVaccinationsByAnimal(animalCardDTO.Id);
                 contractDTO = AnimalCardController.GetContractByAnimal(animalCardDTO.Id);
 
 
@@ -460,7 +460,7 @@ namespace PIS_PetRegistry
         private void button1_Click(object sender, EventArgs e)
         {
             var phone = textBox6.Text;
-            physicalPersonDTO = PetOwnersController.GetPhysicalPersonByPhone(phone);
+            physicalPersonDTO = animalCardRegistry.GetPhysicalPersonByPhone(phone);
             if (physicalPersonDTO == null)
             {
                 MessageBox.Show("Физ. лицо с указанным номером телефона не найдено.");

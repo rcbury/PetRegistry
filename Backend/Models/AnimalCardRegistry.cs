@@ -2,6 +2,7 @@
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.ApplicationServices;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
 using PIS_PetRegistry.Backend.Services;
 using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
@@ -108,6 +109,13 @@ namespace PIS_PetRegistry.Backend.Models
         
         private Users Users { get; set; }
 
+
+        public List<AnimalCategoryDTO> GetAnimalCategories()
+        {
+            return AnimalCategories.AnimalCategoryList
+                .Select(x => DTOModelConverter.ConvertModelToDTO(x))
+                .ToList();
+        }
 
         public List<LegalPersonDTO> GetLegalPeople(string inn, string kpp, string name, string email,
             string address, string phone, int country, int location)
@@ -361,6 +369,162 @@ namespace PIS_PetRegistry.Backend.Models
             AnimalCards.Add(animalCard);
 
             return new AnimalCardDTO(animalCard);
+        }
+        
+        public List<ParasiteTreatmentDTO> GetParasiteTreatmentsByAnimal(int animalId)
+        {
+            var animalCard = AnimalCards.Where(x => x.Id == animalId).FirstOrDefault();
+
+            return animalCard.ParasiteTreatments.ParasiteTreatmentList
+                .Select(x => DTOModelConverter.ConvertModelToDTO(x))
+                .ToList();
+        }
+
+        public List<VaccinationDTO> GetVaccinationsByAnimal(int animalId)
+        {
+            var animalCard = AnimalCards.Where(x => x.Id == animalId).FirstOrDefault();
+
+            return animalCard.Vaccinations.VaccinationList
+                .Select(x => DTOModelConverter.ConvertModelToDTO(x))
+                .ToList();
+        }
+
+        public List<VeterinaryAppointmentDTO> GetVeterinaryAppointmentsByAnimal(int animalId)
+        {
+            var animalCard = AnimalCards.Where(x => x.Id == animalId).FirstOrDefault();
+
+            return animalCard.VeterinaryAppointments.VeterinaryAppointmentList
+                .Select(x => DTOModelConverter.ConvertModelToDTO(x))
+                .ToList();
+        }
+
+        public ParasiteTreatmentDTO AddParasiteTreatment(ParasiteTreatmentDTO parasiteTreatmentDTO)
+        {
+            var animalCard = AnimalCards.Where(x => x.Id == parasiteTreatmentDTO.FkAnimal).FirstOrDefault();
+            var user = AuthorizationController.User;
+
+            var parasiteTreatment = animalCard.ParasiteTreatments.AddParasiteTreatment(
+                parasiteTreatmentDTO.Date,
+                animalCard,
+                user,
+                Medications.MedicationList.Where(x => x.Id == parasiteTreatmentDTO.FkMedication).FirstOrDefault());
+
+            var newParasiteTreatmentDTO = DTOModelConverter.ConvertModelToDTO(parasiteTreatment);
+
+            return newParasiteTreatmentDTO;
+        }
+
+        
+        public ParasiteTreatmentDTO UpdateParasiteTreatment(
+            ParasiteTreatmentDTO oldParasiteTreatmentDTO, 
+            ParasiteTreatmentDTO modifiedParasiteTreatmentDTO)
+        {
+            var animalCard = AnimalCards.Where(x => x.Id == oldParasiteTreatmentDTO.FkAnimal).FirstOrDefault();
+            var user = AuthorizationController.User;
+
+            var oldVeterinaryAppointment = animalCard.ParasiteTreatments.ParasiteTreatmentList
+                .Where(x => oldParasiteTreatmentDTO.FkAnimal == x.AnimalCard.Id)
+                .Where(x => oldParasiteTreatmentDTO.FkUser == x.User.Id)
+                .Where(x => oldParasiteTreatmentDTO.Date == x.Date)
+                .Where(x => oldParasiteTreatmentDTO.FkMedication == x.Medication.Id)
+                .FirstOrDefault();
+
+            var updatedVaccination = animalCard.ParasiteTreatments.UpdateParasiteTreatment(
+                oldVeterinaryAppointment,
+                modifiedParasiteTreatmentDTO.Date,
+                animalCard,
+                user,
+                Medications.MedicationList.Where(x => x.Id == modifiedParasiteTreatmentDTO.FkMedication).FirstOrDefault());
+
+            var newVaccinationDTO = DTOModelConverter.ConvertModelToDTO(updatedVaccination);
+
+            return newVaccinationDTO;
+        }
+
+        public VaccinationDTO AddVaccination(VaccinationDTO vaccinationDTO)
+        {
+            var animalCard = AnimalCards.Where(x => x.Id == vaccinationDTO.FkAnimal).FirstOrDefault();
+            var user = AuthorizationController.User;
+
+            var vaccination = animalCard.Vaccinations.AddVaccination(
+                vaccinationDTO.DateEnd,
+                animalCard,
+                user,
+                Vaccines.VaccineList.Where(x => x.Id == vaccinationDTO.FkVaccine).FirstOrDefault());
+
+            var newVaccinationDTO = DTOModelConverter.ConvertModelToDTO(vaccination);
+
+            return newVaccinationDTO;
+        }
+
+        public VaccinationDTO UpdateVaccination(
+            VaccinationDTO oldVaccinationDTO, 
+            VaccinationDTO modifiedVaccinationDTO)
+        {
+            var animalCard = AnimalCards.Where(x => x.Id == oldVaccinationDTO.FkAnimal).FirstOrDefault();
+            var user = AuthorizationController.User;
+
+            var oldVeterinaryAppointment = animalCard.Vaccinations.VaccinationList
+                .Where(x => oldVaccinationDTO.FkAnimal == x.AnimalCard.Id)
+                .Where(x => oldVaccinationDTO.FkUser == x.User.Id)
+                .Where(x => oldVaccinationDTO.DateEnd == x.DateEnd)
+                .Where(x => oldVaccinationDTO.FkVaccine == x.Vaccine.Id)
+                .FirstOrDefault();
+
+            var updatedVaccination = animalCard.Vaccinations.UpdateVaccination(
+                oldVeterinaryAppointment,
+                modifiedVaccinationDTO.DateEnd,
+                animalCard,
+                user,
+                Vaccines.VaccineList.Where(x => x.Id == modifiedVaccinationDTO.FkVaccine).FirstOrDefault());
+
+            var newVaccinationDTO = DTOModelConverter.ConvertModelToDTO(updatedVaccination);
+
+            return newVaccinationDTO;
+        }
+
+        public VeterinaryAppointmentDTO AddVeterinaryAppointment(VeterinaryAppointmentDTO vaccinationDTO)
+        {
+            var animalCard = AnimalCards.Where(x => x.Id == vaccinationDTO.FkAnimal).FirstOrDefault();
+            var user = AuthorizationController.User;
+
+            var veterinaryAppointment = animalCard.VeterinaryAppointments.AddVeterinaryAppointment(
+                vaccinationDTO.Date,
+                animalCard,
+                user,
+                vaccinationDTO.Name,
+                vaccinationDTO.IsCompleted);
+
+            var newVeterinaryAppointmentDTO = DTOModelConverter.ConvertModelToDTO(veterinaryAppointment);
+
+            return newVeterinaryAppointmentDTO;
+        }
+
+        public VeterinaryAppointmentDTO UpdateVeterinaryAppointment(
+            VeterinaryAppointmentDTO oldVaccinationDTO, 
+            VeterinaryAppointmentDTO modifiedVeterinaryAppointmentDTO)
+        {
+            var animalCard = AnimalCards.Where(x => x.Id == oldVaccinationDTO.FkAnimal).FirstOrDefault();
+            var user = AuthorizationController.User;
+
+
+            var oldVeterinaryAppointment = animalCard.VeterinaryAppointments.VeterinaryAppointmentList
+                .Where(x => oldVaccinationDTO.FkAnimal == x.AnimalCard.Id)
+                .Where(x => oldVaccinationDTO.FkUser == x.User.Id)
+                .Where(x => oldVaccinationDTO.Date == x.Date)
+                .FirstOrDefault();
+
+            var updatedVeterinaryAppointment = animalCard.VeterinaryAppointments.UpdateVeterinaryAppointment(
+                oldVeterinaryAppointment,
+                modifiedVeterinaryAppointmentDTO.Date,
+                animalCard,
+                user,
+                modifiedVeterinaryAppointmentDTO.Name,
+                modifiedVeterinaryAppointmentDTO.IsCompleted);
+
+            var newVaccinationDTO = DTOModelConverter.ConvertModelToDTO(updatedVeterinaryAppointment);
+
+            return newVaccinationDTO;
         }
 
         public void DeleteAnimalCard(int animalId)
