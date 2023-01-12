@@ -1,32 +1,24 @@
-﻿using PIS_PetRegistry.Controllers;
+﻿using PIS_PetRegistry.Backend.Models;
+using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
-using PIS_PetRegistry.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PIS_PetRegistry
 {
     public partial class LegalPersonForm : Form
     {
         private LegalPersonDTO? mainLegalPerson;
+        private AnimalCardRegistry? mainRegistry;
         private bool editAllowed = true;
-        public LegalPersonForm() : this(null)
+        public LegalPersonForm(AnimalCardRegistry registry) : this(selectedLegalPerson: null, registry: registry)
         {
 
         }
-        public LegalPersonForm(LegalPersonDTO? selectedLegalPerson, bool editAllowed = true)
+        public LegalPersonForm(LegalPersonDTO? selectedLegalPerson, bool editAllowed = true, AnimalCardRegistry? registry = null)
         {
 
             mainLegalPerson = selectedLegalPerson;
+            mainRegistry = registry;
 
             InitializeComponent();
 
@@ -132,11 +124,11 @@ namespace PIS_PetRegistry
 
             if (mainLegalPerson == null)
             {
-                PetOwnersController.AddLegalPerson(currentLegalPersonDTO);
+                mainRegistry.AddLegalPerson(currentLegalPersonDTO);
             }
             else
             {
-                PetOwnersController.UpdateLegalPerson(currentLegalPersonDTO);
+                mainRegistry.UpdateLegalPerson(currentLegalPersonDTO);
             }
             this.Close();
         }
