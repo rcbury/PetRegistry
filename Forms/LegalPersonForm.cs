@@ -87,7 +87,7 @@ namespace PIS_PetRegistry
                 MessageBox.Show("Это юридическое лицо еще не добавлено в реестр.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var countAnimalsByLegalPerson = PetOwnersController.CountAnimalsByLegalPerson(mainLegalPerson.Id);
+            var countAnimalsByLegalPerson = mainRegistry.CountAnimalsByLegalPerson(mainLegalPerson.Id);
             if (countAnimalsByLegalPerson == 0)
             {
                 MessageBox.Show("У этого юридического лица нет животных.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
