@@ -345,6 +345,8 @@ namespace PIS_PetRegistry.Backend.Models
 
             var animalCard = new AnimalCard(vaccinations, veterinaryAppointments, parasiteTreatments, animalCardDB);
 
+            AnimalCards.Add(animalCard);
+
             return new AnimalCardDTO(animalCard);
         }
 
