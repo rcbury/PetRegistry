@@ -17,16 +17,15 @@ namespace PIS_PetRegistry.Backend.Models
         public AnimalCardRegistry()
         {
             var animalCardsDB = AnimalCardService.GetAnimals();
-            Vaccines = VaccineService.GetVaccines().Select(x => new Vaccine(x)).ToList();
-            Medications = ParasiteTreatmentMedicationService
-                .GetParasiteTreatmentMedications()
-                .Select(x => new Medication(x))
-                .ToList();
-            AnimalCardCategories = AnimalCardService
-                .GetAnimalCategories()
-                .Select(x => new AnimalCategory(x)).ToList();
+            
+            Medications = new Medications();
+            Vaccines = new Vaccines();
+
+            AnimalCategories = new AnimalCategories();
+            
             Countries = new Countries();
             Locations = new Locations();
+
             var legalPeopleDB = PetOwnersService.GetLegalPeople();
 
 
@@ -57,10 +56,9 @@ namespace PIS_PetRegistry.Backend.Models
 
         }
 
-
-        private List<AnimalCategory> AnimalCardCategories { get; set; }
-        private List<Vaccine> Vaccines { get; set; }
-        private List<Medication> Medications { get; set; }
+        private AnimalCategories AnimalCategories { get; set; }
+        private Vaccines Vaccines { get; set; }
+        private Medications Medications { get; set; }
         private List<AnimalCard> AnimalCards { get; set; }
 
         private List<LegalPerson> LegalPeople;
@@ -149,7 +147,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public List<AnimalCategoryDTO> GetAnimalCardCategories()
         {
-            return AnimalCardCategories.Select(x => new AnimalCategoryDTO(x)).ToList();
+            return AnimalCategories.Select(x => new AnimalCategoryDTO(x)).ToList();
         }
 
         public List<AnimalCardDTO> GetAnimals()
@@ -233,7 +231,8 @@ namespace PIS_PetRegistry.Backend.Models
 
         public AnimalCardDTO AddAnimalCard(AnimalCardDTO animalCardDTO)
         {
-            var animalCategory = AnimalCardCategories.Where(x => x.Id == animalCardDTO.FkShelter).FirstOrDefault();
+            var animalCategory = AnimalCategories.Where(x => x.Id == animalCardDTO.FkCategory).FirstOrDefault();
+            var shelter = AnimalCategories.Where(x => x.Id == animalCardDTO.FkCategory).FirstOrDefault();
             var animalCard = new AnimalCard(animalCategory, animalCardDTO);
         }
     }

@@ -16,6 +16,8 @@ namespace PIS_PetRegistry.Backend.Models
             Location = location;
         }
 
+        public Shelter() { }
+
         public int Id { get; set; }
 
         public string Name { get; set; } = null!;
