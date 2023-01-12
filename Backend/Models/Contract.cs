@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIS_PetRegistry.Backend.Models
 {
-    public class Country
+    public class Contract
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;

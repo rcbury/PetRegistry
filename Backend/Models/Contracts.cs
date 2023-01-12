@@ -14,10 +14,10 @@ namespace PIS_PetRegistry.Backend.Models
             using (var context = new RegistryPetsContext())
             {
                 ContractList = new List<Contract>();
-                var countriesDB = context.Contracts.ToList();
+                var contractsDB = context.Contracts.ToList();
 
 
-                foreach (var countryDB in countriesDB)
+                foreach (var contractDB in contractsDB)
                 {
                     ContractList.Add(new Contract()
                     {
