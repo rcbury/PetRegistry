@@ -168,29 +168,28 @@ namespace PIS_PetRegistry.Services
             }
         }
 
-        public static Contract SaveContract(PhysicalPersonDTO? physicalPersonDTO, LegalPersonDTO? legalPersonDTO, AnimalCardDTO animalCardDTO)
+        public static Contract SaveContract(Contract contract)
         {
-            var user = AuthorizationService.GetAuthorizedUser();
-            var contract = new Contract();
             using (var context = new RegistryPetsContext())
             {
-                var maxNum = context.Contracts
-                    .Where(contract => contract.Date.Year == DateTime.Now.Year)
-                    .Max(x => x.Number);
-                contract.Number = maxNum == null ? 1 : maxNum + 1;
-                contract.Date = DateOnly.FromDateTime(DateTime.Now);
-                contract.FkAnimalCard = animalCardDTO.Id;
-                contract.FkUser = user.Id;
-                contract.FkPhysicalPerson = physicalPersonDTO.Id;
-                if (legalPersonDTO != null)
-                {
-                    contract.FkLegalPerson = legalPersonDTO.Id;
-                }
                 context.Contracts.Add(contract);
                 context.SaveChanges();
             }
             return contract;
         }
+
+
+        public static int GetContractNumber() 
+        {
+            using (var context = new RegistryPetsContext()) 
+            {
+                var maxNum = context.Contracts
+                    .Where(contract => contract.Date.Year == DateTime.Now.Year)
+                    .Max(x => x.Number);
+                return maxNum ?? 1;
+            }
+        }
+
         public static AnimalCard GetAnimalCardById(int cardId)
         {
             using (var context = new RegistryPetsContext())
