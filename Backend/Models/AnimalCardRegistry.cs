@@ -90,7 +90,9 @@ namespace PIS_PetRegistry.Backend.Models
             foreach (var legalPerson in LegalPeople) 
             {
                 legalPerson.Contracts = new Contracts(Contracts.ContractList
+                    .Where(contract => contract.LegalPerson != null)
                     .Where(contract => contract.LegalPerson.Id == legalPerson.Id)
+                    
                     .ToList());
             }
 
@@ -695,8 +697,21 @@ namespace PIS_PetRegistry.Backend.Models
                 FkCountry = physicalPersonDTO.FkCountry,
             };
 
-            /*physicalPersonDB = */
-                PetOwnersService.AddPhysicalPerson(physicalPersonDB);
+            PetOwnersService.AddPhysicalPerson(physicalPersonDB);
+
+            var phys = new PhysicalPerson();
+            phys.Id = physicalPersonDTO.Id;
+            phys.Name = physicalPersonDTO.Name;
+            phys.Address = physicalPersonDTO.Address;
+            phys.Email = physicalPersonDTO.Email;
+            phys.Location = Locations.LocationsList.Where(x => x.Id == physicalPersonDTO.FkLocality).FirstOrDefault();
+            phys.Country = Countries.CountryList.Where(x => x.Id == physicalPersonDTO.FkCountry).FirstOrDefault();
+            phys.Contracts = new Contracts(Contracts.ContractList
+                    .Where(contract => contract.LegalPerson == null)
+                    .Where(contract => contract.PhysicalPerson.Id == phys.Id)
+                    .ToList());
+
+            PhysicalPeople.Add(phys);
         }
         public List<AnimalCardDTO> GetAnimalsByLegalPerson(int legalPersonId)
         {

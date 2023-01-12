@@ -19,7 +19,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public LegalPerson? LegalPerson { get; set; }
 
-        public PhysicalPerson PhysicalPerson { get; set; } = null!;
+        public PhysicalPerson? PhysicalPerson { get; set; } = null!;
 
         public User User { get; set; } = null!;
 

@@ -24,12 +24,13 @@ namespace PIS_PetRegistry
     {
         private PhysicalPersonDTO? mainPhysicalPerson;
         private AnimalCardRegistry? mainRegistry;
+        private AuthorizationController authorizationController;
 
-        public PhysicalPersonForm(AnimalCardRegistry registry) : this(selectedPhysicalPerson: null, registry: registry) { }
+        public PhysicalPersonForm(AnimalCardRegistry registry, AuthorizationController authorizationController) : this(selectedPhysicalPerson: null, registry: registry, authorizationController: authorizationController) { }
 
-        public PhysicalPersonForm(PhysicalPersonDTO? selectedPhysicalPerson, AnimalCardRegistry? registry, bool editAllowed = true)
+        public PhysicalPersonForm(AuthorizationController authorizationController, PhysicalPersonDTO? selectedPhysicalPerson, AnimalCardRegistry? registry, bool editAllowed = true)
         {
-
+            this.authorizationController = authorizationController;
             InitializeComponent();
 
             mainRegistry = registry;
@@ -103,12 +104,6 @@ namespace PIS_PetRegistry
                 Id = mainPhysicalPerson != null ? mainPhysicalPerson.Id : 0
             };
 
-            if(CountryComboBox.SelectedIndex == 0 || LocalityComboBox.SelectedIndex == 0)
-            {
-                MessageBox.Show("Пожалуйста, укажите страну и населенный пункт.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             if (mainPhysicalPerson == null)
             {
                 mainRegistry.AddPhysicalPerson(currentPhysicalPersonDTO);
@@ -122,7 +117,7 @@ namespace PIS_PetRegistry
 
         private void ListAnimalsButton_Click(object sender, EventArgs e)
         {
-            if(mainPhysicalPerson == null)
+            if (mainPhysicalPerson == null)
             {
                 MessageBox.Show("Этот человек еще не добавлен в реестр.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -134,10 +129,12 @@ namespace PIS_PetRegistry
             }
             else
             {
-                AnimalRegistryForm form = new AnimalRegistryForm(mainPhysicalPerson);
+                AnimalRegistryForm form = new AnimalRegistryForm(mainPhysicalPerson, authorizationController);
                 form.ShowDialog();
                 Show();
             }
+
+
         }
 
         private void NumberText_KeyPress(object sender, KeyPressEventArgs e)

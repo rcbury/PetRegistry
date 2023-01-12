@@ -9,13 +9,14 @@ namespace PIS_PetRegistry
     {
         private LegalPersonDTO? mainLegalPerson;
         private AnimalCardRegistry? mainRegistry;
-        public LegalPersonForm(AnimalCardRegistry registry) : this(selectedLegalPerson: null, registry: registry)
+        AuthorizationController authorizationController;
+        public LegalPersonForm(AnimalCardRegistry registry, AuthorizationController authorizationController) : this(selectedLegalPerson: null, registry: registry, authorizationController: authorizationController)
         {
 
         }
-        public LegalPersonForm(LegalPersonDTO? selectedLegalPerson, bool editAllowed = true, AnimalCardRegistry? registry = null)
+        public LegalPersonForm(AuthorizationController authorizationController, LegalPersonDTO? selectedLegalPerson, bool editAllowed = true, AnimalCardRegistry? registry = null)
         {
-
+            this.authorizationController = authorizationController;
             mainLegalPerson = selectedLegalPerson;
             mainRegistry = registry;
 
@@ -94,7 +95,7 @@ namespace PIS_PetRegistry
             }
             else
             {
-                AnimalRegistryForm form = new AnimalRegistryForm(mainLegalPerson);
+                AnimalRegistryForm form = new AnimalRegistryForm(mainLegalPerson, authorizationController);
                 form.ShowDialog();
                 Show();
             }

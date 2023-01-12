@@ -33,19 +33,21 @@ namespace PIS_PetRegistry
 
         
 
-        public AnimalRegistryForm(PhysicalPersonDTO physicalPerson)
+        public AnimalRegistryForm(PhysicalPersonDTO physicalPerson, AuthorizationController authorization)
         {
+            this.authorizationController = authorization;
             this.animalCardRegistry = new AnimalCardRegistry(authorizationController);
             InitForm();
             _physicalPersonFilter = physicalPerson;
             UpdateAnimalToFilter();
         }
 
-        public AnimalRegistryForm(LegalPersonDTO legalPersonFilter)
+        public AnimalRegistryForm(LegalPersonDTO legalPerson, AuthorizationController authorization)
         {
+            this.authorizationController = authorization;
             this.animalCardRegistry = new AnimalCardRegistry(authorizationController);
             InitForm();
-            _legalPersonFilter = legalPersonFilter;
+            _legalPersonFilter = legalPerson;
             UpdateAnimalToFilter();
         }
 

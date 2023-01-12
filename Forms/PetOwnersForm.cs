@@ -316,7 +316,7 @@ namespace PIS_PetRegistry
 
         private void button3_Click(object sender, EventArgs e)
         {
-            var form = new PhysicalPersonForm(animalCardRegistry);
+            var form = new PhysicalPersonForm(animalCardRegistry, authorizationController);
             form.ShowDialog();
             FetchPhysicalWithFilters();
         }
@@ -328,7 +328,7 @@ namespace PIS_PetRegistry
             if (rowIndex >= 0)
             {
                 var selectedPhysicalPerson = listPhysicalPersonDTOs[rowIndex];
-                PhysicalPersonForm form = new PhysicalPersonForm(selectedPhysicalPerson, animalCardRegistry, editAllowed);
+                PhysicalPersonForm form = new PhysicalPersonForm(authorizationController, selectedPhysicalPerson, animalCardRegistry, editAllowed);
 
                 form.ShowDialog();
                 FetchPhysicalWithFilters();
@@ -337,7 +337,7 @@ namespace PIS_PetRegistry
 
         private void button4_Click(object sender, EventArgs e)
         {
-            var form = new LegalPersonForm(animalCardRegistry);
+            var form = new LegalPersonForm(animalCardRegistry, authorizationController);
             form.ShowDialog();
             FetchLegalWithFilters();
         }
@@ -349,7 +349,7 @@ namespace PIS_PetRegistry
             if (rowIndex >= 0)
             {
                 var selectedLegalPerson = listLegalPersonDTOs[rowIndex];
-                LegalPersonForm form = new(selectedLegalPerson, editAllowed);
+                LegalPersonForm form = new(authorizationController, selectedLegalPerson, editAllowed, animalCardRegistry);
 
                 form.ShowDialog();
                 FetchLegalWithFilters();
