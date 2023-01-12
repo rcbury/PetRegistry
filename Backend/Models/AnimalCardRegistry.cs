@@ -28,7 +28,6 @@ namespace PIS_PetRegistry.Backend.Models
             Countries = new Countries();
             Locations = new Locations();
             Shelters = new Shelters(Locations);
-            Contracts = new Contracts();
             Users = new Users(Locations, Shelters);
 
             var legalPeopleDB = PetOwnersService.GetLegalPeople();
@@ -77,6 +76,20 @@ namespace PIS_PetRegistry.Backend.Models
                     Email = physicalPerson.Email,
                     Phone = physicalPerson.Phone
                 });
+            }
+            Contracts = new Contracts(AnimalCards, LegalPeople, PhysicalPeople);
+            foreach (var physicalPerson in PhysicalPeople)
+            {
+                physicalPerson.Contracts = new Contracts(Contracts.ContractList
+                    .Where(contract => contract.LegalPerson == null)
+                    .Where(contract => contract.PhysicalPerson.Id == physicalPerson.Id)
+                    .ToList());
+            }
+            foreach (var legalPerson in LegalPeople) 
+            {
+                legalPerson.Contracts = new Contracts(Contracts.ContractList
+                    .Where(contract => contract.LegalPerson.Id == legalPerson.Id)
+                    .ToList());
             }
 
         }
@@ -541,6 +554,12 @@ namespace PIS_PetRegistry.Backend.Models
             var legalPerson = LegalPeople.Where(person => person.Id == legalPersonId).FirstOrDefault();
 
             return legalPerson.GetAnimalCount();
+        }
+
+        public void MakeContract(string filePath, PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO legalPersonDTO, AnimalCardDTO animalCardDTO)
+        {
+            var physicalPersonModel = DTOModelConverter.ConvertDTOToModel(legalPersonDTO);
+            Exporter.MakeContract(filePath, physicalPersonDTO, );
         }
     }
 }
