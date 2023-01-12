@@ -13,7 +13,7 @@ namespace PIS_PetRegistry.Backend
 {
     internal class DTOModelConverter
     {
-        public static LegalPerson ConvertDTOToModel(LegalPersonDTO legalPersonDTO)
+        public static LegalPerson ConvertDTOToRegistryModel(LegalPersonDTO legalPersonDTO)
         {
             var legalPersonModel = new LegalPerson()
             {
@@ -31,7 +31,7 @@ namespace PIS_PetRegistry.Backend
             return legalPersonModel;
         }
 
-        public static PhysicalPerson ConvertDTOToModel(PhysicalPersonDTO physicalPersonDTO)
+        public static PhysicalPerson ConvertDTOToRegistryModel(PhysicalPersonDTO physicalPersonDTO)
         {
             var physicalPersonModel = new PhysicalPerson()
             {
