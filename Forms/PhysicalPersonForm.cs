@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
+using PIS_PetRegistry.Backend.Models;
 using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
@@ -22,14 +23,16 @@ namespace PIS_PetRegistry
     public partial class PhysicalPersonForm : Form
     {
         private PhysicalPersonDTO? mainPhysicalPerson;
+        private AnimalCardRegistry? mainRegistry;
 
-        public PhysicalPersonForm() : this(null) { }
+        public PhysicalPersonForm(AnimalCardRegistry registry) : this(selectedPhysicalPerson: null, registry: registry) { }
 
-        public PhysicalPersonForm(PhysicalPersonDTO? selectedPhysicalPerson, bool editAllowed = true)
+        public PhysicalPersonForm(PhysicalPersonDTO? selectedPhysicalPerson, bool editAllowed = true, AnimalCardRegistry? registry = null)
         {
 
             InitializeComponent();
 
+            mainRegistry = registry;
             mainPhysicalPerson = selectedPhysicalPerson;
             
             if (!editAllowed)
@@ -108,11 +111,11 @@ namespace PIS_PetRegistry
 
             if (mainPhysicalPerson == null)
             {
-                PetOwnersController.AddPhysicalPerson(currentPhysicalPersonDTO);
+                mainRegistry.AddPhysicalPerson(currentPhysicalPersonDTO);
             }
             else
             {
-                PetOwnersController.UpdatePhysicalPerson(currentPhysicalPersonDTO);
+                mainRegistry.UpdatePhysicalPerson(currentPhysicalPersonDTO);
             }
             this.Close();
         }
