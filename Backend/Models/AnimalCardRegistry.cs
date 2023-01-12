@@ -28,7 +28,6 @@ namespace PIS_PetRegistry.Backend.Models
             Countries = new Countries();
             Locations = new Locations();
             Shelters = new Shelters(Locations);
-            Contracts = new Contracts();
             Users = new Users(Locations, Shelters);
 
             var legalPeopleDB = PetOwnersService.GetLegalPeople();
