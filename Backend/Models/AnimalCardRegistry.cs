@@ -234,8 +234,8 @@ namespace PIS_PetRegistry.Backend.Models
 
         public void UpdatePhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
         {
-            var legalPersonModel = DTOModelConverter.ConvertDTOToModel(physicalPersonDTO);
-            PetOwnersService.UpdateLegalPerson(legalPersonModel);
+            var physicalPersonModel = DTOModelConverter.ConvertDTOToModel(physicalPersonDTO);
+            PetOwnersService.UpdatePhysicalPerson(physicalPersonModel);
         }
 
         public List<AnimalCategoryDTO> GetAnimalCardCategories()
@@ -384,6 +384,30 @@ namespace PIS_PetRegistry.Backend.Models
             modifiedAnimalCard.Photo = animalCardDTO.Photo;
 
             return new AnimalCardDTO(modifiedAnimalCard);
+        }
+
+        public void ExportPhysicalPeopleToExcel(string path, List<PhysicalPersonDTO> physicalPeopleDTO)
+        {
+            Exporter.ExportPhysicalPeopleToExcel(path, physicalPeopleDTO);
+        }
+
+        public void ExportLegalPeopleToExcel(string path, List<LegalPersonDTO> legalPeopleDTO)
+        {
+            Exporter.ExportLegalPeopleToExcel(path, legalPeopleDTO);
+        }
+
+        public int CountAnimalsByPhysicalPerson(int physicalPersonId)
+        {
+            var physicalPerson = PhysicalPeople.Where(person => person.Id == physicalPersonId).FirstOrDefault();
+
+            return physicalPerson.GetAnimalCount();
+        }
+
+        public int CountAnimalsByLegalPerson(int legalPersonId)
+        {
+            var legalPerson = LegalPeople.Where(person => person.Id == legalPersonId).FirstOrDefault();
+
+            return legalPerson.GetAnimalCount();
         }
     }
 }
