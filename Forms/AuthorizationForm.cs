@@ -18,13 +18,15 @@ namespace PIS_PetRegistry
             }
         }
 
+        private AuthorizationController authorizationController;
+
         private void loginButton_Click(object sender, EventArgs e)
         {
             UserDTO? userDTO;
 
             try
             {
-                userDTO = AuthorizationController.Authorize(loginTextBox.Text, passwordTextBox.Text);
+                userDTO = authorizationController.Authorize(loginTextBox.Text, passwordTextBox.Text);
             }
             catch
             {
@@ -38,7 +40,7 @@ namespace PIS_PetRegistry
                 return;
             }
 
-            AnimalRegistryForm form = new AnimalRegistryForm();
+            AnimalRegistryForm form = new AnimalRegistryForm(authorizationController);
 
             Hide();
             form.ShowDialog();

@@ -10,17 +10,17 @@ namespace PIS_PetRegistry.DTO
 {
     public class AnimalCardDTO
     {
-        public AnimalCardDTO(AnimalCard model)
+        public AnimalCardDTO(AnimalCard animalCard)
         {
-            Id = model.Id;
-            ChipId = model.ChipId;
-            Name = model.Name;
-            IsBoy = model.IsBoy;
-            FkCategory = model.AnimalCategory.Id;
-            FkShelter = model.Shelter.Id;
-            YearOfBirth = model.YearOfBirth;
-            Photo = model.Photo;
-            CategoryName = model.AnimalCategory.Name;
+            Id = animalCard.Id;
+            ChipId = animalCard.ChipId;
+            Name = animalCard.Name;
+            IsBoy = animalCard.IsBoy;
+            FkCategory = animalCard.AnimalCategory.Id;
+            FkShelter = animalCard.Shelter.Id;
+            YearOfBirth = animalCard.YearOfBirth;
+            Photo = animalCard.Photo;
+            CategoryName = animalCard.AnimalCategory.Name;
         }
 
         public AnimalCardDTO() { }

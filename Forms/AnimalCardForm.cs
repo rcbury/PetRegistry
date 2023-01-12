@@ -23,7 +23,7 @@ namespace PIS_PetRegistry
         /// Opens animal card with existing data
         /// </summary>
         /// <param name="animalCardDTO"></param>
-        public AnimalCardForm(AnimalCardRegistry animalCardRegistry, AnimalCardDTO? animalCardDTO = null)
+        public AnimalCardForm(AuthorizationController authorizationController, AnimalCardRegistry animalCardRegistry, AnimalCardDTO? animalCardDTO = null)
         {
             this.animalCardRegistry = animalCardRegistry;
             this.animalCardDTO = animalCardDTO;
@@ -41,6 +41,7 @@ namespace PIS_PetRegistry
             FillFields();
         }
 
+        private AuthorizationController authorizationController;
         private AnimalCardRegistry animalCardRegistry;
         private AnimalCardDTO? animalCardDTO;
         private PhysicalPersonDTO? physicalPersonDTO;
@@ -55,7 +56,7 @@ namespace PIS_PetRegistry
 
         public void SetupPermissions()
         {
-            var authorizedUser = AuthorizationController.GetAuthorizedUser();
+            var authorizedUser = authorizationController.GetAuthorizedUser();
 
             if (animalCardDTO == null && authorizedUser.RoleId != (int)UserRoles.Veterinarian)
                 throw new Exception("Данный пользователь не может создать учетную карточку животного");
