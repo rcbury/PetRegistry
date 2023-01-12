@@ -25,8 +25,9 @@ namespace PIS_PetRegistry.Backend.Models
             AnimalCardCategories = AnimalCardService
                 .GetAnimalCategories()
                 .Select(x => new AnimalCategory(x)).ToList();
-            Countries = new Countries();
+                        Countries = new Countries();
             Locations = new Locations();
+            Shelters = new Shelters(Locations);
             var legalPeopleDB = PetOwnersService.GetLegalPeople();
 
 
@@ -66,6 +67,7 @@ namespace PIS_PetRegistry.Backend.Models
         private List<LegalPerson> LegalPeople;
         private Countries Countries;
         private Locations Locations;
+        private Shelters Shelters;
 
 
         public List<LegalPersonDTO> GetLegalPeople(string inn, string kpp, string name, string email,

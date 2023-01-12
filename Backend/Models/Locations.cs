@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PIS_PetRegistry.Backend.Models
 {
-    internal class Locations
+    public class Locations
     {
         public Locations()
         {
