@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIS_PetRegistry.Backend.Models
 {
-    internal class LegalPerson
+    public class LegalPerson
     {
         public int Id { get; set; }
 

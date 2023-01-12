@@ -27,6 +27,7 @@ namespace PIS_PetRegistry.Backend.Models
             Locations = new Locations();
             Shelters = new Shelters(Locations);
             var legalPeopleDB = PetOwnersService.GetLegalPeople();
+            var physicalPeopleDB = PetOwnersService.GetPhysicalPeople();
 
 
             foreach (var animalCardDB in animalCardsDB)
@@ -40,7 +41,7 @@ namespace PIS_PetRegistry.Backend.Models
             }
             foreach (var legalPerson in legalPeopleDB)
             {
-                LegalPeople.Add(new Backend.Models.LegalPerson()
+                LegalPeople.Add(new  LegalPerson()
                 {
                     Id = legalPerson.Id,
                     Name = legalPerson.Name,
@@ -53,6 +54,19 @@ namespace PIS_PetRegistry.Backend.Models
                     Phone = legalPerson.Phone,
                 });
             }
+            foreach (var physicalPerson in physicalPeopleDB)
+            {
+                PhysicalPeople.Add(new PhysicalPerson()
+                {
+                    Id = physicalPerson.Id,
+                    Name = physicalPerson.Name,
+                    Location = Locations.GetLocation(physicalPerson.FkLocality),
+                    Country = Countries.GetCountry(physicalPerson.FkCountry),
+                    Address = physicalPerson.Address,
+                    Email = physicalPerson.Email,
+                    Phone = physicalPerson.Phone
+                });
+            }
 
         }
 
@@ -62,6 +76,7 @@ namespace PIS_PetRegistry.Backend.Models
         private List<AnimalCard> AnimalCards { get; set; }
 
         private List<LegalPerson> LegalPeople;
+        private List<PhysicalPerson> PhysicalPeople;
         private Countries Countries;
         private Locations Locations;
         private Shelters Shelters;
@@ -140,15 +155,86 @@ namespace PIS_PetRegistry.Backend.Models
             return DTOModelConverter.ConvertModelToDTO(person);
         }
 
+        public List<PhysicalPersonDTO> GetPhysicalPeople(string phone, string name, string address, 
+            string email, int country, int location)
+        {
+            var physicalPeople = PhysicalPeople;
+
+            if (phone != null && phone != "")
+            {
+                physicalPeople = physicalPeople.Where(person => person.Phone.Contains(phone)).ToList();
+            }
+            if (name != null && name != "")
+            {
+                physicalPeople = physicalPeople.Where(person => person.Phone.Contains(name)).ToList();
+            }
+            if (address != null && address != "")
+            {
+                physicalPeople = physicalPeople.Where(person => person.Phone.Contains(name)).ToList();
+            }
+            if (email != null && email != "")
+            {
+                physicalPeople = physicalPeople.Where(person => person.Phone.Contains(email)).ToList();
+            }
+            if (country != 0)
+            {
+                physicalPeople = physicalPeople.Where(person => person.Country.Id == country).ToList();
+            }
+            if (location != 0)
+            {
+                physicalPeople = physicalPeople.Where(person => person.Location.Id == location).ToList();
+            }
+
+            var res = new List<PhysicalPersonDTO>();
+
+            foreach (var physicalPerson in physicalPeople)
+            {
+                res.Add(DTOModelConverter.ConvertModelToDTO(physicalPerson));
+            }
+
+            return res;
+        }
+
+        public PhysicalPersonDTO? GetPhysicalPersonByPhone(string phone)
+        {
+            var person = PhysicalPeople.Where(x => x.Phone == phone).FirstOrDefault();
+
+            if (person == null)
+            {
+                return null;
+            }
+
+            return DTOModelConverter.ConvertModelToDTO(person);
+        }
+
+
+        public PhysicalPersonDTO? GetPhysicalPersonById(int? personId)
+        {
+            var person = PhysicalPeople.Where(x => x.Id == personId).FirstOrDefault();
+
+            if (person == null)
+            {
+                return null;
+            }
+
+            return DTOModelConverter.ConvertModelToDTO(person);
+        }
+
         public void UpdateLegalPerson(LegalPersonDTO legalPersonDTO)
         {
             var legalPersonModel = DTOModelConverter.ConvertDTOToModel(legalPersonDTO);
             PetOwnersService.UpdateLegalPerson(legalPersonModel);
         }
 
+        public void UpdatePhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
+        {
+            var legalPersonModel = DTOModelConverter.ConvertDTOToModel(physicalPersonDTO);
+            PetOwnersService.UpdateLegalPerson(legalPersonModel);
+        }
+
         public List<AnimalCategoryDTO> GetAnimalCardCategories()
         {
-            return AnimalCategories.Select(x => new AnimalCategoryDTO(x)).ToList();
+            return AnimalCategories.AnimalCategoryList.Select(x => new AnimalCategoryDTO(x)).ToList();
         }
 
         public List<AnimalCardDTO> GetAnimals()
@@ -232,8 +318,8 @@ namespace PIS_PetRegistry.Backend.Models
 
         public AnimalCardDTO AddAnimalCard(AnimalCardDTO animalCardDTO)
         {
-            var animalCategory = AnimalCategories.Where(x => x.Id == animalCardDTO.FkCategory).FirstOrDefault();
-            var shelter = AnimalCategories.Where(x => x.Id == animalCardDTO.FkCategory).FirstOrDefault();
+            var animalCategory = AnimalCategories.AnimalCategoryList.Where(x => x.Id == animalCardDTO.FkCategory).FirstOrDefault();
+            var shelter = AnimalCategories.AnimalCategoryList.Where(x => x.Id == animalCardDTO.FkCategory).FirstOrDefault();
             var animalCard = new AnimalCard(animalCategory, animalCardDTO);
         }
     }
