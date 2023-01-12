@@ -1,9 +1,13 @@
 ﻿using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.ApplicationServices;
 using PIS_PetRegistry.Backend.Services;
+using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
 using PIS_PetRegistry.Models;
 using PIS_PetRegistry.Services;
+using Spire.Doc.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,21 +18,21 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class AnimalCardRegistry
     {
-        public AnimalCardRegistry()
+        public AnimalCardRegistry(AuthorizationController authorizationController)
         {
-            var animalCardsDB = AnimalCardService.GetAnimals();
-            
+            AuthorizationController = authorizationController;
+
             Medications = new Medications();
             Vaccines = new Vaccines();
-
             AnimalCategories = new AnimalCategories();
-            
             Countries = new Countries();
             Locations = new Locations();
             Shelters = new Shelters(Locations);
+
             var legalPeopleDB = PetOwnersService.GetLegalPeople();
             var physicalPeopleDB = PetOwnersService.GetPhysicalPeople();
 
+            var animalCardsDB = AnimalCardService.GetAnimals();
 
             foreach (var animalCardDB in animalCardsDB)
             {
@@ -69,6 +73,8 @@ namespace PIS_PetRegistry.Backend.Models
             }
 
         }
+
+        private AuthorizationController AuthorizationController { get; set; }
 
         private AnimalCategories AnimalCategories { get; set; }
         private Vaccines Vaccines { get; set; }
@@ -234,7 +240,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public List<AnimalCategoryDTO> GetAnimalCardCategories()
         {
-            return AnimalCategories.AnimalCategoryList.Select(x => new AnimalCategoryDTO(x)).ToList();
+            return AnimalCategories.GetAnimalCategories();
         }
 
         public List<AnimalCardDTO> GetAnimals()
@@ -318,9 +324,66 @@ namespace PIS_PetRegistry.Backend.Models
 
         public AnimalCardDTO AddAnimalCard(AnimalCardDTO animalCardDTO)
         {
-            var animalCategory = AnimalCategories.AnimalCategoryList.Where(x => x.Id == animalCardDTO.FkCategory).FirstOrDefault();
-            var shelter = AnimalCategories.AnimalCategoryList.Where(x => x.Id == animalCardDTO.FkCategory).FirstOrDefault();
-            var animalCard = new AnimalCard(animalCategory, animalCardDTO);
+            var user = AuthorizationController.User;
+
+            var animalCardDB = new PIS_PetRegistry.Models.AnimalCard()
+            {
+                ChipId = animalCardDTO.ChipId,
+                Name = animalCardDTO.Name,
+                FkCategory = animalCardDTO.FkCategory,
+                FkShelter = user.Shelter.Id,
+                YearOfBirth = animalCardDTO.YearOfBirth,
+                IsBoy = animalCardDTO.IsBoy,
+                Photo = animalCardDTO.Photo,
+            };
+
+            animalCardDB = AnimalCardService.AddAnimalCard(animalCardDB);
+
+            var vaccinations = new Vaccinations(animalCardDB.Id);
+            var parasiteTreatments = new ParasiteTreatments(animalCardDB.Id);
+            var veterinaryAppointments = new VeterinaryAppointments(animalCardDB.Id);
+
+            var animalCard = new AnimalCard(vaccinations, veterinaryAppointments, parasiteTreatments, animalCardDB);
+
+            return new AnimalCardDTO(animalCard);
+        }
+
+        public void DeleteAnimalCard(int animalId)
+        {
+            var user = AuthorizationController.User;
+            
+            AnimalCardService.DeleteAnimalCard(animalId);
+            
+            AnimalCards.RemoveAll(x => x.Id == animalId);
+        }
+
+        public AnimalCardDTO UpdateAnimalCard(AnimalCardDTO animalCardDTO)
+        {
+            var user = AuthorizationController.User;
+
+            var animalCardDB = new PIS_PetRegistry.Models.AnimalCard()
+            {
+                ChipId = animalCardDTO.ChipId,
+                Name = animalCardDTO.Name,
+                FkCategory = animalCardDTO.FkCategory,
+                FkShelter = animalCardDTO.FkShelter,
+                YearOfBirth = animalCardDTO.YearOfBirth,
+                IsBoy = animalCardDTO.IsBoy,
+                Photo = animalCardDTO.Photo,
+            };
+
+            animalCardDB = AnimalCardService.UpdateAnimalCard(animalCardDB);
+
+            var modifiedAnimalCard = AnimalCards.Where(x => x.Id == animalCardDTO.Id).FirstOrDefault();
+
+            modifiedAnimalCard.ChipId = animalCardDTO.ChipId;
+            modifiedAnimalCard.Name = animalCardDTO.Name;
+            modifiedAnimalCard.AnimalCategory = AnimalCategories.AnimalCategoryList.Where(x => x.Id == animalCardDB.FkCategory).FirstOrDefault();
+            modifiedAnimalCard.YearOfBirth = animalCardDTO.YearOfBirth;
+            modifiedAnimalCard.IsBoy = animalCardDTO.IsBoy;
+            modifiedAnimalCard.Photo = animalCardDTO.Photo;
+
+            return new AnimalCardDTO(modifiedAnimalCard);
         }
     }
 }

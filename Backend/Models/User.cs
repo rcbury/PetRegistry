@@ -5,6 +5,18 @@ namespace PIS_PetRegistry.Backend.Models;
 
 public class User
 {
+    public User(Location location, Shelter shelter, PIS_PetRegistry.Models.User userDB)
+    {
+        Id = userDB.Id;
+        Login = userDB.Login;
+        Password = userDB.Password;
+        Name = userDB.Name;
+        Email = userDB.Email;
+        Location = location;
+        Shelter = shelter;
+        FkRole = userDB.FkRole;
+    }
+
     public int Id { get; set; }
 
     public string Login { get; set; } = null!;
@@ -15,9 +27,9 @@ public class User
 
     public string Email { get; set; } = null!;
 
-    public virtual Location? Location { get; set; }
+    public Location? Location { get; set; }
 
-    public virtual Role Role { get; set; } = null!;
+    public int FkRole { get; set; }
 
-    public virtual Shelter? Shelter { get; set; }
+    public Shelter? Shelter { get; set; }
 }
