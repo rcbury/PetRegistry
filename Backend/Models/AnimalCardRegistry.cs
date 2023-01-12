@@ -558,8 +558,12 @@ namespace PIS_PetRegistry.Backend.Models
 
         public void MakeContract(string filePath, PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO legalPersonDTO, AnimalCardDTO animalCardDTO)
         {
-            var physicalPersonModel = DTOModelConverter.ConvertDTOToModel(legalPersonDTO);
-            Exporter.MakeContract(filePath, physicalPersonDTO, );
+            var physicalPerson = PhysicalPeople.Where(item => item.Id == physicalPersonDTO.Id).FirstOrDefault();
+            var legalPerson = LegalPeople.Where(item => item.Id == legalPersonDTO.Id).FirstOrDefault();
+            var card = AnimalCards.Where(item => item.Id == animalCardDTO.Id).FirstOrDefault();
+            var user = AuthorizationController.User;
+
+            Exporter.MakeContract(filePath, physicalPerson, legalPerson, card, user);
         }
     }
 }
