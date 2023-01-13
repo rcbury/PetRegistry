@@ -11,6 +11,7 @@ namespace PIS_PetRegistry.DTO
         public int Id { get; set; } = 0;
         public string Login { get; set; } = "";
         public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
         public int? ShelterId { get; set; }
         public int RoleId { get; set; }
         public int? LocationId { get; set; }

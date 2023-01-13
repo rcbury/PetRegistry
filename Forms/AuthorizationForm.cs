@@ -13,12 +13,14 @@ namespace PIS_PetRegistry
             authorizationController = new AuthorizationController();
 
             InitializeComponent();
+#if DEBUG
             if (s_bDoDebugOnlyCode)
             {
                 loginTextBox.Text = "mikhail1";
                 passwordTextBox.Text = "mikhail1";
             }
         }
+#endif
 
         private AuthorizationController authorizationController;
 

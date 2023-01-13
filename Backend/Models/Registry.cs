@@ -22,9 +22,10 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class Registry
     {
-        public Registry(AuthorizationController authorizationController)
+        public Registry(AuthorizationController? authorizationController = null)
         {
-            AuthorizationController = authorizationController;
+            if (authorizationController != null)
+                AuthorizationController = authorizationController;
 
             Medications = new Medications();
             Vaccines = new Vaccines();
@@ -39,7 +40,6 @@ namespace PIS_PetRegistry.Backend.Models
             Contracts = new Contracts(AnimalCards, LegalPeople, PhysicalPeople, Users);
             PhysicalPeople.FillContracts(Contracts);
             LegalPeople.FillContracts(Contracts);
-
         }
 
         private AuthorizationController AuthorizationController { get; set; }
@@ -557,6 +557,13 @@ namespace PIS_PetRegistry.Backend.Models
             {
                 physicalPerson.Contracts.AddContract(contract);
             }
+        }
+
+        public List<UserDTO> GetUsers()
+        {
+            var usersRegistry = Users.UserList.Select(user => DTOModelConverter.ConvertModelToDTO(user)).ToList();
+
+            return usersRegistry;
         }
     }
 }

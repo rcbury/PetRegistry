@@ -163,6 +163,7 @@ namespace PIS_PetRegistry.Backend
                 Id = user.Id,
                 RoleId = user.FkRole,
                 Name = user.Name,
+                Email = user.Email
             };
 
             if (user.Location != null) 
