@@ -211,6 +211,8 @@ namespace PIS_PetRegistry.Backend.Models
                 animalCards = animalCards
                     .Where(item => item.ChipId == animalFilter.ChipId)
                     .ToList();
+
+                animalCardsList = animalCards;
             }
             else
             {
