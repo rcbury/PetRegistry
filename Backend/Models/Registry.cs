@@ -255,7 +255,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public AnimalCardDTO AddAnimalCard(AnimalCardDTO animalCardDTO)
         {
-            var user = AuthorizationController.User;
+            var user = AuthorizationController.AuthorizedUser;
             var animalCategory = AnimalCategories.GetAnimalCategoryById(animalCardDTO.FkCategory);
 
 
@@ -295,7 +295,7 @@ namespace PIS_PetRegistry.Backend.Models
         {
             var animalCard = AnimalCards.GetAnimalCardById(parasiteTreatmentDTO.FkAnimal);
             
-            var user = AuthorizationController.User;
+            var user = AuthorizationController.AuthorizedUser;
 
             var parasiteTreatment = animalCard.ParasiteTreatments.AddParasiteTreatment(
                 parasiteTreatmentDTO.Date,
@@ -315,7 +315,7 @@ namespace PIS_PetRegistry.Backend.Models
         {
             var animalCard = AnimalCards.GetAnimalCardById(oldParasiteTreatmentDTO.FkAnimal);
 
-            var user = AuthorizationController.User;
+            var user = AuthorizationController.AuthorizedUser;
 
             var oldParasiteTreatment = animalCard.ParasiteTreatments.GetParasiteTreatmentById(
                 animalCard.Id, 
@@ -339,7 +339,7 @@ namespace PIS_PetRegistry.Backend.Models
         {
             var animalCard = AnimalCards.GetAnimalCardById(vaccinationDTO.FkAnimal);
 
-            var user = AuthorizationController.User;
+            var user = AuthorizationController.AuthorizedUser;
 
             var vaccination = animalCard.Vaccinations.AddVaccination(
                 vaccinationDTO.DateEnd,
@@ -358,7 +358,7 @@ namespace PIS_PetRegistry.Backend.Models
         {
             var animalCard = AnimalCards.GetAnimalCardById(oldVaccinationDTO.FkAnimal);
 
-            var user = AuthorizationController.User;
+            var user = AuthorizationController.AuthorizedUser;
 
             var oldVeterinaryAppointment = animalCard.Vaccinations.VaccinationList
                 .Where(x => oldVaccinationDTO.FkAnimal == x.AnimalCard.Id)
@@ -383,7 +383,7 @@ namespace PIS_PetRegistry.Backend.Models
         {
             var animalCard = AnimalCards.GetAnimalCardById(vaccinationDTO.FkAnimal);
 
-            var user = AuthorizationController.User;
+            var user = AuthorizationController.AuthorizedUser;
 
             var veterinaryAppointment = animalCard.VeterinaryAppointments.AddVeterinaryAppointment(
                 vaccinationDTO.Date,
@@ -403,7 +403,7 @@ namespace PIS_PetRegistry.Backend.Models
         {
             var animalCard = AnimalCards.GetAnimalCardById(oldVaccinationDTO.FkAnimal);
 
-            var user = AuthorizationController.User;
+            var user = AuthorizationController.AuthorizedUser;
 
 
             var oldVeterinaryAppointment = animalCard.VeterinaryAppointments.VeterinaryAppointmentList
@@ -534,7 +534,7 @@ namespace PIS_PetRegistry.Backend.Models
             var physicalPerson = PhysicalPeople.GetPhysicalPersonById(physicalPersonDTO.Id);
             var legalPerson = LegalPeople.GetLegalPersonById(legalPersonDTO.Id);
             var card = AnimalCards.GetAnimalCardById(animalCardDTO.Id);
-            var user = AuthorizationController.User;
+            var user = AuthorizationController.AuthorizedUser;
 
             Exporter.MakeContract(filePath, physicalPerson, legalPerson, card, user);
         }
@@ -545,7 +545,7 @@ namespace PIS_PetRegistry.Backend.Models
             var legalPerson = legalPersonDTO != null ? LegalPeople.GetLegalPersonById(legalPersonDTO.Id) 
                 : null;
             var card = AnimalCards.GetAnimalCardById(animalCardDTO.Id);
-            var user = AuthorizationController.User;
+            var user = AuthorizationController.AuthorizedUser;
 
             var contract = Contracts.SaveContract(physicalPerson, legalPerson, card, user);
 
