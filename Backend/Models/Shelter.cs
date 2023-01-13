@@ -8,11 +8,11 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class Shelter
     {
-        public Shelter(Location location, PIS_PetRegistry.Models.Shelter shelterDB)
+        public Shelter(Location location, int id, string name, string address)
         {
-            Id = shelterDB.Id;
-            Name = shelterDB.Name;
-            Address = shelterDB.Address;
+            Id = id;
+            Name = name;
+            Address = address;
             Location = location;
         }
 

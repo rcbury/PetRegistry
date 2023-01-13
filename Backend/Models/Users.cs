@@ -22,7 +22,7 @@ namespace PIS_PetRegistry.Backend.Models
                     var user = new User(
                         locations.LocationsList.Where(x => x.Id == userDB.FkLocation).FirstOrDefault(),
                         shelters.ShelterList.Where(x => x.Id == userDB.FkShelter).FirstOrDefault(),
-                        userDB);
+                        userDB.Id, userDB.Login, userDB.Password, userDB.Name, userDB.Email, userDB.FkRole);
 
                     UserList.Add(user);
                 }

@@ -15,7 +15,7 @@ namespace PIS_PetRegistry.Backend.Models
         {
             AnimalCategoryList = AnimalCardService
                 .GetAnimalCategories()
-                .Select(x => new AnimalCategory(x))
+                .Select(x => new AnimalCategory(x.Id, x.Name))
                 .ToList();
         }
 

@@ -10,12 +10,12 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class Vaccine
     {
-        public Vaccine(PIS_PetRegistry.Models.Vaccine vaccineDB)
+        public Vaccine(int id, int number, string name, int validityPeriod)
         {
-            Id = vaccineDB.Id;
-            Number = vaccineDB.Number;
-            Name = vaccineDB.Name;
-            ValidityPeriod = vaccineDB.ValidityPeriod;
+            Id = id;
+            Number = number;
+            Name = name;
+            ValidityPeriod = validityPeriod;
         }
 
         public int Id { get; set; }

@@ -8,10 +8,10 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class Medication
     {
-        public Medication(PIS_PetRegistry.Models.ParasiteTreatmentMedication medicationDB)
+        public Medication(int id, string name)
         {
-            Id = medicationDB.Id;
-            Name = medicationDB.Name;
+            Id = id;
+            Name = name;
         }
 
         public int Id { get; set; }

@@ -13,7 +13,7 @@ namespace PIS_PetRegistry.Backend.Models
         {
             MedicationList = ParasiteTreatmentMedicationService
                 .GetParasiteTreatmentMedications()
-                .Select(x => new Medication(x))
+                .Select(x => new Medication(x.Id, x.Name))
                 .ToList();
         }
 

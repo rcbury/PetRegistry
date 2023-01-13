@@ -34,7 +34,7 @@ namespace PIS_PetRegistry.Controllers
             var user = new Backend.Models.User(
                 Locations.LocationsList.Where(x => x.Id == userDB.FkLocation).FirstOrDefault(),
                 Shelters.ShelterList.Where(x => x.Id == userDB.FkShelter).FirstOrDefault(),
-                userDB);
+                userDB.Id, userDB.Login, userDB.Password, userDB.Name, userDB.Email, userDB.FkRole);
 
             User = user;
 

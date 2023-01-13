@@ -9,9 +9,10 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class Location
     {
-        public Location()
+        public Location(int id, string name)
         {
-
+            Id = id;
+            Name = name;
         }
 
         public int Id { get; set; }

@@ -20,11 +20,7 @@ namespace PIS_PetRegistry.Backend.Models
 
                 foreach (var countryDB in countriesDB)
                 {
-                    CountryList.Add(new Country()
-                    {
-                        Id = countryDB.Id,
-                        Name = countryDB.Name,
-                    });
+                    CountryList.Add(new Country(countryDB.Id, countryDB.Name));
                 }
             }
         }

@@ -9,14 +9,6 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class Vaccination
     {
-        public Vaccination(PIS_PetRegistry.Models.Vaccination vaccinationDB, AnimalCard animalCard, User user)
-        {
-            DateEnd = vaccinationDB.DateEnd;
-            AnimalCard = animalCard;
-            User = user;
-            Vaccine = new Vaccine(vaccinationDB.FkVaccineNavigation);
-        }
-
         public Vaccination(Vaccine vaccine, DateOnly date, AnimalCard animalCard, User user)
         {
             DateEnd = date;

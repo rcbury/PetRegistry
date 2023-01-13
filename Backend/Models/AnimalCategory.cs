@@ -8,10 +8,10 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class AnimalCategory
     {
-        public AnimalCategory(PIS_PetRegistry.Models.AnimalCategory animalCategoryDB)
+        public AnimalCategory(int id, string name)
         {
-            Id = animalCategoryDB.Id;
-            Name = animalCategoryDB.Name;
+            Id = id;
+            Name = name;
         }
 
         public int Id { get; set; }

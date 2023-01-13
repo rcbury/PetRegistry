@@ -19,11 +19,7 @@ namespace PIS_PetRegistry.Backend.Models
 
                 foreach (var locationDB in locationsDB)
                 {
-                    LocationsList.Add(new Location()
-                    {
-                        Id = locationDB.Id,
-                        Name = locationDB.Name,
-                    });
+                    LocationsList.Add(new Location(locationDB.Id, locationDB.Name));
                 }
             }
         }

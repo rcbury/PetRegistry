@@ -5,16 +5,16 @@ namespace PIS_PetRegistry.Backend.Models;
 
 public class User
 {
-    public User(Location location, Shelter shelter, PIS_PetRegistry.Models.User userDB)
+    public User(Location location, Shelter shelter, int id, string login, string password, string name, string email, int fkRole)
     {
-        Id = userDB.Id;
-        Login = userDB.Login;
-        Password = userDB.Password;
-        Name = userDB.Name;
-        Email = userDB.Email;
+        Id = id;
+        Login = login;
+        Password = password;
+        Name = name;
+        Email = email;
         Location = location;
         Shelter = shelter;
-        FkRole = userDB.FkRole;
+        FkRole = fkRole;
     }
 
     public int Id { get; set; }

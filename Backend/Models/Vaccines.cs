@@ -11,7 +11,7 @@ namespace PIS_PetRegistry.Backend.Models
     {
         public Vaccines()
         {
-            VaccineList = VaccineService.GetVaccines().Select(x => new Vaccine(x)).ToList();
+            VaccineList = VaccineService.GetVaccines().Select(x => new Vaccine(x.Id, x.Number, x.Name, x.ValidityPeriod)).ToList();
         }
 
         public Vaccine? GetVaccineById(int id)
