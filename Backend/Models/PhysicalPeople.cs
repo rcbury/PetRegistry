@@ -55,7 +55,7 @@ namespace PIS_PetRegistry.Backend.Models
             }
             if (address != null && address != "")
             {
-                physicalPeople = physicalPeople.Where(person => person.Address.Contains(name)).ToList();
+                physicalPeople = physicalPeople.Where(person => person.Address.Contains(address)).ToList();
             }
             if (email != null && email != "")
             {
