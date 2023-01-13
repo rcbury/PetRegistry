@@ -29,25 +29,14 @@ namespace EmailNotification
 
         private static void OnExecuteNotification()
         {
-            var animalRegistry = new Registry();
+            var notification = new Notification();
+            var registry = new Registry();
 
             String message = "";
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-            var smtpClient = new SmtpClient("smtp.gmail.com")
-            {
-                Port = 587,
-                EnableSsl = true,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential
-                (
-                    ConfigurationManager.ConnectionStrings["SmtpLogin"].ToString(), 
-                    ConfigurationManager.ConnectionStrings["SmtpPassword"].ToString()
-                )
-            };
-            
-            var animals = animalRegistry.GetAnimals();
-            var animalsVacination = animals.Select(animal => animalRegistry.GetVaccinationsByAnimal(animal.Id)).ToList();
+            var animals = registry.GetAnimals();
+            var animalsVacination = animals.Select(animal => registry.GetVaccinationsByAnimal(animal.Id)).ToList();
 
             foreach (var animalVaccinations in animalsVacination)
             {
@@ -67,7 +56,7 @@ namespace EmailNotification
                 }
             }
 
-            var users = animalRegistry.GetUsers();
+            var users = registry.GetUsers();
 
             if (message.Length > 0)
             {
@@ -77,7 +66,7 @@ namespace EmailNotification
                         continue;
 
                     Console.WriteLine("[email-notification] send email {0}; message {1}", user.Email, message);
-                    smtpClient.Send("noreply.petregistry@gmail.com", user.Email, "Уведомление о просрочке вакцины", message);
+                    notification.Send("noreply.petregistry@gmail.com", user.Email, "Уведомление о просрочке вакцины", message);
                 }
             }
         }
