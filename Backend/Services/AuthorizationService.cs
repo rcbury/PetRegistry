@@ -13,25 +13,22 @@ namespace PIS_PetRegistry.Services
 {
     internal class AuthorizationService
     {
-        public static User? Authorize(string login, string password)
+        public static PIS_PetRegistry.Models.User GetUserById(int id)
         {
-
             using (var dbContext = new RegistryPetsContext())
             {
-                MD5Hash mD5Hash = new MD5Hash();
-                string hashedPassword = mD5Hash.HashPassword(password);
+                var user = dbContext.Users.Where(x => x.Id == id).FirstOrDefault();
 
-                var user = dbContext.Users
-                    .Where(x => x.Password.ToLower().Equals(hashedPassword.ToLower()) &&
-                        x.Login.ToLower().Equals(login.ToLower()))
-                    .Include(u => u.FkShelterNavigation)
-                    .Include(u => u.FkLocationNavigation)
-                    .Include(u => u.FkRoleNavigation)
-                    .FirstOrDefault();
-
-                Authorization.AuthorizedUser = user;
                 return user;
             }
+        }
+
+        public static User? Authorize(int id)
+        {
+            var user = GetUserById(id);
+
+            Authorization.AuthorizedUser = user;
+            return user;
         }
 
         public static User? GetAuthorizedUser()
