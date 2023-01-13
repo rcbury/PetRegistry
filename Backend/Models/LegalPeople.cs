@@ -88,7 +88,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public LegalPerson? GetLegalPersonById(int? personId) => LegalPeopleList.Where(x => x.Id == personId).FirstOrDefault();
 
-        public void UpdateLegalPerson(LegalPersonDTO legalPersonDTO)
+        public void UpdateLegalPerson(LegalPersonDTO legalPersonDTO, Country country)
         {
             var legalPersonDB = new PIS_PetRegistry.Models.LegalPerson()
             {
@@ -105,7 +105,7 @@ namespace PIS_PetRegistry.Backend.Models
 
             legalPersonDB = PetOwnersService.UpdateLegalPerson(legalPersonDB);
 
-            var modifiedLegalPerson = LegalPeopleList.Where(x => x.Id == legalPersonDTO.Id).FirstOrDefault();
+            var modifiedLegalPerson = GetLegalPersonById(legalPersonDB.Id);
 
             modifiedLegalPerson.Inn = legalPersonDTO.INN;
             modifiedLegalPerson.Kpp = legalPersonDTO.KPP;
@@ -113,6 +113,7 @@ namespace PIS_PetRegistry.Backend.Models
             modifiedLegalPerson.Address = legalPersonDTO.Address;
             modifiedLegalPerson.Email = legalPersonDTO.Email;
             modifiedLegalPerson.Phone = legalPersonDTO.Phone;
+            modifiedLegalPerson.Country = country;
         }
 
         public LegalPerson AddLegalPerson(LegalPersonDTO legalPersonDTO, Location location, Country country) 

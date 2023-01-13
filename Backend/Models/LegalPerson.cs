@@ -64,6 +64,7 @@ namespace PIS_PetRegistry.Backend.Models
         public IEnumerable<AnimalCard> GetAnimals() 
         {
             return Contracts.ContractList
+                .Where(x => x.LegalPerson != null)
                 .Where(x => x.LegalPerson.Id == Id)
                 .Select(x => x.AnimalCard);
         }

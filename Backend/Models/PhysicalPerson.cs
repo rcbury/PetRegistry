@@ -55,5 +55,18 @@ namespace PIS_PetRegistry.Backend.Models
 
             return catsCount;
         }
+
+        public void FillContracts(Contracts contracts)
+        {
+            Contracts = new Contracts(contracts.ContractList);
+        }
+
+        public IEnumerable<AnimalCard> GetAnimals()
+        {
+            return Contracts.ContractList
+                .Where(x => x.PhysicalPerson.Id == Id)
+                .Where(x => x.LegalPerson == null)
+                .Select(x => x.AnimalCard);
+        }
     }
 }
