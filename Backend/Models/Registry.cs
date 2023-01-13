@@ -201,7 +201,7 @@ namespace PIS_PetRegistry.Backend.Models
 
             if (animalFilter.LegalPerson != null)
             {
-                animalCards = PhysicalPeople.GetPhysicalPersonById(animalFilter.LegalPerson.Id)
+                animalCards = LegalPeople.GetLegalPersonById(animalFilter.LegalPerson.Id)
                     .GetAnimals()
                     .ToList();
             }
