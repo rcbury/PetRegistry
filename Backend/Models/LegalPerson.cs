@@ -66,5 +66,10 @@ namespace PIS_PetRegistry.Backend.Models
             return Contracts.ContractList
                 .Select(x => x.AnimalCard);
         }
+
+        public void AddContract(Contract contract) 
+        {
+            Contracts.AddContract(contract);
+        }
     }
 }
