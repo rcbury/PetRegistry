@@ -16,20 +16,37 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class Vaccinations
     {
-        public Vaccinations(AnimalCard animalCard, Users users) 
+        public Vaccinations(AnimalCard animalCard, Users users, Vaccines vaccines) 
         {
-            Vaccines = VaccineService.GetVaccines().Select(x => new Vaccine(x)).ToList();
             var vaccinationsDB = VaccinationService.GetVaccinationsByAnimal(animalCard.Id);
 
             foreach (var vaccinationDB in vaccinationsDB)
             {
                 VaccinationList.Add(new Vaccination(
-                    Vaccines.Where(x => x.Id == vaccinationDB.FkVaccine).FirstOrDefault(),
+                    vaccines.GetVaccineById(vaccinationDB.FkVaccine),
                     vaccinationDB.DateEnd,
                     animalCard,
-                    users.UserList.Where(x => x.Id == vaccinationDB.FkUser).FirstOrDefault()));
+                    users.GetUserById(vaccinationDB.FkUser)));
             }
         }
+
+        public Vaccinations()
+        {
+
+        }
+
+        public Vaccination GetVaccinationById(int animalId, int userId, DateOnly dateEnd, int vaccineId)
+        {
+            return VaccinationList
+                .Where(x => animalId == x.AnimalCard.Id)
+                .Where(x => userId == x.User.Id)
+                .Where(x => dateEnd == x.DateEnd)
+                .Where(x => vaccineId == x.Vaccine.Id)
+                .FirstOrDefault();
+        }
+
+        public List<Vaccination> VaccinationList { get; set; } = new List<Vaccination>();
+
 
         public Vaccination AddVaccination(
             DateOnly date, 
@@ -91,9 +108,6 @@ namespace PIS_PetRegistry.Backend.Models
             return oldVaccination;
         }
 
-
-        private List<Vaccine> Vaccines { get; set; }
-        public List<Vaccination> VaccinationList { get; set; } = new List<Vaccination>();
     }
 
 }

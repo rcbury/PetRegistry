@@ -13,7 +13,7 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class Contracts
     {
-        public Contracts(List<AnimalCard> cards, LegalPeople legalPeople, PhysicalPeople physicalPeople, Users users)
+        public Contracts(AnimalCards cards, LegalPeople legalPeople, PhysicalPeople physicalPeople, Users users)
         {
             using (var context = new RegistryPetsContext())
             {
@@ -28,10 +28,10 @@ namespace PIS_PetRegistry.Backend.Models
                         Id = contractDB.Id,
                         Number = contractDB.Number,
                         Date = contractDB.Date,
-                        AnimalCard = cards.Where(card => card.Id == contractDB.FkAnimalCard).FirstOrDefault(),
+                        AnimalCard = cards.GetAnimalCardById(contractDB.FkAnimalCard),
                         LegalPerson = legalPeople.LegalPeopleList.Where(person => person.Id == contractDB.FkLegalPerson).FirstOrDefault(),
                         PhysicalPerson = physicalPeople.PhysicalPeopleList.Where(person => person.Id == contractDB.FkPhysicalPerson).FirstOrDefault(),
-                        User = users.UserList.Where(user => user.Id == contractDB.FkUser).FirstOrDefault()
+                        User = users.GetUserById(contractDB.FkUser)
                     });
                 }
             }

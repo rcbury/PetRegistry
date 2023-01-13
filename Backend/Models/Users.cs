@@ -32,5 +32,9 @@ namespace PIS_PetRegistry.Backend.Models
         public List<User> UserList { get; set; }
 
 
+        public User? GetUserById(int Id)
+        {
+            return UserList.Where(x => x.Id == Id).FirstOrDefault();
+        }
     }
 }

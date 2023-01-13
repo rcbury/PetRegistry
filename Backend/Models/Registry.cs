@@ -33,25 +33,8 @@ namespace PIS_PetRegistry.Backend.Models
             Users = new Users(Locations, Shelters);
             PhysicalPeople = new PhysicalPeople(Locations, Countries);
             LegalPeople = new LegalPeople(Locations, Countries);
-
-            var animalCardsDB = AnimalCardService.GetAnimals();
-
-            foreach (var animalCardDB in animalCardsDB)
-            {
-                var animalCard = new AnimalCard(animalCardDB);
-                
-                var vaccinations = new Vaccinations(animalCard, Users);
-                var parasiteTreatments = new ParasiteTreatments(animalCard, Users);
-                var veterinaryAppointments = new VeterinaryAppointments(animalCard, Users);
-
-                animalCard.Vaccinations = vaccinations;
-                animalCard.VeterinaryAppointments = veterinaryAppointments;
-                animalCard.ParasiteTreatments = parasiteTreatments;
-
-                AnimalCards.Add(animalCard);
-            }
+            AnimalCards = new AnimalCards(Users, Vaccines, Medications);
             Contracts = new Contracts(AnimalCards, LegalPeople, PhysicalPeople, Users);
-
             PhysicalPeople.FillContracts(Contracts);
             LegalPeople.FillContracts(Contracts);
 
@@ -61,7 +44,7 @@ namespace PIS_PetRegistry.Backend.Models
         private AnimalCategories AnimalCategories { get; set; }
         private Vaccines Vaccines { get; set; }
         private Medications Medications { get; set; }
-        private List<AnimalCard> AnimalCards { get; set; } = new List<AnimalCard>();
+        private AnimalCards AnimalCards { get; set; }
         private LegalPeople LegalPeople { get; set; }
         private PhysicalPeople PhysicalPeople { get; set; }
         private Countries Countries { get; set; }
@@ -219,7 +202,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public List<AnimalCardDTO> GetAnimals()
         {
-            var animalsListDto = AnimalCards.Select(item => DTOModelConverter.ConvertModelToDTO(item)).ToList();
+            var animalsListDto = AnimalCards.AnimalCardList.Select(item => DTOModelConverter.ConvertModelToDTO(item)).ToList();
 
             return animalsListDto;
         }
@@ -228,7 +211,7 @@ namespace PIS_PetRegistry.Backend.Models
         {
             var animalCardsList = new List<AnimalCard> { };
 
-            var animalCards = AnimalCards;
+            var animalCards = AnimalCards.AnimalCardList;
 
 
             //TODO:
@@ -291,7 +274,7 @@ namespace PIS_PetRegistry.Backend.Models
                 animalCardsList = animalCards;
             }
 
-            var animalsListDto = AnimalCards.Select(item => new AnimalCardDTO(item)).ToList();
+            var animalsListDto = animalCardsList.Select(item => new AnimalCardDTO(item)).ToList();
 
             return animalsListDto;
         }
@@ -299,46 +282,17 @@ namespace PIS_PetRegistry.Backend.Models
         public AnimalCardDTO AddAnimalCard(AnimalCardDTO animalCardDTO)
         {
             var user = AuthorizationController.User;
+            var animalCategory = AnimalCategories.GetAnimalCategoryById(animalCardDTO.FkCategory);
 
-            var animalCardDB = new PIS_PetRegistry.Models.AnimalCard()
-            {
-                ChipId = animalCardDTO.ChipId,
-                Name = animalCardDTO.Name,
-                FkCategory = animalCardDTO.FkCategory,
-                FkShelter = user.Shelter.Id,
-                YearOfBirth = animalCardDTO.YearOfBirth,
-                IsBoy = animalCardDTO.IsBoy,
-                Photo = animalCardDTO.Photo,
-            };
 
-            animalCardDB = AnimalCardService.AddAnimalCard(animalCardDB);
+            var newAnimalCardDTO = AnimalCards.AddAnimalCard(animalCardDTO, user, animalCategory);
 
-            var animalCard = new AnimalCard(
-                animalCardDB.Id,
-                animalCardDB.ChipId,
-                animalCardDB.Name,
-                AnimalCategories.AnimalCategoryList.Where(x => x.Id == animalCardDB.FkCategory).FirstOrDefault(),
-                user.Shelter,
-                animalCardDB.YearOfBirth,
-                animalCardDB.IsBoy,
-                animalCardDB.Photo);
-
-            var vaccinations = new Vaccinations(animalCard, Users);
-            var parasiteTreatments = new ParasiteTreatments(animalCard, Users);
-            var veterinaryAppointments = new VeterinaryAppointments(animalCard, Users);
-
-            animalCard.Vaccinations = vaccinations;
-            animalCard.VeterinaryAppointments = veterinaryAppointments;
-            animalCard.ParasiteTreatments = parasiteTreatments;
-
-            AnimalCards.Add(animalCard);
-
-            return new AnimalCardDTO(animalCard);
+            return newAnimalCardDTO;
         }
         
         public List<ParasiteTreatmentDTO> GetParasiteTreatmentsByAnimal(int animalId)
         {
-            var animalCard = AnimalCards.Where(x => x.Id == animalId).FirstOrDefault();
+            var animalCard = AnimalCards.GetAnimalCardById(animalId);
 
             return animalCard.ParasiteTreatments.ParasiteTreatmentList
                 .Select(x => DTOModelConverter.ConvertModelToDTO(x))
@@ -347,7 +301,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public List<VaccinationDTO> GetVaccinationsByAnimal(int animalId)
         {
-            var animalCard = AnimalCards.Where(x => x.Id == animalId).FirstOrDefault();
+            var animalCard = AnimalCards.GetAnimalCardById(animalId);
 
             return animalCard.Vaccinations.VaccinationList
                 .Select(x => DTOModelConverter.ConvertModelToDTO(x))
@@ -356,7 +310,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public List<VeterinaryAppointmentDTO> GetVeterinaryAppointmentsByAnimal(int animalId)
         {
-            var animalCard = AnimalCards.Where(x => x.Id == animalId).FirstOrDefault();
+            var animalCard = AnimalCards.GetAnimalCardById(animalId);
 
             return animalCard.VeterinaryAppointments.VeterinaryAppointmentList
                 .Select(x => DTOModelConverter.ConvertModelToDTO(x))
@@ -365,7 +319,8 @@ namespace PIS_PetRegistry.Backend.Models
 
         public ParasiteTreatmentDTO AddParasiteTreatment(ParasiteTreatmentDTO parasiteTreatmentDTO)
         {
-            var animalCard = AnimalCards.Where(x => x.Id == parasiteTreatmentDTO.FkAnimal).FirstOrDefault();
+            var animalCard = AnimalCards.GetAnimalCardById(parasiteTreatmentDTO.FkAnimal);
+            
             var user = AuthorizationController.User;
 
             var parasiteTreatment = animalCard.ParasiteTreatments.AddParasiteTreatment(
@@ -384,22 +339,22 @@ namespace PIS_PetRegistry.Backend.Models
             ParasiteTreatmentDTO oldParasiteTreatmentDTO, 
             ParasiteTreatmentDTO modifiedParasiteTreatmentDTO)
         {
-            var animalCard = AnimalCards.Where(x => x.Id == oldParasiteTreatmentDTO.FkAnimal).FirstOrDefault();
+            var animalCard = AnimalCards.GetAnimalCardById(oldParasiteTreatmentDTO.FkAnimal);
+
             var user = AuthorizationController.User;
 
-            var oldVeterinaryAppointment = animalCard.ParasiteTreatments.ParasiteTreatmentList
-                .Where(x => oldParasiteTreatmentDTO.FkAnimal == x.AnimalCard.Id)
-                .Where(x => oldParasiteTreatmentDTO.FkUser == x.User.Id)
-                .Where(x => oldParasiteTreatmentDTO.Date == x.Date)
-                .Where(x => oldParasiteTreatmentDTO.FkMedication == x.Medication.Id)
-                .FirstOrDefault();
+            var oldParasiteTreatment = animalCard.ParasiteTreatments.GetParasiteTreatmentById(
+                animalCard.Id, 
+                user.Id, 
+                oldParasiteTreatmentDTO.Date, 
+                oldParasiteTreatmentDTO.FkMedication);
 
             var updatedVaccination = animalCard.ParasiteTreatments.UpdateParasiteTreatment(
-                oldVeterinaryAppointment,
+                oldParasiteTreatment,
                 modifiedParasiteTreatmentDTO.Date,
                 animalCard,
                 user,
-                Medications.MedicationList.Where(x => x.Id == modifiedParasiteTreatmentDTO.FkMedication).FirstOrDefault());
+                Medications.GetMedicationById(modifiedParasiteTreatmentDTO.FkMedication));
 
             var newVaccinationDTO = DTOModelConverter.ConvertModelToDTO(updatedVaccination);
 
@@ -408,7 +363,8 @@ namespace PIS_PetRegistry.Backend.Models
 
         public VaccinationDTO AddVaccination(VaccinationDTO vaccinationDTO)
         {
-            var animalCard = AnimalCards.Where(x => x.Id == vaccinationDTO.FkAnimal).FirstOrDefault();
+            var animalCard = AnimalCards.GetAnimalCardById(vaccinationDTO.FkAnimal);
+
             var user = AuthorizationController.User;
 
             var vaccination = animalCard.Vaccinations.AddVaccination(
@@ -426,7 +382,8 @@ namespace PIS_PetRegistry.Backend.Models
             VaccinationDTO oldVaccinationDTO, 
             VaccinationDTO modifiedVaccinationDTO)
         {
-            var animalCard = AnimalCards.Where(x => x.Id == oldVaccinationDTO.FkAnimal).FirstOrDefault();
+            var animalCard = AnimalCards.GetAnimalCardById(oldVaccinationDTO.FkAnimal);
+
             var user = AuthorizationController.User;
 
             var oldVeterinaryAppointment = animalCard.Vaccinations.VaccinationList
@@ -450,7 +407,8 @@ namespace PIS_PetRegistry.Backend.Models
 
         public VeterinaryAppointmentDTO AddVeterinaryAppointment(VeterinaryAppointmentDTO vaccinationDTO)
         {
-            var animalCard = AnimalCards.Where(x => x.Id == vaccinationDTO.FkAnimal).FirstOrDefault();
+            var animalCard = AnimalCards.GetAnimalCardById(vaccinationDTO.FkAnimal);
+
             var user = AuthorizationController.User;
 
             var veterinaryAppointment = animalCard.VeterinaryAppointments.AddVeterinaryAppointment(
@@ -469,7 +427,8 @@ namespace PIS_PetRegistry.Backend.Models
             VeterinaryAppointmentDTO oldVaccinationDTO, 
             VeterinaryAppointmentDTO modifiedVeterinaryAppointmentDTO)
         {
-            var animalCard = AnimalCards.Where(x => x.Id == oldVaccinationDTO.FkAnimal).FirstOrDefault();
+            var animalCard = AnimalCards.GetAnimalCardById(oldVaccinationDTO.FkAnimal);
+
             var user = AuthorizationController.User;
 
 
@@ -494,41 +453,16 @@ namespace PIS_PetRegistry.Backend.Models
 
         public void DeleteAnimalCard(int animalId)
         {
-            var user = AuthorizationController.User;
-            
-            AnimalCardService.DeleteAnimalCard(animalId);
-            
-            AnimalCards.RemoveAll(x => x.Id == animalId);
+            AnimalCards.DeleteAnimalCard(animalId); 
         }
 
         public AnimalCardDTO UpdateAnimalCard(AnimalCardDTO animalCardDTO)
         {
-            var user = AuthorizationController.User;
+            var animalCategory = AnimalCategories.GetAnimalCategoryById(animalCardDTO.FkCategory);
 
-            var animalCardDB = new PIS_PetRegistry.Models.AnimalCard()
-            {
-                Id = animalCardDTO.Id,
-                ChipId = animalCardDTO.ChipId,
-                Name = animalCardDTO.Name,
-                FkCategory = animalCardDTO.FkCategory,
-                FkShelter = animalCardDTO.FkShelter,
-                YearOfBirth = animalCardDTO.YearOfBirth,
-                IsBoy = animalCardDTO.IsBoy,
-                Photo = animalCardDTO.Photo,
-            };
+            var modifiedAnimalCardDTO = AnimalCards.UpdateAnimalCard(animalCardDTO, animalCategory);
 
-            animalCardDB = AnimalCardService.UpdateAnimalCard(animalCardDB);
-
-            var modifiedAnimalCard = AnimalCards.Where(x => x.Id == animalCardDTO.Id).FirstOrDefault();
-
-            modifiedAnimalCard.ChipId = animalCardDTO.ChipId;
-            modifiedAnimalCard.Name = animalCardDTO.Name;
-            modifiedAnimalCard.AnimalCategory = AnimalCategories.AnimalCategoryList.Where(x => x.Id == animalCardDB.FkCategory).FirstOrDefault();
-            modifiedAnimalCard.YearOfBirth = animalCardDTO.YearOfBirth;
-            modifiedAnimalCard.IsBoy = animalCardDTO.IsBoy;
-            modifiedAnimalCard.Photo = animalCardDTO.Photo;
-
-            return new AnimalCardDTO(modifiedAnimalCard);
+            return modifiedAnimalCardDTO;
         }
 
         public void UpdateLegalPerson(LegalPersonDTO legalPersonDTO)
@@ -672,7 +606,7 @@ namespace PIS_PetRegistry.Backend.Models
         {
             var physicalPerson = PhysicalPeople.PhysicalPeopleList.Where(item => item.Id == physicalPersonDTO.Id).FirstOrDefault();
             var legalPerson = LegalPeople.LegalPeopleList.Where(item => item.Id == legalPersonDTO.Id).FirstOrDefault();
-            var card = AnimalCards.Where(item => item.Id == animalCardDTO.Id).FirstOrDefault();
+            var card = AnimalCards.GetAnimalCardById(animalCardDTO.Id);
             var user = AuthorizationController.User;
 
             Exporter.MakeContract(filePath, physicalPerson, legalPerson, card, user);
@@ -683,7 +617,7 @@ namespace PIS_PetRegistry.Backend.Models
             var physicalPerson = PhysicalPeople.PhysicalPeopleList.Where(item => item.Id == physicalPersonDTO.Id).FirstOrDefault();
             var legalPerson = legalPersonDTO != null ? LegalPeople.LegalPeopleList.Where(item => item.Id == legalPersonDTO.Id).FirstOrDefault() 
                 : null;
-            var card = AnimalCards.Where(item => item.Id == animalCardDTO.Id).FirstOrDefault();
+            var card = AnimalCards.GetAnimalCardById(animalCardDTO.Id);
             var user = AuthorizationController.User;
 
             var contract = Contracts.SaveContract(physicalPerson, legalPerson, card, user);

@@ -1,4 +1,5 @@
-﻿using PIS_PetRegistry.Backend.Services;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using PIS_PetRegistry.Backend.Services;
 using PIS_PetRegistry.Models;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,8 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class ParasiteTreatments
     {
-        public ParasiteTreatments(AnimalCard animalCard, Users users)
+        public ParasiteTreatments(AnimalCard animalCard, Users users, Medications medications)
         {
-            Medications = new Medications();
-
             ParasiteTreatmentList = new List<ParasiteTreatment>();
 
             var parasiteTreatmentsDB = ParasiteTreatmentService.GetParasiteTreatmentsByAnimal(animalCard.Id);
@@ -21,11 +20,26 @@ namespace PIS_PetRegistry.Backend.Models
             foreach (var parasiteTreatmentDB in parasiteTreatmentsDB)
             {
                 ParasiteTreatmentList.Add(new ParasiteTreatment(
-                    Medications.MedicationList.Where(x => x.Id == parasiteTreatmentDB.FkMedication).FirstOrDefault(),
+                    medications.GetMedicationById(parasiteTreatmentDB.FkMedication),
                     animalCard,
-                    users.UserList.Where(x => x.Id == parasiteTreatmentDB.FkUser).FirstOrDefault(),
+                    users.GetUserById(parasiteTreatmentDB.FkUser),
                     parasiteTreatmentDB.Date));
             }
+        }
+
+        public ParasiteTreatments()
+        {
+            ParasiteTreatmentList = new List<ParasiteTreatment>();
+        }
+
+        public ParasiteTreatment? GetParasiteTreatmentById(int animalId, int userId, DateOnly date, int medicationId)
+        {
+            return ParasiteTreatmentList
+                .Where(x => animalId == x.AnimalCard.Id)
+                .Where(x => userId == x.User.Id)
+                .Where(x => date == x.Date)
+                .Where(x => medicationId == x.Medication.Id)
+                .FirstOrDefault();
         }
 
         public ParasiteTreatment AddParasiteTreatment(
@@ -89,9 +103,6 @@ namespace PIS_PetRegistry.Backend.Models
 
             return oldParasiteTreatment;
         }
-
-
-        public Medications Medications { get; set; }
 
         public List<ParasiteTreatment> ParasiteTreatmentList { get; set; }
     }

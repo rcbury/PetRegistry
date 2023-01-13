@@ -25,10 +25,26 @@ namespace PIS_PetRegistry.Backend.Models
                 VeterinaryAppointmentList.Add(new VeterinaryAppointment(
                     veterinaryAppointmentDB.Date,
                     animalCard,
-                    users.UserList.Where(x => x.Id == veterinaryAppointmentDB.FkUser).FirstOrDefault(),
+                    users.GetUserById(veterinaryAppointmentDB.FkUser),
                     veterinaryAppointmentDB.Name,
                     veterinaryAppointmentDB.IsCompleted));
             }
+        }
+
+        public VeterinaryAppointments()
+        {
+            VeterinaryAppointmentList = new List<VeterinaryAppointment>();
+        }
+
+        public List<VeterinaryAppointment> VeterinaryAppointmentList { get; set; }
+
+        public VeterinaryAppointment? GetVeterinaryAppointmentById(int animalId, int userId, DateTime date)
+        {
+            return VeterinaryAppointmentList
+                .Where(x => animalId == x.AnimalCard.Id)
+                .Where(x => userId == x.User.Id)
+                .Where(x => date == x.Date)
+                .FirstOrDefault(); ;
         }
 
         public VeterinaryAppointment AddVeterinaryAppointment(
@@ -98,6 +114,5 @@ namespace PIS_PetRegistry.Backend.Models
             return oldVeterinaryAppointment;
         }
 
-        public List<VeterinaryAppointment> VeterinaryAppointmentList { get; set; }
     }
 }
