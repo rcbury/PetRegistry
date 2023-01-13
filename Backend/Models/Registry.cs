@@ -551,11 +551,11 @@ namespace PIS_PetRegistry.Backend.Models
 
             if (legalPerson != null)
             {
-                legalPerson.Contracts.AddContract(contract);
+                legalPerson.AddContract(contract);
             }
             else if (physicalPerson != null) 
             {
-                physicalPerson.Contracts.AddContract(contract);
+                physicalPerson.AddContract(contract);
             }
         }
     }
