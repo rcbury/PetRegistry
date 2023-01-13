@@ -35,7 +35,7 @@ namespace PIS_PetRegistry.Backend.Models
             Users = new Users(Locations, Shelters);
             PhysicalPeople = new PhysicalPeople(Locations, Countries);
             LegalPeople = new LegalPeople(Locations, Countries);
-            AnimalCards = new AnimalCards(Users, Vaccines, Medications);
+            AnimalCards = new AnimalCards(Users, Shelters, Vaccines, Medications, AnimalCategories);
             Contracts = new Contracts(AnimalCards, LegalPeople, PhysicalPeople, Users);
             PhysicalPeople.FillContracts(Contracts);
             LegalPeople.FillContracts(Contracts);

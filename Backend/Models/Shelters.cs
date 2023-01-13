@@ -28,8 +28,8 @@ public class Shelters
 
     public List<Shelter> ShelterList { get; private set; }
 
-    public Shelter? GetShelter(int locationId)
+    public Shelter? GetShelter(int shelterId)
     {
-        return ShelterList.Where(x => x.Id == locationId).FirstOrDefault();
+        return ShelterList.Where(x => x.Id == shelterId).FirstOrDefault();
     }
 }

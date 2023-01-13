@@ -1,5 +1,6 @@
 ﻿using PIS_PetRegistry.Controllers;
 using PIS_PetRegistry.DTO;
+using PIS_PetRegistry.Models;
 using PIS_PetRegistry.Services;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,21 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class AnimalCards
     {
-        public AnimalCards(Users users, Vaccines vaccines, Medications medications)
+        public AnimalCards(Users users, Shelters shelters, Vaccines vaccines, Medications medications, AnimalCategories categories)
         {
             var animalCardsDB = AnimalCardService.GetAnimals();
 
             foreach (var animalCardDB in animalCardsDB)
             {
-                var animalCard = new AnimalCard(animalCardDB);
+                var animalCard = new AnimalCard(
+                    animalCardDB.Id,
+                    animalCardDB.ChipId,
+                    animalCardDB.Name,
+                    categories.GetAnimalCategoryById(animalCardDB.FkCategory),
+                    shelters.GetShelter(animalCardDB.FkShelter),
+                    animalCardDB.YearOfBirth,
+                    animalCardDB.IsBoy,
+                    animalCardDB.Photo);
 
                 var vaccinations = new Vaccinations(animalCard, users, vaccines);
                 var parasiteTreatments = new ParasiteTreatments(animalCard, users, medications);

@@ -33,23 +33,6 @@ namespace PIS_PetRegistry.Backend.Models
             Shelter = shelter;
         }
 
-        public AnimalCard(
-            PIS_PetRegistry.Models.AnimalCard animalCardDB)
-        {
-            Id = animalCardDB.Id;
-            IsBoy = animalCardDB.IsBoy;
-            Name = animalCardDB.Name;
-            Photo = animalCardDB.Photo;
-            YearOfBirth = animalCardDB.YearOfBirth;
-            ChipId = animalCardDB.ChipId;
-            AnimalCategory = new AnimalCategory(animalCardDB.FkCategoryNavigation);
-            Shelter = new Shelter()
-            {
-                Id = animalCardDB.FkShelterNavigation.Id,
-                Name = animalCardDB.FkShelterNavigation.Name
-            };
-        }
-
         public int Id { get; set; }
 
         public bool IsBoy { get; set; }
