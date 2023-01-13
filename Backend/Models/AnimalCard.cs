@@ -50,18 +50,6 @@ namespace PIS_PetRegistry.Backend.Models
             };
         }
 
-        public AnimalCard(AnimalCategory animalCategory, Shelter shelter, AnimalCardDTO animalCardDTO)
-        {
-            Id = animalCardDTO.Id;
-            ChipId = animalCardDTO.ChipId;
-            Name = animalCardDTO.Name;
-            AnimalCategory = animalCategory;
-            Shelter = shelter;
-            YearOfBirth = animalCardDTO.YearOfBirth;
-            IsBoy = animalCardDTO.IsBoy;
-            Photo = animalCardDTO.Photo;
-        }
-
         public int Id { get; set; }
 
         public bool IsBoy { get; set; }

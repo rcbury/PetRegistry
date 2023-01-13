@@ -17,6 +17,11 @@ namespace PIS_PetRegistry.Backend.Models
                 .ToList();
         }
 
+        public Medication? GetMedicationById(int id)
+        {
+            return MedicationList.Where(x => x.Id == id).FirstOrDefault();
+        }
+
         public List<Medication> MedicationList { get; set; }
     }
 }

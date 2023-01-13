@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PIS_PetRegistry.Backend.Models
 {
-    internal class AnimalCategories
+    public class AnimalCategories
     {
         public AnimalCategories()
         {
@@ -22,6 +22,11 @@ namespace PIS_PetRegistry.Backend.Models
         public List<AnimalCategoryDTO> GetAnimalCategories()
         {
             return AnimalCategoryList.Select(x => new AnimalCategoryDTO(x)).ToList();
+        }
+
+        public AnimalCategory? GetAnimalCategoryById(int id)
+        {
+            return AnimalCategoryList.Where(x => x.Id == id).FirstOrDefault();
         }
 
         public List<AnimalCategory> AnimalCategoryList { get; set; }

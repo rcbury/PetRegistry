@@ -31,7 +31,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public int GetAnimalCount()
         {
-            var animalsCount = Contracts.ContractList.Where(contract => contract.LegalPerson.Id == this.Id).Count();
+            var animalsCount = Contracts.ContractList.Count();
 
             return animalsCount;
         }
@@ -39,7 +39,6 @@ namespace PIS_PetRegistry.Backend.Models
         public int GetDogCount()
         {
             var dogsCount = Contracts.ContractList.Where(contract =>
-                   contract.LegalPerson.Id == this.Id &&
                    contract.AnimalCard.AnimalCategory.Id == 1)
                    .Count();
 
@@ -49,7 +48,6 @@ namespace PIS_PetRegistry.Backend.Models
         public int GetCatCount()
         {
             var catsCount = Contracts.ContractList.Where(contract =>
-                   contract.LegalPerson.Id == this.Id &&
                    contract.AnimalCard.AnimalCategory.Id == 2)
                    .Count();
 
@@ -58,14 +56,14 @@ namespace PIS_PetRegistry.Backend.Models
 
         public void FillContracts(Contracts contracts) 
         {
-            Contracts = new Contracts(contracts.ContractList);
+            Contracts = new Contracts(contracts.ContractList
+                .Where(contract => contract.LegalPerson != null)
+                .Where(contract => contract.LegalPerson.Id == Id));
         }
 
         public IEnumerable<AnimalCard> GetAnimals() 
         {
             return Contracts.ContractList
-                .Where(x => x.LegalPerson != null)
-                .Where(x => x.LegalPerson.Id == Id)
                 .Select(x => x.AnimalCard);
         }
     }
