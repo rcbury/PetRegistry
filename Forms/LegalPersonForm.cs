@@ -116,12 +116,6 @@ namespace PIS_PetRegistry
                 Id = mainLegalPerson != null ? mainLegalPerson.Id : 0
             };
 
-            if(CountryComboBox.SelectedIndex == 0 || LocalityComboBox.SelectedIndex == 0) 
-            {
-                MessageBox.Show("Пожалуйста, укажите страну и населенный пункт.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             if (mainLegalPerson == null)
             {
                 mainRegistry.AddLegalPerson(currentLegalPersonDTO);

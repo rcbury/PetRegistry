@@ -53,7 +53,7 @@ namespace PIS_PetRegistry.Backend.Models
             return ContractList.Where(x => x.Id == contractId).FirstOrDefault();
         }
 
-        public void SaveContract(PhysicalPerson physicalPerson, LegalPerson? legalPerson, AnimalCard card, User user) 
+        public Contract SaveContract(PhysicalPerson physicalPerson, LegalPerson? legalPerson, AnimalCard card, User user) 
         {
             var maxNum = AnimalCardService.GetContractNumber();
             var contract = new PIS_PetRegistry.Models.Contract()
@@ -80,6 +80,8 @@ namespace PIS_PetRegistry.Backend.Models
             };
 
             ContractList.Add(registryContract);
+
+            return registryContract;
         }
 
     }

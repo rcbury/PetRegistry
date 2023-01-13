@@ -232,15 +232,15 @@ namespace PIS_PetRegistry.Backend.Models
             }
             if (name != null && name != "")
             {
-                physicalPeople = physicalPeople.Where(person => person.Phone.Contains(name)).ToList();
+                physicalPeople = physicalPeople.Where(person => person.Name.Contains(name)).ToList();
             }
             if (address != null && address != "")
             {
-                physicalPeople = physicalPeople.Where(person => person.Phone.Contains(name)).ToList();
+                physicalPeople = physicalPeople.Where(person => person.Address.Contains(name)).ToList();
             }
             if (email != null && email != "")
             {
-                physicalPeople = physicalPeople.Where(person => person.Phone.Contains(email)).ToList();
+                physicalPeople = physicalPeople.Where(person => person.Email.Contains(email)).ToList();
             }
             if (country != 0)
             {
@@ -679,9 +679,25 @@ namespace PIS_PetRegistry.Backend.Models
                 FkCountry = legalPersonDTO.FkCountry,
                 FkLocality = legalPersonDTO.FkLocality,
             };
+            
+            PetOwnersService.AddLegalPerson(legalPersonDB);
 
-            /*legalPersonDB = */
-                PetOwnersService.AddLegalPerson(legalPersonDB);
+            var legalPerson = new LegalPerson();
+            legalPerson.Id = legalPersonDB.Id;
+            legalPerson.Inn = legalPersonDTO.INN;
+            legalPerson.Kpp = legalPersonDTO.KPP;
+            legalPerson.Phone = legalPersonDTO.Phone;
+            legalPerson.Name = legalPersonDTO.Name;
+            legalPerson.Address = legalPersonDTO.Address;
+            legalPerson.Email = legalPersonDTO.Email;
+            legalPerson.Location = Locations.LocationsList.Where(x => x.Id == legalPersonDTO.FkLocality).FirstOrDefault();
+            legalPerson.Country = Countries.CountryList.Where(x => x.Id == legalPersonDTO.FkCountry).FirstOrDefault();
+            legalPerson.Contracts = new Contracts(Contracts.ContractList
+                    .Where(contract => contract.LegalPerson != null)
+                    .Where(contract => contract.LegalPerson.Id == legalPerson.Id)
+                    .ToList());
+
+            LegalPeople.Add(legalPerson);
         }
 
         public void AddPhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
@@ -700,7 +716,8 @@ namespace PIS_PetRegistry.Backend.Models
             PetOwnersService.AddPhysicalPerson(physicalPersonDB);
 
             var phys = new PhysicalPerson();
-            phys.Id = physicalPersonDTO.Id;
+            phys.Id = physicalPersonDB.Id;
+            phys.Phone = physicalPersonDTO.Phone;
             phys.Name = physicalPersonDTO.Name;
             phys.Address = physicalPersonDTO.Address;
             phys.Email = physicalPersonDTO.Email;
@@ -728,6 +745,7 @@ namespace PIS_PetRegistry.Backend.Models
         {
             var animalsListDTO = Contracts.ContractList
                 .Where(x => x.PhysicalPerson.Id == physicalPersonId)
+                .Where(x => x.LegalPerson == null)
                 .Select(x => x.AnimalCard)
                 .Select(x => DTOModelConverter.ConvertModelToDTO(x))
                 .ToList();
@@ -735,9 +753,13 @@ namespace PIS_PetRegistry.Backend.Models
             return animalsListDTO;
         }
 
-        public ContractDTO GetContractByAnimal(int animalCardId) 
+        public ContractDTO? GetContractByAnimal(int animalCardId) 
         {
             var contract = Contracts.ContractList.Where(contract => contract.AnimalCard.Id == animalCardId).FirstOrDefault();
+            if (contract == null) 
+            {
+                return null;
+            }
             return DTOModelConverter.ConvertModelToDTO(contract);
         }
 
@@ -801,11 +823,23 @@ namespace PIS_PetRegistry.Backend.Models
         public void SaveContract(PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO legalPersonDTO, AnimalCardDTO animalCardDTO) 
         {
             var physicalPerson = PhysicalPeople.Where(item => item.Id == physicalPersonDTO.Id).FirstOrDefault();
-            var legalPerson = LegalPeople.Where(item => item.Id == legalPersonDTO.Id).FirstOrDefault();
+            var legalPerson = legalPersonDTO != null ? LegalPeople.Where(item => item.Id == legalPersonDTO.Id).FirstOrDefault() 
+                : null;
             var card = AnimalCards.Where(item => item.Id == animalCardDTO.Id).FirstOrDefault();
             var user = AuthorizationController.User;
 
-            Contracts.SaveContract(physicalPerson, legalPerson, card, user);
+            var contract = Contracts.SaveContract(physicalPerson, legalPerson, card, user);
+
+            if (legalPerson != null)
+            {
+                var person = LegalPeople.Where(person => person.Id == legalPerson.Id).FirstOrDefault();
+                person.Contracts.ContractList.Add(contract);
+            }
+            else if (physicalPerson != null) 
+            {
+                var person = PhysicalPeople.Where(person => person.Id == physicalPerson.Id).FirstOrDefault();
+                person.Contracts.ContractList.Add(contract);
+            }
         }
     }
 }
