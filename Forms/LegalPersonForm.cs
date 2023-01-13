@@ -19,6 +19,7 @@ namespace PIS_PetRegistry
             this.authorizationController = authorizationController;
             mainLegalPerson = selectedLegalPerson;
             mainRegistry = registry;
+            var authorizedUser = authorizationController.GetAuthorizedUser();
 
             InitializeComponent();
 
@@ -40,6 +41,17 @@ namespace PIS_PetRegistry
             LocalityComboBox.DataSource = allLocalities;
             LocalityComboBox.DisplayMember = "Name";
             LocalityComboBox.ValueMember = "Id";
+            LocalityComboBox.Enabled = false;
+
+            if (authorizedUser.ShelterLocationId != null)
+            {
+                LocalityComboBox.SelectedValue = authorizedUser.ShelterLocationId;
+            }
+            else
+            {
+                LocalityComboBox.SelectedValue = authorizedUser.LocationId;
+            }
+
 
             if (selectedLegalPerson != null)
             {
@@ -60,11 +72,6 @@ namespace PIS_PetRegistry
 
                 CountryComboBox.SelectedItem= startCountry;
                 LocalityComboBox.SelectedItem = startLocality;
-            }
-            else
-            {
-                CountryComboBox.SelectedIndex = 0;
-                LocalityComboBox.SelectedIndex = 0;
             }
         }
 
