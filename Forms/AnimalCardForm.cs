@@ -23,7 +23,7 @@ namespace PIS_PetRegistry
         /// Opens animal card with existing data
         /// </summary>
         /// <param name="animalCardDTO"></param>
-        public AnimalCardForm(AuthorizationController authorizationController, AnimalCardRegistry animalCardRegistry, AnimalCardDTO? animalCardDTO = null)
+        public AnimalCardForm(AuthorizationController authorizationController, Registry animalCardRegistry, AnimalCardDTO? animalCardDTO = null)
         {
             this.authorizationController = authorizationController;
 
@@ -44,7 +44,7 @@ namespace PIS_PetRegistry
         }
 
         private AuthorizationController authorizationController;
-        private AnimalCardRegistry animalCardRegistry;
+        private Registry animalCardRegistry;
         private AnimalCardDTO? animalCardDTO;
         private PhysicalPersonDTO? physicalPersonDTO;
         private LegalPersonDTO? legalPersonDTO;

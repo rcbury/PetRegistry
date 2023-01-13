@@ -26,11 +26,11 @@ namespace PIS_PetRegistry
         private bool _physicalSortDirection;
         private int _legalPreviousIndex;
         private bool _legalSortDirection;
-        private AnimalCardRegistry animalCardRegistry;
+        private Registry animalCardRegistry;
         private AuthorizationController authorizationController;
 
 
-        public PetOwnersForm(AnimalCardRegistry animalCardRegistry, AuthorizationController authorizationController)
+        public PetOwnersForm(Registry animalCardRegistry, AuthorizationController authorizationController)
         {
             InitializeComponent();
 

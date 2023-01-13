@@ -23,12 +23,12 @@ namespace PIS_PetRegistry
     public partial class PhysicalPersonForm : Form
     {
         private PhysicalPersonDTO? mainPhysicalPerson;
-        private AnimalCardRegistry? mainRegistry;
+        private Registry? mainRegistry;
         private AuthorizationController authorizationController;
 
-        public PhysicalPersonForm(AnimalCardRegistry registry, AuthorizationController authorizationController) : this(selectedPhysicalPerson: null, registry: registry, authorizationController: authorizationController) { }
+        public PhysicalPersonForm(Registry registry, AuthorizationController authorizationController) : this(selectedPhysicalPerson: null, registry: registry, authorizationController: authorizationController) { }
 
-        public PhysicalPersonForm(AuthorizationController authorizationController, PhysicalPersonDTO? selectedPhysicalPerson, AnimalCardRegistry? registry, bool editAllowed = true)
+        public PhysicalPersonForm(AuthorizationController authorizationController, PhysicalPersonDTO? selectedPhysicalPerson, Registry? registry, bool editAllowed = true)
         {
             this.authorizationController = authorizationController;
             InitializeComponent();

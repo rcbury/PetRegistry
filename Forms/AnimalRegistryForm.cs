@@ -28,7 +28,7 @@ namespace PIS_PetRegistry
 
         private PhysicalPersonDTO _physicalPersonFilter = null;
         private LegalPersonDTO _legalPersonFilter = null;
-        private AnimalCardRegistry animalCardRegistry;
+        private Registry animalCardRegistry;
         private AuthorizationController authorizationController;
 
         
@@ -36,7 +36,7 @@ namespace PIS_PetRegistry
         public AnimalRegistryForm(PhysicalPersonDTO physicalPerson, AuthorizationController authorization)
         {
             this.authorizationController = authorization;
-            this.animalCardRegistry = new AnimalCardRegistry(authorizationController);
+            this.animalCardRegistry = new Registry(authorizationController);
             InitForm();
             _physicalPersonFilter = physicalPerson;
             UpdateAnimalToFilter();
@@ -45,7 +45,7 @@ namespace PIS_PetRegistry
         public AnimalRegistryForm(LegalPersonDTO legalPerson, AuthorizationController authorization)
         {
             this.authorizationController = authorization;
-            this.animalCardRegistry = new AnimalCardRegistry(authorizationController);
+            this.animalCardRegistry = new Registry(authorizationController);
             InitForm();
             _legalPersonFilter = legalPerson;
             UpdateAnimalToFilter();
@@ -54,7 +54,7 @@ namespace PIS_PetRegistry
         public AnimalRegistryForm(AuthorizationController authorizationController)
         {
             this.authorizationController = authorizationController;
-            this.animalCardRegistry = new AnimalCardRegistry(authorizationController);
+            this.animalCardRegistry = new Registry(authorizationController);
             InitForm();
         }
 

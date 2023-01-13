@@ -15,9 +15,9 @@ namespace PIS_PetRegistry.Forms
 {
     public partial class ParasiteTreatmentForm : Form
     {
-        private AnimalCardRegistry animalCardRegistry;
+        private Registry animalCardRegistry;
 
-        public ParasiteTreatmentForm(AnimalCardRegistry animalCardRegistry, int FKAnimal)
+        public ParasiteTreatmentForm(Registry animalCardRegistry, int FKAnimal)
         {
             this.animalCardRegistry = animalCardRegistry;
 
@@ -37,7 +37,7 @@ namespace PIS_PetRegistry.Forms
         }
 
 
-        public ParasiteTreatmentForm(AnimalCardRegistry animalCardRegistry, ParasiteTreatmentDTO parasiteTreatmentDTO)
+        public ParasiteTreatmentForm(Registry animalCardRegistry, ParasiteTreatmentDTO parasiteTreatmentDTO)
         {
             this.animalCardRegistry = animalCardRegistry;
             

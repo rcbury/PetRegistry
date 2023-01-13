@@ -18,9 +18,9 @@ using System.Threading.Tasks;
 
 namespace PIS_PetRegistry.Backend.Models
 {
-    public class AnimalCardRegistry
+    public class Registry
     {
-        public AnimalCardRegistry(AuthorizationController authorizationController)
+        public Registry(AuthorizationController authorizationController)
         {
             AuthorizationController = authorizationController;
 
@@ -31,9 +31,8 @@ namespace PIS_PetRegistry.Backend.Models
             Locations = new Locations();
             Shelters = new Shelters(Locations);
             Users = new Users(Locations, Shelters);
-
-            var legalPeopleDB = PetOwnersService.GetLegalPeople();
-            var physicalPeopleDB = PetOwnersService.GetPhysicalPeople();
+            PhysicalPeople = new PhysicalPeople(Locations, Countries);
+            LegalPeople = new LegalPeople(Locations, Countries);
 
             var animalCardsDB = AnimalCardService.GetAnimals();
 
@@ -51,50 +50,10 @@ namespace PIS_PetRegistry.Backend.Models
 
                 AnimalCards.Add(animalCard);
             }
-            foreach (var legalPerson in legalPeopleDB)
-            {
-                LegalPeople.Add(new  LegalPerson()
-                {
-                    Id = legalPerson.Id,
-                    Name = legalPerson.Name,
-                    Location = Locations.GetLocation(legalPerson.FkLocality),
-                    Country = Countries.GetCountry(legalPerson.FkCountry),
-                    Address = legalPerson.Address,
-                    Email = legalPerson.Email,
-                    Inn = legalPerson.Inn,
-                    Kpp = legalPerson.Kpp,
-                    Phone = legalPerson.Phone,
-                });
-            }
-            foreach (var physicalPerson in physicalPeopleDB)
-            {
-                PhysicalPeople.Add(new PhysicalPerson()
-                {
-                    Id = physicalPerson.Id,
-                    Name = physicalPerson.Name,
-                    Location = Locations.GetLocation(physicalPerson.FkLocality),
-                    Country = Countries.GetCountry(physicalPerson.FkCountry),
-                    Address = physicalPerson.Address,
-                    Email = physicalPerson.Email,
-                    Phone = physicalPerson.Phone
-                });
-            }
             Contracts = new Contracts(AnimalCards, LegalPeople, PhysicalPeople, Users);
-            foreach (var physicalPerson in PhysicalPeople)
-            {
-                physicalPerson.Contracts = new Contracts(Contracts.ContractList
-                    .Where(contract => contract.LegalPerson == null)
-                    .Where(contract => contract.PhysicalPerson.Id == physicalPerson.Id)
-                    .ToList());
-            }
-            foreach (var legalPerson in LegalPeople) 
-            {
-                legalPerson.Contracts = new Contracts(Contracts.ContractList
-                    .Where(contract => contract.LegalPerson != null)
-                    .Where(contract => contract.LegalPerson.Id == legalPerson.Id)
-                    
-                    .ToList());
-            }
+
+            PhysicalPeople.FillContracts(Contracts);
+            LegalPeople.FillContracts(Contracts);
 
         }
 
@@ -103,8 +62,8 @@ namespace PIS_PetRegistry.Backend.Models
         private Vaccines Vaccines { get; set; }
         private Medications Medications { get; set; }
         private List<AnimalCard> AnimalCards { get; set; } = new List<AnimalCard>();
-        private List<LegalPerson> LegalPeople { get; set; } = new List<LegalPerson>();
-        private List<PhysicalPerson> PhysicalPeople { get; set; } = new List<PhysicalPerson>();
+        private LegalPeople LegalPeople { get; set; }
+        private PhysicalPeople PhysicalPeople { get; set; }
         private Countries Countries { get; set; }
         private Locations Locations { get; set; }
         private Shelters Shelters { get; set; }
@@ -151,40 +110,7 @@ namespace PIS_PetRegistry.Backend.Models
         public List<LegalPersonDTO> GetLegalPeople(string inn, string kpp, string name, string email,
             string address, string phone, int country, int location)
         {
-            var legalPeople = LegalPeople;
-
-            if (inn != null && inn != "")
-            {
-                legalPeople = legalPeople.Where(person => person.Inn.Contains(inn)).ToList();
-            }
-            if (kpp != null && kpp != "")
-            {
-                legalPeople = legalPeople.Where(person => person.Kpp.Contains(kpp)).ToList();
-            }
-            if (name != null && name != "")
-            {
-                legalPeople = legalPeople.Where(person => person.Name.Contains(name)).ToList();
-            }
-            if (email != null && email != "")
-            {
-                legalPeople = legalPeople.Where(person => person.Email.Contains(email)).ToList();
-            }
-            if (address != null && address != "")
-            {
-                legalPeople = legalPeople.Where(person => person.Address.Contains(address)).ToList();
-            }
-            if (phone != null && phone != "")
-            {
-                legalPeople = legalPeople.Where(person => person.Phone.Contains(phone)).ToList();
-            }
-            if (country != 0)
-            {
-                legalPeople = legalPeople.Where(person => person.Country.Id == country).ToList();
-            }
-            if (location != 0)
-            {
-                legalPeople = legalPeople.Where(person => person.Location.Id == location).ToList();
-            }
+            var legalPeople = LegalPeople.GetLegalPeople(inn, kpp, name, email, address, phone, country, location);
 
             var res = new List<LegalPersonDTO>();
 
@@ -198,7 +124,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public LegalPersonDTO? GetLegalPersonByINN(string INN)
         {
-            var person = LegalPeople.Where(x => x.Inn == INN).FirstOrDefault();
+            var person = LegalPeople.GetLegalPersonByInn(INN);
 
             if (person == null)
             {
@@ -211,7 +137,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public LegalPersonDTO? GetLegalPersonById(int? personId)
         {
-            var person = LegalPeople.Where(x => x.Id == personId).FirstOrDefault();
+            var person = LegalPeople.GetLegalPersonById(personId);
 
             if (person == null)
             {
@@ -224,7 +150,7 @@ namespace PIS_PetRegistry.Backend.Models
         public List<PhysicalPersonDTO> GetPhysicalPeople(string phone, string name, string address, 
             string email, int country, int location)
         {
-            var physicalPeople = PhysicalPeople;
+            var physicalPeople = PhysicalPeople.PhysicalPeopleList;
 
             if (phone != null && phone != "")
             {
@@ -263,7 +189,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public PhysicalPersonDTO? GetPhysicalPersonByPhone(string phone)
         {
-            var person = PhysicalPeople.Where(x => x.Phone == phone).FirstOrDefault();
+            var person = PhysicalPeople.PhysicalPeopleList.Where(x => x.Phone == phone).FirstOrDefault();
 
             if (person == null)
             {
@@ -276,7 +202,7 @@ namespace PIS_PetRegistry.Backend.Models
 
         public PhysicalPersonDTO? GetPhysicalPersonById(int? personId)
         {
-            var person = PhysicalPeople.Where(x => x.Id == personId).FirstOrDefault();
+            var person = PhysicalPeople.PhysicalPeopleList.Where(x => x.Id == personId).FirstOrDefault();
 
             if (person == null)
             {
@@ -610,31 +536,7 @@ namespace PIS_PetRegistry.Backend.Models
             /*var legalPersonModel = DTOModelConverter.ConvertDTOToModel(legalPersonDTO);
             PetOwnersService.UpdateLegalPerson(legalPersonModel);*/
 
-            var legalPersonDB = new PIS_PetRegistry.Models.LegalPerson()
-            {
-                Id = legalPersonDTO.Id,
-                Inn = legalPersonDTO.INN,
-                Kpp = legalPersonDTO.KPP,
-                Name = legalPersonDTO.Name,
-                Address = legalPersonDTO.Address,
-                Email = legalPersonDTO.Email,
-                Phone = legalPersonDTO.Phone,
-                FkCountry = legalPersonDTO.FkCountry,
-                FkLocality= legalPersonDTO.FkLocality,
-            };
-
-            legalPersonDB = PetOwnersService.UpdateLegalPerson(legalPersonDB);
-
-            var modifiedLegalPerson = LegalPeople.Where(x => x.Id == legalPersonDTO.Id).FirstOrDefault();
-
-            modifiedLegalPerson.Inn = legalPersonDTO.INN;
-            modifiedLegalPerson.Kpp = legalPersonDTO.KPP;
-            modifiedLegalPerson.Name = legalPersonDTO.Name;
-            modifiedLegalPerson.Address = legalPersonDTO.Address;
-            modifiedLegalPerson.Email = legalPersonDTO.Email;
-            modifiedLegalPerson.Phone = legalPersonDTO.Phone;
-            modifiedLegalPerson.Country = Countries.GetCountry(legalPersonDTO.FkCountry);
-            modifiedLegalPerson.Location = Locations.GetLocation(legalPersonDTO.FkLocality);
+            LegalPeople.UpdateLegalPerson(legalPersonDTO);
         }
 
         public void UpdatePhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
@@ -655,7 +557,7 @@ namespace PIS_PetRegistry.Backend.Models
 
             physicalPersonDB = PetOwnersService.UpdatePhysicalPerson(physicalPersonDB);
 
-            var modifiedPhysicalPerson = PhysicalPeople.Where(x => x.Id == physicalPersonDTO.Id).FirstOrDefault();
+            var modifiedPhysicalPerson = PhysicalPeople.PhysicalPeopleList.Where(x => x.Id == physicalPersonDTO.Id).FirstOrDefault();
 
             modifiedPhysicalPerson.Name = physicalPersonDTO.Name;
             modifiedPhysicalPerson.Address = physicalPersonDTO.Address;
@@ -667,37 +569,11 @@ namespace PIS_PetRegistry.Backend.Models
 
         public void AddLegalPerson(LegalPersonDTO legalPersonDTO)
         {
-            var legalPersonDB = new PIS_PetRegistry.Models.LegalPerson()
-            {
-                Id = legalPersonDTO.Id,
-                Inn = legalPersonDTO.INN,
-                Kpp = legalPersonDTO.KPP,
-                Name = legalPersonDTO.Name,
-                Address = legalPersonDTO.Address,
-                Email = legalPersonDTO.Email,
-                Phone = legalPersonDTO.Phone,
-                FkCountry = legalPersonDTO.FkCountry,
-                FkLocality = legalPersonDTO.FkLocality,
-            };
-            
-            PetOwnersService.AddLegalPerson(legalPersonDB);
-
-            var legalPerson = new LegalPerson();
-            legalPerson.Id = legalPersonDB.Id;
-            legalPerson.Inn = legalPersonDTO.INN;
-            legalPerson.Kpp = legalPersonDTO.KPP;
-            legalPerson.Phone = legalPersonDTO.Phone;
-            legalPerson.Name = legalPersonDTO.Name;
-            legalPerson.Address = legalPersonDTO.Address;
-            legalPerson.Email = legalPersonDTO.Email;
-            legalPerson.Location = Locations.LocationsList.Where(x => x.Id == legalPersonDTO.FkLocality).FirstOrDefault();
-            legalPerson.Country = Countries.CountryList.Where(x => x.Id == legalPersonDTO.FkCountry).FirstOrDefault();
-            legalPerson.Contracts = new Contracts(Contracts.ContractList
-                    .Where(contract => contract.LegalPerson != null)
-                    .Where(contract => contract.LegalPerson.Id == legalPerson.Id)
-                    .ToList());
-
-            LegalPeople.Add(legalPerson);
+            var location = Locations.GetLocation(legalPersonDTO.FkLocality);
+            var country = Countries.GetCountry(legalPersonDTO.FkCountry);
+            var contracts = Contracts.GetContractsByLegalPerson(legalPersonDTO.Id);
+            var legalPerson = LegalPeople.AddLegalPerson(legalPersonDTO, location, country);
+            legalPerson.FillContracts(contracts);
         }
 
         public void AddPhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
@@ -728,13 +604,13 @@ namespace PIS_PetRegistry.Backend.Models
                     .Where(contract => contract.PhysicalPerson.Id == phys.Id)
                     .ToList());
 
-            PhysicalPeople.Add(phys);
+            PhysicalPeople.PhysicalPeopleList.Add(phys);
         }
         public List<AnimalCardDTO> GetAnimalsByLegalPerson(int legalPersonId)
         {
-            var animalsListDTO = Contracts.ContractList
-                .Where(x => x.LegalPerson.Id == legalPersonId)
-                .Select(x => x.AnimalCard)
+            var animalsListDTO = 
+                LegalPeople.GetLegalPersonById(legalPersonId)
+                .GetAnimals()
                 .Select(x => DTOModelConverter.ConvertModelToDTO(x))
                 .ToList();
 
@@ -763,24 +639,6 @@ namespace PIS_PetRegistry.Backend.Models
             return DTOModelConverter.ConvertModelToDTO(contract);
         }
 
-        public int CountAnimalsByLegalPerson(LegalPersonDTO legalPersonDTO)
-        {
-            var countAnimals = Contracts.ContractList
-                .Where(x => x.LegalPerson.Id == legalPersonDTO.Id)
-                .Select(x => x.AnimalCard)
-                .Count();
-            return countAnimals;
-        }
-
-        public int CountAnimalsByPhysicalPerson(PhysicalPersonDTO physicalPersonDTO)
-        {
-            var countAnimals = Contracts.ContractList
-                .Where(x => x.PhysicalPerson.Id == physicalPersonDTO.Id)
-                .Select(x => x.AnimalCard)
-                .Count();
-            return countAnimals;
-        }
-
         public void ExportPhysicalPeopleToExcel(string path, List<PhysicalPersonDTO> physicalPeopleDTO)
         {
             Exporter.ExportPhysicalPeopleToExcel(path, physicalPeopleDTO);
@@ -798,22 +656,22 @@ namespace PIS_PetRegistry.Backend.Models
 
         public int CountAnimalsByPhysicalPerson(int physicalPersonId)
         {
-            var physicalPerson = PhysicalPeople.Where(person => person.Id == physicalPersonId).FirstOrDefault();
+            var physicalPerson = PhysicalPeople.PhysicalPeopleList.Where(person => person.Id == physicalPersonId).FirstOrDefault();
 
             return physicalPerson.GetAnimalCount();
         }
 
         public int CountAnimalsByLegalPerson(int legalPersonId)
         {
-            var legalPerson = LegalPeople.Where(person => person.Id == legalPersonId).FirstOrDefault();
+            var legalPerson = LegalPeople.GetLegalPersonById(legalPersonId);
 
             return legalPerson.GetAnimalCount();
         }
 
         public void MakeContract(string filePath, PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO legalPersonDTO, AnimalCardDTO animalCardDTO)
         {
-            var physicalPerson = PhysicalPeople.Where(item => item.Id == physicalPersonDTO.Id).FirstOrDefault();
-            var legalPerson = LegalPeople.Where(item => item.Id == legalPersonDTO.Id).FirstOrDefault();
+            var physicalPerson = PhysicalPeople.PhysicalPeopleList.Where(item => item.Id == physicalPersonDTO.Id).FirstOrDefault();
+            var legalPerson = LegalPeople.LegalPeopleList.Where(item => item.Id == legalPersonDTO.Id).FirstOrDefault();
             var card = AnimalCards.Where(item => item.Id == animalCardDTO.Id).FirstOrDefault();
             var user = AuthorizationController.User;
 
@@ -822,8 +680,8 @@ namespace PIS_PetRegistry.Backend.Models
 
         public void SaveContract(PhysicalPersonDTO physicalPersonDTO, LegalPersonDTO legalPersonDTO, AnimalCardDTO animalCardDTO) 
         {
-            var physicalPerson = PhysicalPeople.Where(item => item.Id == physicalPersonDTO.Id).FirstOrDefault();
-            var legalPerson = legalPersonDTO != null ? LegalPeople.Where(item => item.Id == legalPersonDTO.Id).FirstOrDefault() 
+            var physicalPerson = PhysicalPeople.PhysicalPeopleList.Where(item => item.Id == physicalPersonDTO.Id).FirstOrDefault();
+            var legalPerson = legalPersonDTO != null ? LegalPeople.LegalPeopleList.Where(item => item.Id == legalPersonDTO.Id).FirstOrDefault() 
                 : null;
             var card = AnimalCards.Where(item => item.Id == animalCardDTO.Id).FirstOrDefault();
             var user = AuthorizationController.User;
@@ -832,13 +690,11 @@ namespace PIS_PetRegistry.Backend.Models
 
             if (legalPerson != null)
             {
-                var person = LegalPeople.Where(person => person.Id == legalPerson.Id).FirstOrDefault();
-                person.Contracts.ContractList.Add(contract);
+                legalPerson.Contracts.AddContract(contract);
             }
             else if (physicalPerson != null) 
             {
-                var person = PhysicalPeople.Where(person => person.Id == physicalPerson.Id).FirstOrDefault();
-                person.Contracts.ContractList.Add(contract);
+                physicalPerson.Contracts.AddContract(contract);
             }
         }
     }

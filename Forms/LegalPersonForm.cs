@@ -8,13 +8,13 @@ namespace PIS_PetRegistry
     public partial class LegalPersonForm : Form
     {
         private LegalPersonDTO? mainLegalPerson;
-        private AnimalCardRegistry? mainRegistry;
+        private Registry? mainRegistry;
         AuthorizationController authorizationController;
-        public LegalPersonForm(AnimalCardRegistry registry, AuthorizationController authorizationController) : this(selectedLegalPerson: null, registry: registry, authorizationController: authorizationController)
+        public LegalPersonForm(Registry registry, AuthorizationController authorizationController) : this(selectedLegalPerson: null, registry: registry, authorizationController: authorizationController)
         {
 
         }
-        public LegalPersonForm(AuthorizationController authorizationController, LegalPersonDTO? selectedLegalPerson, bool editAllowed = true, AnimalCardRegistry? registry = null)
+        public LegalPersonForm(AuthorizationController authorizationController, LegalPersonDTO? selectedLegalPerson, bool editAllowed = true, Registry? registry = null)
         {
             this.authorizationController = authorizationController;
             mainLegalPerson = selectedLegalPerson;

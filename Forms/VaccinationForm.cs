@@ -15,9 +15,9 @@ namespace PIS_PetRegistry.Forms
 {
     public partial class VaccinationForm : Form
     {
-        private AnimalCardRegistry animalCardRegistry;
+        private Registry animalCardRegistry;
 
-        public VaccinationForm(AnimalCardRegistry animalCardRegistry, int FKAnimal)
+        public VaccinationForm(Registry animalCardRegistry, int FKAnimal)
         {
             this.animalCardRegistry = animalCardRegistry;
 
@@ -37,7 +37,7 @@ namespace PIS_PetRegistry.Forms
         }
 
 
-        public VaccinationForm(AnimalCardRegistry animalCardRegistry, VaccinationDTO vaccinationDTO)
+        public VaccinationForm(Registry animalCardRegistry, VaccinationDTO vaccinationDTO)
         {
             this.animalCardRegistry = animalCardRegistry;
 

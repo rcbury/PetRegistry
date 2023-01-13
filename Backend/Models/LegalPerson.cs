@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PIS_PetRegistry.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,6 +54,18 @@ namespace PIS_PetRegistry.Backend.Models
                    .Count();
 
             return catsCount;
+        }
+
+        public void FillContracts(Contracts contracts) 
+        {
+            Contracts = new Contracts(contracts.ContractList);
+        }
+
+        public IEnumerable<AnimalCard> GetAnimals() 
+        {
+            return Contracts.ContractList
+                .Where(x => x.LegalPerson.Id == Id)
+                .Select(x => x.AnimalCard);
         }
     }
 }

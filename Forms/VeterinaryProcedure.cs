@@ -15,9 +15,9 @@ namespace PIS_PetRegistry.Forms
 {
     public partial class VeterinaryProcedure : Form
     {
-        private AnimalCardRegistry animalCardRegistry;
+        private Registry animalCardRegistry;
 
-        public VeterinaryProcedure(AnimalCardRegistry animalCardRegistry, int FKAnimal)
+        public VeterinaryProcedure(Registry animalCardRegistry, int FKAnimal)
         {
             this.animalCardRegistry = animalCardRegistry;
 
@@ -28,7 +28,7 @@ namespace PIS_PetRegistry.Forms
             FillFields();
         }
 
-        public VeterinaryProcedure(AnimalCardRegistry animalCardRegistry, VeterinaryAppointmentDTO parasiteTreatmentDTO)
+        public VeterinaryProcedure(Registry animalCardRegistry, VeterinaryAppointmentDTO parasiteTreatmentDTO)
         {
             this.animalCardRegistry = animalCardRegistry;
 

@@ -13,7 +13,7 @@ namespace PIS_PetRegistry.Backend.Models
 {
     public class Contracts
     {
-        public Contracts(List<AnimalCard> cards, List<LegalPerson> legalPeopleList, List<PhysicalPerson> physicalPeopleList, Users users)
+        public Contracts(List<AnimalCard> cards, LegalPeople legalPeople, PhysicalPeople physicalPeople, Users users)
         {
             using (var context = new RegistryPetsContext())
             {
@@ -29,8 +29,8 @@ namespace PIS_PetRegistry.Backend.Models
                         Number = contractDB.Number,
                         Date = contractDB.Date,
                         AnimalCard = cards.Where(card => card.Id == contractDB.FkAnimalCard).FirstOrDefault(),
-                        LegalPerson = legalPeopleList.Where(person => person.Id == contractDB.FkLegalPerson).FirstOrDefault(),
-                        PhysicalPerson = physicalPeopleList.Where(person => person.Id == contractDB.FkPhysicalPerson).FirstOrDefault(),
+                        LegalPerson = legalPeople.LegalPeopleList.Where(person => person.Id == contractDB.FkLegalPerson).FirstOrDefault(),
+                        PhysicalPerson = physicalPeople.PhysicalPeopleList.Where(person => person.Id == contractDB.FkPhysicalPerson).FirstOrDefault(),
                         User = users.UserList.Where(user => user.Id == contractDB.FkUser).FirstOrDefault()
                     });
                 }
@@ -51,6 +51,22 @@ namespace PIS_PetRegistry.Backend.Models
         public Contract? GetContract(int contractId)
         {
             return ContractList.Where(x => x.Id == contractId).FirstOrDefault();
+        }
+
+        public Contracts GetContractsByLegalPerson(int legalPersonId) 
+        {
+            return new Contracts(ContractList
+                    .Where(contract => contract.LegalPerson != null)
+                    .Where(contract => contract.LegalPerson.Id == legalPersonId)
+                    .ToList());
+        }
+
+        public Contracts GetContractsByPhysicalPerson(int physicalPersonId)
+        {
+            return new Contracts(ContractList
+                    .Where(contract => contract.LegalPerson == null)
+                    .Where(contract => contract.PhysicalPerson.Id == physicalPersonId)
+                    .ToList());
         }
 
         public Contract SaveContract(PhysicalPerson physicalPerson, LegalPerson? legalPerson, AnimalCard card, User user) 
@@ -82,6 +98,11 @@ namespace PIS_PetRegistry.Backend.Models
             ContractList.Add(registryContract);
 
             return registryContract;
+        }
+
+        public void AddContract(Contract contract) 
+        {
+            ContractList.Add(contract);
         }
 
     }
