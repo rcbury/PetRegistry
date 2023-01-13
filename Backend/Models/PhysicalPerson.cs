@@ -65,5 +65,10 @@ namespace PIS_PetRegistry.Backend.Models
                 .Where(x => x.LegalPerson == null)
                 .Select(x => x.AnimalCard);
         }
+
+        public void AddContract(Contract contract) 
+        {
+            Contracts.AddContract(contract);
+        }
     }
 }

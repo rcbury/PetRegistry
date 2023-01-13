@@ -191,7 +191,7 @@ namespace PIS_PetRegistry
             FetchAnimalCards();
 
             if (_listAnimalCards.Count == 0)
-                MessageBox.Show("По вашему запросу нечего не найдено");
+                MessageBox.Show("По вашему запросу ничего не найдено");
         }
 
         private AnimalFilterDTO GenerateFilterDTO()
@@ -326,6 +326,11 @@ namespace PIS_PetRegistry
             
             var animalList = animalCardRegistry.GetAnimals(filterParams);
             SetListAnimalsInterface(animalList);
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
