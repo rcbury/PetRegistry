@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PIS_PetRegistry.Backend
 {
-    internal class DTOModelConverter
+    public class DTOModelConverter
     {
         public static AnimalCategoryDTO ConvertModelToDTO(AnimalCategory animalCategory)
         {
@@ -163,6 +163,7 @@ namespace PIS_PetRegistry.Backend
                 Id = user.Id,
                 RoleId = user.FkRole,
                 Name = user.Name,
+                Email = user.Email
             };
 
             if (user.Location != null) 

@@ -1,8 +1,10 @@
-﻿using PIS_PetRegistry.Models;
+﻿using PIS_PetRegistry.Backend.Models;
+using PIS_PetRegistry.Models;
 using System;
 using System.Configuration;
 using System.Net;
 using System.Net.Mail;
+using PIS_PetRegistry.Backend;
 
 namespace EmailNotification
 {
@@ -18,46 +20,53 @@ namespace EmailNotification
                 OnExecuteNotification();
             }, null, startTimeSpan, periodTimeSpan);
 
+#if DEBUG
+            OnExecuteNotification();
+#endif
             Console.WriteLine("[email-notification] start");
             Console.ReadLine();
         }
 
         private static void OnExecuteNotification()
         {
+            var notification = new Notification();
+            var registry = new Registry();
+
             String message = "";
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-            var smtpClient = new SmtpClient("smtp.gmail.com")
-            {
-                Port = 587,
-                EnableSsl = true,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential
-                (
-                    ConfigurationManager.ConnectionStrings["SmtpLogin"].ToString(), 
-                    ConfigurationManager.ConnectionStrings["SmtpPassword"].ToString()
-                )
-            };
+            var animals = registry.GetAnimals();
+            var animalsVacination = animals.Select(animal => registry.GetVaccinationsByAnimal(animal.Id)).ToList();
 
-            using (var context = new RegistryPetsContext())
+            foreach (var animalVaccinations in animalsVacination)
             {
-                var animals = context.AnimalCards.Select(x => x.Vaccinations
-                                                                  .Where(x => new DateOnly(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day) >= x.DateEnd).ToList())
-                                                                  .ToList();
-
-                foreach (var item in animals)
+                foreach (var vacination in animalVaccinations)
                 {
-                    foreach (var itemTwo in item)
-                    {
-                        message = String.Format("{0}\nУ животного {1} ({2}) заканчивается срок действия `{3}`",
-                            message, itemTwo.FkAnimalNavigation.Name, itemTwo.FkAnimalNavigation.ChipId, itemTwo.FkVaccineNavigation.Name);
+                    var animal = animals.Where(item => item.Id == vacination.FkAnimal).FirstOrDefault();
 
-                        if (message.Length > 0)
-                        {
-                            Console.WriteLine("[email-notification] send email {0}; message {1}", itemTwo.FkUserNavigation.Email, message);
-                            smtpClient.Send("noreply.petregistry@gmail.com", itemTwo.FkUserNavigation.Email, "Уведомление о просрочке вакцины", message);
-                        }
-                    }
+                    if (animal == null)
+                        continue;
+
+                    if (new DateOnly(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day) < vacination.DateEnd)
+                        continue;
+
+                    message = String.Format("{0}\nУ животного {1} ({2}) заканчивается срок действия `{3}`",
+                        message, animal.Name, animal.ChipId, vacination.VaccineName);
+
+                }
+            }
+
+            var users = registry.GetUsers();
+
+            if (message.Length > 0)
+            {
+                foreach (var user in users)
+                {
+                    if (user.RoleId != 1)
+                        continue;
+
+                    Console.WriteLine("[email-notification] send email {0}; message {1}", user.Email, message);
+                    notification.Send("noreply.petregistry@gmail.com", user.Email, "Уведомление о просрочке вакцины", message);
                 }
             }
         }

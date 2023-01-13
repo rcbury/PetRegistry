@@ -16,39 +16,42 @@ namespace PIS_PetRegistry.Controllers
     {
         private Locations Locations { get; set; } = new Locations();
         private Shelters Shelters { get; set; }
-        
-        public Backend.Models.User User { get; set; }
+        private Users Users { get; set; }
+
+        public Backend.Models.User AuthorizedUser { get; set; }
 
         public AuthorizationController()
         {
             Shelters = new Shelters(Locations);
+            Users = new Users(Locations, Shelters);
         }
 
         public bool Authorize(string login, string password)
-        {
-            var userDB = AuthorizationService.Authorize(login, password);
+        {            
+            MD5Hash mD5Hash = new MD5Hash();
+            string hashedPassword = mD5Hash.HashPassword(password);
 
-            if (userDB == null)
+            var user = Users.GetUserByLoginAndPassword(login, hashedPassword);
+
+            if (user == null) 
+            {
                 return false;
+            }
+            else
+            {
+                AuthorizedUser = user;
+                AuthorizationService.Authorize(user.Id);
 
-            var user = new Backend.Models.User(
-                Locations.LocationsList.Where(x => x.Id == userDB.FkLocation).FirstOrDefault(),
-                Shelters.ShelterList.Where(x => x.Id == userDB.FkShelter).FirstOrDefault(),
-                userDB.Id, userDB.Login, userDB.Password, userDB.Name, userDB.Email, userDB.FkRole);
-
-            User = user;
-
-            var userDTO = DTOModelConverter.ConvertModelToDTO(user);
-
-            return true;
+                return true;
+            }
         }
 
         public UserDTO? GetAuthorizedUser()
         {
-            if (User == null)
+            if (AuthorizedUser == null)
                 return null;
-
-            var userDTO = DTOModelConverter.ConvertModelToDTO(User);
+            
+            var userDTO = DTOModelConverter.ConvertModelToDTO(AuthorizedUser);
 
             return userDTO;
         }
