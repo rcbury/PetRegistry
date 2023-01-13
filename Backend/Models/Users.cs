@@ -36,5 +36,13 @@ namespace PIS_PetRegistry.Backend.Models
         {
             return UserList.Where(x => x.Id == Id).FirstOrDefault();
         }
+
+        public User? GetUserByLoginAndPassword(string login, string password)
+        {
+            return UserList
+                .Where(x => x.Login.ToLower().Equals(login.ToLower()))
+                .Where(x => x.Password.ToLower().Equals(password.ToLower()))
+                .FirstOrDefault();
+        }
     }
 }
