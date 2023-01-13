@@ -565,5 +565,10 @@ namespace PIS_PetRegistry.Backend.Models
 
             return usersRegistry;
         }
+
+        public List<List<VaccinationDTO>> GetAnimalsVaccinations(List<AnimalCardDTO>animals)
+        {
+            return animals.Select(animal => this.GetVaccinationsByAnimal(animal.Id)).ToList();
+        }
     }
 }
