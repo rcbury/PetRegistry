@@ -114,11 +114,11 @@ namespace PIS_PetRegistry
             legalAddressCol.HeaderText = "Адрес";
             legalAddressCol.DataPropertyName = "Address";
             var innCol = new DataGridViewTextBoxColumn();
-            innCol.Name = "Inn";
+            innCol.Name = "INN";
             innCol.HeaderText = "ИНН";
             innCol.DataPropertyName = "INN";
             var kppCol = new DataGridViewTextBoxColumn();
-            kppCol.Name = "Kpp";
+            kppCol.Name = "KPP";
             kppCol.HeaderText = "КПП";
             kppCol.DataPropertyName = "KPP";
             var legalNameCol = new DataGridViewTextBoxColumn();

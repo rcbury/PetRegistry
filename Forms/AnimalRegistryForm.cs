@@ -99,9 +99,9 @@ namespace PIS_PetRegistry
             dataGridViewListAnimals.Columns.Add(nameCol);
 
             var chipCol = new DataGridViewTextBoxColumn();
-            chipCol.Name = "chipId";
+            chipCol.Name = "ChipId";
             chipCol.HeaderText = "Номер чипа";
-            chipCol.DataPropertyName = "chipId";
+            chipCol.DataPropertyName = "ChipId";
             chipCol.ReadOnly = true;
             dataGridViewListAnimals.Columns.Add(chipCol);
 

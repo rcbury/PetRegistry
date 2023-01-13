@@ -155,23 +155,23 @@ namespace PIS_PetRegistry.Backend.Models
 
             if (inn != null && inn != "")
             {
-                legalPeople = legalPeople.Where(person => person.Phone.Contains(inn)).ToList();
+                legalPeople = legalPeople.Where(person => person.Inn.Contains(inn)).ToList();
             }
             if (kpp != null && kpp != "")
             {
-                legalPeople = legalPeople.Where(person => person.Phone.Contains(kpp)).ToList();
+                legalPeople = legalPeople.Where(person => person.Kpp.Contains(kpp)).ToList();
             }
             if (name != null && name != "")
             {
-                legalPeople = legalPeople.Where(person => person.Phone.Contains(name)).ToList();
+                legalPeople = legalPeople.Where(person => person.Name.Contains(name)).ToList();
             }
             if (email != null && email != "")
             {
-                legalPeople = legalPeople.Where(person => person.Phone.Contains(email)).ToList();
+                legalPeople = legalPeople.Where(person => person.Email.Contains(email)).ToList();
             }
             if (address != null && address != "")
             {
-                legalPeople = legalPeople.Where(person => person.Phone.Contains(address)).ToList();
+                legalPeople = legalPeople.Where(person => person.Address.Contains(address)).ToList();
             }
             if (phone != null && phone != "")
             {
